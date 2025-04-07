@@ -427,6 +427,10 @@
     [
       "4cde12ec-ef2b-48a0-917f-a461b0dd0a62",
       "PowerMisc"
+    ],
+    [
+      "d849c468-5c81-4bfa-891e-09638f49a87b",
+      "HVArchitecture"
     ]
   ],
   "text_variables": {}

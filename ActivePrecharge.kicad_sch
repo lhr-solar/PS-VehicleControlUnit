@@ -2281,7 +2281,7 @@
 		)
 		(uuid "fe8754f0-1841-48a0-86e5-1a30f79af867")
 	)
-	(label "AVef"
+	(label "AVref"
 		(at 144.78 110.49 0)
 		(effects
 			(font
@@ -2291,7 +2291,7 @@
 		)
 		(uuid "35ad8dfb-c0b2-4c6e-a7da-0070250d469f")
 	)
-	(label "MVef"
+	(label "MVref"
 		(at 144.78 45.72 0)
 		(effects
 			(font
@@ -2311,7 +2311,7 @@
 		)
 		(uuid "64c4110d-2bf4-4cf7-8217-efebbdbf6577")
 	)
-	(label "MVin"
+	(label "AVin"
 		(at 92.71 128.27 0)
 		(effects
 			(font
@@ -2321,7 +2321,7 @@
 		)
 		(uuid "9cdda622-d9d5-4754-84ca-aecbe794d1bf")
 	)
-	(label "MVef"
+	(label "AVref"
 		(at 92.71 120.65 0)
 		(effects
 			(font
@@ -2331,7 +2331,7 @@
 		)
 		(uuid "d7aca2c4-f69b-4275-876a-87894ab36e4d")
 	)
-	(label "MVef"
+	(label "MVref"
 		(at 92.71 55.88 0)
 		(effects
 			(font
@@ -2374,7 +2374,7 @@
 		)
 		(uuid "2facd5dd-3d67-4adb-a852-48b91121c636")
 	)
-	(hierarchical_label "MPre-"
+	(hierarchical_label "MVin"
 		(shape input)
 		(at 54.61 63.5 180)
 		(effects
@@ -2385,7 +2385,7 @@
 		)
 		(uuid "2fe21575-e433-4f57-aaf9-12c86126c503")
 	)
-	(hierarchical_label "APre-"
+	(hierarchical_label "AVin"
 		(shape input)
 		(at 54.61 128.27 180)
 		(effects
@@ -2561,7 +2561,7 @@
 		)
 		(uuid "b3c260c6-d08a-4014-90c9-0a85768df95f")
 	)
-	(hierarchical_label "MPre+"
+	(hierarchical_label "MVref"
 		(shape input)
 		(at 54.61 40.64 180)
 		(effects
@@ -2594,7 +2594,7 @@
 		)
 		(uuid "f66c209e-06c4-43ff-909e-eea6801f1d3f")
 	)
-	(hierarchical_label "APre+"
+	(hierarchical_label "AVref"
 		(shape input)
 		(at 54.61 105.41 180)
 		(effects

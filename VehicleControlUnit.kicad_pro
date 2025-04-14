@@ -413,24 +413,12 @@
       "Root"
     ],
     [
-      "04d1ed98-81fd-469b-b267-4ffa7c7cfb21",
-      "ActivePrecharge"
-    ],
-    [
-      "e017158b-3ca7-4808-aa4f-ad76206c17c0",
-      "CAN"
+      "6282503b-e4ab-454b-a074-f701a067f39b",
+      "ESP"
     ],
     [
       "838dfc75-afcf-4845-8c43-fcef4e0ee00c",
       "ContactorDriver"
-    ],
-    [
-      "4cde12ec-ef2b-48a0-917f-a461b0dd0a62",
-      "PowerMisc"
-    ],
-    [
-      "d849c468-5c81-4bfa-891e-09638f49a87b",
-      "HVArchitecture"
     ]
   ],
   "text_variables": {}

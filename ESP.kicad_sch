@@ -3278,6 +3278,16 @@
 		)
 		(uuid "c08418c8-ae37-445b-be1a-ef1ff4a662ed")
 	)
+	(text "3V3_Status"
+		(exclude_from_sim no)
+		(at 95.504 40.132 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "db5d7141-c0d8-4729-8fe0-bbce450a3473")
+	)
 	(text "5V to 3.3V LDO for ESP power from USB\n1A max, bypass cap values via data sheet "
 		(exclude_from_sim no)
 		(at 56.388 105.156 0)
@@ -3311,12 +3321,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3d656a3a-5bc8-4467-aebb-b57c2993e5c9")
-	)
-	(junction
-		(at 90.17 40.64)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5a6da354-fd4f-406f-aed1-d2e0e86c6d85")
 	)
 	(junction
 		(at 252.73 38.1)
@@ -3975,16 +3979,6 @@
 			(type default)
 		)
 		(uuid "9c723fdf-b729-4074-845b-dbac99e59c25")
-	)
-	(wire
-		(pts
-			(xy 90.17 40.64) (xy 92.71 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a2b59d3f-ed8d-4d73-a73d-47adb3e9bb9c")
 	)
 	(wire
 		(pts
@@ -4739,17 +4733,6 @@
 			(justify right)
 		)
 		(uuid "8aabaa39-1bf0-43e5-8c28-f3edf5d44626")
-	)
-	(hierarchical_label "3V3_Status"
-		(shape output)
-		(at 92.71 40.64 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "e0c4b118-6b54-4b3f-80ea-4442e5596c19")
 	)
 	(hierarchical_label "UART_RX"
 		(shape input)

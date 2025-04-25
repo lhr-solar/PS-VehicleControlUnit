@@ -620,6 +620,10 @@
     [
       "838dfc75-afcf-4845-8c43-fcef4e0ee00c",
       "ContactorDriver"
+    ],
+    [
+      "cecfe08a-2de2-4171-9051-c68b429ab9e8",
+      "Buttons_LEDs_IO"
     ]
   ],
   "text_variables": {}

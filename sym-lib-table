@@ -2,4 +2,5 @@
   (version 7)
   (lib (name "utsvt-conn")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/UTSVT-KiCadLibraries/utsvt-connectors.kicad_sym")(options "")(descr ""))
   (lib (name "VCU")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/VCU.kicad_sym")(options "")(descr ""))
+  (lib (name "LM66200")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/LM66200DRLR.kicad_sym")(options "")(descr ""))
 )

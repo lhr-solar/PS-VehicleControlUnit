@@ -2,4 +2,7 @@
   (version 7)
   (lib (name "utsvt_conn")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/UTSVT-KiCadLibraries/UTSVT_Connectors.pretty")(options "")(descr ""))
   (lib (name "UTSVT_Special")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/UTSVT-KiCadLibraries/UTSVT_Special.pretty")(options "")(descr ""))
+  (lib (name "Active-PrechargeLib")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/UTSVT-KiCadLibraries/ActivePrechargeLib.pretty")(options "")(descr ""))
+  (lib (name "LM66200")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/LM66200.pretty")(options "")(descr ""))
+  (lib (name "ESP32-C6-MINI-1")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/ESP32-C6-MINI-1.pretty")(options "")(descr ""))
 )

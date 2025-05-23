@@ -691,6 +691,204 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "SW_MEC_5G_1"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "SW1"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "RESET"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "UTSVT_Special:SW_SPST_B3SL-1002P"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "MEC 5G single pole normally-open tactile switch"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "switch normally-open pushbutton push-button"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SW*MEC*5G*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SW_MEC_5G_1_0_1"
+				(circle
+					(center -2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.27) (xy -2.54 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "SW_MEC_5G_1_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(hide yes)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(hide yes)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Switch:SW_MEC_5G"
 			(pin_numbers
 				(hide yes)
@@ -702,24 +900,23 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "SW"
-				(at 1.27 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "SW_MEC_5G"
-				(at 0 -1.524 0)
+			(property "Reference" "SW2"
+				(at 0 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" ""
+			(property "Value" "BOOT"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "UTSVT_Special:SW_SPST_B3SL-1002P"
 				(at 0 5.08 0)
 				(effects
 					(font
@@ -839,7 +1036,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1530,7 +1727,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0bd86694-3bb8-45fb-9630-5d77eb9e1340")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR051"
 			(at 156.21 107.95 0)
 			(effects
 				(font
@@ -1580,7 +1777,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR052")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -1683,7 +1880,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "UTSVT_Special:SW_SPST_B3SL-1002P"
 			(at 71.12 100.33 0)
 			(effects
 				(font
@@ -1710,7 +1907,7 @@
 				(hide yes)
 			)
 		)
-		(pin "3"
+		(pin "2"
 			(uuid "3dc9f43a-b477-4771-af75-336445e8303a")
 		)
 		(pin "4"
@@ -1741,7 +1938,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2cb23110-fd53-4fc2-ada6-18e3ae8296f1")
-		(property "Reference" "R35"
+		(property "Reference" "R27"
 			(at 135.89 82.5499 0)
 			(effects
 				(font
@@ -1795,7 +1992,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R35")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -1812,7 +2009,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "333bce16-ce3b-45d8-96cb-6af5c7813a10")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR046"
 			(at 60.96 121.92 0)
 			(effects
 				(font
@@ -1862,7 +2059,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR024")
+					(reference "#PWR046")
 					(unit 1)
 				)
 			)
@@ -1878,7 +2075,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3fbb8e48-4ff7-4179-bb40-5031e2357bb0")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR052"
 			(at 167.64 107.95 0)
 			(effects
 				(font
@@ -1928,7 +2125,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR053")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -1945,7 +2142,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4f7455fc-763f-4a27-889a-16ebf291b51a")
-		(property "Reference" "C1"
+		(property "Reference" "C15"
 			(at 57.15 67.3099 0)
 			(effects
 				(font
@@ -1999,7 +2196,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "C1")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -2016,7 +2213,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5cc3df64-ac5f-49b0-91db-c6e30743e5bc")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR045"
 			(at 60.96 80.01 0)
 			(effects
 				(font
@@ -2066,7 +2263,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR04")
+					(reference "#PWR045")
 					(unit 1)
 				)
 			)
@@ -2083,7 +2280,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "698ef03f-a9ae-4c7b-9cab-e7e8fd8c8558")
-		(property "Reference" "R1"
+		(property "Reference" "R25"
 			(at 58.42 54.6099 0)
 			(effects
 				(font
@@ -2137,7 +2334,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R1")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -2153,7 +2350,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6da2059e-ccf5-44d1-bd1a-708695a78dba")
-		(property "Reference" "R36"
+		(property "Reference" "R28"
 			(at 147.32 82.5499 0)
 			(effects
 				(font
@@ -2207,7 +2404,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R36")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -2294,7 +2491,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "74639fd7-2dbc-427f-8da7-e63ef306be0d")
-		(property "Reference" "#PWR02"
+		(property "Reference" "#PWR047"
 			(at 80.01 80.01 0)
 			(effects
 				(font
@@ -2344,7 +2541,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR02")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -2360,7 +2557,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7c68d4de-cb7d-4ea4-a92c-e18a2443d8cd")
-		(property "Reference" "R37"
+		(property "Reference" "R29"
 			(at 158.75 82.5499 0)
 			(effects
 				(font
@@ -2414,7 +2611,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R37")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -2430,7 +2627,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8af0ff8b-204e-4bd2-9df2-60b905767e6c")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR049"
 			(at 133.35 107.95 0)
 			(effects
 				(font
@@ -2480,7 +2677,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR050")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -2496,7 +2693,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9cd39903-8db5-4401-9809-783626a7615b")
-		(property "Reference" "R38"
+		(property "Reference" "R30"
 			(at 170.18 82.5499 0)
 			(effects
 				(font
@@ -2550,13 +2747,14 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R38")
+					(reference "R30")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
+		(lib_name "SW_MEC_5G_1")
 		(lib_id "Switch:SW_MEC_5G")
 		(at 71.12 63.5 0)
 		(mirror y)
@@ -2583,7 +2781,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "UTSVT_Special:SW_SPST_B3SL-1002P"
 			(at 71.12 58.42 0)
 			(effects
 				(font
@@ -2610,7 +2808,7 @@
 				(hide yes)
 			)
 		)
-		(pin "3"
+		(pin "2"
 			(uuid "a5b52471-a758-46f4-80cd-afce69852f8a")
 		)
 		(pin "4"
@@ -2712,7 +2910,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b951a65e-ff3e-4ad1-ae1d-99e18e7ec330")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR048"
 			(at 80.01 121.92 0)
 			(effects
 				(font
@@ -2762,7 +2960,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR05")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -2848,7 +3046,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0a73571-b516-4ebb-948d-7df706d6f2ef")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR050"
 			(at 144.78 107.95 0)
 			(effects
 				(font
@@ -2898,7 +3096,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR051")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -2915,7 +3113,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d70fccc9-5cca-46c6-9bba-5449efbcd588")
-		(property "Reference" "R2"
+		(property "Reference" "R26"
 			(at 58.42 96.5199 0)
 			(effects
 				(font
@@ -2969,7 +3167,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "R2")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -2986,7 +3184,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "df76ce82-339d-473a-bde3-669becad3627")
-		(property "Reference" "C2"
+		(property "Reference" "C16"
 			(at 57.15 109.2199 0)
 			(effects
 				(font
@@ -3040,7 +3238,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "C2")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -3056,7 +3254,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fb968cd2-386c-42f5-bd39-a458c89110a0")
-		(property "Reference" "J13"
+		(property "Reference" "J16"
 			(at 248.92 85.0899 0)
 			(effects
 				(font
@@ -3074,7 +3272,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
 			(at 246.38 85.09 0)
 			(effects
 				(font
@@ -3116,7 +3314,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "J13")
+					(reference "J16")
 					(unit 1)
 				)
 			)

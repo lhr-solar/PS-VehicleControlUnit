@@ -1375,6 +1375,89 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Mechanical:MountingHole"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim yes)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "H"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Mounting Hole without connection"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MountingHole_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers
@@ -3064,6 +3147,16 @@
 	)
 	(wire
 		(pts
+			(xy 213.36 106.045) (xy 228.6 106.045)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a8e6b90-0dec-4cb5-bebe-f620fe83e5fb")
+	)
+	(wire
+		(pts
 			(xy 238.76 72.39) (xy 248.92 72.39)
 		)
 		(stroke
@@ -3364,7 +3457,7 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 118.11) (xy 228.6 118.11)
+			(xy 213.36 116.84) (xy 228.6 116.84)
 		)
 		(stroke
 			(width 0)
@@ -3644,7 +3737,17 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 102.87) (xy 228.6 102.87)
+			(xy 223.52 123.825) (xy 223.52 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6c3b44ef-c45b-49cb-a073-a72a39720faf")
+	)
+	(wire
+		(pts
+			(xy 222.25 102.235) (xy 228.6 102.235)
 		)
 		(stroke
 			(width 0)
@@ -4074,7 +4177,7 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 121.92) (xy 228.6 121.92)
+			(xy 213.36 120.015) (xy 228.6 120.015)
 		)
 		(stroke
 			(width 0)
@@ -4131,6 +4234,16 @@
 			(type default)
 		)
 		(uuid "bb52b71d-15ed-4302-9f03-feeaaed3833d")
+	)
+	(wire
+		(pts
+			(xy 223.52 123.825) (xy 228.6 123.825)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb8e7eb1-fa00-4488-84cb-965c3fbd2573")
 	)
 	(wire
 		(pts
@@ -4662,6 +4775,16 @@
 		)
 		(uuid "658a5572-bb04-4ecd-8e5a-7c2d3cf29dff")
 	)
+	(label "3V3_LSOM"
+		(at 213.36 106.045 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "69fdf5ee-bc7a-4995-aefb-35a9d4dc0d9d")
+	)
 	(label "LED3"
 		(at 187.96 27.94 0)
 		(effects
@@ -4703,7 +4826,7 @@
 		(uuid "7fc51813-2554-4c53-ab18-4d47966eb449")
 	)
 	(label "M_Sense"
-		(at 213.36 118.11 0)
+		(at 213.36 116.84 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4713,7 +4836,7 @@
 		(uuid "8534fa02-2fd7-47a5-80df-e2b5c776e7a8")
 	)
 	(label "MPre_Sense"
-		(at 213.36 121.92 0)
+		(at 213.36 120.015 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4773,7 +4896,7 @@
 		(uuid "a53f6a13-2267-498b-979b-58246d072e0c")
 	)
 	(label "LV+"
-		(at 222.25 102.87 0)
+		(at 222.25 102.235 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5142,7 +5265,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1206aecd-3c9b-4769-a360-e0ccf02c50f8")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR03"
 			(at 40.64 59.69 0)
 			(effects
 				(font
@@ -5192,7 +5315,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR017")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -5208,7 +5331,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "12bb3de4-af8b-4dfd-9402-9f4e82bc784d")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR011"
 			(at 165.1 58.42 0)
 			(effects
 				(font
@@ -5258,7 +5381,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR08")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -5275,7 +5398,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "20dc75ee-de68-49ee-8363-ddffa9766089")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR01"
 			(at 25.4 109.22 0)
 			(effects
 				(font
@@ -5325,7 +5448,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR048")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -5342,7 +5465,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "248e4e9d-aba9-4ffb-bfd4-6f656e0448e9")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR010"
 			(at 151.13 128.27 0)
 			(effects
 				(font
@@ -5392,7 +5515,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR047")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -5478,7 +5601,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2ab0d7f1-00b0-4845-98f7-eb1c62285f6d")
-		(property "Reference" "C13"
+		(property "Reference" "C1"
 			(at 85.09 172.7199 0)
 			(effects
 				(font
@@ -5532,7 +5655,74 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "C13")
+					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 223.52 124.46 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2d0eaee4-6749-4f57-96e8-4c4bca195e5b")
+		(property "Reference" "#PWR015"
+			(at 223.52 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 223.52 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 223.52 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "078bd7cd-2c1a-4b3d-a822-8e082508320b")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -5548,7 +5738,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "362a376f-e3f3-4b6b-8b94-45f2343639a4")
-		(property "Reference" "J15"
+		(property "Reference" "J11"
 			(at 256.54 80.0099 0)
 			(effects
 				(font
@@ -5566,7 +5756,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 254 80.01 0)
 			(effects
 				(font
@@ -5602,7 +5792,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J15")
+					(reference "J11")
 					(unit 1)
 				)
 			)
@@ -5618,7 +5808,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3f2b79fa-c163-4ece-b6e2-f9ba45cf986d")
-		(property "Reference" "R34"
+		(property "Reference" "R2"
 			(at 59.69 160.02 90)
 			(effects
 				(font
@@ -5670,7 +5860,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R34")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -5685,7 +5875,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "43863654-4ffa-43a1-9f8b-546f35a432ac")
-		(property "Reference" "J3"
+		(property "Reference" "J1"
 			(at 31.75 33.02 0)
 			(effects
 				(font
@@ -5701,7 +5891,7 @@
 				)
 			)
 		)
-		(property "Footprint" "utsvt-conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 31.75 41.91 0)
 			(effects
 				(font
@@ -5737,7 +5927,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J3")
+					(reference "J1")
 					(unit 1)
 				)
 			)
@@ -5753,7 +5943,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "48c134b8-de10-4e9e-8749-68d1eda7f4ee")
-		(property "Reference" "R26"
+		(property "Reference" "R5"
 			(at 167.64 33.0199 0)
 			(effects
 				(font
@@ -5807,7 +5997,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R26")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -5823,7 +6013,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b8fb2cf-c847-4d9e-84ec-6c4b8295d453")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR09"
 			(at 125.73 57.15 0)
 			(effects
 				(font
@@ -5873,7 +6063,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR010")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -5889,7 +6079,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "51cf0711-d1ac-4470-8961-345badb7608c")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR016"
 			(at 232.41 36.83 0)
 			(effects
 				(font
@@ -5939,7 +6129,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR019")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -5955,7 +6145,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5484dec9-c79e-4fa3-b5f3-a43a27da2d0b")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR012"
 			(at 176.53 58.42 0)
 			(effects
 				(font
@@ -6005,7 +6195,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR021")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -6021,7 +6211,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "54abd567-e638-4437-9825-6f3b34e5b458")
-		(property "Reference" "J5"
+		(property "Reference" "J6"
 			(at 256.54 29.2099 0)
 			(effects
 				(font
@@ -6039,7 +6229,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x4xP3.00mm_PolarizingPeg_Vertical"
 			(at 254 29.21 0)
 			(effects
 				(font
@@ -6081,7 +6271,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J5")
+					(reference "J6")
 					(unit 1)
 				)
 			)
@@ -6097,7 +6287,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "54b12fee-9102-4606-a799-88473cc7390a")
-		(property "Reference" "#PWR045"
+		(property "Reference" "#PWR06"
 			(at 95.25 114.3 0)
 			(effects
 				(font
@@ -6147,7 +6337,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR045")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -6163,7 +6353,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "59e7752f-8695-41cf-9885-015e840be81b")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR014"
 			(at 199.39 58.42 0)
 			(effects
 				(font
@@ -6213,7 +6403,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR023")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -6229,7 +6419,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5fdbf02a-0a93-4c08-a74c-295f2e6539a9")
-		(property "Reference" "J2"
+		(property "Reference" "J3"
 			(at 133.35 85.09 0)
 			(effects
 				(font
@@ -6419,7 +6609,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J2")
+					(reference "J3")
 					(unit 2)
 				)
 			)
@@ -6450,7 +6640,7 @@
 				)
 			)
 		)
-		(property "Footprint" "utsvt-special:TestPoint_HEX_3mmID"
+		(property "Footprint" "UTSVT_Special:TestPoint_HEX_3mmID"
 			(at 40.64 45.72 0)
 			(effects
 				(font
@@ -6499,7 +6689,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "610d8c5a-7806-455d-b5bf-80839aaa042f")
-		(property "Reference" "R30"
+		(property "Reference" "R7"
 			(at 190.5 33.0199 0)
 			(effects
 				(font
@@ -6553,7 +6743,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R30")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -6570,7 +6760,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6b0f6842-9176-46a1-8efc-2aa2228ce776")
-		(property "Reference" "J10"
+		(property "Reference" "J2"
 			(at 40.64 163.8299 0)
 			(effects
 				(font
@@ -6588,7 +6778,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 43.18 163.83 0)
 			(effects
 				(font
@@ -6624,7 +6814,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J10")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -6640,7 +6830,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6cd06f66-3f3c-4255-b2c9-ef4a16e010c8")
-		(property "Reference" "#PWR046"
+		(property "Reference" "#PWR08"
 			(at 114.3 128.27 0)
 			(effects
 				(font
@@ -6690,7 +6880,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR046")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -6776,7 +6966,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7e3fe1fe-e359-427d-86f4-c560c4a88a87")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR04"
 			(at 69.85 186.69 0)
 			(effects
 				(font
@@ -6826,7 +7016,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR020")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -6842,7 +7032,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "86446739-5989-4c5b-87c9-a2c30b859460")
-		(property "Reference" "R31"
+		(property "Reference" "R8"
 			(at 201.93 33.0199 0)
 			(effects
 				(font
@@ -6896,7 +7086,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R31")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -6912,7 +7102,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8aa2800a-ea42-488f-a53d-53d10218453c")
-		(property "Reference" "R27"
+		(property "Reference" "R6"
 			(at 179.07 33.0199 0)
 			(effects
 				(font
@@ -6966,7 +7156,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R27")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -6982,7 +7172,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "93cc2c8f-05fc-4442-b3c4-7519449b89ea")
-		(property "Reference" "J12"
+		(property "Reference" "J5"
 			(at 129.54 162.56 0)
 			(effects
 				(font
@@ -6998,7 +7188,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 129.54 168.91 0)
 			(effects
 				(font
@@ -7034,7 +7224,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J12")
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -7050,7 +7240,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94ae9148-f252-4c17-9af1-88a8492c7fe9")
-		(property "Reference" "J16"
+		(property "Reference" "J8"
 			(at 256.54 52.0699 0)
 			(effects
 				(font
@@ -7068,7 +7258,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
 			(at 254 52.07 0)
 			(effects
 				(font
@@ -7104,7 +7294,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J16")
+					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -7120,7 +7310,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "96a0e739-e5bb-4692-9981-18d9643877c9")
-		(property "Reference" "R19"
+		(property "Reference" "R4"
 			(at 109.22 31.7499 0)
 			(effects
 				(font
@@ -7174,7 +7364,71 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R19")
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 188.595 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9ab4c3c1-7607-408a-b746-dd022c8e4122")
+		(property "Reference" "H3"
+			(at 191.77 153.6699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 191.77 156.2099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 188.595 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 188.595 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 188.595 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
+					(reference "H3")
 					(unit 1)
 				)
 			)
@@ -7190,7 +7444,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a0b8065e-54dd-4e7f-a74b-82c52e3c240f")
-		(property "Reference" "#FLG03"
+		(property "Reference" "#FLG01"
 			(at 38.735 46.99 0)
 			(effects
 				(font
@@ -7241,7 +7495,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#FLG03")
+					(reference "#FLG01")
 					(unit 1)
 				)
 			)
@@ -7257,7 +7511,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a2a441c7-91af-4842-80e3-41af729c606b")
-		(property "Reference" "J2"
+		(property "Reference" "J3"
 			(at 60.96 85.09 0)
 			(effects
 				(font
@@ -7447,7 +7701,71 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J2")
+					(reference "J3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 188.595 144.78 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a8482f85-e8fa-463e-891a-ad017d974381")
+		(property "Reference" "H2"
+			(at 191.135 143.5099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 191.135 146.0499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 188.595 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 188.595 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 188.595 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
+					(reference "H2")
 					(unit 1)
 				)
 			)
@@ -7603,7 +7921,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "af37a523-5381-4117-9d5b-e85ff35a1d5e")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR07"
 			(at 106.68 57.15 0)
 			(effects
 				(font
@@ -7653,7 +7971,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR06")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -7669,7 +7987,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b090ddea-4c0a-4bfb-ae2b-5d91615c285a")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR05"
 			(at 81.28 186.69 0)
 			(effects
 				(font
@@ -7719,7 +8037,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR049")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -7752,7 +8070,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "utsvt-special:TestPoint_HEX_3mmID"
+		(property "Footprint" "UTSVT_Special:TestPoint_HEX_3mmID"
 			(at 83.82 34.29 0)
 			(effects
 				(font
@@ -7801,7 +8119,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c0aecea2-2610-42ba-be3a-f3936a709557")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR013"
 			(at 187.96 58.42 0)
 			(effects
 				(font
@@ -7851,7 +8169,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR022")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -7867,7 +8185,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cc2ec67b-a9cc-4ba3-abe4-a4bef419a1b3")
-		(property "Reference" "R23"
+		(property "Reference" "R3"
 			(at 72.39 172.7199 0)
 			(effects
 				(font
@@ -7921,7 +8239,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R23")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -7955,7 +8273,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x4xP3.00mm_PolarizingPeg_Vertical"
 			(at 254 41.91 0)
 			(effects
 				(font
@@ -8079,7 +8397,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf1c672c-b220-4e87-b9e5-2f50ac57ff9e")
-		(property "Reference" "C8"
+		(property "Reference" "C2"
 			(at 129.54 36.8299 0)
 			(effects
 				(font
@@ -8133,7 +8451,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "C8")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -8149,7 +8467,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf8f4ef8-950a-4a6a-aac4-d536cef8904c")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR017"
 			(at 232.41 49.53 0)
 			(effects
 				(font
@@ -8199,7 +8517,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR016")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -8215,7 +8533,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d5a07c7f-2aca-4039-874a-3367620c404d")
-		(property "Reference" "J9"
+		(property "Reference" "J10"
 			(at 256.54 72.3899 0)
 			(effects
 				(font
@@ -8233,7 +8551,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 254 72.39 0)
 			(effects
 				(font
@@ -8269,7 +8587,71 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J9")
+					(reference "J10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 188.595 139.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d872c041-943b-44f6-8c05-2bfe1215dfb6")
+		(property "Reference" "H1"
+			(at 191.135 138.4299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 191.135 140.9699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+			(at 188.595 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 188.595 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 188.595 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
+					(reference "H1")
 					(unit 1)
 				)
 			)
@@ -8286,7 +8668,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d8c99b9a-e1ee-4463-afab-5d79367f747c")
-		(property "Reference" "J11"
+		(property "Reference" "J4"
 			(at 129.54 148.59 0)
 			(effects
 				(font
@@ -8302,7 +8684,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 129.54 154.94 0)
 			(effects
 				(font
@@ -8338,7 +8720,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J11")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -8424,7 +8806,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e6b7d199-2e24-46cf-bd7f-b48271dfae23")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR02"
 			(at 40.64 35.56 0)
 			(effects
 				(font
@@ -8474,7 +8856,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "#PWR03")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -8490,7 +8872,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e7898002-6cee-4d1b-9973-f6fdd972f1ce")
-		(property "Reference" "J8"
+		(property "Reference" "J9"
 			(at 256.54 64.7699 0)
 			(effects
 				(font
@@ -8508,7 +8890,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "utsvt_conn:Molex_MicroFit3.0_1x2xP3.00mm_PolarizingPeg_Vertical"
 			(at 254 64.77 0)
 			(effects
 				(font
@@ -8544,7 +8926,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "J8")
+					(reference "J9")
 					(unit 1)
 				)
 			)
@@ -8559,7 +8941,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eca6e93a-2a7f-4873-990b-d50f9fc43a4b")
-		(property "Reference" "R11"
+		(property "Reference" "R1"
 			(at 52.07 44.704 90)
 			(effects
 				(font
@@ -8611,7 +8993,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "R11")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -8794,7 +9176,7 @@
 			)
 		)
 		(pin "LV+" input
-			(at 228.6 102.87 180)
+			(at 228.6 102.235 180)
 			(uuid "e37d522e-3873-43ed-9f19-fee98c7a7d23")
 			(effects
 				(font
@@ -8814,7 +9196,7 @@
 			)
 		)
 		(pin "MPre_Sense" output
-			(at 228.6 121.92 180)
+			(at 228.6 120.015 180)
 			(uuid "e2bf351a-d899-47de-be69-549a2819e3c3")
 			(effects
 				(font
@@ -8834,8 +9216,28 @@
 			)
 		)
 		(pin "M_Sense" output
-			(at 228.6 118.11 180)
+			(at 228.6 116.84 180)
 			(uuid "d560571a-2b2e-400e-8639-af6f46767e42")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "3V3_LSOM" input
+			(at 228.6 106.045 180)
+			(uuid "30f79cf9-9002-4f32-b168-de80d2396437")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "LVGND" input
+			(at 228.6 123.825 180)
+			(uuid "52458f5b-7d7b-40c3-a6a8-492feea3ea90")
 			(effects
 				(font
 					(size 1.27 1.27)

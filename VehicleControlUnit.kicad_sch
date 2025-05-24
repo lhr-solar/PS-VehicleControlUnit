@@ -3237,16 +3237,6 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 99.06) (xy 95.25 99.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1848c8f9-86aa-436f-ac11-f41775b40021")
-	)
-	(wire
-		(pts
 			(xy 232.41 41.91) (xy 232.41 43.18)
 		)
 		(stroke
@@ -3414,16 +3404,6 @@
 			(type default)
 		)
 		(uuid "3b2375bf-4e93-481f-ac17-f26273db238d")
-	)
-	(wire
-		(pts
-			(xy 77.47 96.52) (xy 95.25 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3cf71199-a5a4-4022-aff5-538de056fc36")
 	)
 	(wire
 		(pts
@@ -4107,6 +4087,16 @@
 	)
 	(wire
 		(pts
+			(xy 77.47 96.52) (xy 95.25 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "accc2310-5c7c-43f9-af19-a44c8b5d06de")
+	)
+	(wire
+		(pts
 			(xy 116.84 106.68) (xy 114.3 106.68)
 		)
 		(stroke
@@ -4284,6 +4274,16 @@
 			(type default)
 		)
 		(uuid "be1a8e91-b52a-403e-ac10-bb74860ba022")
+	)
+	(wire
+		(pts
+			(xy 77.47 99.06) (xy 95.25 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf987f1e-c48f-4ff9-afc2-b9c21fd6d0a7")
 	)
 	(wire
 		(pts
@@ -4585,16 +4585,6 @@
 		)
 		(uuid "fe73a2b4-3f8b-4ac3-b772-116b1c587edf")
 	)
-	(label "ISO_ADC_CLK"
-		(at 95.25 96.52 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0150d992-9547-4e69-b588-3dd68a097725")
-	)
 	(label "M_CAN_H"
 		(at 238.76 31.75 0)
 		(effects
@@ -4705,6 +4695,16 @@
 		)
 		(uuid "2671047d-b12b-41fd-940f-474ca5f5623e")
 	)
+	(label "ISO_ADC_CLK"
+		(at 95.25 99.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "4022382e-b0ac-4a6f-971f-270605616a19")
+	)
 	(label "M_CAN_L"
 		(at 238.76 34.29 0)
 		(effects
@@ -4814,6 +4814,16 @@
 			(justify left bottom)
 		)
 		(uuid "774f0caa-631e-45a5-ae44-d9fea2f8e54e")
+	)
+	(label "VPrecharge+"
+		(at 95.25 96.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "78a82ee9-4b9e-48c4-9b97-b045008049f8")
 	)
 	(label "LED3"
 		(at 162.56 96.52 180)
@@ -5074,16 +5084,6 @@
 			(justify right bottom)
 		)
 		(uuid "dd5672bc-2560-482e-9fdc-bf43ff1de81c")
-	)
-	(label "VPrecharge+"
-		(at 95.25 99.06 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "df25d495-dac6-4281-87b3-996d4b74a437")
 	)
 	(label "LV+"
 		(at 83.82 91.44 180)
@@ -7372,7 +7372,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 188.595 154.94 0)
+		(at 188.595 149.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7381,7 +7381,7 @@
 		(fields_autoplaced yes)
 		(uuid "9ab4c3c1-7607-408a-b746-dd022c8e4122")
 		(property "Reference" "H3"
-			(at 191.77 153.6699 0)
+			(at 191.77 148.5899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7390,7 +7390,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 191.77 156.2099 0)
+			(at 191.77 151.1299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7399,7 +7399,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 188.595 154.94 0)
+			(at 188.595 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7408,7 +7408,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 188.595 154.94 0)
+			(at 188.595 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7417,7 +7417,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 188.595 154.94 0)
+			(at 188.595 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -737,7 +737,7 @@
 				)
 			)
 			(property "Description" "MEC 5G single pole normally-open tactile switch"
-				(at 0 0 0)
+				(at -0.254 -2.54 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -859,7 +859,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -878,7 +878,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1057,7 +1057,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1076,7 +1076,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1289,6 +1289,26 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 111.76) (xy 241.3 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1399278f-2157-45ec-b43f-b2e04eb4c2e0")
+	)
+	(wire
+		(pts
+			(xy 237.49 94.615) (xy 241.3 94.615)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15d5e72f-f92d-4a58-91e8-c37caa63f488")
+	)
+	(wire
+		(pts
 			(xy 49.53 63.5) (xy 60.96 63.5)
 		)
 		(stroke
@@ -1296,6 +1316,16 @@
 			(type default)
 		)
 		(uuid "1acccb52-badd-4979-83af-fcf3dd5515c5")
+	)
+	(wire
+		(pts
+			(xy 237.49 102.235) (xy 241.3 102.235)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f5d08db-f722-44c4-a12d-891467e76a57")
 	)
 	(wire
 		(pts
@@ -1349,6 +1379,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 114.3) (xy 241.3 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f36a3e8-5819-45ff-a19b-fa5b31b0bcc7")
+	)
+	(wire
+		(pts
 			(xy 237.49 82.55) (xy 241.3 82.55)
 		)
 		(stroke
@@ -1389,6 +1429,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 99.695) (xy 241.3 99.695)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "52f2e1eb-665b-49b0-9f17-8e940897632e")
+	)
+	(wire
+		(pts
 			(xy 66.04 105.41) (xy 60.96 105.41)
 		)
 		(stroke
@@ -1409,6 +1459,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 109.22) (xy 241.3 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5e05647b-8495-4e9c-a7bf-90b84345b834")
+	)
+	(wire
+		(pts
 			(xy 80.01 63.5) (xy 80.01 73.66)
 		)
 		(stroke
@@ -1419,6 +1479,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 106.68) (xy 241.3 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63b5d5e5-adbe-4cfd-bc8d-1b874fffe2b7")
+	)
+	(wire
+		(pts
 			(xy 76.2 63.5) (xy 80.01 63.5)
 		)
 		(stroke
@@ -1426,6 +1496,16 @@
 			(type default)
 		)
 		(uuid "6494819e-cce1-4218-bf98-af7f354a7b5b")
+	)
+	(wire
+		(pts
+			(xy 237.49 97.155) (xy 241.3 97.155)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71bba784-3542-4ea3-9e14-b0f2b324bbb5")
 	)
 	(wire
 		(pts
@@ -1618,6 +1698,17 @@
 		)
 		(uuid "03db9ea0-494a-4c34-a218-d616a5b4644b")
 	)
+	(hierarchical_label "IO5"
+		(shape input)
+		(at 237.49 94.615 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0636744b-2afd-4cab-9cae-93a2dc94a220")
+	)
 	(hierarchical_label "IO4"
 		(shape input)
 		(at 237.49 90.17 180)
@@ -1640,6 +1731,39 @@
 		)
 		(uuid "1d14b99a-7852-4410-8b6b-80e9eaab0727")
 	)
+	(hierarchical_label "IO10"
+		(shape input)
+		(at 237.49 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1e818e4d-f443-479e-95bd-6b964d822995")
+	)
+	(hierarchical_label "IO7"
+		(shape input)
+		(at 237.49 99.695 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2bbaf7ef-86c8-4ba6-b5a4-fb3659694bb4")
+	)
+	(hierarchical_label "IO9"
+		(shape input)
+		(at 237.49 106.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3a80b522-7395-46fd-ac56-ee8f4ef1219a")
+	)
 	(hierarchical_label "Reset"
 		(shape output)
 		(at 49.53 63.5 180)
@@ -1650,6 +1774,17 @@
 			(justify right)
 		)
 		(uuid "4e68f2b3-9f62-4cb8-8c1d-057ff7cad73e")
+	)
+	(hierarchical_label "IO6"
+		(shape input)
+		(at 237.49 97.155 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6e0a8927-dbc4-46e2-89bb-f267202f2331")
 	)
 	(hierarchical_label "IO2"
 		(shape input)
@@ -1695,6 +1830,17 @@
 		)
 		(uuid "a8c3551d-8bdb-4177-bffe-3373f1450010")
 	)
+	(hierarchical_label "IO12"
+		(shape input)
+		(at 237.49 114.3 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c37e0ff5-1785-46a8-ab16-1924d739efbd")
+	)
 	(hierarchical_label "IO3"
 		(shape input)
 		(at 237.49 87.63 180)
@@ -1705,6 +1851,17 @@
 			(justify right)
 		)
 		(uuid "c75b709b-6a2e-454b-baaa-2991027011f4")
+	)
+	(hierarchical_label "IO11"
+		(shape input)
+		(at 237.49 111.76 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e0658d55-8b13-453d-813c-174759d489f0")
 	)
 	(hierarchical_label "LED2"
 		(shape input)
@@ -1717,6 +1874,17 @@
 		)
 		(uuid "ebf7c251-a146-4d7e-ad11-e1d678d85019")
 	)
+	(hierarchical_label "IO8"
+		(shape input)
+		(at 237.49 102.235 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f5c72cb9-acb8-45b9-96f5-3204b67f8d0b")
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 156.21 101.6 0)
@@ -1727,7 +1895,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0bd86694-3bb8-45fb-9630-5d77eb9e1340")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR053"
 			(at 156.21 107.95 0)
 			(effects
 				(font
@@ -1777,7 +1945,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR051")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -1910,7 +2078,7 @@
 		(pin "2"
 			(uuid "3dc9f43a-b477-4771-af75-336445e8303a")
 		)
-		(pin "4"
+		(pin "1"
 			(uuid "4f38f3e3-f4da-485c-859d-c0e72321ffa5")
 		)
 		(pin "1"
@@ -2009,7 +2177,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "333bce16-ce3b-45d8-96cb-6af5c7813a10")
-		(property "Reference" "#PWR046"
+		(property "Reference" "#PWR048"
 			(at 60.96 121.92 0)
 			(effects
 				(font
@@ -2059,7 +2227,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR046")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -2075,7 +2243,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3fbb8e48-4ff7-4179-bb40-5031e2357bb0")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR054"
 			(at 167.64 107.95 0)
 			(effects
 				(font
@@ -2125,7 +2293,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR052")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -2142,7 +2310,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4f7455fc-763f-4a27-889a-16ebf291b51a")
-		(property "Reference" "C15"
+		(property "Reference" "C16"
 			(at 57.15 67.3099 0)
 			(effects
 				(font
@@ -2196,7 +2364,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "C15")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -2213,7 +2381,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5cc3df64-ac5f-49b0-91db-c6e30743e5bc")
-		(property "Reference" "#PWR045"
+		(property "Reference" "#PWR047"
 			(at 60.96 80.01 0)
 			(effects
 				(font
@@ -2263,7 +2431,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR045")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -2491,7 +2659,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "74639fd7-2dbc-427f-8da7-e63ef306be0d")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR049"
 			(at 80.01 80.01 0)
 			(effects
 				(font
@@ -2541,7 +2709,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR047")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -2627,7 +2795,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8af0ff8b-204e-4bd2-9df2-60b905767e6c")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR051"
 			(at 133.35 107.95 0)
 			(effects
 				(font
@@ -2677,7 +2845,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR049")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -2800,7 +2968,7 @@
 			)
 		)
 		(property "Description" "MEC 5G single pole normally-open tactile switch"
-			(at 71.12 63.5 0)
+			(at 71.374 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2811,7 +2979,7 @@
 		(pin "2"
 			(uuid "a5b52471-a758-46f4-80cd-afce69852f8a")
 		)
-		(pin "4"
+		(pin "1"
 			(uuid "f31f36fc-9bf9-4cd9-be13-31353eaabd4d")
 		)
 		(pin "1"
@@ -2910,7 +3078,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b951a65e-ff3e-4ad1-ae1d-99e18e7ec330")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR050"
 			(at 80.01 121.92 0)
 			(effects
 				(font
@@ -2960,7 +3128,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR048")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -3037,6 +3205,82 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 246.38 97.155 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c9f5ed35-bbad-464a-854a-3fd7ea39525b")
+		(property "Reference" "J17"
+			(at 248.92 97.1549 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IO_5-8"
+			(at 248.92 99.6949 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 246.38 97.155 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 246.38 97.155 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 246.38 97.155 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3376a43c-d844-489d-80c4-36700496a09f")
+		)
+		(pin "4"
+			(uuid "1f18fbe3-fa56-4755-846f-f92d2501655a")
+		)
+		(pin "3"
+			(uuid "1c9f083a-0133-446f-8373-373dfbb59566")
+		)
+		(pin "2"
+			(uuid "88a9bb15-c7cf-4e6b-a9b3-55484af95818")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
+					(reference "J17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 144.78 101.6 0)
 		(unit 1)
@@ -3046,7 +3290,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0a73571-b516-4ebb-948d-7df706d6f2ef")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR052"
 			(at 144.78 107.95 0)
 			(effects
 				(font
@@ -3096,7 +3340,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "#PWR050")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -3184,7 +3428,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "df76ce82-339d-473a-bde3-669becad3627")
-		(property "Reference" "C16"
+		(property "Reference" "C17"
 			(at 57.15 109.2199 0)
 			(effects
 				(font
@@ -3238,7 +3482,83 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "C16")
+					(reference "C17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 246.38 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f5e62ee6-953e-40d1-9241-073b422511d5")
+		(property "Reference" "J18"
+			(at 248.92 109.2199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IO_9-12"
+			(at 248.92 111.7599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 246.38 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 246.38 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 246.38 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2af0dd43-832c-4414-9c73-6e1af0492bb5")
+		)
+		(pin "4"
+			(uuid "5c975ea5-ca42-4208-9384-ae993be81290")
+		)
+		(pin "3"
+			(uuid "c5fddee3-8cef-4637-9bf6-4ee2408ea423")
+		)
+		(pin "2"
+			(uuid "459aa6a4-c9d5-4476-99a4-a1ecd1c50b03")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
+					(reference "J18")
 					(unit 1)
 				)
 			)
@@ -3263,7 +3583,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "IO_Breakout"
+		(property "Value" "IO_1-4"
 			(at 248.92 87.6299 0)
 			(effects
 				(font

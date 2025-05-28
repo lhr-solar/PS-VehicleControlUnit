@@ -2817,7 +2817,7 @@
 	)
 	(text "can make ESP \nenabled all \nthe time to \nsave an LSOM pin"
 		(exclude_from_sim no)
-		(at 107.696 117.348 0)
+		(at 100.33 125.095 0)
 		(effects
 			(font
 				(size 1.27 1.27)

@@ -1289,7 +1289,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 111.76) (xy 241.3 111.76)
+			(xy 235.585 112.395) (xy 239.395 112.395)
 		)
 		(stroke
 			(width 0)
@@ -1299,7 +1299,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 94.615) (xy 241.3 94.615)
+			(xy 235.585 84.455) (xy 239.395 84.455)
 		)
 		(stroke
 			(width 0)
@@ -1319,7 +1319,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 102.235) (xy 241.3 102.235)
+			(xy 235.585 92.075) (xy 239.395 92.075)
 		)
 		(stroke
 			(width 0)
@@ -1379,7 +1379,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 114.3) (xy 241.3 114.3)
+			(xy 235.585 114.935) (xy 239.395 114.935)
 		)
 		(stroke
 			(width 0)
@@ -1389,7 +1389,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 82.55) (xy 241.3 82.55)
+			(xy 235.585 62.23) (xy 239.395 62.23)
 		)
 		(stroke
 			(width 0)
@@ -1429,7 +1429,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 99.695) (xy 241.3 99.695)
+			(xy 235.585 89.535) (xy 239.395 89.535)
 		)
 		(stroke
 			(width 0)
@@ -1459,7 +1459,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 109.22) (xy 241.3 109.22)
+			(xy 235.585 109.855) (xy 239.395 109.855)
 		)
 		(stroke
 			(width 0)
@@ -1479,7 +1479,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 106.68) (xy 241.3 106.68)
+			(xy 235.585 107.315) (xy 239.395 107.315)
 		)
 		(stroke
 			(width 0)
@@ -1499,7 +1499,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 97.155) (xy 241.3 97.155)
+			(xy 235.585 86.995) (xy 239.395 86.995)
 		)
 		(stroke
 			(width 0)
@@ -1519,7 +1519,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 90.17) (xy 241.3 90.17)
+			(xy 235.585 69.85) (xy 239.395 69.85)
 		)
 		(stroke
 			(width 0)
@@ -1589,7 +1589,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 87.63) (xy 241.3 87.63)
+			(xy 235.585 67.31) (xy 239.395 67.31)
 		)
 		(stroke
 			(width 0)
@@ -1639,7 +1639,7 @@
 	)
 	(wire
 		(pts
-			(xy 237.49 85.09) (xy 241.3 85.09)
+			(xy 235.585 64.77) (xy 239.395 64.77)
 		)
 		(stroke
 			(width 0)
@@ -1700,7 +1700,7 @@
 	)
 	(hierarchical_label "IO5"
 		(shape input)
-		(at 237.49 94.615 180)
+		(at 235.585 84.455 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1711,7 +1711,7 @@
 	)
 	(hierarchical_label "IO4"
 		(shape input)
-		(at 237.49 90.17 180)
+		(at 235.585 69.85 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1733,7 +1733,7 @@
 	)
 	(hierarchical_label "IO10"
 		(shape input)
-		(at 237.49 109.22 180)
+		(at 235.585 109.855 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1744,7 +1744,7 @@
 	)
 	(hierarchical_label "IO7"
 		(shape input)
-		(at 237.49 99.695 180)
+		(at 235.585 89.535 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1755,7 +1755,7 @@
 	)
 	(hierarchical_label "IO9"
 		(shape input)
-		(at 237.49 106.68 180)
+		(at 235.585 107.315 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1777,7 +1777,7 @@
 	)
 	(hierarchical_label "IO6"
 		(shape input)
-		(at 237.49 97.155 180)
+		(at 235.585 86.995 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1788,7 +1788,7 @@
 	)
 	(hierarchical_label "IO2"
 		(shape input)
-		(at 237.49 85.09 180)
+		(at 235.585 64.77 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1799,7 +1799,7 @@
 	)
 	(hierarchical_label "IO1"
 		(shape input)
-		(at 237.49 82.55 180)
+		(at 235.585 62.23 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1832,7 +1832,7 @@
 	)
 	(hierarchical_label "IO12"
 		(shape input)
-		(at 237.49 114.3 180)
+		(at 235.585 114.935 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1843,7 +1843,7 @@
 	)
 	(hierarchical_label "IO3"
 		(shape input)
-		(at 237.49 87.63 180)
+		(at 235.585 67.31 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1854,7 +1854,7 @@
 	)
 	(hierarchical_label "IO11"
 		(shape input)
-		(at 237.49 111.76 180)
+		(at 235.585 112.395 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1876,7 +1876,7 @@
 	)
 	(hierarchical_label "IO8"
 		(shape input)
-		(at 237.49 102.235 180)
+		(at 235.585 92.075 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3206,7 +3206,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 246.38 97.155 0)
+		(at 244.475 86.995 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3215,7 +3215,7 @@
 		(fields_autoplaced yes)
 		(uuid "c9f5ed35-bbad-464a-854a-3fd7ea39525b")
 		(property "Reference" "J17"
-			(at 248.92 97.1549 0)
+			(at 247.015 86.9949 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3224,7 +3224,7 @@
 			)
 		)
 		(property "Value" "IO_5-8"
-			(at 248.92 99.6949 0)
+			(at 247.015 89.5349 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3233,7 +3233,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 246.38 97.155 0)
+			(at 244.475 86.995 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3242,7 +3242,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 246.38 97.155 0)
+			(at 244.475 86.995 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3251,7 +3251,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 246.38 97.155 0)
+			(at 244.475 86.995 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3490,7 +3490,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 246.38 109.22 0)
+		(at 244.475 109.855 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3499,7 +3499,7 @@
 		(fields_autoplaced yes)
 		(uuid "f5e62ee6-953e-40d1-9241-073b422511d5")
 		(property "Reference" "J18"
-			(at 248.92 109.2199 0)
+			(at 247.015 109.8549 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3508,7 +3508,7 @@
 			)
 		)
 		(property "Value" "IO_9-12"
-			(at 248.92 111.7599 0)
+			(at 247.015 112.3949 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3517,7 +3517,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 246.38 109.22 0)
+			(at 244.475 109.855 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3526,7 +3526,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 246.38 109.22 0)
+			(at 244.475 109.855 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3535,7 +3535,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 246.38 109.22 0)
+			(at 244.475 109.855 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3566,7 +3566,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 246.38 85.09 0)
+		(at 244.475 64.77 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3575,7 +3575,7 @@
 		(fields_autoplaced yes)
 		(uuid "fb968cd2-386c-42f5-bd39-a458c89110a0")
 		(property "Reference" "J16"
-			(at 248.92 85.0899 0)
+			(at 247.015 64.7699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3584,7 +3584,7 @@
 			)
 		)
 		(property "Value" "IO_1-4"
-			(at 248.92 87.6299 0)
+			(at 247.015 67.3099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3593,7 +3593,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 246.38 85.09 0)
+			(at 244.475 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3602,7 +3602,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 246.38 85.09 0)
+			(at 244.475 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3611,7 +3611,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 246.38 85.09 0)
+			(at 244.475 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)

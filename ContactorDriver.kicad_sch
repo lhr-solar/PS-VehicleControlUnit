@@ -2913,15 +2913,15 @@
 		(fields_autoplaced yes)
 		(uuid "0fe3a73a-b81c-44ea-b4f1-7a2603510b1d")
 		(property "Reference" "R17"
-			(at 99.06 99.695 90)
+			(at 99.06 100.33 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "1k"
-			(at 99.06 102.235 90)
+		(property "Value" "2k"
+			(at 99.06 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3571,7 +3571,7 @@
 				)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "2k"
 			(at 220.98 103.505 90)
 			(effects
 				(font

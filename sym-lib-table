@@ -4,4 +4,5 @@
   (lib (name "VCU")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/VCU.kicad_sym")(options "")(descr ""))
   (lib (name "LM66200")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/LM66200DRLR.kicad_sym")(options "")(descr ""))
   (lib (name "USBC")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/USB4215-03-A_REVA.kicad_sym")(options "")(descr ""))
+  (lib (name "tvs diode")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/PRTR5V0U2AX/PRTR5V0U2AX_215.kicad_sym")(options "")(descr ""))
 )

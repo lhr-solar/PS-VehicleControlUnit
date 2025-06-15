@@ -6,4 +6,5 @@
   (lib (name "LM66200")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/LM66200.pretty")(options "")(descr ""))
   (lib (name "ESP32-C6-MINI-1")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/ESP32-C6-MINI-1.pretty")(options "")(descr ""))
   (lib (name "USBC")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/USBC.pretty")(options "")(descr ""))
+  (lib (name "tv diode")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/PRTR5V0U2AX.pretty")(options "")(descr ""))
 )

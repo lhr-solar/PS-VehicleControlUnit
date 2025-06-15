@@ -2968,7 +2968,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "04af76ef-1d56-41fc-af25-8915d70978af")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR050"
 			(at 112.395 36.83 0)
 			(effects
 				(font
@@ -3018,7 +3018,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR053")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -3318,7 +3318,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3236392d-1aef-44ac-b05d-34d4460c7593")
-		(property "Reference" "C11"
+		(property "Reference" "C12"
 			(at 59.055 117.4749 0)
 			(effects
 				(font
@@ -3372,7 +3372,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "C11")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -3527,7 +3527,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "515b3664-f6b5-4cd0-86b7-bada1b1643ea")
-		(property "Reference" "C13"
+		(property "Reference" "C14"
 			(at 179.705 118.1099 0)
 			(effects
 				(font
@@ -3581,7 +3581,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "C13")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -3597,7 +3597,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5163f7a2-7689-4615-8ff9-5673f0358dc7")
-		(property "Reference" "D8"
+		(property "Reference" "D7"
 			(at 114.935 43.8149 90)
 			(effects
 				(font
@@ -3669,7 +3669,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "D8")
+					(reference "D7")
 					(unit 1)
 				)
 			)
@@ -3823,7 +3823,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "66685011-d6a8-45b7-b1f0-d98ff3437484")
-		(property "Reference" "#PWR054"
+		(property "Reference" "#PWR051"
 			(at 226.695 105.41 0)
 			(effects
 				(font
@@ -3873,7 +3873,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR054")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3956,7 +3956,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8d958766-8620-4076-823f-7ee75fcc64a2")
-		(property "Reference" "C12"
+		(property "Reference" "C13"
 			(at 100.965 112.3949 0)
 			(effects
 				(font
@@ -4010,7 +4010,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "C12")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -4306,7 +4306,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ba5de6ac-428c-4071-90cd-7d923389c5ce")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR052"
 			(at 234.315 38.1 0)
 			(effects
 				(font
@@ -4356,7 +4356,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR055")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -4578,7 +4578,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "de2011f5-57f7-48e3-8d80-f04061080760")
-		(property "Reference" "C14"
+		(property "Reference" "C15"
 			(at 222.885 113.0299 0)
 			(effects
 				(font
@@ -4632,7 +4632,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "C14")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -4724,7 +4724,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ea61a381-4e6f-4ea8-a34b-82e578de6423")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR049"
 			(at 106.045 104.775 0)
 			(effects
 				(font
@@ -4774,7 +4774,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR052")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -4790,7 +4790,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ef978df1-17dc-4321-9f36-4dfb4b3efc19")
-		(property "Reference" "J14"
+		(property "Reference" "J13"
 			(at 245.745 106.6801 0)
 			(effects
 				(font
@@ -4850,7 +4850,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "J14")
+					(reference "J13")
 					(unit 1)
 				)
 			)
@@ -4866,7 +4866,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f0742394-080c-4f29-bfe2-098793384220")
-		(property "Reference" "J13"
+		(property "Reference" "J12"
 			(at 123.825 106.0451 0)
 			(effects
 				(font
@@ -4926,7 +4926,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "J13")
+					(reference "J12")
 					(unit 1)
 				)
 			)
@@ -5018,7 +5018,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f3cc84a7-6dd7-4e62-abd6-c8019469da84")
-		(property "Reference" "D9"
+		(property "Reference" "D8"
 			(at 236.855 44.4499 90)
 			(effects
 				(font
@@ -5090,7 +5090,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "D9")
+					(reference "D8")
 					(unit 1)
 				)
 			)

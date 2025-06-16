@@ -5388,6 +5388,16 @@
 		)
 		(uuid "686169c6-991b-4425-b3a4-337deeb319c2")
 	)
+	(label "BOOT"
+		(at 213.36 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6ac2d669-1bc3-43aa-8822-b98b7a7fb3b7")
+	)
 	(label "3V3_USB"
 		(at 41.91 43.18 0)
 		(effects
@@ -5458,6 +5468,16 @@
 		)
 		(uuid "8ddf6c7b-a038-4256-9469-936e41ee075d")
 	)
+	(label "LED4"
+		(at 213.36 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8fdf2ac9-533c-4cbb-bcc8-56ec24ab4770")
+	)
 	(label "3V3"
 		(at 118.11 43.18 180)
 		(effects
@@ -5467,16 +5487,6 @@
 			(justify right bottom)
 		)
 		(uuid "9454a386-4e5c-4da6-9013-d9f8277a245c")
-	)
-	(label "LED4"
-		(at 213.36 76.2 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9d978188-81c8-410f-92f1-88327d030110")
 	)
 	(label "LED2"
 		(at 213.36 71.12 180)
@@ -5637,16 +5647,6 @@
 			(justify right bottom)
 		)
 		(uuid "e80fa12b-48f2-4836-9ba6-9e6ff34a245b")
-	)
-	(label "BOOT"
-		(at 213.36 73.66 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "eac5318d-240c-4cb0-b842-ac68b9f35309")
 	)
 	(label "IO6"
 		(at 281.305 71.755 180)
@@ -6566,7 +6566,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "41e9e7c4-437c-41f1-ac10-86e6fecbe50a")
-		(property "Reference" "#PWR044"
+		(property "Reference" "#PWR043"
 			(at 175.26 104.14 0)
 			(effects
 				(font
@@ -6616,7 +6616,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
-					(reference "#PWR044")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -8454,7 +8454,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm66200.pdf?ts=1749979530840&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLM66200%253Futm_source%253Dgoogle%2526utm_medium%253Dcpc%2526utm_campaign%253Dapp-psil-null-44700045336317533_prodfolderdynamic-cpc-pf-google-eu_en_int%2526utm_content%253Dprodfolddynamic%2526ds_k%253DDYNAMIC+SEARCH+ADS%2526DCM%253Dyes%2526gad_source%253D1%2526gad_campaignid%253D8846228537%2526gbraid%253D0AAAAAC068F1nk_tvmYl3HXqK31USHPiW6%2526gclid%253DCjwKCAjw3rnCBhBxEiwArN0QE3nkB2-V_-iCZj5EyJCU-GAaAYaAjT6NO-eVHse-p8kje0rPcw2oyxoCwP4QAvD_BwE%2526gclsrc%253Daw.ds"
 			(at 77.47 44.45 0)
 			(effects
 				(font
@@ -8582,7 +8582,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ebd3f152-d3cf-4f8c-b10c-dd56ca88b029")
-		(property "Reference" "#PWR043"
+		(property "Reference" "#PWR044"
 			(at 178.435 165.735 0)
 			(effects
 				(font
@@ -8632,7 +8632,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
-					(reference "#PWR043")
+					(reference "#PWR044")
 					(unit 1)
 				)
 			)
@@ -9083,7 +9083,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.mouser.com/datasheet/2/80/CPDxx5V0R_HF_Series_RevC661473-2505247.pdf"
 			(at 201.295 146.05 0)
 			(effects
 				(font

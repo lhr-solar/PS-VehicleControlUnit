@@ -2365,7 +2365,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "177b5a37-2453-40c9-aefd-04733a7bd4c8")
-		(property "Reference" "LV6"
+		(property "Reference" "LV1"
 			(at 137.16 93.0274 90)
 			(effects
 				(font
@@ -2419,7 +2419,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "LV6")
+					(reference "LV1")
 					(unit 1)
 				)
 			)
@@ -3068,7 +3068,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7110dc29-ad3b-4db4-8856-8e3918bbd0f7")
-		(property "Reference" "LV7"
+		(property "Reference" "LV2"
 			(at 148.59 93.0274 90)
 			(effects
 				(font
@@ -3122,7 +3122,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "LV7")
+					(reference "LV2")
 					(unit 1)
 				)
 			)
@@ -3487,7 +3487,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a2a6cc22-9320-4fbe-9287-76409ce34644")
-		(property "Reference" "LV9"
+		(property "Reference" "LV4"
 			(at 171.45 93.0274 90)
 			(effects
 				(font
@@ -3541,7 +3541,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "LV9")
+					(reference "LV4")
 					(unit 1)
 				)
 			)
@@ -3624,7 +3624,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bbadd0b7-5d4a-4041-9c05-deae133e9450")
-		(property "Reference" "LV8"
+		(property "Reference" "LV3"
 			(at 160.02 93.0274 90)
 			(effects
 				(font
@@ -3678,7 +3678,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b/cecfe08a-2de2-4171-9051-c68b429ab9e8"
-					(reference "LV8")
+					(reference "LV3")
 					(unit 1)
 				)
 			)

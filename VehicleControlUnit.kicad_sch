@@ -5533,7 +5533,7 @@
 				)
 			)
 		)
-		(property "Value" "Q_PMOS_GDS"
+		(property "Value" "PMV35EPER"
 			(at 62.23 30.48 90)
 			(effects
 				(font
@@ -5550,7 +5550,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PMV35EPE.pdf"
 			(at 62.23 36.83 0)
 			(effects
 				(font
@@ -8341,7 +8341,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/BZT52-Q_SER.pdf"
 			(at 78.74 43.18 0)
 			(effects
 				(font
@@ -9527,7 +9527,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eeaad0ff-91ed-4b82-9a6c-e94a4373bd7f")
-		(property "Reference" "LV1"
+		(property "Reference" "LVPWR1"
 			(at 110.49 42.2274 90)
 			(effects
 				(font
@@ -9581,7 +9581,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7"
-					(reference "LV1")
+					(reference "LVPWR1")
 					(unit 1)
 				)
 			)

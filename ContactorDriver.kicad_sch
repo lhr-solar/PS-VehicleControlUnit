@@ -3624,7 +3624,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.mouser.com/datasheet/2/408/CMS08_datasheet_en_20190307-1134677.pdf"
 			(at 112.395 45.085 0)
 			(effects
 				(font
@@ -5045,7 +5045,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.mouser.com/datasheet/2/408/CMS08_datasheet_en_20190307-1134677.pdf"
 			(at 234.315 45.72 0)
 			(effects
 				(font

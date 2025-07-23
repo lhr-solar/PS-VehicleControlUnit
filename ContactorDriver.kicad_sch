@@ -1776,13 +1776,23 @@
 	)
 	(text "Motor\nCoil+"
 		(exclude_from_sim no)
-		(at 111.633 96.901 0)
+		(at 114.3 99.06 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
 		(uuid "67865841-9906-4869-8dda-66fe81dac89c")
+	)
+	(text "M_Sense+"
+		(exclude_from_sim no)
+		(at 111.76 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "72ec760b-0997-43d0-b01b-e31202f65305")
 	)
 	(text "Flyback\nDiode"
 		(exclude_from_sim no)
@@ -1834,37 +1844,21 @@
 		)
 		(uuid "dd22e6e9-fcd4-4f6e-9890-ff12b12d5f40")
 	)
-	(text_box "Voltage dividers for signals that go to the Nucleo. \nSense signals from contactors are 12v and the Nucleo pins operate at 3.3v\n\n12v*(10k)/(10k+30k) = 3v "
+	(text "MPre_Sense+"
 		(exclude_from_sim no)
-		(at 67.31 162.56 0)
-		(size 54.61 12.7)
-		(margins 0.9525 0.9525 0.9525 0.9525)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type none)
-		)
+		(at 233.045 103.505 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left top)
 		)
-		(uuid "7efb4357-90e1-4ff6-9076-decbca653e96")
+		(uuid "ea129928-67f8-4721-85d4-481efdeca48a")
 	)
 	(junction
 		(at 189.23 111.76)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "139c6762-b4c6-4e0c-a449-897b4a56ca3d")
-	)
-	(junction
-		(at 226.695 101.6)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "19ead837-7794-45fa-a56e-fb5b3da172dc")
 	)
 	(junction
 		(at 221.615 64.77)
@@ -1885,10 +1879,22 @@
 		(uuid "36abcc7a-b8d8-416b-b1b3-b0fe13202ce0")
 	)
 	(junction
+		(at 106.045 100.965)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "43b30b6d-3857-40bc-890e-6ffc8bd4ee68")
+	)
+	(junction
 		(at 68.58 111.125)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4c44d22d-e8a8-4ff2-b3e5-90fb10c5abb8")
+	)
+	(junction
+		(at 226.695 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "522c6bfd-05d0-4ed5-99a7-a0a150d74c46")
 	)
 	(junction
 		(at 104.775 118.11)
@@ -1901,12 +1907,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7d5d56f4-0e6d-4927-8bdc-2bd2c209ee0d")
-	)
-	(junction
-		(at 106.045 100.965)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8bfa39c0-be41-46cd-83cb-40fc00fcc884")
 	)
 	(junction
 		(at 57.15 111.125)
@@ -2959,72 +2959,6 @@
 		(uuid "f268e523-16f2-41e9-b1bf-464e452a3951")
 	)
 	(symbol
-		(lib_id "power:+12V")
-		(at 112.395 33.02 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "04af76ef-1d56-41fc-af25-8915d70978af")
-		(property "Reference" "#PWR050"
-			(at 112.395 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+12V"
-			(at 112.395 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 112.395 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 112.395 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 112.395 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "96ae68a7-4a73-4989-bd1c-bb2251f873b1")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR050")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
 		(at 99.06 106.045 270)
 		(unit 1)
@@ -3042,7 +2976,7 @@
 				)
 			)
 		)
-		(property "Value" "2k"
+		(property "Value" "4k"
 			(at 99.06 102.87 90)
 			(effects
 				(font
@@ -3087,6 +3021,72 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "R17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+12V")
+		(at 226.695 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "13deb05f-a3eb-42d2-b876-4d52b8f12575")
+		(property "Reference" "#PWR051"
+			(at 226.695 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+24V"
+			(at 226.695 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 226.695 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 226.695 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 226.695 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d4da1b86-f93c-4ce8-9436-4f7c4c8215b8")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3396,7 +3396,7 @@
 				)
 			)
 		)
-		(property "Value" "2k"
+		(property "Value" "4k"
 			(at 225.425 35.56 90)
 			(effects
 				(font
@@ -3693,7 +3693,7 @@
 				)
 			)
 		)
-		(property "Value" "2k"
+		(property "Value" "4k"
 			(at 220.98 103.505 90)
 			(effects
 				(font
@@ -3738,6 +3738,72 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "R22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+12V")
+		(at 112.395 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "629b6e96-7a14-4d60-9ed8-cded2cf6f405")
+		(property "Reference" "#PWR050"
+			(at 112.395 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+24V"
+			(at 112.395 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 112.395 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 112.395 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 112.395 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4052cdbc-9dc7-4cb9-bcdd-3d98e8574415")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -3814,72 +3880,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+12V")
-		(at 226.695 101.6 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "66685011-d6a8-45b7-b1f0-d98ff3437484")
-		(property "Reference" "#PWR051"
-			(at 226.695 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+12V"
-			(at 226.695 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 226.695 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 226.695 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 226.695 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8523869a-b509-458c-9372-c5988eb9efb6")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR051")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 177.8 111.76 0)
 		(mirror y)
@@ -3941,6 +3941,72 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "M_Pre_Sen_TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+12V")
+		(at 106.045 100.965 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7651b5ca-f27f-4cbc-869e-facbcffc4c00")
+		(property "Reference" "#PWR049"
+			(at 106.045 104.775 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+24V"
+			(at 106.045 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.045 100.965 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.045 100.965 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 106.045 100.965 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3b962213-01a0-4e7e-8a88-89221b6dc1bb")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -4110,7 +4176,7 @@
 				)
 			)
 		)
-		(property "Value" "2k"
+		(property "Value" "4k"
 			(at 103.505 34.925 90)
 			(effects
 				(font
@@ -4297,72 +4363,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+12V")
-		(at 234.315 34.29 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ba5de6ac-428c-4071-90cd-7d923389c5ce")
-		(property "Reference" "#PWR052"
-			(at 234.315 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+12V"
-			(at 234.315 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 234.315 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 234.315 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 234.315 34.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8829c32b-0fc6-4f4f-b0a8-94dc4d31f504")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR052")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
 		(at 194.31 111.76 90)
 		(unit 1)
@@ -4425,6 +4425,72 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "R21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+12V")
+		(at 234.315 34.29 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c5b191db-df28-4925-8d9f-f8528d7a98d8")
+		(property "Reference" "#PWR052"
+			(at 234.315 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+24V"
+			(at 234.315 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 234.315 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 234.315 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 234.315 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ddfc18b2-401c-448f-a1f4-cfca21e1d03e")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -4709,72 +4775,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+12V")
-		(at 106.045 100.965 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ea61a381-4e6f-4ea8-a34b-82e578de6423")
-		(property "Reference" "#PWR049"
-			(at 106.045 104.775 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+12V"
-			(at 106.045 95.885 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 106.045 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 106.045 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 106.045 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a7a31114-7fc4-4cb0-b52e-64a92bd5c215")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "#PWR049")
 					(unit 1)
 				)
 			)

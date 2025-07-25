@@ -1,8 +1,9 @@
 (sym_lib_table
   (version 7)
-  (lib (name "utsvt-conn")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/UTSVT-KiCadLibraries/utsvt-connectors.kicad_sym")(options "")(descr ""))
   (lib (name "VCU")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/VCU.kicad_sym")(options "")(descr ""))
-  (lib (name "LM66200")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/LM66200DRLR.kicad_sym")(options "")(descr ""))
-  (lib (name "USBC")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/USB4215-03-A_REVA.kicad_sym")(options "")(descr ""))
-  (lib (name "tvs diode")(type "KiCad")(uri "${KIPRJMOD}/VehicleControlUnitLib/PRTR5V0U2AX/PRTR5V0U2AX_215.kicad_sym")(options "")(descr ""))
+  (lib (name "UTSVT_Connectors")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_connectors.kicad_sym")(options "")(descr ""))
+  (lib (name "UTSVT_ICs")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_ics.kicad_sym")(options "")(descr ""))
+  (lib (name "UTSVT_Misc")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_misc.kicad_sym")(options "")(descr ""))
+  (lib (name "UTSVT_Power")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_power.kicad_sym")(options "")(descr ""))
+  (lib (name "LSOM")(type "KiCad")(uri "C:/Users/Tony/Documents/LHR/UTSVT-KiCadLibraries/utsvt-connectors.kicad_sym")(options "")(descr ""))
 )

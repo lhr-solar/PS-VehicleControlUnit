@@ -5,113 +5,6 @@
 	(uuid "5b54ca8f-e4f3-4968-ae2f-61eb0a03a3dc")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector:TestPoint"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.762)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "test point"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "test point tp"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "TestPoint_1_1"
-				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Connector_Generic:Conn_01x04"
 			(pin_names
 				(offset 1.016)
@@ -1898,12 +1791,6 @@
 		(uuid "8cc9503a-5016-45a7-80f7-f9f646603302")
 	)
 	(junction
-		(at 57.15 111.125)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "955c7d69-ef62-4458-b5d3-81211a415120")
-	)
-	(junction
 		(at 102.87 106.045)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1914,12 +1801,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c6fcbf2f-a729-47dc-b9ad-e231c1fe4b2c")
-	)
-	(junction
-		(at 177.8 111.76)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c8731190-23c8-418a-a802-10b584fa382c")
 	)
 	(junction
 		(at 99.695 64.135)
@@ -1971,7 +1852,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 111.76) (xy 182.88 111.76)
+			(xy 175.26 111.76) (xy 182.88 111.76)
 		)
 		(stroke
 			(width 0)
@@ -2151,16 +2032,6 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 111.125) (xy 62.23 111.125)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4988b1b9-18a8-4491-8ea2-8dc11b0bf7a9")
-	)
-	(wire
-		(pts
 			(xy 112.395 52.705) (xy 112.395 59.055)
 		)
 		(stroke
@@ -2268,16 +2139,6 @@
 			(type default)
 		)
 		(uuid "66a8bb5d-b49f-45c5-979a-06fa416f10e4")
-	)
-	(wire
-		(pts
-			(xy 175.26 111.76) (xy 177.8 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "70399a3c-66d2-4eea-b0d4-9bca9ab5359d")
 	)
 	(wire
 		(pts
@@ -2411,7 +2272,7 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 111.125) (xy 54.61 111.125)
+			(xy 54.61 111.125) (xy 62.23 111.125)
 		)
 		(stroke
 			(width 0)
@@ -3816,73 +3677,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 177.8 111.76 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6a3043f4-5926-485b-8cde-343805d6bdb9")
-		(property "Reference" "M_Pre_Sen_TP1"
-			(at 175.26 107.1879 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 175.26 109.7279 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "UTSVT_Special:TestPoint_HEX_3mmID"
-			(at 172.72 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 172.72 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 177.8 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "411d9b76-dc3d-477d-8fa0-d0ae855ac567")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "M_Pre_Sen_TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+12V")
 		(at 106.045 100.965 0)
 		(unit 1)
@@ -4223,73 +4017,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "R16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 57.15 111.125 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "afaa8c52-8810-42b3-88fe-228daa2794fa")
-		(property "Reference" "M_Sen_TP1"
-			(at 54.61 106.5529 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 54.61 109.0929 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "UTSVT_Special:TestPoint_HEX_3mmID"
-			(at 52.07 111.125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 52.07 111.125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 57.15 111.125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "62d194ad-2791-4912-b98d-60971f52be27")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "M_Sen_TP1")
 					(unit 1)
 				)
 			)

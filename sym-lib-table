@@ -6,4 +6,5 @@
   (lib (name "UTSVT_Misc")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_misc.kicad_sym")(options "")(descr ""))
   (lib (name "UTSVT_Power")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_power.kicad_sym")(options "")(descr ""))
   (lib (name "LSOM")(type "KiCad")(uri "C:/Users/Tony/Documents/LHR/UTSVT-KiCadLibraries/utsvt-connectors.kicad_sym")(options "")(descr ""))
+  (lib (name "utsvt_special")(type "KiCad")(uri "${KIPRJMOD}/KiCAD-Bild/utsvt_special.kicad_sym")(options "")(descr ""))
 )

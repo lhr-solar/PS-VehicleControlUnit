@@ -4785,7 +4785,7 @@
 	)
 	(no_connect
 		(at 77.47 104.14)
-		(uuid "b5a46fcb-3ee1-4c83-898e-c0f7429c39f7")
+		(uuid "c8cb42e7-3c80-4a02-81aa-bef141384f37")
 	)
 	(wire
 		(pts
@@ -4966,6 +4966,16 @@
 			(type default)
 		)
 		(uuid "14dd94a5-dc2e-4051-8bab-29d077f1443c")
+	)
+	(wire
+		(pts
+			(xy 44.45 109.22) (xy 31.75 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15439395-5a30-4f86-b3ea-149064093331")
 	)
 	(wire
 		(pts
@@ -5629,16 +5639,6 @@
 	)
 	(wire
 		(pts
-			(xy 77.47 101.6) (xy 95.25 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "781a7b83-5f4d-44fe-b2b6-a71c371c4a94")
-	)
-	(wire
-		(pts
 			(xy 199.39 27.94) (xy 199.39 30.48)
 		)
 		(stroke
@@ -5736,6 +5736,16 @@
 			(type default)
 		)
 		(uuid "855d6061-e6be-45a6-915e-5c1127f65d20")
+	)
+	(wire
+		(pts
+			(xy 95.25 101.6) (xy 77.47 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85a441c4-b7cc-4ec8-91c9-47647b808f61")
 	)
 	(wire
 		(pts
@@ -6149,16 +6159,6 @@
 	)
 	(wire
 		(pts
-			(xy 31.75 109.22) (xy 44.45 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bba9ed8a-228e-4739-a000-ef2ab5f2c009")
-	)
-	(wire
-		(pts
 			(xy 151.13 91.44) (xy 162.56 91.44)
 		)
 		(stroke
@@ -6537,16 +6537,6 @@
 		)
 		(uuid "0aef34b5-3a18-4bf0-808e-861fcaff36ce")
 	)
-	(label "MPre_Enable"
-		(at 31.75 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "10b73abc-57de-4ac6-8cee-893cba207d3e")
-	)
 	(label "M_CAN_L"
 		(at 236.22 58.42 0)
 		(effects
@@ -6567,6 +6557,16 @@
 		)
 		(uuid "1dacf1bc-4293-42fc-aea1-2cfcf5553ac2")
 	)
+	(label "ESP_RX"
+		(at 166.37 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1f76e901-dac6-4048-8676-c3ca2226152a")
+	)
 	(label "M_Sense"
 		(at 166.37 97.79 0)
 		(effects
@@ -6578,14 +6578,14 @@
 		(uuid "23c54acd-23a8-42d0-9417-975c09edf94d")
 	)
 	(label "ESP_RX"
-		(at 35.56 99.06 0)
+		(at 35.56 96.52 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "2671047d-b12b-41fd-940f-474ca5f5623e")
+		(uuid "2d102b29-5595-4d85-a116-aea6051141c6")
 	)
 	(label "LED1"
 		(at 162.56 96.52 180)
@@ -6627,6 +6627,16 @@
 		)
 		(uuid "4a50998e-d38a-4cb3-9756-a84fc814459f")
 	)
+	(label "Motor_Voltage"
+		(at 31.75 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4c84e189-3206-4497-8b50-1da749d1362b")
+	)
 	(label "LED1"
 		(at 165.1 27.94 0)
 		(effects
@@ -6646,6 +6656,16 @@
 			(justify right bottom)
 		)
 		(uuid "534e0255-1d84-4132-a3e6-6042d8952763")
+	)
+	(label "ESP_TX"
+		(at 166.37 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "53e23096-1c54-43be-aa45-aaa3494c35f9")
 	)
 	(label "C_CAN_L"
 		(at 236.22 33.655 0)
@@ -6797,16 +6817,6 @@
 		)
 		(uuid "b584a351-f930-439e-96f5-ff5bec9d48e6")
 	)
-	(label "ESP_TX"
-		(at 35.56 96.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b6769746-8edb-4cbb-960f-a58cab9cdf66")
-	)
 	(label "C_CAN_H"
 		(at 236.22 36.195 0)
 		(effects
@@ -6827,16 +6837,6 @@
 		)
 		(uuid "b82c44c1-e2ae-4030-9631-cc57b875d4a5")
 	)
-	(label "ESP_RX"
-		(at 166.37 115.57 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b95c5900-fc30-449a-8e66-27c10f4453fc")
-	)
 	(label "LED4"
 		(at 199.39 27.94 0)
 		(effects
@@ -6846,16 +6846,6 @@
 			(justify left bottom)
 		)
 		(uuid "c81c2a99-c112-43f2-b4bd-9f3057115ad6")
-	)
-	(label "ESP_TX"
-		(at 166.37 113.03 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c8876277-907c-4a00-bd2b-cbbd9df30ff9")
 	)
 	(label "C_CAN_L"
 		(at 162.56 111.76 180)
@@ -6876,6 +6866,16 @@
 			(justify right bottom)
 		)
 		(uuid "cd59b057-cc8b-4afb-a838-f025ac0ea9d6")
+	)
+	(label "MPre_Enable"
+		(at 95.25 101.6 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "cdd469bd-30ca-4762-83ba-4afddf4081be")
 	)
 	(label "C_CAN_L"
 		(at 236.22 48.26 0)
@@ -6926,6 +6926,16 @@
 			(justify left bottom)
 		)
 		(uuid "dd120668-10c9-4e97-aac4-18ae22ead719")
+	)
+	(label "ESP_TX"
+		(at 35.56 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e19db5c3-77e3-4e9f-8da9-05dbcd117d10")
 	)
 	(label "M_CAN_H"
 		(at 236.22 45.72 0)
@@ -6986,16 +6996,6 @@
 			(justify right bottom)
 		)
 		(uuid "efcf61ed-a549-4d2e-8ed3-7877302687cb")
-	)
-	(label "Motor_Voltage"
-		(at 95.25 101.6 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fabc9a82-994d-491d-af8d-47eab8cf7278")
 	)
 	(label "C_CAN_L"
 		(at 236.22 63.5 0)

@@ -650,6 +650,10 @@
     [
       "cecfe08a-2de2-4171-9051-c68b429ab9e8",
       "Buttons_LEDs_IO"
+    ],
+    [
+      "5469fc22-573e-4402-96df-d8b4b5bb4d29",
+      "Power"
     ]
   ],
   "text_variables": {}

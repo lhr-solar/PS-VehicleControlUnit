@@ -25252,7 +25252,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105309-xx04_1x04_P2.50mm_Vertical"
 			(at 29.845 165.1 0)
 			(effects
 				(font
@@ -25462,7 +25462,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "UTSVT_Logos:Hallock_Image_Tiny"
 			(at 210.82 147.32 0)
 			(effects
 				(font

@@ -1286,7 +1286,7 @@
 					)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "UTSVT_Connectors:Molex_MicroFit3.0_1x4xP3.00mm_PolarizingPeg_Vertical"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2698,7 +2698,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105309-xx04_1x04_P2.50mm_Vertical"
 			(at 243.205 95.25 0)
 			(effects
 				(font
@@ -3014,6 +3014,82 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "UTSVT_Connectors:ContactorConnector")
+		(at 121.285 94.615 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "29291016-bcc8-41f6-8135-2ac314759ccd")
+		(property "Reference" "J7"
+			(at 133.985 102.8699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ContactorConnector"
+			(at 133.985 105.4099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105309-xx04_1x04_P2.50mm_Vertical"
+			(at 121.285 94.615 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.285 94.615 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Pinout for contactor connectors."
+			(at 122.555 104.013 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3845ba98-81a7-48e6-a025-43d2ba244c9e")
+		)
+		(pin "3"
+			(uuid "ec18e879-271f-4b11-a12b-a76cc0ec8ea3")
+		)
+		(pin "4"
+			(uuid "64aacec2-d091-483b-9391-040e5a13fa8b")
+		)
+		(pin "1"
+			(uuid "9d7d3573-e78a-4f98-8a1b-44207e0aa3d0")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "J7")
 					(unit 1)
 				)
 			)
@@ -3807,82 +3883,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "C15")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "UTSVT_Connectors:ContactorConnector")
-		(at 121.285 94.615 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "92d62d19-3424-4517-8b3a-68dc765eb67f")
-		(property "Reference" "U7"
-			(at 133.985 102.8699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "ContactorConnector"
-			(at 133.985 105.4099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 121.285 94.615 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 121.285 94.615 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Pinout for contactor connectors."
-			(at 122.555 104.013 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "7bb4e71f-cfbc-49f6-ac9a-913beac3162d")
-		)
-		(pin "4"
-			(uuid "04c14d4f-4160-4c66-82d3-e2211a6a1910")
-		)
-		(pin "1"
-			(uuid "ad043e01-e0d1-48dc-8b86-17d68777688b")
-		)
-		(pin "2"
-			(uuid "32458cc3-b25a-4265-a062-cd841364a954")
-		)
-		(instances
-			(project ""
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "U7")
 					(unit 1)
 				)
 			)

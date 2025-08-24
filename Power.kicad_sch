@@ -860,14 +860,6 @@
 				)
 			)
 			(embedded_fonts no)
-			(embedded_files
-				(file
-					(name "PS-105300-100-001.pdf")
-					(type datasheet)
-					(data)
-					(checksum "70E924741D4B4DB67EF14FBC30B424CA")
-				)
-			)
 		)
 		(symbol "UTSVT_ICs:LM74502HDDFR"
 			(exclude_from_sim no)
@@ -3387,72 +3379,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 50.165 104.14 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "47d9e9c4-287e-4097-854e-e8a3d20bab83")
-		(property "Reference" "#PWR041"
-			(at 50.165 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 50.165 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 50.165 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 50.165 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 50.165 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a167a6ab-7d15-410b-b579-be0cde83f4ea")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR041")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 203.835 57.785 0)
 		(unit 1)
@@ -3781,6 +3707,72 @@
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
 					(reference "J3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 50.165 104.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "71f416a0-17dd-4db9-b902-4042394478cd")
+		(property "Reference" "#PWR041"
+			(at 50.165 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 50.165 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 50.165 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.165 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 50.165 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5d1ccea4-948b-45e0-8301-31a21b6eb7de")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)

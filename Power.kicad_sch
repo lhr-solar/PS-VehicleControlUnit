@@ -2710,7 +2710,7 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 58.42) (xy 71.12 33.02)
+			(xy 71.12 55.245) (xy 71.12 33.02)
 		)
 		(stroke
 			(width 0)
@@ -2810,7 +2810,7 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 66.04) (xy 71.12 68.58)
+			(xy 71.12 62.865) (xy 71.12 68.58)
 		)
 		(stroke
 			(width 0)
@@ -3179,7 +3179,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 71.12 62.23 0)
+		(at 71.12 59.055 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3188,7 +3188,7 @@
 		(fields_autoplaced yes)
 		(uuid "2c45fc8a-bcc4-4313-aeca-374a3cb5e0de")
 		(property "Reference" "R18"
-			(at 73.66 60.9599 0)
+			(at 73.66 57.7849 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3197,7 +3197,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 73.66 63.4999 0)
+			(at 73.66 60.3249 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3206,7 +3206,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 72.136 62.484 90)
+			(at 72.136 59.309 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3215,7 +3215,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 71.12 62.23 0)
+			(at 71.12 59.055 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3224,7 +3224,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 71.12 62.23 0)
+			(at 71.12 59.055 0)
 			(effects
 				(font
 					(size 1.27 1.27)

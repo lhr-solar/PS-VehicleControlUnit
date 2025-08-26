@@ -668,306 +668,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Isolator:TCMT1106"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "U"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TCMT1106"
-				(at 0 -5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "Package_SO:SOP-4_4.4x2.6mm_P1.27mm"
-				(at 0 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "http://www.vishay.com/docs/83510/tcmt1100.pdf"
-				(at 0 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Description" "Optocoupler, Vce 70V, CTR 100-300%, Viso 3750V (RMS), SOP-4"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "NPN DC opto"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOP*4.4x2.6mm*P1.27mm*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "TCMT1106_1_1"
-				(rectangle
-					(start -5.08 3.81)
-					(end 5.08 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -5.08 2.54) (xy -2.54 2.54) (xy -2.54 -1.27) (xy -2.54 0.635)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -3.175 -0.635) (xy -1.905 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.54 -0.635) (xy -2.54 -2.54) (xy -5.08 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.54 -0.635) (xy -3.175 0.635) (xy -1.905 0.635) (xy -2.54 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.508 0.508) (xy 0.762 0.508) (xy 0.381 0.381) (xy 0.381 0.635) (xy 0.762 0.508)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.508 -0.508) (xy 0.762 -0.508) (xy 0.381 -0.635) (xy 0.381 -0.381) (xy 0.762 -0.508)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 1.905) (xy 2.54 -1.905) (xy 2.54 -1.905)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 0.635) (xy 4.445 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.048 -1.651) (xy 3.556 -1.143) (xy 4.064 -2.159) (xy 3.048 -1.651) (xy 3.048 -1.651)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 2.54) (xy 5.08 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -2.54) (xy 2.54 -0.635)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -2.54) (xy 5.08 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -7.62 2.54 0)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -7.62 -2.54 0)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 2.54 180)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 -2.54 180)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Transistor_FET:IRLML0030"
 			(pin_names
 				(hide yes)
@@ -1400,6 +1100,333 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "UTSVT_ICs:EL3H7"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "EL3H7"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "UTSVT_ICs:EL3H7"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
+				(at 0 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "P/N" "EL3H7(D)(TA)-VG"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Vf" "1.4V"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "If" "20mA"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "NPN DC opto"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOP*4.4x2.6mm*P1.27mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "EL3H7_1_1"
+				(rectangle
+					(start -5.08 3.81)
+					(end 5.08 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 2.54) (xy -2.54 2.54) (xy -2.54 -1.27) (xy -2.54 0.635)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -3.175 -0.635) (xy -1.905 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -0.635) (xy -2.54 -2.54) (xy -5.08 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -0.635) (xy -3.175 0.635) (xy -1.905 0.635) (xy -2.54 -0.635)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.508 0.508) (xy 0.762 0.508) (xy 0.381 0.381) (xy 0.381 0.635) (xy 0.762 0.508)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.508 -0.508) (xy 0.762 -0.508) (xy 0.381 -0.635) (xy 0.381 -0.381) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.905) (xy 2.54 -1.905) (xy 2.54 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0.635) (xy 4.445 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.048 -1.651) (xy 3.556 -1.143) (xy 4.064 -2.159) (xy 3.048 -1.651) (xy 3.048 -1.651)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.445 2.54) (xy 5.08 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.445 -2.54) (xy 2.54 -0.635)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.445 -2.54) (xy 5.08 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 -2.54 0)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers
@@ -1693,6 +1720,12 @@
 		(uuid "13d0075f-50d1-433c-93d4-48ea8b9054b4")
 	)
 	(junction
+		(at 97.79 106.045)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1c5451c2-e1b2-4090-8c69-8788ddde97b0")
+	)
+	(junction
 		(at 94.615 116.205)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1729,16 +1762,10 @@
 		(uuid "7d5d56f4-0e6d-4927-8bdc-2bd2c209ee0d")
 	)
 	(junction
-		(at 222.885 106.68)
+		(at 218.44 106.68)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "8cc9503a-5016-45a7-80f7-f9f646603302")
-	)
-	(junction
-		(at 102.87 106.045)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "9982f927-5f81-4557-be09-6313b02233ab")
+		(uuid "9dca4ba3-42e2-4457-b7b7-bca2a2b44ad1")
 	)
 	(junction
 		(at 234.315 39.37)
@@ -1763,16 +1790,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f69d10ff-b02c-4823-942b-19d772903c91")
-	)
-	(wire
-		(pts
-			(xy 102.87 106.045) (xy 116.205 106.045)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "00d66ba6-8ac8-4bbe-a240-fa2fc2abc7ce")
 	)
 	(wire
 		(pts
@@ -1863,16 +1880,6 @@
 			(type default)
 		)
 		(uuid "13ab2394-6931-45f8-8fc6-1ed604e4cb39")
-	)
-	(wire
-		(pts
-			(xy 102.235 106.045) (xy 102.87 106.045)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "19c69634-3748-42a0-9765-46ae66f59d89")
 	)
 	(wire
 		(pts
@@ -1996,16 +2003,6 @@
 	)
 	(wire
 		(pts
-			(xy 222.885 106.68) (xy 238.125 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "59b33727-5550-4e3f-8877-cf041d2fdfa4")
-	)
-	(wire
-		(pts
 			(xy 217.805 39.37) (xy 221.615 39.37)
 		)
 		(stroke
@@ -2016,7 +2013,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.885 106.68) (xy 222.885 110.49)
+			(xy 218.44 106.68) (xy 218.44 110.49)
 		)
 		(stroke
 			(width 0)
@@ -2096,6 +2093,16 @@
 	)
 	(wire
 		(pts
+			(xy 106.045 106.045) (xy 116.205 106.045)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "76816855-2366-4914-ac74-04fb461f5470")
+	)
+	(wire
+		(pts
 			(xy 68.58 111.125) (xy 79.375 111.125)
 		)
 		(stroke
@@ -2106,7 +2113,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.885 118.11) (xy 222.885 118.745)
+			(xy 218.44 118.11) (xy 218.44 118.745)
 		)
 		(stroke
 			(width 0)
@@ -2186,7 +2193,7 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 118.745) (xy 222.885 118.745)
+			(xy 214.63 118.745) (xy 218.44 118.745)
 		)
 		(stroke
 			(width 0)
@@ -2203,6 +2210,16 @@
 			(type default)
 		)
 		(uuid "9b17f7af-4447-4a38-877b-45f22e259db1")
+	)
+	(wire
+		(pts
+			(xy 94.615 106.045) (xy 97.79 106.045)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a4d31318-0402-4f34-831e-4a3e6db67a10")
 	)
 	(wire
 		(pts
@@ -2296,7 +2313,7 @@
 	)
 	(wire
 		(pts
-			(xy 94.615 116.205) (xy 102.87 116.205)
+			(xy 94.615 116.205) (xy 97.79 116.205)
 		)
 		(stroke
 			(width 0)
@@ -2326,16 +2343,6 @@
 	)
 	(wire
 		(pts
-			(xy 102.87 106.045) (xy 102.87 108.585)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cd0dd8c2-24c9-4069-b833-54fc198dcf83")
-	)
-	(wire
-		(pts
 			(xy 217.805 49.53) (xy 217.805 53.34)
 		)
 		(stroke
@@ -2346,6 +2353,16 @@
 	)
 	(wire
 		(pts
+			(xy 97.79 106.045) (xy 97.79 108.585)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ceff99f3-a631-4a42-9127-4dc6356b08d4")
+	)
+	(wire
+		(pts
 			(xy 112.395 38.735) (xy 112.395 41.275)
 		)
 		(stroke
@@ -2353,6 +2370,26 @@
 			(type default)
 		)
 		(uuid "d51f69cd-f488-41c1-9b77-cc8be4e13845")
+	)
+	(wire
+		(pts
+			(xy 214.63 106.68) (xy 218.44 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d828fe4f-1f32-4125-b24e-e0524691d6a2")
+	)
+	(wire
+		(pts
+			(xy 227.33 106.68) (xy 238.125 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de47457e-8164-45f5-84e9-3a19d26a3d88")
 	)
 	(wire
 		(pts
@@ -2373,6 +2410,16 @@
 			(type default)
 		)
 		(uuid "e577f70b-b6a3-4b97-8c8c-40330829389c")
+	)
+	(wire
+		(pts
+			(xy 218.44 106.68) (xy 219.71 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e62593bd-801b-4718-89bd-b77308717293")
 	)
 	(wire
 		(pts
@@ -2436,6 +2483,16 @@
 	)
 	(wire
 		(pts
+			(xy 97.79 106.045) (xy 98.425 106.045)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fc78c983-92e9-4eec-8a66-384841e0b746")
+	)
+	(wire
+		(pts
 			(xy 217.805 53.34) (xy 234.315 53.34)
 		)
 		(stroke
@@ -2443,16 +2500,6 @@
 			(type default)
 		)
 		(uuid "fcb98949-3de4-4bd9-98fd-e3498ca5b8e9")
-	)
-	(wire
-		(pts
-			(xy 222.25 106.68) (xy 222.885 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fe0808e8-a9aa-4fda-89b3-29b237818638")
 	)
 	(label "MCon-"
 		(at 126.365 52.705 180)
@@ -2748,7 +2795,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 98.425 106.045 270)
+		(at 102.235 106.045 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2757,7 +2804,7 @@
 		(fields_autoplaced yes)
 		(uuid "0fe3a73a-b81c-44ea-b4f1-7a2603510b1d")
 		(property "Reference" "R14"
-			(at 98.425 100.33 90)
+			(at 102.235 100.33 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2765,7 +2812,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 98.425 102.87 90)
+			(at 102.235 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2773,7 +2820,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 98.171 107.061 90)
+			(at 101.981 107.061 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2782,7 +2829,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 98.425 106.045 0)
+			(at 102.235 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2791,7 +2838,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 98.425 106.045 0)
+			(at 102.235 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3090,82 +3137,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "J7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Isolator:TCMT1106")
-		(at 207.01 109.22 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2932f2ef-7f30-4759-8c58-ca4afd576c35")
-		(property "Reference" "U6"
-			(at 207.01 117.475 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TCMT1106"
-			(at 207.01 114.935 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:SOP-4_4.4x2.6mm_P1.27mm"
-			(at 207.01 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/83510/tcmt1100.pdf"
-			(at 207.01 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "Optocoupler, Vce 70V, CTR 100-300%, Viso 3750V (RMS), SOP-4"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "fe847d22-d240-4c75-8c21-5f03e6c9ed3a")
-		)
-		(pin "3"
-			(uuid "c94146e9-4a02-496a-97da-ebc75b483ee7")
-		)
-		(pin "4"
-			(uuid "13f4296f-7181-4cf3-8629-8fd17f06437b")
-		)
-		(pin "2"
-			(uuid "3ab1647c-aecb-47f1-abcc-ed94c9bbefde")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -3541,7 +3512,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 218.44 106.68 270)
+		(at 223.52 106.68 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3550,7 +3521,7 @@
 		(fields_autoplaced yes)
 		(uuid "54e423d7-d692-488d-982c-e3840b8568fd")
 		(property "Reference" "R19"
-			(at 218.44 100.33 90)
+			(at 223.52 100.33 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3558,7 +3529,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 218.44 102.87 90)
+			(at 223.52 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3566,7 +3537,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 218.186 107.696 90)
+			(at 223.266 107.696 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3575,7 +3546,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 218.44 106.68 0)
+			(at 223.52 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3584,7 +3555,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 218.44 106.68 0)
+			(at 223.52 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3820,8 +3791,8 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 102.87 112.395 0)
-		(mirror y)
+		(at 97.79 112.395 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3829,7 +3800,7 @@
 		(dnp no)
 		(uuid "8d958766-8620-4076-823f-7ee75fcc64a2")
 		(property "Reference" "C15"
-			(at 99.06 111.1249 0)
+			(at 101.6 113.6651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3838,7 +3809,7 @@
 			)
 		)
 		(property "Value" "0.1u"
-			(at 99.06 113.6649 0)
+			(at 101.6 111.1251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3847,7 +3818,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 101.9048 116.205 0)
+			(at 98.7552 108.585 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3856,7 +3827,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 102.87 112.395 0)
+			(at 97.79 112.395 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3865,7 +3836,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 102.87 112.395 0)
+			(at 97.79 112.395 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3883,6 +3854,109 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "C15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "UTSVT_ICs:EL3H7")
+		(at 86.995 108.585 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "92c4c6d8-7c3c-47c1-84f6-9e13efd0010c")
+		(property "Reference" "U3"
+			(at 86.995 99.695 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "EL3H7"
+			(at 86.995 102.235 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "UTSVT_ICs:EL3H7"
+			(at 86.995 116.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
+			(at 86.995 109.855 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
+			(at 86.995 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "EL3H7(D)(TA)-VG"
+			(at 86.995 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" "1.4V"
+			(at 86.995 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" "20mA"
+			(at 86.995 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "17009995-6f03-4753-9bda-3826ecceee01")
+		)
+		(pin "4"
+			(uuid "7fe83cd5-688f-4374-9bb3-6b82b13bb42f")
+		)
+		(pin "2"
+			(uuid "24a9c3d9-558e-4e32-a454-25aa96721490")
+		)
+		(pin "3"
+			(uuid "d28ef4b6-38e5-420c-a992-29845a17ea2c")
+		)
+		(instances
+			(project ""
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -4168,6 +4242,109 @@
 		)
 	)
 	(symbol
+		(lib_id "UTSVT_ICs:EL3H7")
+		(at 207.01 109.22 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c5482e50-af5c-461b-bfa6-ab35bc082f3e")
+		(property "Reference" "U2"
+			(at 207.01 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "EL3H7"
+			(at 207.01 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "UTSVT_ICs:EL3H7"
+			(at 207.01 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
+			(at 207.01 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "EL3H7(D)(TA)-VG"
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" "1.4V"
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" "20mA"
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8bbac9f0-d8a6-46c4-884f-32cd557aa530")
+		)
+		(pin "4"
+			(uuid "a9163cb8-ebdf-4a86-b9cf-ed7c728d9315")
+		)
+		(pin "2"
+			(uuid "90c7a4b3-f2f5-42bb-9a66-bba10e65536d")
+		)
+		(pin "3"
+			(uuid "d554a7fc-b539-4fd6-b641-17322916a76a")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+12V")
 		(at 234.315 34.29 0)
 		(unit 1)
@@ -4380,8 +4557,8 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 222.885 114.3 0)
-		(mirror y)
+		(at 218.44 114.3 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4389,7 +4566,7 @@
 		(dnp no)
 		(uuid "de2011f5-57f7-48e3-8d80-f04061080760")
 		(property "Reference" "C17"
-			(at 219.075 113.0299 0)
+			(at 222.25 115.5701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4398,7 +4575,7 @@
 			)
 		)
 		(property "Value" "0.1u"
-			(at 219.075 115.5699 0)
+			(at 222.25 113.0301 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4407,7 +4584,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 221.9198 118.11 0)
+			(at 219.4052 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4416,7 +4593,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 222.885 114.3 0)
+			(at 218.44 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4425,7 +4602,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 222.885 114.3 0)
+			(at 218.44 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4519,82 +4696,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Isolator:TCMT1106")
-		(at 86.995 108.585 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f2086fc3-39a0-4c30-9874-47d00658ec18")
-		(property "Reference" "U5"
-			(at 86.995 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TCMT1106"
-			(at 86.995 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_SO:SOP-4_4.4x2.6mm_P1.27mm"
-			(at 86.995 116.205 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.vishay.com/docs/83510/tcmt1100.pdf"
-			(at 86.995 109.855 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "Optocoupler, Vce 70V, CTR 100-300%, Viso 3750V (RMS), SOP-4"
-			(at 86.995 108.585 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3aebe044-e564-40f6-97a4-bd4fa29ceca2")
-		)
-		(pin "3"
-			(uuid "f9a2c7dc-0864-4eee-9fa3-e1e05157f590")
-		)
-		(pin "4"
-			(uuid "aa09a79a-07c4-41f1-ac1d-802696de5ea4")
-		)
-		(pin "2"
-			(uuid "42483eae-0dae-4742-a270-4404eb18d0b7")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "U5")
 					(unit 1)
 				)
 			)

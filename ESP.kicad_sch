@@ -5,6 +5,113 @@
 	(uuid "83452ed4-5a58-41d3-b1b6-6c58ea4e1df8")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Connector:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -3757,6 +3864,12 @@
 		(uuid "324a60ec-3821-49d6-bdc0-9e48c4c762ea")
 	)
 	(junction
+		(at 93.345 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "58d631bf-6ba7-4b7b-b73f-a79cbe8b5cbd")
+	)
+	(junction
 		(at 40.64 83.82)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3819,16 +3932,8 @@
 		(uuid "5aca4449-c762-4b72-bc8c-acb2ac7b44be")
 	)
 	(no_connect
-		(at 147.32 71.12)
-		(uuid "6a3003c7-5c44-48bb-9c9c-aa78a1474c8d")
-	)
-	(no_connect
 		(at 203.2 68.58)
 		(uuid "c0338a7f-cef6-4a73-a0bc-1ff443fcb4c5")
-	)
-	(no_connect
-		(at 203.2 86.36)
-		(uuid "cda67eb6-eb88-4fa2-a33d-dc13776ac1b4")
 	)
 	(no_connect
 		(at 203.2 71.12)
@@ -4346,7 +4451,17 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 22.86) (xy 106.045 22.86)
+			(xy 93.345 22.86) (xy 106.045 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84a84995-24c2-4b11-953c-fac50159fbbe")
+	)
+	(wire
+		(pts
+			(xy 88.9 22.86) (xy 93.345 22.86)
 		)
 		(stroke
 			(width 0)
@@ -4383,6 +4498,16 @@
 			(type default)
 		)
 		(uuid "95393f4d-e4a7-423c-ae49-7cb4b9d87961")
+	)
+	(wire
+		(pts
+			(xy 230.505 79.375) (xy 239.395 79.375)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "97b986a5-0c24-4d17-b573-5de3e9cd3d08")
 	)
 	(wire
 		(pts
@@ -4473,6 +4598,16 @@
 			(type default)
 		)
 		(uuid "a6a48012-de4d-4f33-984d-b9312220002c")
+	)
+	(wire
+		(pts
+			(xy 203.2 86.36) (xy 213.36 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a7da08d9-010d-4412-bc14-d203ca6b0567")
 	)
 	(wire
 		(pts
@@ -4766,6 +4901,16 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 71.12) (xy 137.16 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e39ff54b-6976-4204-ac58-b17aaa85977e")
+	)
+	(wire
+		(pts
 			(xy 177.165 132.715) (xy 177.165 140.97)
 		)
 		(stroke
@@ -4886,6 +5031,16 @@
 	)
 	(wire
 		(pts
+			(xy 271.145 68.58) (xy 281.305 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb598e9c-35c8-4e83-97b9-f223e3ed506f")
+	)
+	(wire
+		(pts
 			(xy 201.295 133.35) (xy 201.295 142.24)
 		)
 		(stroke
@@ -4933,6 +5088,16 @@
 			(justify right bottom)
 		)
 		(uuid "054c2386-c5aa-47d6-9c02-c5196e63af53")
+	)
+	(label "IO4"
+		(at 281.305 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0c5bdd72-80e2-43a6-b720-9a9c581efe99")
 	)
 	(label "3V3_USB"
 		(at 36.83 125.73 270)
@@ -5084,6 +5249,16 @@
 		)
 		(uuid "547c1e4e-aa57-41e2-954b-8930ddf07ff6")
 	)
+	(label "LED5"
+		(at 230.505 79.375 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5825a63c-701c-4c4c-864f-9a0486da65e7")
+	)
 	(label "VBUSB"
 		(at 139.7 129.54 0)
 		(effects
@@ -5123,6 +5298,16 @@
 			(justify left bottom)
 		)
 		(uuid "66ee1ed6-f950-4d8f-a886-76a50bdfeb3f")
+	)
+	(label "IO4"
+		(at 137.16 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "683acdf6-955b-4b18-94cf-1b563924c2fb")
 	)
 	(label "LED3"
 		(at 213.36 81.28 180)
@@ -5283,6 +5468,16 @@
 			(justify left bottom)
 		)
 		(uuid "e409fa66-a076-42c9-a47a-904e3be16bf1")
+	)
+	(label "LED5"
+		(at 213.36 86.36 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e5a8978d-0963-4d0b-9d0e-24c4db9df6e9")
 	)
 	(label "5V_USB"
 		(at 215.265 132.715 270)
@@ -7429,6 +7624,72 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 93.345 22.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "aca44e9a-4cc9-45bc-849a-7688cf28b4aa")
+		(property "Reference" "3V31"
+			(at 92.329 14.986 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 92.329 17.272 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "UTSVT_Special:TestPoint_HEX_3mmID"
+			(at 98.425 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 98.425 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 93.345 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f256413e-3ef9-4543-8464-e7e3b815008b")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
+					(reference "3V31")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
 		(at 231.775 144.145 0)
 		(unit 1)
@@ -9002,6 +9263,26 @@
 		(pin "IO12" input
 			(at 271.145 80.01 0)
 			(uuid "893cee39-5ae6-4d7c-be84-957dc7595431")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "LED5" input
+			(at 239.395 79.375 180)
+			(uuid "66a17def-3709-4e8e-9ffa-6dba5e065a1e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "IO4" input
+			(at 271.145 68.58 0)
+			(uuid "eeb52e27-ce9f-4fa5-8378-5e065860347f")
 			(effects
 				(font
 					(size 1.27 1.27)

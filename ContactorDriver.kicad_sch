@@ -3231,7 +3231,7 @@
 				)
 			)
 		)
-		(property "Value" "4k"
+		(property "Value" "4.3k"
 			(at 225.425 35.56 90)
 			(effects
 				(font
@@ -4115,15 +4115,15 @@
 		(fields_autoplaced yes)
 		(uuid "a9262e7e-5a92-4650-a983-1b119078c1b1")
 		(property "Reference" "R16"
-			(at 103.505 32.385 90)
+			(at 103.505 33.02 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "4k"
-			(at 103.505 34.925 90)
+		(property "Value" "4.3k"
+			(at 103.505 35.56 90)
 			(effects
 				(font
 					(size 1.27 1.27)

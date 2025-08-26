@@ -2080,6 +2080,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "Overvoltage Protection: 29.03V\nVovr = (R2 * Vov)/(R1 + R2)\nVov = Vovr * (R1 + R2) / R2\n29.03 = 1.25 * (200k + 9k) / 9k"
+		(exclude_from_sim no)
+		(at 146.685 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "00ab7346-2d75-42a0-b29f-b3848bb6d327")
+	)
 	(text "3v3 injector"
 		(exclude_from_sim no)
 		(at 38.735 93.98 0)
@@ -4399,7 +4409,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4k"
+		(property "Value" "4.3k"
 			(at 193.04 41.2749 0)
 			(effects
 				(font
@@ -4994,15 +5004,15 @@
 		(fields_autoplaced yes)
 		(uuid "be94d869-90f2-4669-bef8-7f9b9e85a653")
 		(property "Reference" "R13"
-			(at 120.65 66.675 90)
+			(at 120.65 66.04 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "8k"
-			(at 120.65 69.215 90)
+		(property "Value" "9k"
+			(at 120.65 68.58 90)
 			(effects
 				(font
 					(size 1.27 1.27)

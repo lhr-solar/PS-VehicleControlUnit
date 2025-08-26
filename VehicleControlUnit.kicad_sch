@@ -20232,7 +20232,7 @@
 					)
 				)
 				(pin output line
-					(at 0 0 0)
+					(at 0 1.27 0)
 					(length 5.08)
 					(name "CH0"
 						(effects
@@ -20241,7 +20241,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -20250,135 +20250,9 @@
 					)
 				)
 				(pin output line
-					(at 0 -2.54 0)
+					(at 0 -1.27 0)
 					(length 5.08)
 					(name "CH1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -5.08 0)
-					(length 5.08)
-					(name "CH2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -7.62 0)
-					(length 5.08)
-					(name "CH3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -10.16 0)
-					(length 5.08)
-					(name "CH4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -12.7 0)
-					(length 5.08)
-					(name "CH5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -15.24 0)
-					(length 5.08)
-					(name "CH6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -17.78 0)
-					(length 5.08)
-					(name "CH7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -20.32 0)
-					(length 5.08)
-					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -20394,7 +20268,115 @@
 					)
 				)
 				(pin output line
-					(at 0 -22.86 0)
+					(at 0 -3.81 0)
+					(length 5.08)
+					(name "CH2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -6.35 0)
+					(length 5.08)
+					(name "CH3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -8.89 0)
+					(length 5.08)
+					(name "CH4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -11.43 0)
+					(length 5.08)
+					(name "CH5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -13.97 0)
+					(length 5.08)
+					(name "CH6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -16.51 0)
+					(length 5.08)
+					(name "CH7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -21.59 0)
 					(length 5.08)
 					(name "GND"
 						(effects
@@ -20403,7 +20385,25 @@
 							)
 						)
 					)
-					(number "10"
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -24.13 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -21759,12 +21759,6 @@
 		(uuid "1e8e6589-56d9-48b2-bb04-9f123d3f0400")
 	)
 	(junction
-		(at 184.785 112.395)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3eb223ad-5678-45e9-8e2e-f2e7d7b52f64")
-	)
-	(junction
 		(at 39.37 175.26)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -21817,6 +21811,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c501b866-4f93-4b54-9014-382667bfd6f4")
+	)
+	(junction
+		(at 184.785 113.665)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c9d978b3-deaf-43eb-aee5-04213de350a0")
 	)
 	(junction
 		(at 115.57 91.44)
@@ -21877,7 +21877,7 @@
 		(uuid "5dc3f37d-c027-4b97-a40f-e1e46324b6db")
 	)
 	(no_connect
-		(at 187.96 102.235)
+		(at 187.96 100.965)
 		(uuid "79eab4b6-6e46-46f2-a429-8178e3c1ed27")
 	)
 	(no_connect
@@ -21918,7 +21918,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 94.615) (xy 187.96 94.615)
+			(xy 175.26 93.345) (xy 187.96 93.345)
 		)
 		(stroke
 			(width 0)
@@ -22418,7 +22418,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 92.075) (xy 187.96 92.075)
+			(xy 175.26 90.805) (xy 187.96 90.805)
 		)
 		(stroke
 			(width 0)
@@ -22548,7 +22548,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.785 112.395) (xy 187.96 112.395)
+			(xy 184.785 113.665) (xy 187.96 113.665)
 		)
 		(stroke
 			(width 0)
@@ -22688,7 +22688,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 99.695) (xy 187.96 99.695)
+			(xy 175.26 98.425) (xy 187.96 98.425)
 		)
 		(stroke
 			(width 0)
@@ -22778,7 +22778,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 89.535) (xy 187.96 89.535)
+			(xy 175.26 88.265) (xy 187.96 88.265)
 		)
 		(stroke
 			(width 0)
@@ -22858,7 +22858,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 107.315) (xy 187.96 107.315)
+			(xy 175.26 106.045) (xy 187.96 106.045)
 		)
 		(stroke
 			(width 0)
@@ -22888,7 +22888,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 97.155) (xy 187.96 97.155)
+			(xy 175.26 95.885) (xy 187.96 95.885)
 		)
 		(stroke
 			(width 0)
@@ -23008,13 +23008,23 @@
 	)
 	(wire
 		(pts
-			(xy 184.785 109.855) (xy 187.96 109.855)
+			(xy 184.785 111.125) (xy 187.96 111.125)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "cb577b9e-e361-4a08-b525-a2db60abc3f7")
+	)
+	(wire
+		(pts
+			(xy 184.785 111.125) (xy 184.785 113.665)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd5daaf9-7868-4150-9696-44f74f245bb9")
 	)
 	(wire
 		(pts
@@ -23178,23 +23188,13 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 104.775) (xy 187.96 104.775)
+			(xy 175.26 103.505) (xy 187.96 103.505)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "f8581ec0-b636-432d-a223-945cff2a765e")
-	)
-	(wire
-		(pts
-			(xy 184.785 109.855) (xy 184.785 112.395)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f862b379-c961-4782-884c-dad5b049a113")
 	)
 	(wire
 		(pts
@@ -24635,6 +24635,24 @@
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 			"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
 		)
 	)
@@ -24699,7 +24717,7 @@
 		(uuid "1dacf1bc-4293-42fc-aea1-2cfcf5553ac2")
 	)
 	(label "ESP_RX"
-		(at 175.26 104.775 0)
+		(at 175.26 103.505 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -24719,7 +24737,7 @@
 		(uuid "207cb29d-0325-41f3-a871-1e381ceb98eb")
 	)
 	(label "M_Sense"
-		(at 175.26 89.535 0)
+		(at 175.26 88.265 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -24739,7 +24757,7 @@
 		(uuid "2d102b29-5595-4d85-a116-aea6051141c6")
 	)
 	(label "MPre_Sense"
-		(at 175.26 94.615 0)
+		(at 175.26 93.345 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -24769,7 +24787,7 @@
 		(uuid "5146a6e2-2a14-40de-a6a4-8b1360f34771")
 	)
 	(label "ESP_TX"
-		(at 175.26 107.315 0)
+		(at 175.26 106.045 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -24819,7 +24837,7 @@
 		(uuid "62a31a0b-fbce-403d-8486-8b23dddff087")
 	)
 	(label "MPre_Enable"
-		(at 175.26 92.075 0)
+		(at 175.26 90.805 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -24939,7 +24957,7 @@
 		(uuid "a8a4722b-ab4a-488a-bb05-ac447f6baf01")
 	)
 	(label "ESP_RESET"
-		(at 175.26 99.695 0)
+		(at 175.26 98.425 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -25069,7 +25087,7 @@
 		(uuid "e19db5c3-77e3-4e9f-8da9-05dbcd117d10")
 	)
 	(label "M_Enable"
-		(at 175.26 97.155 0)
+		(at 175.26 95.885 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -26166,7 +26184,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 208.28 35.5599 0)
 			(effects
 				(font
@@ -26236,7 +26254,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 162.56 35.5599 0)
 			(effects
 				(font
@@ -26786,7 +26804,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 185.42 35.5599 0)
 			(effects
 				(font
@@ -27721,7 +27739,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 196.85 35.5599 0)
 			(effects
 				(font
@@ -27791,7 +27809,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 173.99 35.5599 0)
 			(effects
 				(font
@@ -28552,7 +28570,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 184.785 112.395 0)
+		(at 184.785 113.665 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -28562,7 +28580,7 @@
 		(fields_autoplaced yes)
 		(uuid "d475cfd0-80c7-4eab-a80c-7ca41e47120a")
 		(property "Reference" "#PWR027"
-			(at 184.785 118.745 0)
+			(at 184.785 120.015 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28571,7 +28589,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 184.785 117.475 0)
+			(at 184.785 118.745 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28579,7 +28597,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 184.785 112.395 0)
+			(at 184.785 113.665 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28588,7 +28606,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 184.785 112.395 0)
+			(at 184.785 113.665 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28597,7 +28615,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 184.785 112.395 0)
+			(at 184.785 113.665 0)
 			(effects
 				(font
 					(size 1.27 1.27)

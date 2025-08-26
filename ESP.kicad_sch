@@ -401,156 +401,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D_TVS"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "D"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "D_TVS"
-				(at 0 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Bidirectional transient-voltage-suppression diode"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "diode TVS thyrector"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "D_TVS_0_1"
-				(polyline
-					(pts
-						(xy -2.54 1.27) (xy -2.54 -1.27) (xy 2.54 1.27) (xy 2.54 -1.27) (xy -2.54 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.508 1.27) (xy 0 1.27) (xy 0 -1.27) (xy -0.508 -1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0) (xy -1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "D_TVS_1_1"
-				(pin passive line
-					(at -3.81 0 0)
-					(length 2.54)
-					(name "A1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 3.81 0 180)
-					(length 2.54)
-					(name "A2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:LED"
 			(pin_numbers
 				(hide yes)
@@ -3932,6 +3782,10 @@
 		(uuid "5aca4449-c762-4b72-bc8c-acb2ac7b44be")
 	)
 	(no_connect
+		(at 203.2 86.36)
+		(uuid "96cd2a97-a7a7-4d91-9a9e-e70e3c6dbfc3")
+	)
+	(no_connect
 		(at 203.2 68.58)
 		(uuid "c0338a7f-cef6-4a73-a0bc-1ff443fcb4c5")
 	)
@@ -4501,16 +4355,6 @@
 	)
 	(wire
 		(pts
-			(xy 230.505 79.375) (xy 239.395 79.375)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "97b986a5-0c24-4d17-b573-5de3e9cd3d08")
-	)
-	(wire
-		(pts
 			(xy 69.85 83.82) (xy 82.55 83.82)
 		)
 		(stroke
@@ -4598,16 +4442,6 @@
 			(type default)
 		)
 		(uuid "a6a48012-de4d-4f33-984d-b9312220002c")
-	)
-	(wire
-		(pts
-			(xy 203.2 86.36) (xy 213.36 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a7da08d9-010d-4412-bc14-d203ca6b0567")
 	)
 	(wire
 		(pts
@@ -4951,16 +4785,6 @@
 	)
 	(wire
 		(pts
-			(xy 201.295 149.86) (xy 201.295 153.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ecad14a3-587b-4e32-b6cb-8af6607964b1")
-	)
-	(wire
-		(pts
 			(xy 175.26 96.52) (xy 175.26 97.79)
 		)
 		(stroke
@@ -5038,16 +4862,6 @@
 			(type default)
 		)
 		(uuid "fb598e9c-35c8-4e83-97b9-f223e3ed506f")
-	)
-	(wire
-		(pts
-			(xy 201.295 133.35) (xy 201.295 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fbaa5f1a-c83b-4577-a2c5-bb9f91bc8f22")
 	)
 	(wire
 		(pts
@@ -5179,16 +4993,6 @@
 		)
 		(uuid "2bf13aae-8d1b-4efa-aca1-b7117bd26815")
 	)
-	(label "VBUSB"
-		(at 201.295 133.35 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "2da478f1-a616-4c6f-a4a9-6226ef79ac03")
-	)
 	(label "IO9"
 		(at 137.16 63.5 0)
 		(effects
@@ -5248,16 +5052,6 @@
 			(justify left bottom)
 		)
 		(uuid "547c1e4e-aa57-41e2-954b-8930ddf07ff6")
-	)
-	(label "LED5"
-		(at 230.505 79.375 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5825a63c-701c-4c4c-864f-9a0486da65e7")
 	)
 	(label "VBUSB"
 		(at 139.7 129.54 0)
@@ -5469,16 +5263,6 @@
 		)
 		(uuid "e409fa66-a076-42c9-a47a-904e3be16bf1")
 	)
-	(label "LED5"
-		(at 213.36 86.36 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e5a8978d-0963-4d0b-9d0e-24c4db9df6e9")
-	)
 	(label "5V_USB"
 		(at 215.265 132.715 270)
 		(effects
@@ -5551,14 +5335,14 @@
 	)
 	(hierarchical_label "UART_TX"
 		(shape output)
-		(at 219.71 43.18 0)
+		(at 219.71 45.72 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "67dca23b-5b98-4055-a163-1d4f706f3a22")
+		(uuid "16aedf94-e9ce-4a5f-b787-a727e086be57")
 	)
 	(hierarchical_label "3V3_LSOM"
 		(shape input)
@@ -5595,14 +5379,14 @@
 	)
 	(hierarchical_label "UART_RX"
 		(shape input)
-		(at 219.71 45.72 0)
+		(at 219.71 43.18 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "e1e2ce8a-57b1-4b78-837c-68e2a417d5ef")
+		(uuid "fb0b0a7d-82d8-4f67-a2f0-8adf6a1308d1")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6039,7 +5823,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "450"
 			(at 26.67 142.2399 0)
 			(effects
 				(font
@@ -6242,7 +6026,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "120"
 			(at 39.37 142.2399 0)
 			(effects
 				(font
@@ -8208,72 +7992,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 201.295 153.67 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c096b378-efb2-4e00-8da6-50e61069b4ce")
-		(property "Reference" "#PWR049"
-			(at 201.295 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 201.295 158.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 201.295 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 201.295 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 201.295 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "91be01ac-5882-4fbb-a314-8f3d15cb20a1")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
-					(reference "#PWR049")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 69.85 157.48 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8962,85 +8680,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D_TVS")
-		(at 201.295 146.05 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fa663771-d567-4462-b009-064c03f241a1")
-		(property "Reference" "D6"
-			(at 203.835 144.7799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "TVS"
-			(at 203.835 147.3199 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_0603_1608Metric"
-			(at 201.295 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 201.295 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Bidirectional transient-voltage-suppression diode"
-			(at 201.295 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "P/N" "CPDUC5V0R-HF "
-			(at 201.295 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "36173afc-f64d-41a3-a41d-934962628d2d")
-		)
-		(pin "2"
-			(uuid "7a695ffc-3e90-4f7d-a22a-61836b1b6d17")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
-					(reference "D6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3V3")
 		(at 175.26 26.67 0)
 		(unit 1)
@@ -9268,16 +8907,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-			)
-		)
-		(pin "LED5" input
-			(at 239.395 79.375 180)
-			(uuid "66a17def-3709-4e8e-9ffa-6dba5e065a1e")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 			)
 		)
 		(pin "IO4" input

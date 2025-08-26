@@ -967,7 +967,7 @@
 					)
 				)
 				(pin output line
-					(at 0 0 0)
+					(at 0 1.27 0)
 					(length 5.08)
 					(name "CH0"
 						(effects
@@ -976,7 +976,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -985,135 +985,9 @@
 					)
 				)
 				(pin output line
-					(at 0 -2.54 0)
+					(at 0 -1.27 0)
 					(length 5.08)
 					(name "CH1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -5.08 0)
-					(length 5.08)
-					(name "CH2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -7.62 0)
-					(length 5.08)
-					(name "CH3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -10.16 0)
-					(length 5.08)
-					(name "CH4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -12.7 0)
-					(length 5.08)
-					(name "CH5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -15.24 0)
-					(length 5.08)
-					(name "CH6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -17.78 0)
-					(length 5.08)
-					(name "CH7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin output line
-					(at 0 -20.32 0)
-					(length 5.08)
-					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1129,7 +1003,115 @@
 					)
 				)
 				(pin output line
-					(at 0 -22.86 0)
+					(at 0 -3.81 0)
+					(length 5.08)
+					(name "CH2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -6.35 0)
+					(length 5.08)
+					(name "CH3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -8.89 0)
+					(length 5.08)
+					(name "CH4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -11.43 0)
+					(length 5.08)
+					(name "CH5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -13.97 0)
+					(length 5.08)
+					(name "CH6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -16.51 0)
+					(length 5.08)
+					(name "CH7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -21.59 0)
 					(length 5.08)
 					(name "GND"
 						(effects
@@ -1138,7 +1120,25 @@
 							)
 						)
 					)
-					(number "10"
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 0 -24.13 0)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2043,7 +2043,7 @@
 		(uuid "fc27e647-5643-467a-9988-d7752db10329")
 	)
 	(junction
-		(at 236.855 104.775)
+		(at 236.855 106.045)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "26f348fb-66c6-4a9d-87f9-964b4c312b8b")
@@ -2086,7 +2086,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 89.535) (xy 241.935 89.535)
+			(xy 238.125 88.265) (xy 241.935 88.265)
 		)
 		(stroke
 			(width 0)
@@ -2136,7 +2136,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 92.075) (xy 241.935 92.075)
+			(xy 238.125 90.805) (xy 241.935 90.805)
 		)
 		(stroke
 			(width 0)
@@ -2216,7 +2216,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 94.615) (xy 241.935 94.615)
+			(xy 238.125 93.345) (xy 241.935 93.345)
 		)
 		(stroke
 			(width 0)
@@ -2236,7 +2236,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 84.455) (xy 241.935 84.455)
+			(xy 238.125 83.185) (xy 241.935 83.185)
 		)
 		(stroke
 			(width 0)
@@ -2256,7 +2256,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.855 102.235) (xy 236.855 104.775)
+			(xy 236.855 103.505) (xy 236.855 106.045)
 		)
 		(stroke
 			(width 0)
@@ -2286,7 +2286,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 99.695) (xy 241.935 99.695)
+			(xy 238.125 98.425) (xy 241.935 98.425)
 		)
 		(stroke
 			(width 0)
@@ -2316,7 +2316,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.855 104.775) (xy 241.935 104.775)
+			(xy 236.855 106.045) (xy 241.935 106.045)
 		)
 		(stroke
 			(width 0)
@@ -2326,7 +2326,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 81.915) (xy 241.935 81.915)
+			(xy 238.125 80.645) (xy 241.935 80.645)
 		)
 		(stroke
 			(width 0)
@@ -2356,7 +2356,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 97.155) (xy 241.935 97.155)
+			(xy 238.125 95.885) (xy 241.935 95.885)
 		)
 		(stroke
 			(width 0)
@@ -2366,7 +2366,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.125 86.995) (xy 241.935 86.995)
+			(xy 238.125 85.725) (xy 241.935 85.725)
 		)
 		(stroke
 			(width 0)
@@ -2386,7 +2386,7 @@
 	)
 	(wire
 		(pts
-			(xy 241.935 102.235) (xy 236.855 102.235)
+			(xy 241.935 103.505) (xy 236.855 103.505)
 		)
 		(stroke
 			(width 0)
@@ -2427,7 +2427,7 @@
 	)
 	(hierarchical_label "IO9"
 		(shape input)
-		(at 238.125 89.535 180)
+		(at 238.125 88.265 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2460,7 +2460,7 @@
 	)
 	(hierarchical_label "IO5"
 		(shape input)
-		(at 238.125 99.695 180)
+		(at 238.125 98.425 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2471,7 +2471,7 @@
 	)
 	(hierarchical_label "IO4"
 		(shape input)
-		(at 238.125 97.155 180)
+		(at 238.125 95.885 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2493,7 +2493,7 @@
 	)
 	(hierarchical_label "IO10"
 		(shape input)
-		(at 238.125 81.915 180)
+		(at 238.125 80.645 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2515,7 +2515,7 @@
 	)
 	(hierarchical_label "IO6"
 		(shape input)
-		(at 238.125 92.075 180)
+		(at 238.125 90.805 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2526,7 +2526,7 @@
 	)
 	(hierarchical_label "IO7"
 		(shape input)
-		(at 238.125 94.615 180)
+		(at 238.125 93.345 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2548,7 +2548,7 @@
 	)
 	(hierarchical_label "IO12"
 		(shape input)
-		(at 238.125 84.455 180)
+		(at 238.125 83.185 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2559,7 +2559,7 @@
 	)
 	(hierarchical_label "IO8"
 		(shape input)
-		(at 238.125 86.995 180)
+		(at 238.125 85.725 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2795,7 +2795,7 @@
 		(fields_autoplaced yes)
 		(uuid "2cb23110-fd53-4fc2-ada6-18e3ae8296f1")
 		(property "Reference" "R24"
-			(at 131.445 82.5499 0)
+			(at 130.81 82.5499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2803,8 +2803,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
-			(at 131.445 85.0899 0)
+		(property "Value" "120"
+			(at 130.81 85.0899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3126,7 +3126,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 236.855 104.775 0)
+		(at 236.855 106.045 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3135,7 +3135,7 @@
 		(fields_autoplaced yes)
 		(uuid "696a2a75-966b-4681-94fd-f97cd0a51b59")
 		(property "Reference" "#PWR067"
-			(at 236.855 111.125 0)
+			(at 236.855 112.395 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3144,7 +3144,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 236.855 109.855 0)
+			(at 236.855 111.125 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3152,7 +3152,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 236.855 104.775 0)
+			(at 236.855 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3161,7 +3161,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 236.855 104.775 0)
+			(at 236.855 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3170,7 +3170,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 236.855 104.775 0)
+			(at 236.855 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3338,7 +3338,7 @@
 		(fields_autoplaced yes)
 		(uuid "6da2059e-ccf5-44d1-bd1a-708695a78dba")
 		(property "Reference" "R25"
-			(at 142.875 82.5499 0)
+			(at 142.24 82.5499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3346,8 +3346,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
-			(at 142.875 85.0899 0)
+		(property "Value" "120"
+			(at 142.24 85.0899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3554,7 +3554,7 @@
 		(fields_autoplaced yes)
 		(uuid "7c68d4de-cb7d-4ea4-a92c-e18a2443d8cd")
 		(property "Reference" "R26"
-			(at 154.305 82.5499 0)
+			(at 153.67 82.5499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3562,8 +3562,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
-			(at 154.305 85.0899 0)
+		(property "Value" "120"
+			(at 153.67 85.0899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3794,7 +3794,7 @@
 		(fields_autoplaced yes)
 		(uuid "9cd39903-8db5-4401-9809-783626a7615b")
 		(property "Reference" "R27"
-			(at 165.735 82.5499 0)
+			(at 165.1 82.5499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3802,8 +3802,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1k"
-			(at 165.735 85.0899 0)
+		(property "Value" "120"
+			(at 165.1 85.0899 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -5508,6 +5508,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW06031K00FKEI"
+			(at 52.705 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
+			(at 52.705 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "12c9f173-1b04-4cbb-9f17-9d28bfcb5f57")
 		)
@@ -5575,6 +5591,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "HMK107B7104KA-T"
+			(at 54.61 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 54.61 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -5647,13 +5679,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "UMK107B7104KAHT "
+		(property "P/N" "HMK107B7104KA-T"
 			(at 106.045 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 106.045 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -5859,6 +5899,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW1206470RFKEA"
+			(at 24.13 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW1206-470-E3"
+			(at 24.13 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "6b7dd315-02e3-4b9f-9703-0ee83159b1f2")
 		)
@@ -6062,6 +6118,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 36.83 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 36.83 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "ee0480df-7e89-4f37-97a1-83f7f4505a51")
 		)
@@ -6193,6 +6265,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW060310K0FKEI"
+			(at 99.695 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW060310K0FKEI"
+			(at 99.695 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "2"
@@ -6425,13 +6513,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "UMK107B7104KAHT "
+		(property "P/N" "HMK107B7104KA-T"
 			(at 43.18 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 43.18 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -6511,6 +6607,14 @@
 				(hide yes)
 			)
 		)
+		(property "Mouser Part Number" " 621-1N5819HW-F"
+			(at 149.86 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "bbc0d162-9ecf-4f0d-8b60-4c37402db43e")
 		)
@@ -6579,13 +6683,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "LT1963AEST-3.3#TRPBF "
+		(property "P/N" "LT1963AEST-3.3#TRPBF"
 			(at 55.88 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "584-1963AEST-3.3TPF"
+			(at 55.88 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "2"
@@ -6661,7 +6773,7 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "HSML-C191"
+		(property "P/N" "XL-1608UBC-06A"
 			(at 36.83 151.13 90)
 			(effects
 				(font
@@ -6814,13 +6926,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "UMK107B7104KAHT "
+		(property "P/N" "HMK107B7104KA-T"
 			(at 33.655 29.845 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 33.655 29.845 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -6893,7 +7013,7 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "HSML-C191"
+		(property "P/N" "XL-1608UBC-06A"
 			(at 24.13 151.13 90)
 			(effects
 				(font
@@ -6986,6 +7106,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "640-USB4215-03-A"
+			(at 124.46 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "B5"
@@ -7371,6 +7499,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "TPS2115ADRBR"
+			(at 71.12 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "595-TPS2115ADRBR"
+			(at 71.12 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "9"
 			(uuid "2400ad5a-1370-4072-a346-d5b342e4e564")
 		)
@@ -7412,9 +7556,9 @@
 		(at 93.345 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "aca44e9a-4cc9-45bc-849a-7688cf28b4aa")
 		(property "Reference" "3V31"
 			(at 92.329 14.986 0)
@@ -7526,6 +7670,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW06035K10FKEC"
+			(at 231.775 144.145 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW06035K10FKEC"
+			(at 231.775 144.145 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "2"
@@ -7663,7 +7823,7 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "MLAST168BB5106MTNA01"
+		(property "P/N" "GRM21BR61H106KE43K"
 			(at 69.85 88.9 0)
 			(effects
 				(font
@@ -7679,6 +7839,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 69.85 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -7749,6 +7917,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "ESP32-C6-MINI-1U-N4"
+			(at 177.8 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 356-ESP32-C6MINI1UN4"
+			(at 177.8 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "3"
@@ -7975,6 +8159,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "GRM21BR61H106KE43K"
+			(at 69.85 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 69.85 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "0f0b961f-6c2a-4d32-8146-91266cd39230")
 		)
@@ -8176,13 +8376,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "MLAST168BB5106MTNA01"
+		(property "P/N" "GRM21BR61H106KE43K"
 			(at 215.265 145.415 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 215.265 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "2"
@@ -8586,6 +8794,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW06035K10FKEC"
+			(at 241.935 144.145 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW06035K10FKEC"
+			(at 241.935 144.145 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "4c116e4f-3209-4583-bb2b-0290589afeee")
 		)
@@ -8655,13 +8879,21 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "UMK107B7104KAHT "
+		(property "P/N" "GRM21BR61H106KE43K"
 			(at 40.64 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 40.64 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"

@@ -2621,6 +2621,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CJS-1200TA"
+			(at 71.12 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "229-CJS-1200TA"
+			(at 71.12 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "9aed0775-19d4-4961-bc42-27dec3d481ac")
 		)
@@ -2769,6 +2785,14 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 128.905 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "8a31be9f-3ace-4d33-8ccb-28053b484c2e")
 		)
@@ -2837,6 +2861,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 128.905 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 128.905 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -3040,6 +3080,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "HMK107B7104KA-T"
+			(at 60.96 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 60.96 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -3246,6 +3302,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW060310K0FKEI"
+			(at 60.96 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW060310K0FKEI"
+			(at 60.96 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "1d3bc2e2-19e2-4d86-bc52-9f9f425854ec")
 		)
@@ -3382,6 +3454,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 140.335 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 140.335 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "2fa7e63d-e387-4aa9-b37c-45740a52007f")
 		)
@@ -3459,6 +3547,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 140.335 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -3596,6 +3692,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 151.765 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 151.765 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -3838,6 +3950,22 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 163.195 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 163.195 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "c9d50d2e-1f29-4b32-be9e-3f1519a6e522")
 		)
@@ -3905,6 +4033,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "EVQ-7Q203W"
+			(at 71.12 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "667-EVQ-7Q203W"
+			(at 71.12 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "2"
@@ -3990,6 +4134,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 163.195 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
@@ -4138,6 +4290,14 @@
 				(hide yes)
 			)
 		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 151.765 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "9fde54a4-5683-459b-8935-cf970a4fd0b0")
 		)
@@ -4271,6 +4431,22 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW060310K0FKEI"
+			(at 60.325 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW060310K0FKEI"
+			(at 60.325 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"

@@ -1,4 +1,4 @@
-# ----- Contactor Board Makefile -----
+# ----- BPS-Leader Makefile -----
 
 # crazy colors ------------------
 RED=\033[0;31m
@@ -16,25 +16,24 @@ NC=\033[0m # No Color
 
 # Project Configuration ----------
 TEST ?= main
-PROJECT_TARGET ?= stm32G473RE
-#stm32G473RET6
+PROJECT_TARGET ?= stm32g473gre
 
 # source and include directories
 PROJECT_C_INCLUDES = $(wildcard */Inc)
 PROJECT_C_SOURCES = $(wildcard */Src/*.c)
 
 # build directories
-PROJECT_BUILD_DIR = Build
+PROJECT_BUILD_DIR = build
 BUILD_MAKEFILE_DIR = Embedded-Sharepoint
 
 # generate paths
 MAKEFILE_DIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-PROJECT_MAIN_DIR ?= Apps/Src/main
+PROJECT_MAIN_DIR ?= core/Src/main
 
 ifneq ($(TEST), main)
 PROJECT_C_SOURCES := $(filter-out $(PROJECT_MAIN_DIR).c, $(PROJECT_C_SOURCES))
-PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES) Tests/Test_$(TEST).c)
+PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES) tests/$(TEST).c)
 else
 PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES))
 endif
@@ -43,12 +42,6 @@ endif
 ifeq ($(PRINT_DEBUG), true)
 $(info SOURCES: $(PROJECT_C_SOURCES))
 $(info INCLUDES: $(PROJECT_C_INCLUDES))
-endif
-
-CAN_LOOPBACK ?= 0
-
-ifeq ($(CAN_LOOPBACK), 1)
-CFLAGS += -DCAN_LOOPBACK
 endif
 
 # generate paths (cont.d)
@@ -69,11 +62,15 @@ BEAR_PREFIX :=
 BEAR_INSTALLED := $(shell command -v bear >/dev/null 2>&1 && echo yes || echo no)
 
 # define path of .vscode
-VS_CODE_DIR := $(realpath .vscode/)
+VS_CODE_DIR := $(realpath ../.vscode/)
 
-# ifeq ($(BEAR_INSTALLED),yes)
-# BEAR_PREFIX := bear --output $(VS_CODE_DIR)/compile_commands.json --append --
-# endif
+ifeq ($(BEAR_INSTALLED),yes)
+	ifneq ($(VS_CODE_DIR),)
+		BEAR_PREFIX := bear --output $(VS_CODE_DIR)/compile_commands.json --append --
+	endif
+else
+	BEAR_PREFIX :=
+endif
 
 
 # Build --------------------------
@@ -86,16 +83,17 @@ else
 	$(BEAR_PREFIX) $(MAKE) -C $(BUILD_MAKEFILE_DIR) $(MAKECMDGOALS)
 endif
 
-
 build_code:
+ifndef VOLTTEMP
+	$(error VOLTTEMP is not defined. Please provide a volttemp to build for. Run make help for more information.)
+endif
 ifneq ($(TEST), main)
 	@echo "Making ${PURPLE}$(PROJECT_TARGET)${NC}build for ${BLUE}TEST=${PURPLE} ${TEST}${NC}"
 else
 	@echo "Making ${PURPLE}$(PROJECT_TARGET)${NC}build with ${ORANGE}no test.${NC}"
 endif
-	@echo "CAN Loopback is set to ${GREEN}$(CAN_LOOPBACK)${NC}"
-	$(BEAR_PREFIX) $(MAKE) -C $(BUILD_MAKEFILE_DIR) all -j
-	@echo "${BLUE}Compiled for Contactor Board! Splendid! Jolly Good!!${NC}"
+	$(BEAR_PREFIX) $(MAKE) -C $(BUILD_MAKEFILE_DIR) VERBOSE=1 all -j
+	@echo "${BLUE}Compiled! Splendid! Jolly Good!!${NC}"
 #---------------------------------
 
 
@@ -107,20 +105,11 @@ flash:
 # Help
 .PHONY: help
 help:
-	@echo "Format: ${ORANGE}make  ${GREEN}PROJECT_TARGET=${PURPLE}<stm-target>${NC} ${BLUE}TEST=${PURPLE}<Test name>${NC}"
-	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' will compile the production code."
-	@echo "- Specify ${GREEN}TARGET${NC}if different than default; ${BLUE}TEST${NC}is optional. \n"
-
-	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32l432kcu${NC}):"
-	@echo "- Specify stm32 target by entering the full stm chip number.\n"
+	@echo "Format: ${ORANGE}make ${GREEN}VOLTTEMP=${PURPLE}<volttemp target (0-7)>${NC} ${BLUE}TEST=${PURPLE}<Test name>${NC}"
 
 	@echo "${BLUE}TEST${NC}( OPTIONAL ):"
 	@echo "- If you want to run a test, specify ${BLUE}TEST=${PURPLE}<Test name>${NC}, with ${PURPLE}<Test name>${NC}"
-	@echo "   being the exact name of the test file ${RED} without${NC} \"TEST_\" or the .c suffix.\n"
-	@echo "PRINT_DEBUG:"
-	@echo "- For debugs, specify ${BLUE}PRINT_DEBUG=${PURPLE}true${NC}."
-	@echo "- For now, this will print the directories that will be compiled (can be useful for troubleshooting)."
-
+	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix.\n"
 #-------------- 
 # Documentation
 # .PHONY: docs

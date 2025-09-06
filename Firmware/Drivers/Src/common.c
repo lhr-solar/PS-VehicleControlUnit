@@ -1,5 +1,8 @@
 #include "common.h"
-#include "stm32xx_hal.h"
+#include "StatusLEDs.h"
+#include "Contactors.h"
+#include "CANMetaData.h"
+#include "ContactorTask.h"
 
 void gpio_clock_enable(uint32_t port){
     switch (port) {

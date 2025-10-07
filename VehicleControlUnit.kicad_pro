@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 1.15,
-          "width": 0.6
+          "height": 0.635,
+          "width": 0.51
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -515,7 +515,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "VehicleControlUnit.step",
       "svg": "",
       "vrml": ""
     },

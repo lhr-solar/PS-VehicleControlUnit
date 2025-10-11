@@ -3167,6 +3167,7 @@
 	(symbol
 		(lib_id "UTSVT_Power:PSMN8R5-40MSDX")
 		(at 92.075 32.385 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3174,7 +3175,7 @@
 		(dnp no)
 		(uuid "2ded5c2c-d7d9-4074-a972-b28edbce3ec7")
 		(property "Reference" "Q1"
-			(at 83.947 25.273 0)
+			(at 100.203 25.273 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3183,7 +3184,7 @@
 			)
 		)
 		(property "Value" "PSMN8R5-40MSDX"
-			(at 83.82 27.94 0)
+			(at 100.33 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3192,7 +3193,7 @@
 			)
 		)
 		(property "Footprint" "UTSVT_Power:PSMN8R5-40MSDX"
-			(at 113.665 127.305 0)
+			(at 70.485 127.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3202,7 +3203,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PSMN8R5-40MSD.pdf"
-			(at 113.665 227.305 0)
+			(at 70.485 227.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3212,7 +3213,7 @@
 			)
 		)
 		(property "Description" "MOSFETs PSMN8R5-40MSD/SOT1210/mLFPAK"
-			(at 93.091 20.955 0)
+			(at 91.059 20.955 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3221,7 +3222,7 @@
 			)
 		)
 		(property "Height" "1"
-			(at 113.665 427.305 0)
+			(at 70.485 427.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3231,7 +3232,7 @@
 			)
 		)
 		(property "Mouser Part Number" "771-PSMN8R5-40MSDX"
-			(at 113.665 527.305 0)
+			(at 70.485 527.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3241,7 +3242,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Nexperia/PSMN8R5-40MSDX?qs=vHuUswq2%252BswjdnYdBdHaPw%3D%3D"
-			(at 113.665 627.305 0)
+			(at 70.485 627.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3251,7 +3252,7 @@
 			)
 		)
 		(property "Manufacturer_Name" "Nexperia"
-			(at 113.665 727.305 0)
+			(at 70.485 727.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3261,7 +3262,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" "PSMN8R5-40MSDX"
-			(at 113.665 827.305 0)
+			(at 70.485 827.305 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -2120,12 +2120,6 @@
 		(uuid "539d1f93-8895-4d1b-8993-ea1a203928e2")
 	)
 	(junction
-		(at 62.865 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "617c9869-62e4-4087-afe4-b4f169300dad")
-	)
-	(junction
 		(at 106.68 33.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2142,12 +2136,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c27d28eb-1de8-4cb5-b014-8cdfa2bc1fba")
-	)
-	(junction
-		(at 62.865 68.58)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d1e8d1ee-41cd-4fbb-bae2-68ef5b15d38d")
 	)
 	(junction
 		(at 71.12 33.02)
@@ -2209,33 +2197,13 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 68.58) (xy 55.88 69.215)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1bc23fa1-f5ae-4bfa-85ff-9316f9c5abb0")
-	)
-	(wire
-		(pts
-			(xy 55.88 68.58) (xy 62.865 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1f09fab4-5b36-4232-ad58-364904373760")
-	)
-	(wire
-		(pts
 			(xy 62.865 68.58) (xy 62.865 69.215)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "25919b01-a94e-4911-9ccb-8ba7b0ddf462")
+		(uuid "1bc23fa1-f5ae-4bfa-85ff-9316f9c5abb0")
 	)
 	(wire
 		(pts
@@ -2296,16 +2264,6 @@
 			(type default)
 		)
 		(uuid "5677f226-6ef8-48f8-ab00-c40221044c4f")
-	)
-	(wire
-		(pts
-			(xy 55.88 77.47) (xy 62.865 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "56ab3482-45fc-4a1d-bbeb-84c5642915a1")
 	)
 	(wire
 		(pts
@@ -2459,26 +2417,6 @@
 	)
 	(wire
 		(pts
-			(xy 62.865 76.835) (xy 62.865 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bc4abede-edba-4f1f-8fa2-dd539ea9eeff")
-	)
-	(wire
-		(pts
-			(xy 62.865 77.47) (xy 62.865 78.105)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bf72fcb6-3bcf-46d6-ac43-2b6477613f14")
-	)
-	(wire
-		(pts
 			(xy 43.815 104.14) (xy 50.165 104.14)
 		)
 		(stroke
@@ -2549,7 +2487,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 77.47) (xy 55.88 76.835)
+			(xy 62.865 76.835) (xy 62.865 78.105)
 		)
 		(stroke
 			(width 0)
@@ -4059,135 +3997,6 @@
 		)
 	)
 	(symbol
-		(lib_id "UTSVT_Power:SMAF4749A-TP")
-		(at 62.865 66.675 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "87e68d8b-dc9b-4397-8ede-f5938e2e08b6")
-		(property "Reference" "Z1"
-			(at 61.595 66.675 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "SMAF4751A-TP"
-			(at 53.975 64.77 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "UTSVT_Passives:SODFL5026X125N"
-			(at -30.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mccsemi.com/pdf/Products/SMAF4735A_SMAF4764A(DO-221AC).pdf"
-			(at -130.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Description" "1.0 Watt Zener Diodes 6.2V to 100V"
-			(at 62.865 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" "1.25"
-			(at -330.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "833-SMAF4749A-TP"
-			(at -430.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Micro-Commercial-Components-MCC/SMAF4749A-TP?qs=%252BXxaIXUDbq1bdSZ3Ebik%2FA%3D%3D"
-			(at -530.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "MCC"
-			(at -630.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" "SMAF4749A-TP"
-			(at -730.785 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "P/N" "SMAF4751A-TP"
-			(at 62.865 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "16479629-beb0-4289-bcb3-e84e92a5844f")
-		)
-		(pin "2"
-			(uuid "eba73000-779b-406f-8f94-d2b79e836888")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "Z1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 216.535 45.085 0)
 		(unit 1)
@@ -4993,17 +4802,16 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 55.88 73.025 0)
+		(at 62.865 73.025 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "c99346f3-cf25-4b2b-b50c-e7e063bd40c1")
 		(property "Reference" "C20"
-			(at 52.07 71.7549 0)
+			(at 59.055 71.7549 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5012,7 +4820,7 @@
 			)
 		)
 		(property "Value" "1u"
-			(at 52.07 74.2949 0)
+			(at 59.055 74.2949 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5021,7 +4829,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 56.8452 69.215 0)
+			(at 63.8302 69.215 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5030,7 +4838,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 55.88 73.025 0)
+			(at 62.865 73.025 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5039,7 +4847,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 55.88 73.025 0)
+			(at 62.865 73.025 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5048,7 +4856,7 @@
 			)
 		)
 		(property "P/N" "UMK107BJ105KA-T"
-			(at 55.88 73.025 0)
+			(at 59.69 75.565 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5056,7 +4864,7 @@
 			)
 		)
 		(property "Mouser Part Number" "963-UMK107BJ105KA-T"
-			(at 55.88 73.025 0)
+			(at 61.595 75.565 0)
 			(effects
 				(font
 					(size 1.27 1.27)

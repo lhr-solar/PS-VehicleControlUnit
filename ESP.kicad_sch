@@ -3762,16 +3762,12 @@
 		(uuid "f71e0ace-6dab-4225-900e-031baea4aef2")
 	)
 	(no_connect
-		(at 203.2 63.5)
-		(uuid "1dcab778-e617-4048-9c5b-d8983726fb3c")
-	)
-	(no_connect
 		(at 139.7 160.02)
 		(uuid "2244dbca-8cc8-4780-b5ef-9a3b66d778b4")
 	)
 	(no_connect
-		(at 203.2 66.04)
-		(uuid "286093d6-64e3-4045-907d-48ffb23803c6")
+		(at 203.2 73.66)
+		(uuid "2d3e0b5d-de08-4242-bc38-224461ef21b2")
 	)
 	(no_connect
 		(at 139.7 157.48)
@@ -3832,6 +3828,16 @@
 			(type default)
 		)
 		(uuid "015cf723-54de-42ae-9742-153c091fb9ee")
+	)
+	(wire
+		(pts
+			(xy 203.2 66.04) (xy 213.36 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "02208115-ed41-4c96-8f8d-138225ae0d35")
 	)
 	(wire
 		(pts
@@ -3972,16 +3978,6 @@
 			(type default)
 		)
 		(uuid "21709bb5-f2db-426a-9489-8312b0319495")
-	)
-	(wire
-		(pts
-			(xy 203.2 73.66) (xy 213.36 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21e3f476-4a87-4f16-af98-00a87698a40a")
 	)
 	(wire
 		(pts
@@ -4242,6 +4238,16 @@
 			(type default)
 		)
 		(uuid "74465fff-b598-41b7-8a87-345b07a9ea28")
+	)
+	(wire
+		(pts
+			(xy 207.645 63.5) (xy 203.2 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "75c757ad-8a93-4820-8862-31dcb1ba3757")
 	)
 	(wire
 		(pts
@@ -5103,6 +5109,16 @@
 		)
 		(uuid "683acdf6-955b-4b18-94cf-1b563924c2fb")
 	)
+	(label "BOOT"
+		(at 213.36 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6a4cb4ed-d02a-4424-9f0c-29e3c21f9bcc")
+	)
 	(label "LED3"
 		(at 213.36 81.28 180)
 		(effects
@@ -5302,16 +5318,6 @@
 			(justify right bottom)
 		)
 		(uuid "f4c74bb9-3ad0-4cb9-bd2d-e262ebe4bf58")
-	)
-	(label "BOOT"
-		(at 213.36 73.66 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fc425d92-d00c-478c-be24-406c9f4e8066")
 	)
 	(label "IO10"
 		(at 137.16 55.88 0)
@@ -6867,6 +6873,72 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
 					(reference "#PWR050")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 207.645 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7b78884f-6cc2-4d8f-8d7e-4e77ffe22183")
+		(property "Reference" "#PWR072"
+			(at 207.645 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 207.645 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.645 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.645 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 207.645 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fd05c71f-9ff4-47e4-abac-07ae1318f1ab")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
+					(reference "#PWR072")
 					(unit 1)
 				)
 			)

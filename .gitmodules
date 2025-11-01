@@ -1,9 +1,1 @@
-[submodule "VehicleContolUnitLib/UTSVT-KiCadLibraries"]
-	path = VehicleContolUnitLib/UTSVT-KiCadLibraries
-	url = git@github.com:lhr-solar/UTSVT-KiCadLibraries.git
-[submodule "VehicleControlUnitLib/UTSVT-KiCadLibraries"]
-	path = VehicleControlUnitLib/UTSVT-KiCadLibraries
-	url = git@github.com:lhr-solar/UTSVT-KiCadLibraries.git
-[submodule "KiCAD-Bild"]
-	path = KiCAD-Bild
-	url = https://github.com/lhr-solar/KiCAD-Bild.git
+

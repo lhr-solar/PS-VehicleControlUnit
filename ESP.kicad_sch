@@ -1284,6 +1284,63 @@
 					)
 				)
 				(pin passive line
+					(at -7.62 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "Shield"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "S2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "Shield"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "S3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 -22.86 90)
+					(length 5.08)
+					(hide yes)
+					(name "Shield"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "S4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
 					(at 0 -22.86 90)
 					(length 5.08)
 					(name "GND"
@@ -4241,16 +4298,6 @@
 	)
 	(wire
 		(pts
-			(xy 207.645 63.5) (xy 203.2 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "75c757ad-8a93-4820-8862-31dcb1ba3757")
-	)
-	(wire
-		(pts
 			(xy 33.655 22.86) (xy 33.655 26.035)
 		)
 		(stroke
@@ -4748,6 +4795,16 @@
 			(type default)
 		)
 		(uuid "e39ff54b-6976-4204-ac58-b17aaa85977e")
+	)
+	(wire
+		(pts
+			(xy 217.17 63.5) (xy 203.2 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e4845278-9a84-409a-90aa-7af12d268e11")
 	)
 	(wire
 		(pts
@@ -5487,7 +5544,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 53.721 43.434 90)
 			(effects
 				(font
@@ -5546,6 +5603,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_US")
+		(at 217.17 59.69 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "195163a8-24a0-4c96-9920-a1928e6a38c6")
+		(property "Reference" "R30"
+			(at 219.71 58.4199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 219.71 60.9599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 216.154 59.436 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "73cb7bc0-5221-45f6-a5b4-88b694ce6aeb")
+		)
+		(pin "2"
+			(uuid "9ffe831c-9757-4420-8f48-37af96854d91")
+		)
+		(instances
+			(project ""
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/6282503b-e4ab-454b-a074-f701a067f39b"
+					(reference "R30")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 54.61 147.32 0)
 		(unit 1)
@@ -5572,7 +5699,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 55.5752 151.13 0)
 			(effects
 				(font
@@ -5658,7 +5785,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 107.0102 38.1 0)
 			(effects
 				(font
@@ -5878,7 +6005,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 25.146 141.224 90)
 			(effects
 				(font
@@ -6097,7 +6224,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 37.846 141.224 90)
 			(effects
 				(font
@@ -6246,7 +6373,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 99.441 28.956 90)
 			(effects
 				(font
@@ -6492,7 +6619,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 44.1452 35.56 0)
 			(effects
 				(font
@@ -6880,7 +7007,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 207.645 63.5 0)
+		(at 217.17 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6889,7 +7016,7 @@
 		(fields_autoplaced yes)
 		(uuid "7b78884f-6cc2-4d8f-8d7e-4e77ffe22183")
 		(property "Reference" "#PWR072"
-			(at 207.645 67.31 0)
+			(at 217.17 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6898,7 +7025,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 207.645 58.42 0)
+			(at 217.17 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6906,7 +7033,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 207.645 63.5 0)
+			(at 217.17 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6915,7 +7042,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 207.645 63.5 0)
+			(at 217.17 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6924,7 +7051,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 207.645 63.5 0)
+			(at 217.17 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6971,7 +7098,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 34.6202 33.655 0)
 			(effects
 				(font
@@ -7238,6 +7365,15 @@
 		)
 		(pin "S1"
 			(uuid "a96a44d3-7ec9-4fb2-a284-f6966e6d2545")
+		)
+		(pin "S3"
+			(uuid "d7635471-798c-4ca5-b5b2-77278f8ef8dd")
+		)
+		(pin "S4"
+			(uuid "702d551c-06b0-48af-815c-44abe69c2188")
+		)
+		(pin "S2"
+			(uuid "97cc391d-ba02-459e-b662-db8c5209344c")
 		)
 		(instances
 			(project "VehicleControlUnit"
@@ -7717,7 +7853,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 232.791 144.399 90)
 			(effects
 				(font
@@ -7868,7 +8004,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 70.8152 92.71 0)
 			(effects
 				(font
@@ -8204,7 +8340,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 68.8848 151.13 0)
 			(effects
 				(font
@@ -8421,7 +8557,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 216.2302 149.225 0)
 			(effects
 				(font
@@ -8839,7 +8975,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 242.951 144.399 90)
 			(effects
 				(font
@@ -8924,7 +9060,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 41.6052 92.71 0)
 			(effects
 				(font

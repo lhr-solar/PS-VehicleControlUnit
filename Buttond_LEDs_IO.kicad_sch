@@ -2425,16 +2425,16 @@
 		)
 		(uuid "03db9ea0-494a-4c34-a218-d616a5b4644b")
 	)
-	(hierarchical_label "IO9"
+	(hierarchical_label "IO5"
 		(shape input)
-		(at 238.125 88.265 180)
+		(at 238.125 83.185 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "1a6f70ed-934a-49fe-94a6-5627ed345140")
+		(uuid "0bc61a7c-989c-49e7-97df-048ca237cb0a")
 	)
 	(hierarchical_label "BOOT"
 		(shape output)
@@ -2447,6 +2447,28 @@
 		)
 		(uuid "1d14b99a-7852-4410-8b6b-80e9eaab0727")
 	)
+	(hierarchical_label "IO10"
+		(shape input)
+		(at 238.125 95.885 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2ea95d89-37fd-40b9-8417-cb2b4cdd0770")
+	)
+	(hierarchical_label "IO9"
+		(shape input)
+		(at 238.125 93.345 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3a14b3a5-8972-49f5-9167-6adf0800e983")
+	)
 	(hierarchical_label "Reset"
 		(shape output)
 		(at 49.53 63.5 180)
@@ -2458,27 +2480,16 @@
 		)
 		(uuid "4e68f2b3-9f62-4cb8-8c1d-057ff7cad73e")
 	)
-	(hierarchical_label "IO5"
+	(hierarchical_label "IO7"
 		(shape input)
-		(at 238.125 98.425 180)
+		(at 238.125 88.265 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "5f1249f4-4e14-4df2-9715-f87d384db136")
-	)
-	(hierarchical_label "IO4"
-		(shape input)
-		(at 238.125 95.885 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "95b250ec-e80e-42b8-998c-a7d91ea10e47")
+		(uuid "4f1d3217-97e2-40d5-adc3-65fd3fdf9fbd")
 	)
 	(hierarchical_label "LED3"
 		(shape input)
@@ -2490,17 +2501,6 @@
 			(justify left)
 		)
 		(uuid "98158b15-7b79-4d74-abc9-2cb0354fe12c")
-	)
-	(hierarchical_label "IO10"
-		(shape input)
-		(at 238.125 80.645 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "9f2e98ca-0d8a-45df-8236-4a9b95eb216a")
 	)
 	(hierarchical_label "LED1"
 		(shape input)
@@ -2515,25 +2515,36 @@
 	)
 	(hierarchical_label "IO6"
 		(shape input)
-		(at 238.125 90.805 180)
+		(at 238.125 85.725 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "b648b9a0-1e09-4c88-b897-ecb7630188ca")
+		(uuid "bd28a2eb-f79a-404e-b3dd-917a236d809b")
 	)
-	(hierarchical_label "IO7"
+	(hierarchical_label "IO4"
 		(shape input)
-		(at 238.125 93.345 180)
+		(at 238.125 80.645 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "db7adeab-c09a-498c-882d-83a71be342cb")
+		(uuid "dcb0a1ab-a846-4704-8fd5-b57a35f28f90")
+	)
+	(hierarchical_label "IO12"
+		(shape input)
+		(at 238.125 98.425 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e5053f02-4e5f-4eaf-93eb-502bae29aef9")
 	)
 	(hierarchical_label "LED2"
 		(shape input)
@@ -2546,27 +2557,16 @@
 		)
 		(uuid "ebf7c251-a146-4d7e-ad11-e1d678d85019")
 	)
-	(hierarchical_label "IO12"
-		(shape input)
-		(at 238.125 83.185 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ee9f77f6-b8aa-4172-aefc-b4c40ae7742f")
-	)
 	(hierarchical_label "IO8"
 		(shape input)
-		(at 238.125 85.725 180)
+		(at 238.125 90.805 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "f195e8ed-a42e-40be-acc5-97b74e01a2c3")
+		(uuid "f01c484e-0c2a-4af2-bd0a-841f1035617c")
 	)
 	(symbol
 		(lib_id "Switch:SW_SPDT")
@@ -2749,7 +2749,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 128.905 92.71 0)
 			(effects
 				(font
@@ -3513,7 +3513,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 140.335 92.71 0)
 			(effects
 				(font
@@ -4008,7 +4008,7 @@
 				)
 			)
 		)
-		(property "Footprint" "UTSVT_Special:SW_SPST_B3SL-1002P"
+		(property "Footprint" "Boot Switch:TL3365AF180QG"
 			(at 71.12 58.42 0)
 			(effects
 				(font
@@ -4100,7 +4100,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 163.195 92.71 0)
 			(effects
 				(font
@@ -4254,7 +4254,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 151.765 92.71 0)
 			(effects
 				(font

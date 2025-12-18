@@ -2,6 +2,7 @@
 [submodule "Hardware/KiCAD-Sharepoint"]
 	path = Hardware/KiCAD-Sharepoint
 	url = https://github.com/lhr-solar/KiCAD-Sharepoint.git
+	branch = VCU-RevB
 [submodule "Firmware/Embedded-Sharepoint"]
 	path = Firmware/Embedded-Sharepoint
 	url = https://github.com/lhr-solar/Embedded-Sharepoint.git

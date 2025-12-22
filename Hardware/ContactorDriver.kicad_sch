@@ -967,333 +967,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "UTSVT_ICs:EL3H7"
-			(pin_names
-				(offset 1.016)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "U"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "EL3H7"
-				(at 0 -5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "UTSVT_ICs:EL3H7"
-				(at 0 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
-				(at 0 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "P/N" "EL3H7(D)(TA)-VG"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Vf" "1.4V"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "If" "20mA"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "NPN DC opto"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOP*4.4x2.6mm*P1.27mm*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "EL3H7_1_1"
-				(rectangle
-					(start -5.08 3.81)
-					(end 5.08 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy -5.08 2.54) (xy -2.54 2.54) (xy -2.54 -1.27) (xy -2.54 0.635)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -3.175 -0.635) (xy -1.905 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.54 -0.635) (xy -2.54 -2.54) (xy -5.08 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -2.54 -0.635) (xy -3.175 0.635) (xy -1.905 0.635) (xy -2.54 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.508 0.508) (xy 0.762 0.508) (xy 0.381 0.381) (xy 0.381 0.635) (xy 0.762 0.508)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.508 -0.508) (xy 0.762 -0.508) (xy 0.381 -0.635) (xy 0.381 -0.381) (xy 0.762 -0.508)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 1.905) (xy 2.54 -1.905) (xy 2.54 -1.905)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 0.635) (xy 4.445 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.048 -1.651) (xy 3.556 -1.143) (xy 4.064 -2.159) (xy 3.048 -1.651) (xy 3.048 -1.651)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 2.54) (xy 5.08 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -2.54) (xy 2.54 -0.635)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -2.54) (xy 5.08 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -7.62 2.54 0)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -7.62 -2.54 0)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 2.54 180)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 7.62 -2.54 180)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "power:+12V"
 			(power)
 			(pin_numbers
@@ -1484,26 +1157,6 @@
 		)
 		(uuid "643b4c25-e1cf-4975-bb59-1abc2886e172")
 	)
-	(text "Motor\nCoil+"
-		(exclude_from_sim no)
-		(at 131.191 154.813 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "67865841-9906-4869-8dda-66fe81dac89c")
-	)
-	(text "M_Sense+"
-		(exclude_from_sim no)
-		(at 133.985 158.115 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "72ec760b-0997-43d0-b01b-e31202f65305")
-	)
 	(text "Flyback\nDiode"
 		(exclude_from_sim no)
 		(at 234.823 50.546 0)
@@ -1513,16 +1166,6 @@
 			)
 		)
 		(uuid "7957f4df-c486-41f7-ab70-a6ac9655bc8b")
-	)
-	(text "MPre_Sense+"
-		(exclude_from_sim no)
-		(at 234.95 115.57 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "8a67f1a6-5e10-4c12-b887-0452ecd6bcba")
 	)
 	(text "Motor\nPrecharge\nContactor\nIndicator\nLED"
 		(exclude_from_sim no)
@@ -1555,28 +1198,16 @@
 		(uuid "d191a378-7fc7-4077-8390-67e86882a6e3")
 	)
 	(junction
+		(at 114.3 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0876e33d-25bc-4b9e-a4ec-1b3dd6c03ec7")
+	)
+	(junction
 		(at 189.23 111.76)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "139c6762-b4c6-4e0c-a449-897b4a56ca3d")
-	)
-	(junction
-		(at 214.63 119.38)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "13d0075f-50d1-433c-93d4-48ea8b9054b4")
-	)
-	(junction
-		(at 113.03 101.6)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "1c5451c2-e1b2-4090-8c69-8788ddde97b0")
-	)
-	(junction
-		(at 110.49 111.76)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "22da5a14-02ae-4388-ad8c-0805730d71fe")
 	)
 	(junction
 		(at 221.615 64.77)
@@ -1609,6 +1240,12 @@
 		(uuid "7d5d56f4-0e6d-4927-8bdc-2bd2c209ee0d")
 	)
 	(junction
+		(at 239.395 106.68)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "913e02e0-c032-49b1-a000-614f5b3cddd0")
+	)
+	(junction
 		(at 218.44 106.68)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1619,6 +1256,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c6fcbf2f-a729-47dc-b9ad-e231c1fe4b2c")
+	)
+	(junction
+		(at 132.08 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d8ca4d0d-8e0c-43f8-8cac-8baa6ae7f32b")
 	)
 	(junction
 		(at 100.33 64.77)
@@ -1640,13 +1283,13 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 106.68) (xy 110.49 111.76)
+			(xy 93.98 95.25) (xy 93.98 96.52)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "039a61f5-d36a-4afe-abd4-2767de06bbc6")
+		(uuid "0167b852-e9c4-4305-ac22-6ea4fd4a0ebe")
 	)
 	(wire
 		(pts
@@ -1680,26 +1323,6 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 111.76) (xy 214.63 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08b7ec0e-4318-4635-b660-ef3d8b9435db")
-	)
-	(wire
-		(pts
-			(xy 93.98 95.25) (xy 93.98 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0a91b021-4d1e-47f5-878a-4e604d3cdddb")
-	)
-	(wire
-		(pts
 			(xy 217.805 64.77) (xy 221.615 64.77)
 		)
 		(stroke
@@ -1727,6 +1350,26 @@
 			(type default)
 		)
 		(uuid "1ba53bb1-7474-45fc-94f5-8ab03c6355f3")
+	)
+	(wire
+		(pts
+			(xy 132.08 115.57) (xy 132.08 112.395)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2095e2de-27bb-410d-b8ef-5bc44f586313")
+	)
+	(wire
+		(pts
+			(xy 239.395 106.68) (xy 239.395 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "227d80b7-494c-4b61-9514-0af84bdc41b7")
 	)
 	(wire
 		(pts
@@ -1760,13 +1403,23 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 100.33) (xy 199.39 106.68)
+			(xy 239.395 92.71) (xy 239.395 96.52)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "3c8504c1-f77c-412b-be43-b5bf66fe3158")
+		(uuid "331bc2ff-a913-4320-85fc-e605533477c9")
+	)
+	(wire
+		(pts
+			(xy 102.87 96.52) (xy 93.98 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "36a8ab50-8895-4e97-9937-ae66b655d4f5")
 	)
 	(wire
 		(pts
@@ -1800,7 +1453,7 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 111.76) (xy 110.49 115.57)
+			(xy 114.3 111.76) (xy 114.3 115.57)
 		)
 		(stroke
 			(width 0)
@@ -1860,16 +1513,6 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 101.6) (xy 95.25 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "65a13c23-e73b-41ac-abbb-8133e3f4422f")
-	)
-	(wire
-		(pts
 			(xy 234.315 39.37) (xy 234.315 41.91)
 		)
 		(stroke
@@ -1877,6 +1520,26 @@
 			(type default)
 		)
 		(uuid "66a8bb5d-b49f-45c5-979a-06fa416f10e4")
+	)
+	(wire
+		(pts
+			(xy 132.08 90.17) (xy 132.08 92.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "67213f45-b881-46d0-a537-b0a9408c6cc7")
+	)
+	(wire
+		(pts
+			(xy 198.755 101.6) (xy 207.01 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71328e03-b252-49d1-8313-2a58b990190d")
 	)
 	(wire
 		(pts
@@ -1890,7 +1553,7 @@
 	)
 	(wire
 		(pts
-			(xy 121.92 101.6) (xy 132.08 101.6)
+			(xy 132.08 90.17) (xy 133.35 90.17)
 		)
 		(stroke
 			(width 0)
@@ -1900,7 +1563,7 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 106.68) (xy 95.25 106.68)
+			(xy 83.82 106.68) (xy 102.87 106.68)
 		)
 		(stroke
 			(width 0)
@@ -1910,7 +1573,7 @@
 	)
 	(wire
 		(pts
-			(xy 218.44 118.11) (xy 218.44 119.38)
+			(xy 218.44 118.11) (xy 218.44 121.285)
 		)
 		(stroke
 			(width 0)
@@ -1930,16 +1593,6 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 119.38) (xy 214.63 121.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7fe325a9-462d-4acb-8e3e-8f2a1c3f0f71")
-	)
-	(wire
-		(pts
 			(xy 113.03 49.53) (xy 113.03 53.34)
 		)
 		(stroke
@@ -1950,13 +1603,23 @@
 	)
 	(wire
 		(pts
-			(xy 189.23 111.76) (xy 199.39 111.76)
+			(xy 189.23 111.76) (xy 207.01 111.76)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "834724df-e779-4f84-bcf6-e9aa66a97e1a")
+	)
+	(wire
+		(pts
+			(xy 239.395 104.14) (xy 239.395 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d3866f9-ffbf-4037-89c4-5be9d6cb5967")
 	)
 	(wire
 		(pts
@@ -1990,16 +1653,6 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 119.38) (xy 218.44 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9a5911bd-2e1e-49a1-8471-dd092d3cd576")
-	)
-	(wire
-		(pts
 			(xy 69.85 106.68) (xy 77.47 106.68)
 		)
 		(stroke
@@ -2010,7 +1663,7 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 101.6) (xy 113.03 101.6)
+			(xy 110.49 101.6) (xy 114.3 101.6)
 		)
 		(stroke
 			(width 0)
@@ -2027,6 +1680,16 @@
 			(type default)
 		)
 		(uuid "a978de48-34a1-4175-878b-92b2066e899e")
+	)
+	(wire
+		(pts
+			(xy 132.08 99.695) (xy 132.08 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae495428-547c-4343-ac7f-e5975e9363ae")
 	)
 	(wire
 		(pts
@@ -2080,6 +1743,16 @@
 	)
 	(wire
 		(pts
+			(xy 132.08 101.6) (xy 121.92 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ba02bbce-1dbb-4d76-bc82-0428e94ab318")
+	)
+	(wire
+		(pts
 			(xy 182.88 123.19) (xy 182.88 125.73)
 		)
 		(stroke
@@ -2097,16 +1770,6 @@
 			(type default)
 		)
 		(uuid "bfd0c242-12e1-4b87-8199-fc77922785cb")
-	)
-	(wire
-		(pts
-			(xy 110.49 111.76) (xy 113.03 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c0abe816-0376-4c9b-a68a-40d640b6e309")
 	)
 	(wire
 		(pts
@@ -2140,7 +1803,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 101.6) (xy 113.03 104.14)
+			(xy 114.3 101.6) (xy 114.3 104.14)
 		)
 		(stroke
 			(width 0)
@@ -2170,7 +1833,17 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 106.68) (xy 238.76 106.68)
+			(xy 132.08 104.775) (xy 132.08 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbabd7f8-6d67-4184-b07c-3467ff0f44aa")
+	)
+	(wire
+		(pts
+			(xy 227.33 106.68) (xy 239.395 106.68)
 		)
 		(stroke
 			(width 0)
@@ -2230,6 +1903,16 @@
 	)
 	(wire
 		(pts
+			(xy 239.395 116.84) (xy 239.395 120.015)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f449cc2c-8609-4290-96e6-6d1e9b3ac708")
+	)
+	(wire
+		(pts
 			(xy 100.33 74.93) (xy 100.33 76.2)
 		)
 		(stroke
@@ -2237,16 +1920,6 @@
 			(type default)
 		)
 		(uuid "fc210e69-cd90-4ed4-a4dd-5ce7edc06c07")
-	)
-	(wire
-		(pts
-			(xy 113.03 101.6) (xy 114.3 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fc78c983-92e9-4eec-8a66-384841e0b746")
 	)
 	(wire
 		(pts
@@ -2260,7 +1933,18 @@
 	)
 	(hierarchical_label "GND"
 		(shape input)
-		(at 110.49 115.57 270)
+		(at 239.395 120.015 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "21b52dd4-ef04-410f-835f-7e069bf6f85b")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 114.3 115.57 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2271,7 +1955,7 @@
 	)
 	(hierarchical_label "3V3_LSOM"
 		(shape input)
-		(at 199.39 100.33 180)
+		(at 198.755 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2290,17 +1974,6 @@
 			(justify right)
 		)
 		(uuid "432ba62e-5c64-4378-a424-8bf899d9ee37")
-	)
-	(hierarchical_label "MPre_Sense-"
-		(shape bidirectional)
-		(at 238.76 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "440b336a-87eb-4e2b-88e9-d376bf53a2bf")
 	)
 	(hierarchical_label "GND"
 		(shape input)
@@ -2379,6 +2052,17 @@
 		)
 		(uuid "8684ecac-d79b-413e-8a66-496a33e57102")
 	)
+	(hierarchical_label "MPre_Sense-"
+		(shape bidirectional)
+		(at 239.395 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9263a7ad-d9f6-4abe-a7e2-5424fa81508f")
+	)
 	(hierarchical_label "MPre_Sense"
 		(shape output)
 		(at 175.26 111.76 180)
@@ -2392,7 +2076,7 @@
 	)
 	(hierarchical_label "GND"
 		(shape input)
-		(at 214.63 121.92 270)
+		(at 218.44 121.285 270)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2458,7 +2142,7 @@
 	)
 	(hierarchical_label "M_Sense-"
 		(shape bidirectional)
-		(at 132.08 101.6 0)
+		(at 133.35 90.17 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2466,6 +2150,17 @@
 			(justify left)
 		)
 		(uuid "ec9dc79b-febe-4753-b7ff-fbed9b8dd9f3")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 132.08 115.57 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f10ddf8a-91a3-4f98-8cb0-1a1c42ec30fb")
 	)
 	(hierarchical_label "3V3_LSOM"
 		(shape input)
@@ -3003,6 +2698,94 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_US")
+		(at 239.395 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "421dfd34-ac87-45dc-aeca-97375de81f32")
+		(property "Reference" "R4"
+			(at 241.935 99.0599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 241.935 101.5999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 240.411 100.584 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 239.395 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 239.395 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW06031K00FKEI"
+			(at 239.395 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
+			(at 239.395 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d94cf1ca-02b2-4eb1-b2b2-9623d5ac83eb")
+		)
+		(pin "1"
+			(uuid "4d335b07-7f07-4be5-ae18-e96a778dead1")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 182.88 119.38 0)
 		(mirror x)
@@ -3430,7 +3213,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 113.03 107.95 0)
+		(at 114.3 107.95 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3439,7 +3222,7 @@
 		(dnp no)
 		(uuid "8d958766-8620-4076-823f-7ee75fcc64a2")
 		(property "Reference" "C15"
-			(at 116.84 109.2201 0)
+			(at 118.11 109.2201 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3448,7 +3231,7 @@
 			)
 		)
 		(property "Value" "0.1u"
-			(at 116.84 106.6801 0)
+			(at 118.11 106.6801 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3457,7 +3240,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-			(at 113.9952 104.14 0)
+			(at 115.2652 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3466,7 +3249,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 113.03 107.95 0)
+			(at 114.3 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3475,7 +3258,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 113.03 107.95 0)
+			(at 114.3 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3484,7 +3267,7 @@
 			)
 		)
 		(property "P/N" "HMK107B7104KA-T"
-			(at 113.03 107.95 0)
+			(at 114.3 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3493,7 +3276,7 @@
 			)
 		)
 		(property "Mouser Part Number" "963-HMK107B7104KA-T"
-			(at 113.03 107.95 0)
+			(at 114.3 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3517,34 +3300,35 @@
 		)
 	)
 	(symbol
-		(lib_id "UTSVT_ICs:EL3H7")
-		(at 102.87 104.14 0)
-		(mirror y)
+		(lib_id "Device:R_US")
+		(at 132.08 108.585 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "92c4c6d8-7c3c-47c1-84f6-9e13efd0010c")
-		(property "Reference" "U3"
-			(at 102.87 95.25 0)
+		(uuid "905d7210-b901-4622-aadc-8cd1ca0f7e75")
+		(property "Reference" "R3"
+			(at 134.62 107.3149 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "EL3H7"
-			(at 102.87 97.79 0)
+		(property "Value" "10k"
+			(at 134.62 109.8549 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" "UTSVT_ICs:EL3H7"
-			(at 102.87 111.76 0)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 133.096 108.839 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3552,8 +3336,99 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
-			(at 102.87 105.41 0)
+		(property "Datasheet" "~"
+			(at 132.08 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 132.08 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW06031K00FKEI"
+			(at 132.08 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
+			(at 132.08 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "4d5f271a-7659-4d97-9363-006de35d3684")
+		)
+		(pin "1"
+			(uuid "bf7f2dad-7528-4fb3-ba98-6916e4e66b42")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:IRLML0030")
+		(at 105.41 101.6 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "91572510-18b9-4810-8e73-0ada2880c2a1")
+		(property "Reference" "Q1"
+			(at 99.06 102.8701 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IRLML0030"
+			(at 99.06 100.3301 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 100.33 103.505 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.infineon.com/dgdl/irlml0030pbf.pdf?fileId=5546d462533600a401535664773825df"
+			(at 100.33 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3562,8 +3437,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
-			(at 102.87 104.14 0)
+		(property "Description" "5.3A Id, 30V Vds, 27mOhm Rds, N-Channel HEXFET Power MOSFET, SOT-23"
+			(at 105.41 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3571,8 +3446,8 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "EL3H7(D)(TA)-VG"
-			(at 102.87 104.14 0)
+		(property "P/N" "IRLML0030TRPBF"
+			(at 105.41 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3580,26 +3455,8 @@
 				(hide yes)
 			)
 		)
-		(property "Vf" "1.4V"
-			(at 102.87 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "If" "20mA"
-			(at 102.87 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "638-EL3H7DTAVG"
-			(at 102.87 104.14 0)
+		(property "Mouser Part Number" " 942-IRLML0030TRPBF"
+			(at 105.41 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3608,21 +3465,18 @@
 			)
 		)
 		(pin "1"
-			(uuid "17009995-6f03-4753-9bda-3826ecceee01")
-		)
-		(pin "4"
-			(uuid "7fe83cd5-688f-4374-9bb3-6b82b13bb42f")
+			(uuid "51fa0077-e508-4d23-b46b-5542f7a16947")
 		)
 		(pin "2"
-			(uuid "24a9c3d9-558e-4e32-a454-25aa96721490")
+			(uuid "3cc33ec0-fb26-4837-9241-b76eec1516c9")
 		)
 		(pin "3"
-			(uuid "d28ef4b6-38e5-420c-a992-29845a17ea2c")
+			(uuid "ef5192e4-e8d7-472c-9518-136b24338b84")
 		)
 		(instances
-			(project ""
+			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "U3")
+					(reference "Q1")
 					(unit 1)
 				)
 			)
@@ -3810,6 +3664,94 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
+		(at 132.08 95.885 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b17d72de-0796-4228-aeb6-2ddaecb50d44")
+		(property "Reference" "R2"
+			(at 134.62 94.6149 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 134.62 97.1549 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 133.096 96.139 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 132.08 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 132.08 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW06031K00FKEI"
+			(at 132.08 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
+			(at 132.08 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e9dde862-ce84-494b-972e-57ae13dd57ad")
+		)
+		(pin "1"
+			(uuid "5cce788b-658d-42dc-ade7-e841fb1827a3")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
 		(at 221.615 71.12 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3896,118 +3838,6 @@
 		)
 	)
 	(symbol
-		(lib_id "UTSVT_ICs:EL3H7")
-		(at 207.01 109.22 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c5482e50-af5c-461b-bfa6-ab35bc082f3e")
-		(property "Reference" "U2"
-			(at 207.01 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "EL3H7"
-			(at 207.01 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "UTSVT_ICs:EL3H7"
-			(at 207.01 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.digikey.com/en/products/detail/everlight-electronics-co-ltd/EL3H7-D-TA-VG/2692979"
-			(at 207.01 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "OPTOISO 3.75KV 1CH TRANS 4-SSOP"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "P/N" "EL3H7(D)(TA)-VG"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Vf" "1.4V"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "If" "20mA"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "638-EL3H7DTAVG"
-			(at 207.01 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8bbac9f0-d8a6-46c4-884f-32cd557aa530")
-		)
-		(pin "4"
-			(uuid "a9163cb8-ebdf-4a86-b9cf-ed7c728d9315")
-		)
-		(pin "2"
-			(uuid "90c7a4b3-f2f5-42bb-9a66-bba10e65536d")
-		)
-		(pin "3"
-			(uuid "d554a7fc-b539-4fd6-b641-17322916a76a")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
-					(reference "U2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+12V")
 		(at 234.315 34.29 0)
 		(unit 1)
@@ -4068,6 +3898,101 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "#PWR058")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:IRLML0030")
+		(at 209.55 106.68 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cef244b6-1963-4253-81f8-34ac36823692")
+		(property "Reference" "Q6"
+			(at 203.2 107.9501 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "IRLML0030"
+			(at 203.2 105.4101 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 204.47 108.585 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.infineon.com/dgdl/irlml0030pbf.pdf?fileId=5546d462533600a401535664773825df"
+			(at 204.47 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "5.3A Id, 30V Vds, 27mOhm Rds, N-Channel HEXFET Power MOSFET, SOT-23"
+			(at 209.55 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "IRLML0030TRPBF"
+			(at 209.55 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 942-IRLML0030TRPBF"
+			(at 209.55 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b861fa2b-07ac-4c34-a50d-433f7923d3f5")
+		)
+		(pin "2"
+			(uuid "81a9e3eb-d958-4e9c-ba4b-239d1bebce32")
+		)
+		(pin "3"
+			(uuid "aca04802-5bff-42a8-b4cf-92236dc2e9cc")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "Q6")
 					(unit 1)
 				)
 			)
@@ -4338,6 +4263,94 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
 					(reference "Q2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 239.395 113.03 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e7295d82-59bf-414a-a0f7-688010fb4cde")
+		(property "Reference" "R5"
+			(at 241.935 111.7599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 241.935 114.2999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 240.411 113.284 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 239.395 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 239.395 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW06031K00FKEI"
+			(at 239.395 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
+			(at 239.395 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "4e687465-a33f-4c37-a763-c463900329ad")
+		)
+		(pin "1"
+			(uuid "35bdd5a1-2e70-4990-aab2-dcb24a175390")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/838dfc75-afcf-4845-8c43-fcef4e0ee00c"
+					(reference "R5")
 					(unit 1)
 				)
 			)

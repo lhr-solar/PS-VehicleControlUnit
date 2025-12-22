@@ -788,6 +788,10 @@
     [
       "5469fc22-573e-4402-96df-d8b4b5bb4d29",
       "Power"
+    ],
+    [
+      "96c53ded-19ba-4bc3-a002-d56d1ee79194",
+      "Status LEDs"
     ]
   ],
   "text_variables": {}

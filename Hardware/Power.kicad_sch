@@ -112,148 +112,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector_Generic:Conn_01x02"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_01x02"
-				(at 0 -5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_01x02_1_1"
-				(rectangle
-					(start -1.27 1.27)
-					(end 1.27 -3.81)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(rectangle
-					(start -1.27 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -1791,131 +1649,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "power:+3V3"
-			(power)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+3V3"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+3V3\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+3V3_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+3V3_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "power:GND"
 			(power)
 			(pin_numbers
@@ -2128,16 +1861,6 @@
 			)
 		)
 		(uuid "00ab7346-2d75-42a0-b29f-b3848bb6d327")
-	)
-	(text "3v3 injector"
-		(exclude_from_sim no)
-		(at 41.275 160.655 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "bd2aac22-6db0-4360-bd9f-6438640b0d2f")
 	)
 	(text "LV PWR \nindicator LED"
 		(exclude_from_sim no)
@@ -2525,16 +2248,6 @@
 	)
 	(wire
 		(pts
-			(xy 46.355 173.355) (xy 52.705 173.355)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b2e58800-2c76-4240-8fec-f52ab39350c3")
-	)
-	(wire
-		(pts
 			(xy 125.73 33.02) (xy 142.24 33.02)
 		)
 		(stroke
@@ -2562,16 +2275,6 @@
 			(type default)
 		)
 		(uuid "b98cc495-d4d4-4299-b2b6-25fc0de51949")
-	)
-	(wire
-		(pts
-			(xy 46.355 170.815) (xy 52.705 170.815)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bf882127-60be-4f5f-83a4-86f5f3451a7d")
 	)
 	(wire
 		(pts
@@ -2724,7 +2427,7 @@
 		(uuid "ffed2652-f56c-40fb-b8bb-2bfa73be7c2a")
 	)
 	(image
-		(at -22.225 41.91)
+		(at 91.44 -9.525)
 		(scale 0.373981)
 		(uuid "2a00b05f-09a2-4d44-8c84-59805149554e")
 		(data "iVBORw0KGgoAAAANSUhEUgAAA4IAAAIOCAIAAABibiQhAAAAA3NCSVQICAjb4U/gAAAACXBIWXMA"
@@ -4098,7 +3801,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "042b9804-47b9-407a-87bf-5006a6aed699")
-		(property "Reference" "C1"
+		(property "Reference" "C16"
 			(at 74.295 71.7549 0)
 			(effects
 				(font
@@ -4170,7 +3873,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C1")
+					(reference "C16")
 					(unit 1)
 				)
 			)
@@ -4187,7 +3890,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0bfa0708-4ef8-41d9-b052-9c37ba80a288")
-		(property "Reference" "Q5"
+		(property "Reference" "Q6"
 			(at 106.045 26.67 90)
 			(effects
 				(font
@@ -4269,7 +3972,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "Q5")
+					(reference "Q6")
 					(unit 1)
 				)
 			)
@@ -4285,7 +3988,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1206aecd-3c9b-4769-a360-e0ccf02c50f8")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR050"
 			(at 47.625 69.215 0)
 			(effects
 				(font
@@ -4335,73 +4038,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR03")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 52.705 173.355 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1793b7d3-e090-4420-b5ad-7c3db91a26f8")
-		(property "Reference" "#PWR045"
-			(at 52.705 179.705 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 52.705 178.435 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 52.705 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 52.705 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 52.705 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "701bd7e7-3ab5-4f65-9fb5-a98242375fce")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR045")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -4417,7 +4054,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "187ae0be-6974-44c0-9ba3-b139012b0750")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR063"
 			(at 216.535 37.465 0)
 			(effects
 				(font
@@ -4467,7 +4104,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR019")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -4483,7 +4120,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2c45fc8a-bcc4-4313-aeca-374a3cb5e0de")
-		(property "Reference" "R18"
+		(property "Reference" "R28"
 			(at 73.66 46.9899 0)
 			(effects
 				(font
@@ -4501,7 +4138,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 72.136 48.514 90)
 			(effects
 				(font
@@ -4555,7 +4192,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "R18")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -4571,7 +4208,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3230e0a4-250f-4f92-b1af-23ebec501eca")
-		(property "Reference" "Q4"
+		(property "Reference" "Q5"
 			(at 80.01 26.67 90)
 			(effects
 				(font
@@ -4653,7 +4290,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "Q4")
+					(reference "Q5")
 					(unit 1)
 				)
 			)
@@ -4669,7 +4306,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b8fb2cf-c847-4d9e-84ec-6c4b8295d453")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR062"
 			(at 203.835 64.135 0)
 			(effects
 				(font
@@ -4719,7 +4356,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR018")
+					(reference "#PWR062")
 					(unit 1)
 				)
 			)
@@ -4735,7 +4372,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4f4d5eda-1a75-4c13-8201-028aa91b14c3")
-		(property "Reference" "C5"
+		(property "Reference" "C20"
 			(at 229.87 43.8149 0)
 			(effects
 				(font
@@ -4744,7 +4381,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.1u"
+		(property "Value" "1u"
 			(at 229.87 46.3549 0)
 			(effects
 				(font
@@ -4807,7 +4444,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C5")
+					(reference "C20")
 					(unit 1)
 				)
 			)
@@ -4822,7 +4459,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "554c6273-4c35-418e-b9d9-5d7b3feeab64")
-		(property "Reference" "C19"
+		(property "Reference" "C15"
 			(at 62.23 35.5599 0)
 			(effects
 				(font
@@ -4894,7 +4531,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C19")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -4910,7 +4547,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5db953bc-97e7-4adc-a010-6e713607e430")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR061"
 			(at 203.835 37.465 0)
 			(effects
 				(font
@@ -4960,7 +4597,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR017")
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -5025,158 +4662,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
 					(reference "LVGND_TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x02")
-		(at 41.275 173.355 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "64573f72-6a2b-4c1c-a9aa-2e0d6791bcd6")
-		(property "Reference" "J3"
-			(at 41.275 164.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x02"
-			(at 41.275 167.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105309-xx02_1x02_P2.50mm_Vertical"
-			(at 41.275 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 41.275 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 41.275 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "P/N" "105309-1102"
-			(at 41.275 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" " 538-105309-1102 "
-			(at 41.275 173.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "543a3a1d-7162-4228-aab1-bc0d8e3574a1")
-		)
-		(pin "1"
-			(uuid "e5df3db7-c417-48fb-913a-0188a1f3e806")
-		)
-		(instances
-			(project ""
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 52.705 170.815 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "71f416a0-17dd-4db9-b902-4042394478cd")
-		(property "Reference" "#PWR041"
-			(at 52.705 174.625 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "3V3_LSOM"
-			(at 52.705 165.735 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 52.705 170.815 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 52.705 170.815 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 52.705 170.815 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5d1ccea4-948b-45e0-8301-31a21b6eb7de")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -5338,7 +4823,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "79b0b70f-65b4-4974-a531-0a747dd0d498")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR055"
 			(at 90.805 93.98 0)
 			(effects
 				(font
@@ -5388,7 +4873,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR036")
+					(reference "#PWR055")
 					(unit 1)
 				)
 			)
@@ -5404,7 +4889,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8d033670-70a6-4077-929a-5da60cbbf2e1")
-		(property "Reference" "C4"
+		(property "Reference" "C19"
 			(at 219.71 43.8149 0)
 			(effects
 				(font
@@ -5476,7 +4961,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C4")
+					(reference "C19")
 					(unit 1)
 				)
 			)
@@ -5492,7 +4977,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "96a0e739-e5bb-4692-9981-18d9643877c9")
-		(property "Reference" "R1"
+		(property "Reference" "R31"
 			(at 193.04 38.7349 0)
 			(effects
 				(font
@@ -5564,7 +5049,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "R1")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -5580,7 +5065,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b69c9bb-ab5b-472b-95e0-ede7944f7d7a")
-		(property "Reference" "#PWR074"
+		(property "Reference" "#PWR057"
 			(at 126.365 78.74 0)
 			(effects
 				(font
@@ -5630,7 +5115,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR074")
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)
@@ -5712,7 +5197,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a4deae88-7df1-4411-8ab3-b2332c17194a")
-		(property "Reference" "C21"
+		(property "Reference" "C17"
 			(at 128.905 38.0999 0)
 			(effects
 				(font
@@ -5784,7 +5269,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C21")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -5800,7 +5285,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "af37a523-5381-4117-9d5b-e85ff35a1d5e")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR060"
 			(at 190.5 64.135 0)
 			(effects
 				(font
@@ -5850,7 +5335,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR014")
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
@@ -5866,7 +5351,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b078a72e-d285-47e3-be5b-c408b769a3bd")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR064"
 			(at 216.535 64.135 0)
 			(effects
 				(font
@@ -5916,7 +5401,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR020")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -5998,7 +5483,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bb88db29-91d8-4410-be51-ba8535e37665")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR065"
 			(at 226.695 64.135 0)
 			(effects
 				(font
@@ -6048,7 +5533,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR021")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -6064,7 +5549,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bc5acefe-123b-4f28-a227-69f801176c2c")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR059"
 			(at 190.5 37.465 0)
 			(effects
 				(font
@@ -6114,7 +5599,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR013")
+					(reference "#PWR059")
 					(unit 1)
 				)
 			)
@@ -6130,7 +5615,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "be94d869-90f2-4669-bef8-7f9b9e85a653")
-		(property "Reference" "R13"
+		(property "Reference" "R30"
 			(at 120.65 66.04 90)
 			(effects
 				(font
@@ -6200,7 +5685,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "R13")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -6216,7 +5701,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c14b4f59-05e7-4bf5-84a0-5fbb5a89a522")
-		(property "Reference" "D5"
+		(property "Reference" "D11"
 			(at 62.23 72.3899 90)
 			(effects
 				(font
@@ -6270,7 +5755,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "D5")
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -6286,7 +5771,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c99346f3-cf25-4b2b-b50c-e7e063bd40c1")
-		(property "Reference" "C20"
+		(property "Reference" "C14"
 			(at 49.53 72.3899 0)
 			(effects
 				(font
@@ -6358,7 +5843,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C20")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -6374,7 +5859,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ceff15c4-1227-4b00-8002-8051aa5b5779")
-		(property "Reference" "#FLG04"
+		(property "Reference" "#FLG03"
 			(at 125.73 31.115 0)
 			(effects
 				(font
@@ -6425,7 +5910,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#FLG04")
+					(reference "#FLG03")
 					(unit 1)
 				)
 			)
@@ -6441,7 +5926,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf1c672c-b220-4e87-b9e5-2f50ac57ff9e")
-		(property "Reference" "C3"
+		(property "Reference" "C18"
 			(at 207.645 43.8149 0)
 			(effects
 				(font
@@ -6513,7 +5998,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "C3")
+					(reference "C18")
 					(unit 1)
 				)
 			)
@@ -6529,7 +6014,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d9bd813c-b0dd-4d44-99a9-f9d10311a1b5")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR056"
 			(at 125.73 49.53 0)
 			(effects
 				(font
@@ -6579,7 +6064,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR08")
+					(reference "#PWR056")
 					(unit 1)
 				)
 			)
@@ -6595,7 +6080,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dc50b215-6e88-4055-b18d-dec3d913aa62")
-		(property "Reference" "R28"
+		(property "Reference" "R29"
 			(at 113.03 64.1349 0)
 			(effects
 				(font
@@ -6667,7 +6152,7 @@
 		(instances
 			(project ""
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "R28")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -6683,7 +6168,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e6b7d199-2e24-46cf-bd7f-b48271dfae23")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR058"
 			(at 142.24 36.83 0)
 			(effects
 				(font
@@ -6733,7 +6218,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR010")
+					(reference "#PWR058")
 					(unit 1)
 				)
 			)
@@ -6749,7 +6234,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "edd26b22-4130-4b27-a47e-5403ee1a460e")
-		(property "Reference" "#PWR076"
+		(property "Reference" "#PWR054"
 			(at 58.42 46.99 0)
 			(effects
 				(font
@@ -6799,7 +6284,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR076")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -6903,7 +6388,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f89b7487-61ef-4e97-ba39-dac4005f4087")
-		(property "Reference" "#PWR042"
+		(property "Reference" "#PWR053"
 			(at 55.88 84.455 0)
 			(effects
 				(font
@@ -6953,7 +6438,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "#PWR042")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -6968,7 +6453,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f9d76a70-2be9-474a-ab76-adeb2175f849")
-		(property "Reference" "J1"
+		(property "Reference" "J7"
 			(at 39.37 46.355 0)
 			(effects
 				(font
@@ -7038,7 +6523,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "J1")
+					(reference "J7")
 					(unit 1)
 				)
 			)

@@ -599,6 +599,15 @@
 		(uuid "d5231df9-f179-4b08-94d0-904db879f817")
 	)
 	(bus_entry
+		(at 33.655 65.405)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc23f793-7511-4f13-9291-b10971a4388c")
+	)
+	(bus_entry
 		(at 33.655 62.865)
 		(size 2.54 2.54)
 		(stroke
@@ -665,6 +674,16 @@
 			(type default)
 		)
 		(uuid "18db032a-a27d-4e14-80ca-e36e2c40d479")
+	)
+	(wire
+		(pts
+			(xy 36.195 67.945) (xy 59.055 67.945)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "18ee7c37-a901-4563-a214-489cd11c3d44")
 	)
 	(wire
 		(pts
@@ -1168,6 +1187,16 @@
 	)
 	(wire
 		(pts
+			(xy 274.32 55.245) (xy 274.32 60.325)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a90b2367-13e5-4ca4-bcc2-064a6a63a376")
+	)
+	(wire
+		(pts
 			(xy 36.195 55.245) (xy 59.055 55.245)
 		)
 		(stroke
@@ -1338,6 +1367,16 @@
 	)
 	(wire
 		(pts
+			(xy 274.32 46.355) (xy 274.32 47.625)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db0efbaf-f233-4f9a-8bd1-2b4fc1911909")
+	)
+	(wire
+		(pts
 			(xy 36.195 52.705) (xy 59.055 52.705)
 		)
 		(stroke
@@ -1365,6 +1404,26 @@
 			(type default)
 		)
 		(uuid "dcba10e5-84e5-4a6d-a6dc-a55aeefca4bc")
+	)
+	(wire
+		(pts
+			(xy 274.32 38.735) (xy 274.32 15.875)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e7a027b9-9c8c-4d71-9025-26a440e6aed6")
+	)
+	(bus
+		(pts
+			(xy 33.655 62.865) (xy 33.655 65.405)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e8d59277-1721-45ec-a403-780ba42df8eb")
 	)
 	(wire
 		(pts
@@ -1466,16 +1525,6 @@
 		)
 		(uuid "fdec7e38-a712-4c38-92e3-f43b2c809d6f")
 	)
-	(label "LED3"
-		(at 59.055 50.165 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0471d767-65ce-4ef7-9a39-27489f426c85")
-	)
 	(label "Precharge_Complete"
 		(at 59.055 24.765 180)
 		(effects
@@ -1485,16 +1534,6 @@
 			(justify right bottom)
 		)
 		(uuid "05f6c2a5-04bc-404c-8aee-1bf3c6bdd7a1")
-	)
-	(label "LED2"
-		(at 172.72 16.51 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "14279064-ea19-4245-b0ae-ae981aad8cbe")
 	)
 	(label "Bad_Hall"
 		(at 149.86 15.875 270)
@@ -1515,16 +1554,6 @@
 			(justify right bottom)
 		)
 		(uuid "1dcbddc1-45ad-450a-b3f0-bd968e474564")
-	)
-	(label "LED3"
-		(at 184.785 15.875 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "25893486-e12f-411a-a7c8-fbaf1aef1b84")
 	)
 	(label "Cruise"
 		(at 59.055 60.325 180)
@@ -1566,6 +1595,36 @@
 		)
 		(uuid "3513dc35-91ef-4a7e-887c-da10953d25b3")
 	)
+	(label "MPre_Sense"
+		(at 59.055 45.085 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "37cd67bd-25f1-40e7-b7a0-f3eb0834ba8f")
+	)
+	(label "M_Sense"
+		(at 59.055 50.165 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3d7eff1c-64cd-4fee-9c01-870285abf37e")
+	)
+	(label "M_Sense"
+		(at 184.785 15.875 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "55b7a312-5f43-4b4c-a95f-144b4a5461a5")
+	)
 	(label "HB"
 		(at 59.055 55.245 180)
 		(effects
@@ -1586,6 +1645,16 @@
 		)
 		(uuid "59c0f375-22b8-46c9-b722-ab27591a3a1c")
 	)
+	(label "MPre_Enable"
+		(at 59.055 47.625 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "5e45ffc6-2cd0-4c2f-b780-2190c00f493d")
+	)
 	(label "Motor_Fault"
 		(at 106.68 15.875 270)
 		(effects
@@ -1595,26 +1664,6 @@
 			(justify right bottom)
 		)
 		(uuid "64ba7e13-fe61-4186-83f1-f6d20b234856")
-	)
-	(label "LED1"
-		(at 161.29 15.875 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "65e66c42-96db-4039-b4d1-deb81fb628be")
-	)
-	(label "LED4"
-		(at 196.215 15.875 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "66c56be5-58b5-495a-8344-ff3661708ff6")
 	)
 	(label "Bad_Hall"
 		(at 59.055 42.545 180)
@@ -1646,6 +1695,16 @@
 		)
 		(uuid "83ee4e59-a746-4ef0-9964-877fb840aa3b")
 	)
+	(label "M_Enable"
+		(at 196.215 15.875 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "923b3ce7-9ed8-413e-a042-fe155a52aa67")
+	)
 	(label "BPS_Fault"
 		(at 117.475 15.875 270)
 		(effects
@@ -1666,26 +1725,6 @@
 		)
 		(uuid "afe04555-e9b8-4362-9176-46962caaaebe")
 	)
-	(label "LED1"
-		(at 59.055 45.085 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b58f1ab4-9944-443f-aab8-19570ccc92b9")
-	)
-	(label "LED2"
-		(at 59.055 47.625 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c0bbce09-52e2-4455-996b-a868a55a7956")
-	)
 	(label "Precharge_Timeout"
 		(at 85.725 15.875 270)
 		(effects
@@ -1695,6 +1734,16 @@
 			(justify right bottom)
 		)
 		(uuid "c135627a-861a-4d5a-88fa-3955fb4abe6d")
+	)
+	(label "MPre_Sense"
+		(at 161.29 15.875 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c28ce761-5efe-41c9-a13c-ff881dae1a99")
 	)
 	(label "Safe"
 		(at 59.055 62.865 180)
@@ -1715,6 +1764,16 @@
 			(justify right bottom)
 		)
 		(uuid "cc2afc9e-1c13-444c-87c5-579ad8cae278")
+	)
+	(label "ESP_RESET"
+		(at 59.055 67.945 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d2152984-7b5e-4955-bb84-b379e5c66780")
 	)
 	(label "Sense_Timeout"
 		(at 96.52 15.875 270)
@@ -1756,15 +1815,15 @@
 		)
 		(uuid "e24a6b75-b486-4925-ad82-e4a49b4f7e39")
 	)
-	(label "LED4"
-		(at 59.055 52.705 180)
+	(label "MPre_Enable"
+		(at 172.72 16.51 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "e6aed389-9be6-4a2f-a022-70c36db9c2c0")
+		(uuid "e3275734-7474-4bcd-808e-a527bb4ee759")
 	)
 	(label "Precharge_Complete"
 		(at 75.565 15.875 270)
@@ -1785,6 +1844,26 @@
 			(justify right bottom)
 		)
 		(uuid "e8d24325-3b78-494c-b7fd-2dfab2b73715")
+	)
+	(label "M_Enable"
+		(at 59.055 52.705 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ea7b33e0-df1c-4179-bc1f-047b2df4aeed")
+	)
+	(label "ESP_RESET"
+		(at 274.32 15.875 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f13d7957-34d6-4805-ae08-33d27e020dcb")
 	)
 	(label "Driving"
 		(at 59.055 65.405 180)
@@ -2179,7 +2258,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0e859777-b1fa-45a0-9b92-57ff7db002cf")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR066"
 			(at 75.565 66.675 0)
 			(effects
 				(font
@@ -2229,7 +2308,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR015")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -2245,7 +2324,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1569690d-2df3-48aa-b8c9-97c0f4090e9a")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR071"
 			(at 127.635 66.675 0)
 			(effects
 				(font
@@ -2295,7 +2374,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR025")
+					(reference "#PWR071")
 					(unit 1)
 				)
 			)
@@ -2399,7 +2478,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "20e85a18-8d2e-433d-8d76-5b5dffa822be")
-		(property "Reference" "#PWR067"
+		(property "Reference" "#PWR077"
 			(at 196.215 66.675 0)
 			(effects
 				(font
@@ -2449,7 +2528,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR067")
+					(reference "#PWR077")
 					(unit 1)
 				)
 			)
@@ -2641,7 +2720,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2689ce5c-bb41-4101-adfe-58690800ccea")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR073"
 			(at 149.86 66.675 0)
 			(effects
 				(font
@@ -2691,7 +2770,95 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR028")
+					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 274.32 42.545 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "270af4ab-122a-4daa-b56a-77df4303942d")
+		(property "Reference" "R49"
+			(at 276.225 41.2749 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k"
+			(at 276.225 43.8149 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 275.336 42.799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 274.32 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 274.32 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 274.32 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 274.32 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e5aa8bc7-5195-4c09-b7a3-0dd888af1115")
+		)
+		(pin "2"
+			(uuid "e3beb551-dbcf-42a6-a040-af3c70ec217c")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "R49")
 					(unit 1)
 				)
 			)
@@ -2883,7 +3050,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "397271b0-f7c3-4cf4-ae1f-accc5946bdb8")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR067"
 			(at 85.725 66.675 0)
 			(effects
 				(font
@@ -2933,7 +3100,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR016")
+					(reference "#PWR067")
 					(unit 1)
 				)
 			)
@@ -3763,7 +3930,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6d148a9c-bf2a-48dc-a65e-395b07918ce8")
-		(property "Reference" "#PWR056"
+		(property "Reference" "#PWR075"
 			(at 172.72 66.675 0)
 			(effects
 				(font
@@ -3813,7 +3980,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR056")
+					(reference "#PWR075")
 					(unit 1)
 				)
 			)
@@ -4181,7 +4348,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "978a0b9a-eec9-4480-856b-63a30ee8af07")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR072"
 			(at 139.065 66.675 0)
 			(effects
 				(font
@@ -4231,7 +4398,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR026")
+					(reference "#PWR072")
 					(unit 1)
 				)
 			)
@@ -4423,7 +4590,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9eade4ba-81a7-4dda-9ce4-3c68dd921728")
-		(property "Reference" "#PWR057"
+		(property "Reference" "#PWR076"
 			(at 184.785 66.675 0)
 			(effects
 				(font
@@ -4473,7 +4640,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR057")
+					(reference "#PWR076")
 					(unit 1)
 				)
 			)
@@ -4577,7 +4744,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a47fd5b4-5216-46df-89b8-ecc92a1bc1cf")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR070"
 			(at 117.475 66.675 0)
 			(effects
 				(font
@@ -4627,7 +4794,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR024")
+					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -4907,7 +5074,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b37e17c7-2f94-435e-93e7-4a063869f662")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR074"
 			(at 161.29 66.675 0)
 			(effects
 				(font
@@ -4957,7 +5124,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR029")
+					(reference "#PWR074")
 					(unit 1)
 				)
 			)
@@ -5471,6 +5638,94 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
+		(at 274.32 51.435 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "df2cb620-bf90-4c8c-8f67-4064a6a4a6e1")
+		(property "Reference" "LV22"
+			(at 277.495 51.7524 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "Driving"
+			(at 277.495 54.2924 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
+			(at 274.32 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
+			(at 274.32 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 274.32 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 274.32 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 274.32 51.435 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7125a05a-6edd-4c3c-bd9d-ea782fdf7aa9")
+		)
+		(pin "2"
+			(uuid "811b6327-103d-43c7-b124-65126f0393a2")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "LV22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
 		(at 117.475 51.435 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5655,7 +5910,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "efebb4cb-715a-4f31-9768-4afe97f0cb7a")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR069"
 			(at 106.68 66.675 0)
 			(effects
 				(font
@@ -5705,7 +5960,73 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR023")
+					(reference "#PWR069")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 274.32 60.325 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f03341ee-28de-4e54-b6f2-bb0f680f30f8")
+		(property "Reference" "#PWR051"
+			(at 274.32 66.675 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 274.32 65.405 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 274.32 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 274.32 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 274.32 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9ed1b367-13c0-4898-99a1-54379483760b")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -5721,7 +6042,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f26e6c0a-8172-42a4-9920-473d49cb12d5")
-		(property "Reference" "#PWR069"
+		(property "Reference" "#PWR078"
 			(at 208.28 66.675 0)
 			(effects
 				(font
@@ -5771,7 +6092,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR069")
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -5875,7 +6196,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fc3d9407-1cf6-42e8-8f89-477aba4dc9cd")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR068"
 			(at 96.52 66.675 0)
 			(effects
 				(font
@@ -5925,7 +6246,7 @@
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR022")
+					(reference "#PWR068")
 					(unit 1)
 				)
 			)

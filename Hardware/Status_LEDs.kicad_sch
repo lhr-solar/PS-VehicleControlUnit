@@ -361,7 +361,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "power:GND"
+		(symbol "power:+3V3"
 			(power)
 			(pin_numbers
 				(hide yes)
@@ -374,7 +374,7 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "#PWR"
-				(at 0 -6.35 0)
+				(at 0 -3.81 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -382,8 +382,8 @@
 					(hide yes)
 				)
 			)
-			(property "Value" "GND"
-				(at 0 -3.81 0)
+			(property "Value" "+3V3"
+				(at 0 3.556 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -408,7 +408,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(property "Description" "Power symbol creates a global label with name \"+3V3\""
 				(at 0 0 0)
 				(effects
 					(font
@@ -426,10 +426,34 @@
 					(hide yes)
 				)
 			)
-			(symbol "GND_0_1"
+			(symbol "+3V3_0_1"
 				(polyline
 					(pts
-						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
 					)
 					(stroke
 						(width 0)
@@ -440,9 +464,9 @@
 					)
 				)
 			)
-			(symbol "GND_1_1"
+			(symbol "+3V3_1_1"
 				(pin power_in line
-					(at 0 0 270)
+					(at 0 0 90)
 					(length 0)
 					(name "~"
 						(effects
@@ -516,6 +540,15 @@
 			(type default)
 		)
 		(uuid "4eba1293-0dd0-4aab-b2dc-d914e1f6e7ba")
+	)
+	(bus_entry
+		(at 33.655 67.945)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c03abd7-2781-47a2-80ab-fcbf3d3fe67f")
 	)
 	(bus_entry
 		(at 33.655 27.305)
@@ -637,7 +670,7 @@
 	)
 	(wire
 		(pts
-			(xy 196.215 55.245) (xy 196.215 60.325)
+			(xy 100.33 86.995) (xy 100.33 81.915)
 		)
 		(stroke
 			(width 0)
@@ -647,7 +680,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 38.735) (xy 149.86 15.875)
+			(xy 148.59 103.505) (xy 148.59 126.365)
 		)
 		(stroke
 			(width 0)
@@ -657,7 +690,7 @@
 	)
 	(wire
 		(pts
-			(xy 208.28 55.245) (xy 208.28 60.325)
+			(xy 88.265 86.995) (xy 88.265 81.915)
 		)
 		(stroke
 			(width 0)
@@ -667,7 +700,7 @@
 	)
 	(wire
 		(pts
-			(xy 221.615 38.735) (xy 221.615 15.875)
+			(xy 76.2 103.505) (xy 76.2 126.365)
 		)
 		(stroke
 			(width 0)
@@ -687,7 +720,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.065 38.735) (xy 139.065 15.875)
+			(xy 160.655 103.505) (xy 160.655 126.365)
 		)
 		(stroke
 			(width 0)
@@ -697,7 +730,7 @@
 	)
 	(wire
 		(pts
-			(xy 221.615 55.245) (xy 221.615 60.325)
+			(xy 76.2 86.995) (xy 76.2 81.915)
 		)
 		(stroke
 			(width 0)
@@ -717,7 +750,7 @@
 	)
 	(wire
 		(pts
-			(xy 127.635 46.355) (xy 127.635 47.625)
+			(xy 172.72 95.885) (xy 172.72 94.615)
 		)
 		(stroke
 			(width 0)
@@ -727,7 +760,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 55.245) (xy 234.95 60.325)
+			(xy 64.135 86.995) (xy 64.135 81.915)
 		)
 		(stroke
 			(width 0)
@@ -737,7 +770,7 @@
 	)
 	(wire
 		(pts
-			(xy 208.28 38.735) (xy 208.28 15.875)
+			(xy 88.265 103.505) (xy 88.265 126.365)
 		)
 		(stroke
 			(width 0)
@@ -747,7 +780,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 55.245) (xy 106.68 60.325)
+			(xy 196.85 86.995) (xy 196.85 81.915)
 		)
 		(stroke
 			(width 0)
@@ -767,7 +800,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.785 55.245) (xy 184.785 60.325)
+			(xy 112.395 86.995) (xy 112.395 81.915)
 		)
 		(stroke
 			(width 0)
@@ -777,7 +810,7 @@
 	)
 	(wire
 		(pts
-			(xy 221.615 46.355) (xy 221.615 47.625)
+			(xy 76.2 95.885) (xy 76.2 94.615)
 		)
 		(stroke
 			(width 0)
@@ -787,7 +820,7 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 46.355) (xy 161.29 47.625)
+			(xy 136.525 95.885) (xy 136.525 94.615)
 		)
 		(stroke
 			(width 0)
@@ -797,7 +830,7 @@
 	)
 	(wire
 		(pts
-			(xy 208.28 46.355) (xy 208.28 47.625)
+			(xy 88.265 95.885) (xy 88.265 94.615)
 		)
 		(stroke
 			(width 0)
@@ -807,7 +840,7 @@
 	)
 	(wire
 		(pts
-			(xy 75.565 46.355) (xy 75.565 47.625)
+			(xy 233.045 95.885) (xy 233.045 94.615)
 		)
 		(stroke
 			(width 0)
@@ -837,7 +870,7 @@
 	)
 	(wire
 		(pts
-			(xy 75.565 55.245) (xy 75.565 60.325)
+			(xy 233.045 86.995) (xy 233.045 81.915)
 		)
 		(stroke
 			(width 0)
@@ -867,7 +900,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 46.355) (xy 247.65 47.625)
+			(xy 52.07 95.885) (xy 52.07 94.615)
 		)
 		(stroke
 			(width 0)
@@ -887,7 +920,7 @@
 	)
 	(wire
 		(pts
-			(xy 96.52 55.245) (xy 96.52 60.325)
+			(xy 208.915 86.995) (xy 208.915 81.915)
 		)
 		(stroke
 			(width 0)
@@ -917,7 +950,7 @@
 	)
 	(wire
 		(pts
-			(xy 196.215 38.735) (xy 196.215 15.875)
+			(xy 100.33 103.505) (xy 100.33 126.365)
 		)
 		(stroke
 			(width 0)
@@ -937,7 +970,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 38.735) (xy 247.65 15.875)
+			(xy 52.07 103.505) (xy 52.07 126.365)
 		)
 		(stroke
 			(width 0)
@@ -947,13 +980,23 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 55.245) (xy 172.72 60.325)
+			(xy 124.46 86.995) (xy 124.46 81.915)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "65139801-6dbe-4e19-8b41-c1a992c89bec")
+	)
+	(wire
+		(pts
+			(xy 36.195 70.485) (xy 59.055 70.485)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "661d8e14-b5e7-416b-ba2a-0e6eb57641cc")
 	)
 	(bus
 		(pts
@@ -967,7 +1010,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.065 55.245) (xy 139.065 60.325)
+			(xy 160.655 86.995) (xy 160.655 81.915)
 		)
 		(stroke
 			(width 0)
@@ -977,7 +1020,7 @@
 	)
 	(wire
 		(pts
-			(xy 85.725 38.735) (xy 85.725 15.875)
+			(xy 220.98 103.505) (xy 220.98 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1027,7 +1070,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 46.355) (xy 172.72 47.625)
+			(xy 124.46 95.885) (xy 124.46 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1037,7 +1080,17 @@
 	)
 	(wire
 		(pts
-			(xy 117.475 46.355) (xy 117.475 47.625)
+			(xy 245.11 86.995) (xy 245.11 81.915)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7773182e-7bc3-4c1e-8b4c-46cda7bf84d4")
+	)
+	(wire
+		(pts
+			(xy 184.785 95.885) (xy 184.785 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1047,7 +1100,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 46.355) (xy 149.86 47.625)
+			(xy 148.59 95.885) (xy 148.59 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1067,7 +1120,7 @@
 	)
 	(wire
 		(pts
-			(xy 262.255 38.735) (xy 262.255 15.875)
+			(xy 40.005 103.505) (xy 40.005 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1077,7 +1130,7 @@
 	)
 	(wire
 		(pts
-			(xy 196.215 46.355) (xy 196.215 47.625)
+			(xy 100.33 95.885) (xy 100.33 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1087,7 +1140,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 46.355) (xy 234.95 47.625)
+			(xy 64.135 95.885) (xy 64.135 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1107,7 +1160,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.785 46.355) (xy 184.785 47.625)
+			(xy 112.395 95.885) (xy 112.395 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1117,7 +1170,7 @@
 	)
 	(wire
 		(pts
-			(xy 117.475 38.735) (xy 117.475 15.875)
+			(xy 184.785 103.505) (xy 184.785 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1147,7 +1200,7 @@
 	)
 	(wire
 		(pts
-			(xy 75.565 38.735) (xy 75.565 15.875)
+			(xy 233.045 103.505) (xy 233.045 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1157,7 +1210,7 @@
 	)
 	(wire
 		(pts
-			(xy 127.635 38.735) (xy 127.635 15.875)
+			(xy 172.72 103.505) (xy 172.72 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1177,7 +1230,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.65 55.245) (xy 247.65 60.325)
+			(xy 52.07 86.995) (xy 52.07 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1187,7 +1240,17 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 55.245) (xy 274.32 60.325)
+			(xy 245.11 95.885) (xy 245.11 94.615)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a5c0602a-0f2a-4832-91e8-b8d6e3e7191a")
+	)
+	(wire
+		(pts
+			(xy 27.94 86.995) (xy 27.94 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1205,9 +1268,19 @@
 		)
 		(uuid "aca4e6c9-eb91-46b9-9535-272d87ecd949")
 	)
+	(bus
+		(pts
+			(xy 33.655 65.405) (xy 33.655 67.945)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aee253aa-7151-4803-a75d-11b06dcfbf05")
+	)
 	(wire
 		(pts
-			(xy 106.68 46.355) (xy 106.68 47.625)
+			(xy 196.85 95.885) (xy 196.85 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1227,7 +1300,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 55.245) (xy 149.86 60.325)
+			(xy 148.59 86.995) (xy 148.59 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1247,7 +1320,7 @@
 	)
 	(wire
 		(pts
-			(xy 96.52 38.735) (xy 96.52 15.875)
+			(xy 208.915 103.505) (xy 208.915 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1257,7 +1330,7 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 55.245) (xy 161.29 60.325)
+			(xy 136.525 86.995) (xy 136.525 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1287,7 +1360,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.785 38.735) (xy 184.785 15.875)
+			(xy 112.395 103.505) (xy 112.395 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1297,7 +1370,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 38.735) (xy 234.95 15.875)
+			(xy 64.135 103.505) (xy 64.135 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1307,7 +1380,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.065 46.355) (xy 139.065 47.625)
+			(xy 160.655 95.885) (xy 160.655 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1327,7 +1400,7 @@
 	)
 	(wire
 		(pts
-			(xy 85.725 55.245) (xy 85.725 60.325)
+			(xy 220.98 86.995) (xy 220.98 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1337,7 +1410,17 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 38.735) (xy 106.68 15.875)
+			(xy 245.11 103.505) (xy 245.11 126.365)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d68ba6fc-cf85-4b29-866a-c773279b74a9")
+	)
+	(wire
+		(pts
+			(xy 196.85 103.505) (xy 196.85 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1367,7 +1450,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 46.355) (xy 274.32 47.625)
+			(xy 27.94 95.885) (xy 27.94 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1387,7 +1470,7 @@
 	)
 	(wire
 		(pts
-			(xy 96.52 46.355) (xy 96.52 47.625)
+			(xy 208.915 95.885) (xy 208.915 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1397,7 +1480,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 38.735) (xy 172.72 16.51)
+			(xy 124.46 103.505) (xy 124.46 125.73)
 		)
 		(stroke
 			(width 0)
@@ -1407,7 +1490,7 @@
 	)
 	(wire
 		(pts
-			(xy 274.32 38.735) (xy 274.32 15.875)
+			(xy 27.94 103.505) (xy 27.94 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1427,7 +1510,7 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 38.735) (xy 161.29 15.875)
+			(xy 136.525 103.505) (xy 136.525 126.365)
 		)
 		(stroke
 			(width 0)
@@ -1447,7 +1530,7 @@
 	)
 	(wire
 		(pts
-			(xy 262.255 46.355) (xy 262.255 47.625)
+			(xy 40.005 95.885) (xy 40.005 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1467,7 +1550,7 @@
 	)
 	(wire
 		(pts
-			(xy 262.255 55.245) (xy 262.255 60.325)
+			(xy 40.005 86.995) (xy 40.005 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1487,7 +1570,7 @@
 	)
 	(wire
 		(pts
-			(xy 127.635 55.245) (xy 127.635 60.325)
+			(xy 172.72 86.995) (xy 172.72 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1497,7 +1580,7 @@
 	)
 	(wire
 		(pts
-			(xy 117.475 55.245) (xy 117.475 60.325)
+			(xy 184.785 86.995) (xy 184.785 81.915)
 		)
 		(stroke
 			(width 0)
@@ -1517,7 +1600,7 @@
 	)
 	(wire
 		(pts
-			(xy 85.725 46.355) (xy 85.725 47.625)
+			(xy 220.98 95.885) (xy 220.98 94.615)
 		)
 		(stroke
 			(width 0)
@@ -1536,12 +1619,12 @@
 		(uuid "05f6c2a5-04bc-404c-8aee-1bf3c6bdd7a1")
 	)
 	(label "Bad_Hall"
-		(at 149.86 15.875 270)
+		(at 148.59 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "156451fe-9507-4d3b-9525-3afbcd1169f0")
 	)
@@ -1566,26 +1649,26 @@
 		(uuid "26ee41f5-5e10-449d-afb3-d9fbe0cc2156")
 	)
 	(label "Cruise"
-		(at 234.95 15.875 270)
+		(at 64.135 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "2d59cdb8-135d-4239-9dd6-3e2958e11655")
 	)
 	(label "Driving"
-		(at 262.255 15.875 270)
+		(at 40.005 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "2ecedc6a-f34d-43cc-925b-81a8ef9dca3e")
 	)
-	(label "Sense_Timeout"
+	(label "PreSense_Timeout"
 		(at 59.055 29.845 180)
 		(effects
 			(font
@@ -1615,13 +1698,23 @@
 		)
 		(uuid "3d7eff1c-64cd-4fee-9c01-870285abf37e")
 	)
-	(label "M_Sense"
-		(at 184.785 15.875 270)
+	(label "Motor_Sense_Timeout"
+		(at 245.11 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
+		)
+		(uuid "4997ac05-c7d6-4b4d-b35d-dbb610b77782")
+	)
+	(label "M_Sense"
+		(at 112.395 126.365 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
 		)
 		(uuid "55b7a312-5f43-4b4c-a95f-144b4a5461a5")
 	)
@@ -1656,12 +1749,12 @@
 		(uuid "5e45ffc6-2cd0-4c2f-b780-2190c00f493d")
 	)
 	(label "Motor_Fault"
-		(at 106.68 15.875 270)
+		(at 196.85 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "64ba7e13-fe61-4186-83f1-f6d20b234856")
 	)
@@ -1676,72 +1769,82 @@
 		(uuid "67786fcf-f27e-4f9d-9233-5e33cf4def76")
 	)
 	(label "SWOC"
-		(at 127.635 15.875 270)
+		(at 172.72 126.365 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "75eb26dd-9a2f-436a-b4f4-175f6551abd7")
+	)
+	(label "Motor_Sense_Timeout"
+		(at 59.055 70.485 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "75eb26dd-9a2f-436a-b4f4-175f6551abd7")
+		(uuid "810b3529-31d2-492e-9d85-cf40dcbd60d1")
 	)
 	(label "HB"
-		(at 208.28 15.875 270)
+		(at 88.265 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "83ee4e59-a746-4ef0-9964-877fb840aa3b")
 	)
 	(label "M_Enable"
-		(at 196.215 15.875 270)
+		(at 100.33 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "923b3ce7-9ed8-413e-a042-fe155a52aa67")
 	)
 	(label "BPS_Fault"
-		(at 117.475 15.875 270)
+		(at 184.785 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "996c10cb-5016-4a32-b06f-2b59730dedf8")
 	)
 	(label "Regen"
-		(at 221.615 15.875 270)
+		(at 76.2 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "afe04555-e9b8-4362-9176-46962caaaebe")
 	)
 	(label "Precharge_Timeout"
-		(at 85.725 15.875 270)
+		(at 220.98 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "c135627a-861a-4d5a-88fa-3955fb4abe6d")
 	)
 	(label "MPre_Sense"
-		(at 161.29 15.875 270)
+		(at 136.525 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "c28ce761-5efe-41c9-a13c-ff881dae1a99")
 	)
@@ -1756,12 +1859,12 @@
 		(uuid "c407a485-bd4f-4a8f-889c-219c841c5259")
 	)
 	(label "Safe"
-		(at 247.65 15.875 270)
+		(at 52.07 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "cc2afc9e-1c13-444c-87c5-579ad8cae278")
 	)
@@ -1775,13 +1878,13 @@
 		)
 		(uuid "d2152984-7b5e-4955-bb84-b379e5c66780")
 	)
-	(label "Sense_Timeout"
-		(at 96.52 15.875 270)
+	(label "PreSense_Timeout"
+		(at 208.915 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "d848160c-8b26-4144-862e-2e2311e41fe6")
 	)
@@ -1816,22 +1919,22 @@
 		(uuid "e24a6b75-b486-4925-ad82-e4a49b4f7e39")
 	)
 	(label "MPre_Enable"
-		(at 172.72 16.51 270)
+		(at 124.46 125.73 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "e3275734-7474-4bcd-808e-a527bb4ee759")
 	)
 	(label "Precharge_Complete"
-		(at 75.565 15.875 270)
+		(at 233.045 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "e7c5f16b-d8b2-4e6e-b4d1-678c4c887d68")
 	)
@@ -1856,12 +1959,12 @@
 		(uuid "ea7b33e0-df1c-4179-bc1f-047b2df4aeed")
 	)
 	(label "ESP_RESET"
-		(at 274.32 15.875 270)
+		(at 27.94 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "f13d7957-34d6-4805-ae08-33d27e020dcb")
 	)
@@ -1876,12 +1979,12 @@
 		(uuid "fbf44377-83cb-4d09-a7e6-0d8b1e4e1ecb")
 	)
 	(label "Motor_Watchdog"
-		(at 139.065 15.875 270)
+		(at 160.655 126.365 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "feada8d0-e8a4-4994-8c02-679a428ab6aa")
 	)
@@ -1898,7 +2001,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 75.565 51.435 90)
+		(at 233.045 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1907,7 +2010,7 @@
 		(fields_autoplaced yes)
 		(uuid "01de2717-710b-4f72-bea7-ff338beecd48")
 		(property "Reference" "LV5"
-			(at 78.74 51.7524 90)
+			(at 236.22 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1916,7 +2019,7 @@
 			)
 		)
 		(property "Value" "PC"
-			(at 78.74 54.2924 90)
+			(at 236.22 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1925,7 +2028,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 75.565 51.435 0)
+			(at 233.045 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1934,7 +2037,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 75.565 51.435 0)
+			(at 233.045 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1943,7 +2046,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 75.565 51.435 0)
+			(at 233.045 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1952,7 +2055,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 75.565 51.435 0)
+			(at 233.045 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1961,7 +2064,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 75.565 51.435 0)
+			(at 233.045 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1986,7 +2089,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 161.29 42.545 0)
+		(at 136.525 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1995,7 +2098,7 @@
 		(fields_autoplaced yes)
 		(uuid "04a3fdac-b089-454a-9ecc-93d658d5745f")
 		(property "Reference" "R40"
-			(at 163.195 41.2749 0)
+			(at 134.62 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2004,7 +2107,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 163.195 43.8149 0)
+			(at 134.62 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2013,7 +2116,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 162.306 42.799 90)
+			(at 135.509 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2022,7 +2125,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 161.29 42.545 0)
+			(at 136.525 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2031,7 +2134,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 161.29 42.545 0)
+			(at 136.525 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2040,7 +2143,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 161.29 42.545 0)
+			(at 136.525 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2049,7 +2152,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 161.29 42.545 0)
+			(at 136.525 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2073,8 +2176,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 100.33 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "094fe9b1-3d1d-45b2-95ab-8b387b798fbb")
+		(property "Reference" "#PWR070"
+			(at 100.33 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 101.6 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 100.33 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 100.33 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 100.33 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "525360e2-8b89-4eb1-8f28-af1f483f8e3e")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR070")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
-		(at 262.255 51.435 90)
+		(at 40.005 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2083,7 +2252,7 @@
 		(fields_autoplaced yes)
 		(uuid "0b4aefb3-f427-45c0-8414-54984f03beba")
 		(property "Reference" "LV21"
-			(at 265.43 51.7524 90)
+			(at 43.18 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2092,7 +2261,7 @@
 			)
 		)
 		(property "Value" "Driving"
-			(at 265.43 54.2924 90)
+			(at 43.18 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2101,7 +2270,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 262.255 51.435 0)
+			(at 40.005 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2110,7 +2279,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 262.255 51.435 0)
+			(at 40.005 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2119,7 +2288,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 262.255 51.435 0)
+			(at 40.005 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2128,7 +2297,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 262.255 51.435 0)
+			(at 40.005 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2137,7 +2306,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 262.255 51.435 0)
+			(at 40.005 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2162,7 +2331,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 106.68 51.435 90)
+		(at 196.85 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2171,7 +2340,7 @@
 		(fields_autoplaced yes)
 		(uuid "0ccd42d7-4197-4766-aeff-25e94339b7cf")
 		(property "Reference" "LV8"
-			(at 110.49 51.7524 90)
+			(at 200.66 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2180,7 +2349,7 @@
 			)
 		)
 		(property "Value" "MF"
-			(at 110.49 54.2924 90)
+			(at 200.66 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2189,7 +2358,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 106.68 51.435 0)
+			(at 196.85 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2198,7 +2367,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 106.68 51.435 0)
+			(at 196.85 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2207,7 +2376,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 106.68 51.435 0)
+			(at 196.85 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2216,7 +2385,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 106.68 51.435 0)
+			(at 196.85 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2225,7 +2394,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 106.68 51.435 0)
+			(at 196.85 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2249,140 +2418,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 75.565 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0e859777-b1fa-45a0-9b92-57ff7db002cf")
-		(property "Reference" "#PWR066"
-			(at 75.565 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 75.565 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 75.565 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 75.565 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 75.565 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c39c02df-432e-4d4f-a5c5-a3920676aec5")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR066")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 127.635 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1569690d-2df3-48aa-b8c9-97c0f4090e9a")
-		(property "Reference" "#PWR071"
-			(at 127.635 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 127.635 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 127.635 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 127.635 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 127.635 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e3373ef0-0a1b-4dd5-845a-c7245f888ed9")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR071")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:LED")
-		(at 184.785 51.435 90)
+		(at 112.395 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2391,7 +2428,7 @@
 		(fields_autoplaced yes)
 		(uuid "1b8fd771-b9df-4381-8ce4-514da0c24b32")
 		(property "Reference" "LV15"
-			(at 188.595 51.7524 90)
+			(at 115.57 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2400,7 +2437,7 @@
 			)
 		)
 		(property "Value" "LED3"
-			(at 188.595 54.2924 90)
+			(at 115.57 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2409,7 +2446,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 184.785 51.435 0)
+			(at 112.395 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2418,7 +2455,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 184.785 51.435 0)
+			(at 112.395 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2427,7 +2464,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 184.785 51.435 0)
+			(at 112.395 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2436,7 +2473,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 184.785 51.435 0)
+			(at 112.395 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2445,7 +2482,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 184.785 51.435 0)
+			(at 112.395 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2469,74 +2506,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 196.215 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "20e85a18-8d2e-433d-8d76-5b5dffa822be")
-		(property "Reference" "#PWR077"
-			(at 196.215 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 196.215 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 196.215 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 196.215 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 196.215 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "acadf9b5-6159-4dee-b087-b98e10d7ff22")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR077")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
-		(at 75.565 42.545 0)
+		(at 233.045 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2545,7 +2516,7 @@
 		(fields_autoplaced yes)
 		(uuid "23717d08-0db9-457e-99d2-87b7350397f8")
 		(property "Reference" "R32"
-			(at 77.47 41.2749 0)
+			(at 231.14 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2554,7 +2525,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 77.47 43.8149 0)
+			(at 231.14 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2563,7 +2534,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 76.581 42.799 90)
+			(at 232.029 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2572,7 +2543,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 75.565 42.545 0)
+			(at 233.045 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2581,7 +2552,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 75.565 42.545 0)
+			(at 233.045 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2590,7 +2561,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 75.565 42.545 0)
+			(at 233.045 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2599,7 +2570,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 75.565 42.545 0)
+			(at 233.045 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2624,7 +2595,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 127.635 51.435 90)
+		(at 172.72 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2633,7 +2604,7 @@
 		(fields_autoplaced yes)
 		(uuid "23b77ded-2e73-4201-b689-0849e655d24b")
 		(property "Reference" "LV10"
-			(at 130.81 51.7524 90)
+			(at 175.895 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2642,7 +2613,7 @@
 			)
 		)
 		(property "Value" "SWOC"
-			(at 130.81 54.2924 90)
+			(at 175.895 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2651,7 +2622,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 127.635 51.435 0)
+			(at 172.72 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2660,7 +2631,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 127.635 51.435 0)
+			(at 172.72 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2669,7 +2640,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 127.635 51.435 0)
+			(at 172.72 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2678,7 +2649,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 127.635 51.435 0)
+			(at 172.72 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2687,7 +2658,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 127.635 51.435 0)
+			(at 172.72 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2711,17 +2682,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 149.86 60.325 0)
+		(lib_id "power:+3V3")
+		(at 245.11 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2689ce5c-bb41-4101-adfe-58690800ccea")
-		(property "Reference" "#PWR073"
-			(at 149.86 66.675 0)
+		(uuid "25abcc4e-c220-4584-a768-11d0029ad709")
+		(property "Reference" "#PWR084"
+			(at 245.11 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2729,16 +2699,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 149.86 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 246.38 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 149.86 60.325 0)
+			(at 245.11 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2747,7 +2718,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 149.86 60.325 0)
+			(at 245.11 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2755,8 +2726,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 149.86 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 245.11 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2765,12 +2736,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "2c87b205-a331-4da4-830c-13f4c8a45321")
+			(uuid "b03f6413-31d1-4e77-b765-c163bd23110d")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR073")
+					(reference "#PWR084")
 					(unit 1)
 				)
 			)
@@ -2778,7 +2749,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 274.32 42.545 0)
+		(at 27.94 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2787,7 +2758,7 @@
 		(fields_autoplaced yes)
 		(uuid "270af4ab-122a-4daa-b56a-77df4303942d")
 		(property "Reference" "R49"
-			(at 276.225 41.2749 0)
+			(at 26.035 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2796,7 +2767,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 276.225 43.8149 0)
+			(at 26.035 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2805,7 +2776,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 275.336 42.799 90)
+			(at 26.924 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2814,7 +2785,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 274.32 42.545 0)
+			(at 27.94 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2823,7 +2794,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 274.32 42.545 0)
+			(at 27.94 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2832,7 +2803,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 274.32 42.545 0)
+			(at 27.94 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2841,7 +2812,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 274.32 42.545 0)
+			(at 27.94 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2866,7 +2837,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 96.52 42.545 0)
+		(at 208.915 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2875,7 +2846,7 @@
 		(fields_autoplaced yes)
 		(uuid "2adaff88-6c88-46c5-a9a2-6998be69da62")
 		(property "Reference" "R34"
-			(at 98.425 41.2749 0)
+			(at 207.01 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2884,7 +2855,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 98.425 43.8149 0)
+			(at 207.01 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2893,7 +2864,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 97.536 42.799 90)
+			(at 207.899 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2902,7 +2873,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 96.52 42.545 0)
+			(at 208.915 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2911,7 +2882,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 96.52 42.545 0)
+			(at 208.915 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2920,7 +2891,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 96.52 42.545 0)
+			(at 208.915 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2929,7 +2900,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 96.52 42.545 0)
+			(at 208.915 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2954,7 +2925,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 247.65 51.435 90)
+		(at 52.07 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2963,7 +2934,7 @@
 		(fields_autoplaced yes)
 		(uuid "3175c8f2-8dcc-47d1-b3de-394e18b33289")
 		(property "Reference" "LV20"
-			(at 251.46 51.7524 90)
+			(at 55.88 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2972,7 +2943,7 @@
 			)
 		)
 		(property "Value" "Safe"
-			(at 251.46 54.2924 90)
+			(at 55.88 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2981,7 +2952,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 247.65 51.435 0)
+			(at 52.07 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2990,7 +2961,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 247.65 51.435 0)
+			(at 52.07 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2999,7 +2970,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 247.65 51.435 0)
+			(at 52.07 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3008,7 +2979,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 247.65 51.435 0)
+			(at 52.07 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3017,7 +2988,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 247.65 51.435 0)
+			(at 52.07 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3041,17 +3012,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 85.725 60.325 0)
+		(lib_id "power:+3V3")
+		(at 160.655 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "397271b0-f7c3-4cf4-ae1f-accc5946bdb8")
-		(property "Reference" "#PWR067"
-			(at 85.725 66.675 0)
+		(uuid "3bbce3a2-d2e9-469a-ab8f-f2ac6c434032")
+		(property "Reference" "#PWR075"
+			(at 160.655 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3059,16 +3029,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 85.725 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 161.925 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 85.725 60.325 0)
+			(at 160.655 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3077,7 +3048,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 85.725 60.325 0)
+			(at 160.655 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3085,8 +3056,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 85.725 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 160.655 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3095,12 +3066,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "9a99c873-23af-4eb4-8c04-1ca31c04b3f0")
+			(uuid "8cd639d3-899f-4816-8850-ccef905f28d6")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR067")
+					(reference "#PWR075")
 					(unit 1)
 				)
 			)
@@ -3108,7 +3079,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 221.615 42.545 0)
+		(at 76.2 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3117,7 +3088,7 @@
 		(fields_autoplaced yes)
 		(uuid "3c5e4b73-c80f-4cd4-a849-faa2621b2bce")
 		(property "Reference" "R45"
-			(at 223.52 41.2749 0)
+			(at 74.295 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3126,7 +3097,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 223.52 43.8149 0)
+			(at 74.295 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3135,7 +3106,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 222.631 42.799 90)
+			(at 75.184 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3144,7 +3115,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 221.615 42.545 0)
+			(at 76.2 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3153,7 +3124,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 221.615 42.545 0)
+			(at 76.2 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3162,7 +3133,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 221.615 42.545 0)
+			(at 76.2 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3171,7 +3142,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 221.615 42.545 0)
+			(at 76.2 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3196,7 +3167,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 161.29 51.435 90)
+		(at 136.525 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3205,7 +3176,7 @@
 		(fields_autoplaced yes)
 		(uuid "3d32692f-d201-40bb-8253-6c43436cd352")
 		(property "Reference" "LV13"
-			(at 164.465 51.7524 90)
+			(at 140.335 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3214,7 +3185,7 @@
 			)
 		)
 		(property "Value" "LED1"
-			(at 164.465 54.2924 90)
+			(at 140.335 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3223,7 +3194,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 161.29 51.435 0)
+			(at 136.525 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3232,7 +3203,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 161.29 51.435 0)
+			(at 136.525 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3241,7 +3212,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 161.29 51.435 0)
+			(at 136.525 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3250,7 +3221,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 161.29 51.435 0)
+			(at 136.525 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3259,7 +3230,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 161.29 51.435 0)
+			(at 136.525 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3283,17 +3254,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 262.255 60.325 0)
+		(lib_id "power:+3V3")
+		(at 184.785 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4067c326-3ab2-4c83-af86-f1087e23e7fd")
-		(property "Reference" "#PWR082"
-			(at 262.255 66.675 0)
+		(uuid "3f07e0ed-1759-41cf-a8e8-6dff542f96ca")
+		(property "Reference" "#PWR077"
+			(at 184.785 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3301,16 +3271,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 262.255 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 186.055 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 262.255 60.325 0)
+			(at 184.785 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3319,7 +3290,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 262.255 60.325 0)
+			(at 184.785 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3327,8 +3298,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 262.255 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 184.785 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3337,12 +3308,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "fb2c72a0-88b1-47e8-9d08-350cf392f545")
+			(uuid "d00d9eda-2565-4171-b3c0-604faaafe9ab")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR082")
+					(reference "#PWR077")
 					(unit 1)
 				)
 			)
@@ -3350,7 +3321,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 106.68 42.545 0)
+		(at 196.85 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3359,7 +3330,7 @@
 		(fields_autoplaced yes)
 		(uuid "44b90b01-7c8d-4d2d-84de-0d48a9a59df0")
 		(property "Reference" "R35"
-			(at 108.585 41.2749 0)
+			(at 194.945 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3368,7 +3339,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 108.585 43.8149 0)
+			(at 194.945 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3377,7 +3348,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 107.696 42.799 90)
+			(at 195.834 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3386,7 +3357,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 106.68 42.545 0)
+			(at 196.85 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3395,7 +3366,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 106.68 42.545 0)
+			(at 196.85 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3404,7 +3375,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 106.68 42.545 0)
+			(at 196.85 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3413,7 +3384,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 106.68 42.545 0)
+			(at 196.85 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3437,8 +3408,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 136.525 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4791a5e0-e9c8-4535-8984-077ee3e34d04")
+		(property "Reference" "#PWR073"
+			(at 136.525 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 137.795 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 136.525 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 136.525 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 136.525 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "96aca68f-e6e0-4c81-867c-f9f0c2a558f9")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
-		(at 262.255 42.545 0)
+		(at 40.005 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3447,7 +3484,7 @@
 		(fields_autoplaced yes)
 		(uuid "4a51b121-0a95-4a6c-8db5-7f6f39b573e7")
 		(property "Reference" "R48"
-			(at 264.16 41.2749 0)
+			(at 38.1 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3456,7 +3493,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 264.16 43.8149 0)
+			(at 38.1 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3465,7 +3502,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 263.271 42.799 90)
+			(at 38.989 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3474,7 +3511,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 262.255 42.545 0)
+			(at 40.005 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3483,7 +3520,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 262.255 42.545 0)
+			(at 40.005 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3492,7 +3529,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 262.255 42.545 0)
+			(at 40.005 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3501,7 +3538,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 262.255 42.545 0)
+			(at 40.005 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3526,7 +3563,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 85.725 51.435 90)
+		(at 220.98 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3535,7 +3572,7 @@
 		(fields_autoplaced yes)
 		(uuid "4c913c66-28f9-4057-8df9-98758bc00b03")
 		(property "Reference" "LV6"
-			(at 88.9 51.7524 90)
+			(at 224.155 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3544,7 +3581,7 @@
 			)
 		)
 		(property "Value" "PT"
-			(at 88.9 54.2924 90)
+			(at 224.155 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3553,7 +3590,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 85.725 51.435 0)
+			(at 220.98 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3562,7 +3599,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 85.725 51.435 0)
+			(at 220.98 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3571,7 +3608,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 85.725 51.435 0)
+			(at 220.98 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3580,7 +3617,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 85.725 51.435 0)
+			(at 220.98 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3589,7 +3626,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 85.725 51.435 0)
+			(at 220.98 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3613,17 +3650,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 221.615 60.325 0)
+		(lib_id "power:+3V3")
+		(at 40.005 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5c855985-0133-4506-8e50-3cfc9c35bb54")
-		(property "Reference" "#PWR079"
-			(at 221.615 66.675 0)
+		(uuid "4dc07444-250c-44aa-a4f3-293d0bf5d5d9")
+		(property "Reference" "#PWR051"
+			(at 40.005 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3631,16 +3667,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 221.615 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 41.275 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 221.615 60.325 0)
+			(at 40.005 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3649,7 +3686,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 221.615 60.325 0)
+			(at 40.005 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3657,8 +3694,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 221.615 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 40.005 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3667,12 +3704,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1bc7df73-55fd-4b12-8172-83bd01222629")
+			(uuid "b5d499f2-d042-437f-9aaf-97f7dcc38128")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR079")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3680,16 +3717,16 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 149.86 51.435 90)
+		(at 245.11 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "6075afb6-098f-4968-86e8-b4426a99405b")
-		(property "Reference" "LV12"
-			(at 153.67 51.7524 90)
+		(uuid "5e891fb8-a701-428a-a0b3-53a72dc49e02")
+		(property "Reference" "LV23"
+			(at 248.285 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3697,8 +3734,8 @@
 				(justify right)
 			)
 		)
-		(property "Value" "HALL"
-			(at 153.67 54.2924 90)
+		(property "Value" "PT"
+			(at 248.285 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3707,7 +3744,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 149.86 51.435 0)
+			(at 245.11 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3716,7 +3753,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 149.86 51.435 0)
+			(at 245.11 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3725,7 +3762,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 149.86 51.435 0)
+			(at 245.11 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3734,7 +3771,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 149.86 51.435 0)
+			(at 245.11 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3743,7 +3780,95 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 149.86 51.435 0)
+			(at 245.11 90.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "03fdc9c6-5215-4439-9534-981ba0249184")
+		)
+		(pin "2"
+			(uuid "6283de04-d05f-493f-98e7-49d69c7b7971")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "LV23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 148.59 90.805 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6075afb6-098f-4968-86e8-b4426a99405b")
+		(property "Reference" "LV12"
+			(at 152.4 91.1224 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "HALL"
+			(at 152.4 93.6624 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
+			(at 148.59 90.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
+			(at 148.59 90.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 148.59 90.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 148.59 90.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "XL-1608UBC-06A"
+			(at 148.59 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3767,74 +3892,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 234.95 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "63027215-3483-48bd-9b80-caf6e01a8cb8")
-		(property "Reference" "#PWR080"
-			(at 234.95 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 234.95 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 234.95 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 234.95 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 234.95 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1441b162-26a5-4a84-a4cb-76590fd91772")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR080")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:LED")
-		(at 96.52 51.435 90)
+		(at 208.915 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3843,7 +3902,7 @@
 		(fields_autoplaced yes)
 		(uuid "695e7837-e0a6-47a2-92cd-171eb35314b4")
 		(property "Reference" "LV7"
-			(at 100.33 51.7524 90)
+			(at 212.725 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3852,7 +3911,7 @@
 			)
 		)
 		(property "Value" "ST"
-			(at 100.33 54.2924 90)
+			(at 212.725 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3861,7 +3920,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 96.52 51.435 0)
+			(at 208.915 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3870,7 +3929,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 96.52 51.435 0)
+			(at 208.915 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3879,7 +3938,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 96.52 51.435 0)
+			(at 208.915 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3888,7 +3947,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 96.52 51.435 0)
+			(at 208.915 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3897,7 +3956,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 96.52 51.435 0)
+			(at 208.915 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3921,17 +3980,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 172.72 60.325 0)
+		(lib_id "power:+3V3")
+		(at 208.915 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6d148a9c-bf2a-48dc-a65e-395b07918ce8")
-		(property "Reference" "#PWR075"
-			(at 172.72 66.675 0)
+		(uuid "6d12e56d-bcd4-4223-88ae-fe934060e8f1")
+		(property "Reference" "#PWR079"
+			(at 208.915 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3939,16 +3997,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 172.72 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 210.185 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 172.72 60.325 0)
+			(at 208.915 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3957,7 +4016,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 172.72 60.325 0)
+			(at 208.915 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3965,8 +4024,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 172.72 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 208.915 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3975,12 +4034,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "6e41f7e2-a57f-48c3-abc4-09df76b2b174")
+			(uuid "0f0988b7-82c9-4c3a-971b-338826fb400e")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR075")
+					(reference "#PWR079")
 					(unit 1)
 				)
 			)
@@ -3988,7 +4047,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 196.215 42.545 0)
+		(at 100.33 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3997,7 +4056,7 @@
 		(fields_autoplaced yes)
 		(uuid "7ab87fd5-6948-479c-ae74-f9a92b4f3f30")
 		(property "Reference" "R43"
-			(at 198.12 41.2749 0)
+			(at 98.425 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4006,7 +4065,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 198.12 43.8149 0)
+			(at 98.425 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4015,7 +4074,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 197.231 42.799 90)
+			(at 99.314 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4024,7 +4083,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 196.215 42.545 0)
+			(at 100.33 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4033,7 +4092,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 196.215 42.545 0)
+			(at 100.33 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4042,7 +4101,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 196.215 42.545 0)
+			(at 100.33 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4051,7 +4110,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 196.215 42.545 0)
+			(at 100.33 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4075,8 +4134,206 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 124.46 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7d277677-a2fe-4c66-b7ed-bf01b32e4f32")
+		(property "Reference" "#PWR072"
+			(at 124.46 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 125.73 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 124.46 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 124.46 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9b6ddc7f-ae6a-45d6-aeb5-a31549737565")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR072")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 64.135 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7e7e6a2c-19b0-4c76-9644-03cf6f54b461")
+		(property "Reference" "#PWR067"
+			(at 64.135 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 65.405 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 64.135 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 64.135 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 64.135 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d265e1b8-c969-4fe3-a3e1-ee96f2f94d9b")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR067")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 148.59 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "848285b8-59ef-4c16-9877-5ad01cf66476")
+		(property "Reference" "#PWR074"
+			(at 148.59 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 149.86 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 148.59 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 148.59 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 148.59 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e498c149-306d-4570-b8b3-95a6bdc4a589")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR074")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
-		(at 139.065 42.545 0)
+		(at 160.655 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4085,7 +4342,7 @@
 		(fields_autoplaced yes)
 		(uuid "8759bf79-8408-460d-8bd8-32d81aee7848")
 		(property "Reference" "R38"
-			(at 140.97 41.2749 0)
+			(at 158.75 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4094,7 +4351,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 140.97 43.8149 0)
+			(at 158.75 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4103,7 +4360,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 140.081 42.799 90)
+			(at 159.639 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4112,7 +4369,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 139.065 42.545 0)
+			(at 160.655 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4121,7 +4378,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 139.065 42.545 0)
+			(at 160.655 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4130,7 +4387,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 139.065 42.545 0)
+			(at 160.655 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4139,7 +4396,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 139.065 42.545 0)
+			(at 160.655 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4164,7 +4421,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 184.785 42.545 0)
+		(at 112.395 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4173,7 +4430,7 @@
 		(fields_autoplaced yes)
 		(uuid "88abd7de-d5f5-4d66-8131-46eaa67ec1fe")
 		(property "Reference" "R42"
-			(at 186.69 41.2749 0)
+			(at 110.49 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4182,7 +4439,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 186.69 43.8149 0)
+			(at 110.49 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4191,7 +4448,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 185.801 42.799 90)
+			(at 111.379 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4200,7 +4457,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 184.785 42.545 0)
+			(at 112.395 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4209,7 +4466,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 184.785 42.545 0)
+			(at 112.395 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4218,7 +4475,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 184.785 42.545 0)
+			(at 112.395 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4227,7 +4484,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 184.785 42.545 0)
+			(at 112.395 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4251,8 +4508,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 172.72 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8ad41b72-a850-4b62-a158-46bc3e9bd560")
+		(property "Reference" "#PWR076"
+			(at 172.72 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 173.99 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 172.72 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 172.72 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "dae6f797-751a-4580-b80e-4e0751a788ba")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR076")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
-		(at 234.95 42.545 0)
+		(at 64.135 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4261,7 +4584,7 @@
 		(fields_autoplaced yes)
 		(uuid "8c27b198-6860-4ece-9172-f875f325d116")
 		(property "Reference" "R46"
-			(at 236.855 41.2749 0)
+			(at 62.23 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4270,7 +4593,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 236.855 43.8149 0)
+			(at 62.23 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4279,7 +4602,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 235.966 42.799 90)
+			(at 63.119 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4288,7 +4611,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 234.95 42.545 0)
+			(at 64.135 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4297,7 +4620,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 234.95 42.545 0)
+			(at 64.135 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4306,7 +4629,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 234.95 42.545 0)
+			(at 64.135 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4315,7 +4638,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 234.95 42.545 0)
+			(at 64.135 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4339,17 +4662,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 139.065 60.325 0)
+		(lib_id "power:+3V3")
+		(at 233.045 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "978a0b9a-eec9-4480-856b-63a30ee8af07")
-		(property "Reference" "#PWR072"
-			(at 139.065 66.675 0)
+		(uuid "8f056196-daa2-47cd-a89d-ed6e7063e3b2")
+		(property "Reference" "#PWR081"
+			(at 233.045 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4357,16 +4679,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 139.065 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 234.315 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 139.065 60.325 0)
+			(at 233.045 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4375,7 +4698,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 139.065 60.325 0)
+			(at 233.045 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4383,8 +4706,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 139.065 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 233.045 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4393,12 +4716,78 @@
 			)
 		)
 		(pin "1"
-			(uuid "71530e9b-3f62-4441-83e9-29927053e4af")
+			(uuid "8c8f7d0c-156f-4bbc-b1be-07787b1ab7b5")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR072")
+					(reference "#PWR081")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 52.07 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9159146d-2de2-475d-83da-6cedc221fd9b")
+		(property "Reference" "#PWR066"
+			(at 52.07 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 53.34 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 52.07 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 52.07 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "efd70f4d-0a9b-46ec-a641-93e391b06a15")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -4406,16 +4795,16 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 127.635 42.545 0)
+		(at 245.11 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "9b662510-ab66-41c6-8b51-1da91052cffb")
-		(property "Reference" "R37"
-			(at 129.54 41.2749 0)
+		(uuid "981c619f-a3a3-47c6-9f56-3566b38460e4")
+		(property "Reference" "R52"
+			(at 243.205 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4424,7 +4813,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 129.54 43.8149 0)
+			(at 243.205 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4433,7 +4822,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 128.651 42.799 90)
+			(at 244.094 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4442,7 +4831,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 127.635 42.545 0)
+			(at 245.11 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4451,7 +4840,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 127.635 42.545 0)
+			(at 245.11 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4460,7 +4849,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 127.635 42.545 0)
+			(at 245.11 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4469,7 +4858,95 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 127.635 42.545 0)
+			(at 245.11 99.695 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f3591171-c74c-4f8b-8003-1f9c47f57840")
+		)
+		(pin "2"
+			(uuid "0c694eb5-6e5a-4afc-9ae1-eaed74ef60fc")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "R52")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 172.72 99.695 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9b662510-ab66-41c6-8b51-1da91052cffb")
+		(property "Reference" "R37"
+			(at 170.815 100.9651 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k"
+			(at 170.815 98.4251 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 171.704 99.441 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 172.72 99.695 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 172.72 99.695 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW0603120RFKEC"
+			(at 172.72 99.695 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 172.72 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4494,7 +4971,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 172.72 51.435 90)
+		(at 124.46 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4503,7 +4980,7 @@
 		(fields_autoplaced yes)
 		(uuid "9e36d8b0-0bc2-43be-bebf-6cb0f0641e25")
 		(property "Reference" "LV14"
-			(at 176.53 51.7524 90)
+			(at 128.27 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4512,7 +4989,7 @@
 			)
 		)
 		(property "Value" "LED2"
-			(at 176.53 54.2924 90)
+			(at 128.27 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4521,7 +4998,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 172.72 51.435 0)
+			(at 124.46 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4530,7 +5007,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 172.72 51.435 0)
+			(at 124.46 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4539,7 +5016,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 172.72 51.435 0)
+			(at 124.46 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4548,7 +5025,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 172.72 51.435 0)
+			(at 124.46 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4557,7 +5034,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 172.72 51.435 0)
+			(at 124.46 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4581,74 +5058,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 184.785 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9eade4ba-81a7-4dda-9ce4-3c68dd921728")
-		(property "Reference" "#PWR076"
-			(at 184.785 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 184.785 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 184.785 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 184.785 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 184.785 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "68329b23-ff97-4eee-9c7e-c73b4581e9fb")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR076")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
-		(at 208.28 42.545 0)
+		(at 88.265 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4657,7 +5068,7 @@
 		(fields_autoplaced yes)
 		(uuid "a1c16bb5-2e88-4443-b734-58389957c6c0")
 		(property "Reference" "R44"
-			(at 210.185 41.2749 0)
+			(at 86.36 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4666,7 +5077,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 210.185 43.8149 0)
+			(at 86.36 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4675,7 +5086,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 209.296 42.799 90)
+			(at 87.249 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4684,7 +5095,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 208.28 42.545 0)
+			(at 88.265 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4693,7 +5104,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 208.28 42.545 0)
+			(at 88.265 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4702,7 +5113,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 208.28 42.545 0)
+			(at 88.265 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4711,7 +5122,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 208.28 42.545 0)
+			(at 88.265 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4735,17 +5146,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 117.475 60.325 0)
+		(lib_id "power:+3V3")
+		(at 196.85 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a47fd5b4-5216-46df-89b8-ecc92a1bc1cf")
-		(property "Reference" "#PWR070"
-			(at 117.475 66.675 0)
+		(uuid "a2d640f2-b115-4293-a3bc-0223928222e2")
+		(property "Reference" "#PWR078"
+			(at 196.85 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4753,16 +5163,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 117.475 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 198.12 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 117.475 60.325 0)
+			(at 196.85 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4771,7 +5182,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 117.475 60.325 0)
+			(at 196.85 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4779,8 +5190,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 117.475 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 196.85 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4789,12 +5200,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "68f2648d-530c-4da5-8b72-843970604b39")
+			(uuid "2481ae4e-44ca-4a3b-bcb5-983319e814ce")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR070")
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -4802,7 +5213,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 208.28 51.435 90)
+		(at 88.265 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4811,7 +5222,7 @@
 		(fields_autoplaced yes)
 		(uuid "a7bbe8b4-28ef-4097-ada0-413175827ded")
 		(property "Reference" "LV17"
-			(at 212.09 51.7524 90)
+			(at 92.075 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4820,7 +5231,7 @@
 			)
 		)
 		(property "Value" "HB"
-			(at 212.09 54.2924 90)
+			(at 92.075 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4829,7 +5240,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 208.28 51.435 0)
+			(at 88.265 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4838,7 +5249,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 208.28 51.435 0)
+			(at 88.265 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4847,7 +5258,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 208.28 51.435 0)
+			(at 88.265 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4856,7 +5267,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 208.28 51.435 0)
+			(at 88.265 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4865,7 +5276,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 208.28 51.435 0)
+			(at 88.265 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4890,7 +5301,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 149.86 42.545 0)
+		(at 148.59 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4899,7 +5310,7 @@
 		(fields_autoplaced yes)
 		(uuid "aecd7d92-f982-43a4-880f-939669a83897")
 		(property "Reference" "R39"
-			(at 151.765 41.2749 0)
+			(at 146.685 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4908,7 +5319,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 151.765 43.8149 0)
+			(at 146.685 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4917,7 +5328,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 150.876 42.799 90)
+			(at 147.574 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4926,7 +5337,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 149.86 42.545 0)
+			(at 148.59 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4935,7 +5346,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 149.86 42.545 0)
+			(at 148.59 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4944,7 +5355,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 149.86 42.545 0)
+			(at 148.59 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4953,7 +5364,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 149.86 42.545 0)
+			(at 148.59 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4978,7 +5389,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 85.725 42.545 0)
+		(at 220.98 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4987,7 +5398,7 @@
 		(fields_autoplaced yes)
 		(uuid "b302b192-aeac-4cbe-949e-d0a61e669254")
 		(property "Reference" "R33"
-			(at 87.63 41.2749 0)
+			(at 219.075 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4996,7 +5407,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 87.63 43.8149 0)
+			(at 219.075 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5005,7 +5416,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 86.741 42.799 90)
+			(at 219.964 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5014,7 +5425,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 85.725 42.545 0)
+			(at 220.98 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5023,7 +5434,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 85.725 42.545 0)
+			(at 220.98 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5032,7 +5443,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 85.725 42.545 0)
+			(at 220.98 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5041,7 +5452,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 85.725 42.545 0)
+			(at 220.98 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5065,74 +5476,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 161.29 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b37e17c7-2f94-435e-93e7-4a063869f662")
-		(property "Reference" "#PWR074"
-			(at 161.29 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 161.29 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 161.29 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 161.29 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 161.29 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6394bdf3-8640-4855-999e-cda7e1774890")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR074")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:LED")
-		(at 234.95 51.435 90)
+		(at 64.135 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5141,7 +5486,7 @@
 		(fields_autoplaced yes)
 		(uuid "b522b46d-3994-42fc-be9b-f80fd5e127a3")
 		(property "Reference" "LV19"
-			(at 238.76 51.7524 90)
+			(at 67.945 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5150,7 +5495,7 @@
 			)
 		)
 		(property "Value" "Cruise"
-			(at 238.76 54.2924 90)
+			(at 67.945 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5159,7 +5504,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 234.95 51.435 0)
+			(at 64.135 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5168,7 +5513,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 234.95 51.435 0)
+			(at 64.135 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5177,7 +5522,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 234.95 51.435 0)
+			(at 64.135 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5186,7 +5531,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 234.95 51.435 0)
+			(at 64.135 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5195,7 +5540,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 234.95 51.435 0)
+			(at 64.135 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5220,7 +5565,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 247.65 42.545 0)
+		(at 52.07 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5229,7 +5574,7 @@
 		(fields_autoplaced yes)
 		(uuid "bb3886be-c8cf-43af-84f8-ae5ce40cffde")
 		(property "Reference" "R47"
-			(at 249.555 41.2749 0)
+			(at 50.165 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5238,7 +5583,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 249.555 43.8149 0)
+			(at 50.165 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5247,7 +5592,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 248.666 42.799 90)
+			(at 51.054 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5256,7 +5601,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 247.65 42.545 0)
+			(at 52.07 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5265,7 +5610,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 247.65 42.545 0)
+			(at 52.07 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5274,7 +5619,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 247.65 42.545 0)
+			(at 52.07 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5283,7 +5628,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 247.65 42.545 0)
+			(at 52.07 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5307,8 +5652,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 88.265 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c8a9216c-2189-4a91-83f7-59c054611edb")
+		(property "Reference" "#PWR069"
+			(at 88.265 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3_LSOM"
+			(at 89.535 80.0099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.265 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 88.265 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "208b5899-1f76-4d7a-9fa6-79481cd5bb79")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR069")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
-		(at 117.475 42.545 0)
+		(at 184.785 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5317,7 +5728,7 @@
 		(fields_autoplaced yes)
 		(uuid "cc0ee686-5b43-4441-8e1f-3a977e635d85")
 		(property "Reference" "R36"
-			(at 119.38 41.2749 0)
+			(at 182.88 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5326,7 +5737,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 119.38 43.8149 0)
+			(at 182.88 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5335,7 +5746,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 118.491 42.799 90)
+			(at 183.769 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5344,7 +5755,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 117.475 42.545 0)
+			(at 184.785 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5353,7 +5764,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 117.475 42.545 0)
+			(at 184.785 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5362,7 +5773,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 117.475 42.545 0)
+			(at 184.785 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5371,7 +5782,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 117.475 42.545 0)
+			(at 184.785 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5395,74 +5806,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 247.65 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "cdd36759-1b54-438d-aeb4-7c971af81b01")
-		(property "Reference" "#PWR081"
-			(at 247.65 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 247.65 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 247.65 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 247.65 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 247.65 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "01ca645d-4192-40d7-91c6-5154f0775b0b")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR081")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
-		(at 172.72 42.545 0)
+		(at 124.46 99.695 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5471,7 +5816,7 @@
 		(fields_autoplaced yes)
 		(uuid "d6f35244-bc7a-40d1-b7ef-4182ba8c63f8")
 		(property "Reference" "R41"
-			(at 174.625 41.2749 0)
+			(at 122.555 100.9651 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5480,7 +5825,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 174.625 43.8149 0)
+			(at 122.555 98.4251 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5489,7 +5834,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 173.736 42.799 90)
+			(at 123.444 99.441 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5498,7 +5843,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 172.72 42.545 0)
+			(at 124.46 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5507,7 +5852,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 172.72 42.545 0)
+			(at 124.46 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5516,7 +5861,7 @@
 			)
 		)
 		(property "P/N" "CRCW0603120RFKEC"
-			(at 172.72 42.545 0)
+			(at 124.46 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5525,7 +5870,7 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
-			(at 172.72 42.545 0)
+			(at 124.46 99.695 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5550,7 +5895,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 221.615 51.435 90)
+		(at 76.2 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5559,7 +5904,7 @@
 		(fields_autoplaced yes)
 		(uuid "d8cb0e72-76aa-4a7f-8b54-f784d7bd7db3")
 		(property "Reference" "LV18"
-			(at 224.79 51.7524 90)
+			(at 79.375 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5568,7 +5913,7 @@
 			)
 		)
 		(property "Value" "Regen"
-			(at 224.79 54.2924 90)
+			(at 79.375 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5577,7 +5922,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 221.615 51.435 0)
+			(at 76.2 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5586,7 +5931,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 221.615 51.435 0)
+			(at 76.2 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5595,7 +5940,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 221.615 51.435 0)
+			(at 76.2 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5604,7 +5949,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 221.615 51.435 0)
+			(at 76.2 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5613,7 +5958,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 221.615 51.435 0)
+			(at 76.2 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5638,7 +5983,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 274.32 51.435 90)
+		(at 27.94 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5647,7 +5992,7 @@
 		(fields_autoplaced yes)
 		(uuid "df2cb620-bf90-4c8c-8f67-4064a6a4a6e1")
 		(property "Reference" "LV22"
-			(at 277.495 51.7524 90)
+			(at 31.75 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5656,7 +6001,7 @@
 			)
 		)
 		(property "Value" "Driving"
-			(at 277.495 54.2924 90)
+			(at 31.75 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5665,7 +6010,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 274.32 51.435 0)
+			(at 27.94 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5674,7 +6019,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 274.32 51.435 0)
+			(at 27.94 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5683,7 +6028,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 274.32 51.435 0)
+			(at 27.94 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5692,7 +6037,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 274.32 51.435 0)
+			(at 27.94 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5701,7 +6046,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 274.32 51.435 0)
+			(at 27.94 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5725,8 +6070,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 27.94 81.915 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ebc2128c-b517-4126-a7db-c40062a56489")
+		(property "Reference" "#PWR082"
+			(at 27.94 85.725 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 27.94 76.835 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 27.94 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 27.94 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 27.94 81.915 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e57b3ce3-d72b-45b7-a251-5de121fef208")
+		)
+		(instances
+			(project "VehicleControlUnit"
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
+					(reference "#PWR082")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
-		(at 117.475 51.435 90)
+		(at 184.785 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5735,7 +6146,7 @@
 		(fields_autoplaced yes)
 		(uuid "ebe760cc-1609-4c90-a0dd-1e9b4eed04fe")
 		(property "Reference" "LV9"
-			(at 120.65 51.7524 90)
+			(at 187.96 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5744,7 +6155,7 @@
 			)
 		)
 		(property "Value" "BF"
-			(at 120.65 54.2924 90)
+			(at 187.96 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5753,7 +6164,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 117.475 51.435 0)
+			(at 184.785 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5762,7 +6173,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 117.475 51.435 0)
+			(at 184.785 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5771,7 +6182,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 117.475 51.435 0)
+			(at 184.785 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5780,7 +6191,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 117.475 51.435 0)
+			(at 184.785 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5789,7 +6200,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 117.475 51.435 0)
+			(at 184.785 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5814,7 +6225,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 139.065 51.435 90)
+		(at 160.655 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5823,7 +6234,7 @@
 		(fields_autoplaced yes)
 		(uuid "ecf20c14-f821-4489-823a-dbde2b1d8086")
 		(property "Reference" "LV11"
-			(at 142.24 51.7524 90)
+			(at 163.83 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5832,7 +6243,7 @@
 			)
 		)
 		(property "Value" "MW"
-			(at 142.24 54.2924 90)
+			(at 163.83 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5841,7 +6252,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 139.065 51.435 0)
+			(at 160.655 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5850,7 +6261,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 139.065 51.435 0)
+			(at 160.655 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5859,7 +6270,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 139.065 51.435 0)
+			(at 160.655 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5868,7 +6279,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 139.065 51.435 0)
+			(at 160.655 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5877,7 +6288,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 139.065 51.435 0)
+			(at 160.655 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5901,17 +6312,16 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 106.68 60.325 0)
+		(lib_id "power:+3V3")
+		(at 220.98 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "efebb4cb-715a-4f31-9768-4afe97f0cb7a")
-		(property "Reference" "#PWR069"
-			(at 106.68 66.675 0)
+		(uuid "f0dd8831-bb77-44f2-b337-788bb9299135")
+		(property "Reference" "#PWR080"
+			(at 220.98 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5919,16 +6329,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 106.68 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 222.25 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 106.68 60.325 0)
+			(at 220.98 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5937,7 +6348,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 106.68 60.325 0)
+			(at 220.98 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5945,8 +6356,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 106.68 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 220.98 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5955,29 +6366,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "4701daba-4f0f-4037-a71b-326bf6ec19b5")
+			(uuid "310a7d38-3561-4d71-9c16-c4e0d481c8a5")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR069")
+					(reference "#PWR080")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 274.32 60.325 0)
+		(lib_id "power:+3V3")
+		(at 76.2 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f03341ee-28de-4e54-b6f2-bb0f680f30f8")
-		(property "Reference" "#PWR051"
-			(at 274.32 66.675 0)
+		(uuid "f718ecfb-8075-4a7e-a9e3-8f271a0c2603")
+		(property "Reference" "#PWR068"
+			(at 76.2 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5985,16 +6395,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 274.32 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 77.47 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 274.32 60.325 0)
+			(at 76.2 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6003,7 +6414,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 274.32 60.325 0)
+			(at 76.2 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6011,8 +6422,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 274.32 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 76.2 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6021,29 +6432,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "9ed1b367-13c0-4898-99a1-54379483760b")
+			(uuid "26bd7f71-b403-4d7a-8985-fe0849d54f36")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR051")
+					(reference "#PWR068")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 208.28 60.325 0)
+		(lib_id "power:+3V3")
+		(at 112.395 81.915 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f26e6c0a-8172-42a4-9920-473d49cb12d5")
-		(property "Reference" "#PWR078"
-			(at 208.28 66.675 0)
+		(uuid "f73e0992-2962-47ac-a76c-d50fddf58513")
+		(property "Reference" "#PWR071"
+			(at 112.395 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6051,16 +6461,17 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 208.28 65.405 0)
+		(property "Value" "3V3_LSOM"
+			(at 113.665 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 208.28 60.325 0)
+			(at 112.395 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6069,7 +6480,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 208.28 60.325 0)
+			(at 112.395 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6077,8 +6488,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 208.28 60.325 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 112.395 81.915 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6087,12 +6498,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "c05f1e2f-4668-4866-829e-15a9f922b45c")
+			(uuid "48811444-305c-480e-9fc2-d722ff31f77d")
 		)
 		(instances
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR078")
+					(reference "#PWR071")
 					(unit 1)
 				)
 			)
@@ -6100,7 +6511,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 196.215 51.435 90)
+		(at 100.33 90.805 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6109,7 +6520,7 @@
 		(fields_autoplaced yes)
 		(uuid "f8fd85c6-64eb-4cc6-af84-a58db8299948")
 		(property "Reference" "LV16"
-			(at 200.025 51.7524 90)
+			(at 103.505 91.1224 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6118,7 +6529,7 @@
 			)
 		)
 		(property "Value" "LED4"
-			(at 200.025 54.2924 90)
+			(at 103.505 93.6624 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6127,7 +6538,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
-			(at 196.215 51.435 0)
+			(at 100.33 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6136,7 +6547,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C7371904.pdf"
-			(at 196.215 51.435 0)
+			(at 100.33 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6145,7 +6556,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 196.215 51.435 0)
+			(at 100.33 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6154,7 +6565,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 196.215 51.435 0)
+			(at 100.33 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6163,7 +6574,7 @@
 			)
 		)
 		(property "P/N" "XL-1608UBC-06A"
-			(at 196.215 51.435 0)
+			(at 100.33 90.805 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6181,72 +6592,6 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
 					(reference "LV16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 96.52 60.325 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fc3d9407-1cf6-42e8-8f89-477aba4dc9cd")
-		(property "Reference" "#PWR068"
-			(at 96.52 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 96.52 65.405 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 96.52 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 96.52 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 96.52 60.325 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "950b483f-b161-4ffb-9ec2-7dcd69948b73")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/96c53ded-19ba-4bc3-a002-d56d1ee79194"
-					(reference "#PWR068")
 					(unit 1)
 				)
 			)

@@ -1270,23 +1270,27 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Mechanical:MountingHole"
+		(symbol "Mechanical:MountingHole_Pad"
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 1.016)
+				(hide yes)
 			)
-			(exclude_from_sim yes)
+			(exclude_from_sim no)
 			(in_bom no)
 			(on_board yes)
 			(property "Reference" "H"
-				(at 0 5.08 0)
+				(at 0 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "MountingHole"
-				(at 0 3.175 0)
+			(property "Value" "MountingHole_Pad"
+				(at 0 4.445 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1311,7 +1315,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Mounting Hole without connection"
+			(property "Description" "Mounting Hole with connection"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1329,7 +1333,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "MountingHole*"
+			(property "ki_fp_filters" "MountingHole*Pad*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1338,9 +1342,9 @@
 					(hide yes)
 				)
 			)
-			(symbol "MountingHole_0_1"
+			(symbol "MountingHole_Pad_0_1"
 				(circle
-					(center 0 0)
+					(center 0 1.27)
 					(radius 1.27)
 					(stroke
 						(width 1.27)
@@ -1348,6 +1352,26 @@
 					)
 					(fill
 						(type none)
+					)
+				)
+			)
+			(symbol "MountingHole_Pad_1_1"
+				(pin input line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
 					)
 				)
 			)
@@ -3886,9 +3910,10 @@
 		)
 	)
 	(bus_alias "Status_LEDs"
-		(members "Precharge_Complete" "Precharge_Timeout" "Sense_Timeout" "Motor_Fault"
+		(members "Precharge_Complete" "Precharge_Timeout" "PreSense_Timeout" "Motor_Fault"
 			"BPS_Fault" "SWOC" "Motor_Watchdog" "Bad_Hall" "MPre_Sense" "MPre_Enable"
 			"M_Sense" "M_Enable" "HB" "Regen" "Cruise" "Safe" "Driving" "ESP_RESET"
+			"Motor_Sense_Timeout"
 		)
 	)
 	(rectangle
@@ -4173,7 +4198,7 @@
 		(uuid "c772c9d4-6f18-4b64-819b-ae63a32539cc")
 	)
 	(junction
-		(at 186.055 58.42)
+		(at 195.58 52.705)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c9d978b3-deaf-43eb-aee5-04213de350a0")
@@ -4207,23 +4232,23 @@
 		(uuid "05f0403b-a113-4e0e-a992-543a13e8ca54")
 	)
 	(no_connect
-		(at 152.4 49.53)
-		(uuid "18e422d5-4493-4d5f-8108-1396765e3dfd")
-	)
-	(no_connect
 		(at 152.4 36.83)
 		(uuid "2d42f0bc-8758-49f6-8c29-3ba7ede88429")
 	)
 	(no_connect
-		(at 189.23 43.18)
+		(at 198.755 37.465)
 		(uuid "31339ce0-c88d-4bc0-8bc3-2a77a509a4f2")
 	)
 	(no_connect
-		(at 189.23 38.1)
+		(at 245.745 153.035)
+		(uuid "31632a35-5968-4fa4-95e3-ba4f84a9672a")
+	)
+	(no_connect
+		(at 198.755 32.385)
 		(uuid "38c6f95b-8e4a-420a-87e1-ee74c30956eb")
 	)
 	(no_connect
-		(at 189.23 50.8)
+		(at 198.755 45.085)
 		(uuid "4887b263-e8e6-4e30-aaf0-9bc8763a3f20")
 	)
 	(no_connect
@@ -4231,11 +4256,15 @@
 		(uuid "4a2bbc65-fb2f-4b8d-8b1a-b97de225e97d")
 	)
 	(no_connect
-		(at 152.4 46.99)
-		(uuid "69b8c336-ab7f-4092-9020-0a37d4fc633b")
+		(at 245.745 144.78)
+		(uuid "5ca8632b-afee-4969-a243-ea92292bf977")
 	)
 	(no_connect
-		(at 189.23 48.26)
+		(at 245.745 160.655)
+		(uuid "7c3ff4d3-9a82-41b3-86c8-bbe38283ddd3")
+	)
+	(no_connect
+		(at 198.755 42.545)
 		(uuid "8b87e56d-3ca6-4b1a-bf81-7326a6123b16")
 	)
 	(no_connect
@@ -4243,11 +4272,15 @@
 		(uuid "96df8a6a-f2ae-4908-9b99-b79e9c2abdc1")
 	)
 	(no_connect
-		(at 189.23 40.64)
+		(at 152.4 46.99)
+		(uuid "9ca8cae7-4b03-4874-8cb4-b5750b0274a4")
+	)
+	(no_connect
+		(at 198.755 34.925)
 		(uuid "a7ada731-7b12-4438-afa2-cfdf6c7f07e6")
 	)
 	(no_connect
-		(at 189.23 45.72)
+		(at 198.755 40.005)
 		(uuid "bfe49498-5db9-44a4-b37c-be53fc8e8e6e")
 	)
 	(no_connect
@@ -4259,7 +4292,7 @@
 		(uuid "d2067e94-bb88-4cf0-ba5d-324012f2bda8")
 	)
 	(bus_entry
-		(at 162.56 52.07)
+		(at 168.275 52.07)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4304,7 +4337,7 @@
 		(uuid "3898b8d8-f44e-48ee-9803-380b890f0778")
 	)
 	(bus_entry
-		(at 162.56 31.75)
+		(at 168.275 31.75)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4349,7 +4382,7 @@
 		(uuid "9db47a4f-a0bd-4b26-b10d-7d2de09bc955")
 	)
 	(bus_entry
-		(at 162.56 72.39)
+		(at 167.64 72.39)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4358,7 +4391,16 @@
 		(uuid "b5ab595f-42ba-4e90-ab14-8ff9524fa32c")
 	)
 	(bus_entry
-		(at 162.56 67.31)
+		(at 168.275 49.53)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb1a4608-7229-4a8c-b65a-eba8b6df6d93")
+	)
+	(bus_entry
+		(at 167.64 67.31)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4385,7 +4427,7 @@
 		(uuid "da7b3cf6-b7bb-482f-98c2-69bcd794a247")
 	)
 	(bus_entry
-		(at 162.56 74.93)
+		(at 167.64 74.93)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4403,7 +4445,7 @@
 		(uuid "ebd55dc0-d72c-438b-9a4a-08968288fe4b")
 	)
 	(bus_entry
-		(at 162.56 69.85)
+		(at 167.64 69.85)
 		(size 2.54 2.54)
 		(stroke
 			(width 0)
@@ -4419,6 +4461,16 @@
 			(type default)
 		)
 		(uuid "ff90f1f7-beb3-4c70-85eb-3bafaac5846c")
+	)
+	(wire
+		(pts
+			(xy 152.4 49.53) (xy 168.275 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "012a2654-20b5-4880-b949-a9e3f75d0144")
 	)
 	(wire
 		(pts
@@ -4482,13 +4534,23 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 69.85) (xy 162.56 69.85)
+			(xy 152.4 69.85) (xy 167.64 69.85)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "106f7487-5cd5-4d0c-bd6b-c2b38800c4aa")
+	)
+	(bus
+		(pts
+			(xy 170.815 52.07) (xy 170.815 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "133fb45e-454d-4402-9a6e-7ed474b2d3bd")
 	)
 	(wire
 		(pts
@@ -4612,7 +4674,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.15 71.12) (xy 198.12 71.12)
+			(xy 191.135 71.755) (xy 205.105 71.755)
 		)
 		(stroke
 			(width 0)
@@ -4632,7 +4694,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 74.93) (xy 162.56 74.93)
+			(xy 152.4 74.93) (xy 167.64 74.93)
 		)
 		(stroke
 			(width 0)
@@ -4652,7 +4714,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 73.66) (xy 182.88 74.295)
+			(xy 189.865 74.295) (xy 189.865 74.93)
 		)
 		(stroke
 			(width 0)
@@ -4732,7 +4794,7 @@
 	)
 	(wire
 		(pts
-			(xy 184.15 76.2) (xy 198.12 76.2)
+			(xy 191.135 76.835) (xy 205.105 76.835)
 		)
 		(stroke
 			(width 0)
@@ -4752,7 +4814,7 @@
 	)
 	(bus
 		(pts
-			(xy 165.1 72.39) (xy 165.1 74.93)
+			(xy 170.18 72.39) (xy 170.18 74.93)
 		)
 		(stroke
 			(width 0)
@@ -4802,7 +4864,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 67.31) (xy 162.56 67.31)
+			(xy 152.4 67.31) (xy 167.64 67.31)
 		)
 		(stroke
 			(width 0)
@@ -4862,7 +4924,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.055 58.42) (xy 189.23 58.42)
+			(xy 195.58 52.705) (xy 198.755 52.705)
 		)
 		(stroke
 			(width 0)
@@ -4912,7 +4974,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 72.39) (xy 162.56 72.39)
+			(xy 152.4 72.39) (xy 167.64 72.39)
 		)
 		(stroke
 			(width 0)
@@ -4932,7 +4994,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 52.07) (xy 162.56 52.07)
+			(xy 152.4 52.07) (xy 168.275 52.07)
 		)
 		(stroke
 			(width 0)
@@ -5062,7 +5124,7 @@
 	)
 	(bus
 		(pts
-			(xy 165.1 69.85) (xy 165.1 72.39)
+			(xy 170.18 69.85) (xy 170.18 72.39)
 		)
 		(stroke
 			(width 0)
@@ -5072,7 +5134,7 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 33.02) (xy 189.23 33.02)
+			(xy 186.055 27.305) (xy 198.755 27.305)
 		)
 		(stroke
 			(width 0)
@@ -5092,7 +5154,7 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 35.56) (xy 189.23 35.56)
+			(xy 186.055 29.845) (xy 198.755 29.845)
 		)
 		(stroke
 			(width 0)
@@ -5132,7 +5194,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 31.75) (xy 162.56 31.75)
+			(xy 152.4 31.75) (xy 168.275 31.75)
 		)
 		(stroke
 			(width 0)
@@ -5162,7 +5224,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 73.66) (xy 198.12 73.66)
+			(xy 189.865 74.295) (xy 205.105 74.295)
 		)
 		(stroke
 			(width 0)
@@ -5222,7 +5284,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.055 55.88) (xy 189.23 55.88)
+			(xy 195.58 50.165) (xy 198.755 50.165)
 		)
 		(stroke
 			(width 0)
@@ -5242,7 +5304,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.055 55.88) (xy 186.055 58.42)
+			(xy 195.58 50.165) (xy 195.58 52.705)
 		)
 		(stroke
 			(width 0)
@@ -5392,7 +5454,7 @@
 	)
 	(bus
 		(pts
-			(xy 165.1 34.29) (xy 165.1 54.61)
+			(xy 170.815 34.29) (xy 170.815 52.07)
 		)
 		(stroke
 			(width 0)
@@ -5422,7 +5484,7 @@
 	)
 	(bus
 		(pts
-			(xy 165.1 74.93) (xy 165.1 77.47)
+			(xy 170.18 74.93) (xy 170.18 77.47)
 		)
 		(stroke
 			(width 0)
@@ -5470,35 +5532,15 @@
 		)
 		(uuid "12dae517-92f3-44a7-8cb0-56150896d2b7")
 	)
-	(label "Precharge_Timeout"
-		(at 92.71 41.91 180)
+	(label "HB"
+		(at 92.71 66.04 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "16cef7ed-2e1c-4520-8def-299d602ade64")
-	)
-	(label "M_Enable"
-		(at 92.71 73.66 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "19589e9a-90f4-4641-a7e7-63ca441d7f7f")
-	)
-	(label "Precharge_Complete"
-		(at 92.71 39.37 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "1d8d9a77-6667-40a2-8b9c-40fd96c2b033")
+		(uuid "156b6009-d921-4185-8ab7-32c908bd545e")
 	)
 	(label "ESP_TX"
 		(at 170.815 119.38 0)
@@ -5510,6 +5552,16 @@
 		)
 		(uuid "1dacf1bc-4293-42fc-aea1-2cfcf5553ac2")
 	)
+	(label "PreSense_Timeout"
+		(at 92.71 39.37 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1dfbb7e1-ee91-4590-aad5-287220067195")
+	)
 	(label "ESP_RX"
 		(at 165.1 60.96 180)
 		(effects
@@ -5520,15 +5572,15 @@
 		)
 		(uuid "22de4bb5-e424-404a-bae7-2df95c2bbd82")
 	)
-	(label "Cruise"
-		(at 162.56 72.39 180)
+	(label "Motor_Watchdog"
+		(at 167.64 72.39 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "252a6195-46e6-402e-960b-6f3a8356030e")
+		(uuid "230407d4-e6fd-400b-9db0-4c2caa043b66")
 	)
 	(label "{Status_LEDs}"
 		(at 115.57 106.68 180)
@@ -5560,6 +5612,16 @@
 		)
 		(uuid "2b28b2c1-95a8-40a4-af7d-5b9a468a7858")
 	)
+	(label "Regen"
+		(at 92.71 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2b4b2a45-7363-4ad1-b40c-563e9e499813")
+	)
 	(label "Motor_Voltage"
 		(at 128.27 151.13 180)
 		(effects
@@ -5569,6 +5631,16 @@
 			(justify right bottom)
 		)
 		(uuid "305a5e03-ba78-4069-9f81-a2272caefaed")
+	)
+	(label "Motor_Fault"
+		(at 167.64 67.31 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3082828f-32ec-4bc5-87cb-e07ea4b94de6")
 	)
 	(label "ESP_TX"
 		(at 165.1 58.42 180)
@@ -5590,25 +5662,25 @@
 		)
 		(uuid "3dae6eb4-e434-4d46-a002-f1fdb3b21e92")
 	)
-	(label "SWOC"
-		(at 92.71 55.88 180)
+	(label "M_Enable"
+		(at 168.275 52.07 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "491cb5a9-f549-40f7-ba18-2c7feceb08a1")
+		(uuid "5284f234-2215-4916-af4f-15f1bbae032e")
 	)
-	(label "Bad_Hall"
-		(at 92.71 60.96 180)
+	(label "Driving"
+		(at 92.71 58.42 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "4e1b043f-187f-4e21-a235-262bc23c6620")
+		(uuid "57b15534-7f3d-4798-9c27-59abfaabf1e5")
 	)
 	(label "C_CAN_L"
 		(at 233.045 29.21 0)
@@ -5640,16 +5712,6 @@
 		)
 		(uuid "69b25fd3-2ed7-4f96-bb63-ab9929beb089")
 	)
-	(label "MPre_Enable"
-		(at 92.71 68.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6af9ad73-046b-43c4-94fa-935282f0aae2")
-	)
 	(label "M_CAN_L"
 		(at 233.045 52.07 0)
 		(effects
@@ -5659,6 +5721,16 @@
 			(justify left bottom)
 		)
 		(uuid "70ce34e1-5931-4d4a-9285-aa1865524fa4")
+	)
+	(label "Motor_Sense_Timeout"
+		(at 92.71 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "75abbe44-2bc3-4909-9541-ad2cc025d941")
 	)
 	(label "Motor_Voltage"
 		(at 87.63 34.29 180)
@@ -5670,15 +5742,15 @@
 		)
 		(uuid "7ad1cdf3-561e-4543-93ac-ca467b65baae")
 	)
-	(label "MPre_Sense"
-		(at 92.71 66.04 180)
+	(label "Safe"
+		(at 92.7078 55.88 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "7ea55681-3877-4e09-a3ff-e04082a3396a")
+		(uuid "7baa35dd-8c82-413b-907a-d5837227bc6d")
 	)
 	(label "B_Volt"
 		(at 73.025 172.72 180)
@@ -5711,7 +5783,7 @@
 		(uuid "8534fa02-2fd7-47a5-80df-e2b5c776e7a8")
 	)
 	(label "ESP_RESET"
-		(at 162.56 31.75 180)
+		(at 168.275 31.75 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5731,17 +5803,17 @@
 		(uuid "87837d03-8d05-4936-8dde-639ea1054fae")
 	)
 	(label "M_Sense"
-		(at 92.71 71.12 180)
+		(at 168.275 49.53 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "886276b2-48f5-4fd7-8aef-e1e363b70bfe")
+		(uuid "8cb12051-bcf7-44a5-95cf-5b203327a66c")
 	)
 	(label "ESP_RX"
-		(at 176.53 35.56 0)
+		(at 186.055 29.845 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5760,15 +5832,15 @@
 		)
 		(uuid "968f032d-4b1e-4a0d-a4bc-482e34b81298")
 	)
-	(label "Sense_Timeout"
-		(at 92.71 44.45 180)
+	(label "SWOC"
+		(at 167.64 69.85 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "98b349ec-ec09-4d7e-bebe-ce2709a872fc")
+		(uuid "9751e845-a0df-4a0e-94ad-f89753d499aa")
 	)
 	(label "C_CAN_L"
 		(at 101.6 36.83 0)
@@ -5821,7 +5893,7 @@
 		(uuid "9f567a0a-3764-4de4-8b85-b80d58f08a94")
 	)
 	(label "Motor_Voltage"
-		(at 184.15 76.2 0)
+		(at 191.135 76.835 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5829,16 +5901,6 @@
 			(justify left bottom)
 		)
 		(uuid "9fc3f484-4af5-448c-8898-6578b3619971")
-	)
-	(label "Driving"
-		(at 162.56 74.93 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a0ea8f17-68ce-4f58-80e5-4d9ba4edb5f8")
 	)
 	(label "MPre_Enable"
 		(at 24.765 114.935 0)
@@ -5850,8 +5912,28 @@
 		)
 		(uuid "a53f6a13-2267-498b-979b-58246d072e0c")
 	)
+	(label "Cruise"
+		(at 92.71 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a95a9e38-da72-41c6-952b-c8c911c7d238")
+	)
+	(label "Precharge_Timeout"
+		(at 92.71 41.91 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ac5930c7-08a3-4dc5-ad98-5ad39d1f6ac1")
+	)
 	(label "Batt_Voltage"
-		(at 184.15 71.12 0)
+		(at 191.135 71.755 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5900,28 +5982,18 @@
 		)
 		(uuid "ba0086f4-05da-422d-862d-cfe6440f35ed")
 	)
-	(label "Safe"
-		(at 162.56 52.07 180)
+	(label "MPre_Enable"
+		(at 92.71 44.45 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "c1a7778c-d1a6-412a-aa12-ce0b8e287038")
-	)
-	(label "Motor_Watchdog"
-		(at 92.71 58.42 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c5c5689c-8da8-48a3-a008-073c1291fcef")
+		(uuid "bf94ae75-f86e-4e5d-8863-3d6da89edb00")
 	)
 	(label "{Status_LEDs}"
-		(at 165.1 77.47 0)
+		(at 170.18 77.47 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5930,8 +6002,18 @@
 		)
 		(uuid "c72cfd0c-1095-4839-b9be-20ee61b0279c")
 	)
+	(label "MPre_Sense"
+		(at 92.71 46.99 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c7ef3139-55f3-4de8-a9c4-954df097ce76")
+	)
 	(label "ESP_TX"
-		(at 176.53 33.02 0)
+		(at 186.055 27.305 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5939,6 +6021,16 @@
 			(justify left bottom)
 		)
 		(uuid "ce300035-d73f-4c04-bb34-486a3a8bb46b")
+	)
+	(label "BPS_Fault"
+		(at 92.71 68.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d12a37a9-6e53-4632-ab9a-970072d35e77")
 	)
 	(label "ESP_RX"
 		(at 170.815 115.57 0)
@@ -5961,7 +6053,7 @@
 		(uuid "d5ebc7e3-ee4f-424c-bcf2-811eece5a108")
 	)
 	(label "{Status_LEDs}"
-		(at 165.1 54.61 0)
+		(at 170.815 54.61 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5969,16 +6061,6 @@
 			(justify left bottom)
 		)
 		(uuid "d88ba42a-52a2-4784-be13-5e331c3612bc")
-	)
-	(label "Regen"
-		(at 162.56 69.85 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d95f83b1-181e-4192-96b5-411aed20478a")
 	)
 	(label "C_CAN_L"
 		(at 233.045 34.29 0)
@@ -5990,16 +6072,6 @@
 		)
 		(uuid "db9b280d-a7da-4d9a-95bb-bb09a7c0e47b")
 	)
-	(label "BPS_Fault"
-		(at 92.71 53.34 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "df7d79e3-d018-4429-896d-efca45ea2173")
-	)
 	(label "M_CAN_L"
 		(at 21.59 45.72 0)
 		(effects
@@ -6010,15 +6082,15 @@
 		)
 		(uuid "ec84ad3b-e6e9-4a8d-884b-f364aea2ae39")
 	)
-	(label "Motor_Fault"
-		(at 92.71 46.99 180)
+	(label "Bad_Hall"
+		(at 167.64 74.93 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "f1707e68-b7ca-4eee-afdf-28a0029a991b")
+		(uuid "ef717ec0-970a-4710-a1c3-d6942d9e6c80")
 	)
 	(label "M_Volt"
 		(at 103.505 151.13 180)
@@ -6030,15 +6102,15 @@
 		)
 		(uuid "f2344b8a-9f04-474c-b8e7-6bcfa4ca667b")
 	)
-	(label "HB"
-		(at 162.56 67.31 180)
+	(label "Precharge_Complete"
+		(at 92.71 60.96 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "f9ae1d10-2ba5-41eb-9149-d72d0fd4334f")
+		(uuid "f8587f0d-5317-4b60-8864-ffd8ffd1f5d7")
 	)
 	(label "Batt_Voltage"
 		(at 87.63 31.75 180)
@@ -6125,7 +6197,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 203.2 71.12 0)
+		(at 210.185 71.755 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -6133,7 +6205,7 @@
 		(dnp no)
 		(uuid "100c6c5f-c7f4-409d-b014-4745a61bfc89")
 		(property "Reference" "J3"
-			(at 205.74 71.1199 0)
+			(at 212.725 71.7549 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6142,7 +6214,7 @@
 			)
 		)
 		(property "Value" "3.3V Injector"
-			(at 201.93 79.3749 0)
+			(at 200.025 80.0099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6151,7 +6223,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 203.2 71.12 0)
+			(at 210.185 71.755 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6160,7 +6232,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 203.2 71.12 0)
+			(at 210.185 71.755 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6169,7 +6241,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 203.2 71.12 0)
+			(at 210.185 71.755 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6646,7 +6718,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 182.88 74.295 0)
+		(at 189.865 74.93 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6656,7 +6728,7 @@
 		(fields_autoplaced yes)
 		(uuid "30122d35-e15d-43a3-ba57-52a06ab38b21")
 		(property "Reference" "#PWR013"
-			(at 182.88 80.645 0)
+			(at 189.865 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6665,7 +6737,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 182.88 79.375 0)
+			(at 189.865 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6673,7 +6745,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 182.88 74.295 0)
+			(at 189.865 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6682,7 +6754,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 182.88 74.295 0)
+			(at 189.865 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6691,7 +6763,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 182.88 74.295 0)
+			(at 189.865 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7001,7 +7073,7 @@
 	)
 	(symbol
 		(lib_id "UTSVT_Connectors:SFH11-PBPC-D05-ST-BK")
-		(at 189.23 34.29 0)
+		(at 198.755 28.575 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7009,7 +7081,7 @@
 		(dnp no)
 		(uuid "6bd212ee-29ae-4cfa-849c-a10a00cf5824")
 		(property "Reference" "J2"
-			(at 196.215 26.67 0)
+			(at 205.74 20.955 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -7018,7 +7090,7 @@
 			)
 		)
 		(property "Value" "SFH11-PBPC-D05-ST-BK"
-			(at 184.15 29.845 0)
+			(at 183.515 23.495 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -7027,7 +7099,7 @@
 			)
 		)
 		(property "Footprint" "UTSVT_Connectors:CONN_SFH11-xxxC-D05-ST-XX_SUL"
-			(at 189.23 34.29 0)
+			(at 198.755 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7037,7 +7109,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.digikey.com/en/products/detail/sullins-connector-solutions/SFH11-PBPC-D05-ST-BK/1990087?gclsrc=aw.ds&gad_source=1&gad_campaignid=120565755&gbraid=0AAAAADrbLljEsXDDEt5svizMM4jeYrL-A&gclid=Cj0KCQjwwZDFBhCpARIsAB95qO2YCKMg2VQme3QQBBCFa3dTLVMMS-qCbMZE8KZJpYe-_Bi6ULwi-x0aAvv3EALw_wcB"
-			(at 189.23 34.29 0)
+			(at 198.755 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7047,7 +7119,7 @@
 			)
 		)
 		(property "Description" "Connector interfacing with logic analyzers"
-			(at 189.23 34.29 0)
+			(at 198.755 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7056,7 +7128,7 @@
 			)
 		)
 		(property "P/N" "SFH11-PBPC-D05-ST-BK"
-			(at 189.23 34.29 0)
+			(at 198.755 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7642,7 +7714,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
+		(lib_id "Mechanical:MountingHole_Pad")
 		(at 245.745 158.115 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7652,7 +7724,7 @@
 		(fields_autoplaced yes)
 		(uuid "9ab4c3c1-7607-408a-b746-dd022c8e4122")
 		(property "Reference" "H3"
-			(at 248.92 156.8449 0)
+			(at 248.92 155.5749 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7661,7 +7733,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 248.92 159.3849 0)
+			(at 248.92 158.1149 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7669,7 +7741,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom"
 			(at 245.745 158.115 0)
 			(effects
 				(font
@@ -7687,7 +7759,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
+		(property "Description" "Mounting Hole with connection"
 			(at 245.745 158.115 0)
 			(effects
 				(font
@@ -7695,6 +7767,9 @@
 				)
 				(hide yes)
 			)
+		)
+		(pin "1"
+			(uuid "3ece542b-ed86-46d0-b2d0-95123fcfbcb2")
 		)
 		(instances
 			(project "VehicleControlUnit"
@@ -7706,8 +7781,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 245.745 153.035 0)
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 245.745 150.495 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -7716,7 +7791,7 @@
 		(fields_autoplaced yes)
 		(uuid "a8482f85-e8fa-463e-891a-ad017d974381")
 		(property "Reference" "H2"
-			(at 248.285 151.7649 0)
+			(at 248.92 147.9549 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7725,7 +7800,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 248.285 154.3049 0)
+			(at 248.92 150.4949 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7733,8 +7808,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 245.745 153.035 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom"
+			(at 245.745 150.495 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7743,7 +7818,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 245.745 153.035 0)
+			(at 245.745 150.495 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7751,14 +7826,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 245.745 153.035 0)
+		(property "Description" "Mounting Hole with connection"
+			(at 245.745 150.495 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "1"
+			(uuid "d6b6506a-d877-48e0-a67d-e4cc1f33c069")
 		)
 		(instances
 			(project "VehicleControlUnit"
@@ -7923,7 +8001,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 198.12 68.58 0)
+		(at 205.105 69.215 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7932,7 +8010,7 @@
 		(fields_autoplaced yes)
 		(uuid "b397a356-a52d-45a4-99da-b43d37721191")
 		(property "Reference" "#PWR015"
-			(at 198.12 72.39 0)
+			(at 205.105 73.025 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7941,7 +8019,7 @@
 			)
 		)
 		(property "Value" "3V3_LSOM"
-			(at 198.12 63.5 0)
+			(at 205.105 64.135 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7949,7 +8027,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 198.12 68.58 0)
+			(at 205.105 69.215 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7958,7 +8036,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 68.58 0)
+			(at 205.105 69.215 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7967,7 +8045,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 198.12 68.58 0)
+			(at 205.105 69.215 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8159,7 +8237,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 186.055 58.42 0)
+		(at 195.58 52.705 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8169,7 +8247,7 @@
 		(fields_autoplaced yes)
 		(uuid "d475cfd0-80c7-4eab-a80c-7ca41e47120a")
 		(property "Reference" "#PWR014"
-			(at 186.055 64.77 0)
+			(at 195.58 59.055 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8178,7 +8256,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 186.055 63.5 0)
+			(at 195.58 57.785 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8186,7 +8264,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 186.055 58.42 0)
+			(at 195.58 52.705 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8195,7 +8273,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 186.055 58.42 0)
+			(at 195.58 52.705 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8204,7 +8282,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 186.055 58.42 0)
+			(at 195.58 52.705 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8225,8 +8303,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 245.745 147.955 0)
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 245.745 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -8235,7 +8313,7 @@
 		(fields_autoplaced yes)
 		(uuid "d872c041-943b-44f6-8c05-2bfe1215dfb6")
 		(property "Reference" "H1"
-			(at 248.285 146.6849 0)
+			(at 248.92 139.6999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8244,7 +8322,7 @@
 			)
 		)
 		(property "Value" "MountingHole"
-			(at 248.285 149.2249 0)
+			(at 248.92 142.2399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8252,8 +8330,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3"
-			(at 245.745 147.955 0)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom"
+			(at 245.745 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8262,7 +8340,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 245.745 147.955 0)
+			(at 245.745 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8270,14 +8348,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 245.745 147.955 0)
+		(property "Description" "Mounting Hole with connection"
+			(at 245.745 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "1"
+			(uuid "b9569bed-c3ed-4e3c-aa66-85ed189db05b")
 		)
 		(instances
 			(project ""

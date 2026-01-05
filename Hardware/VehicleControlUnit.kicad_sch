@@ -6150,7 +6150,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Nano-Fit_105309-xx03_1x03_P2.50mm_Vertical"
+		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105309-xx03_1x03_P2.50mm_Vertical"
 			(at 248.285 52.07 0)
 			(effects
 				(font
@@ -7574,7 +7574,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Nano-Fit_105310-xx12_2x06_P2.50mm_Vertical"
+		(property "Footprint" "UTSVT_Connectors:Molex_Nano-Fit_105310-xx12_2x06_P2.50mm_Vertical"
 			(at 51.435 165.1 0)
 			(effects
 				(font

@@ -2911,7 +2911,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://jlcpcb.com/api/file/downloadByFileSystemAccessId/8601096770898038784"
 			(at 113.03 45.72 0)
 			(effects
 				(font
@@ -2947,7 +2947,7 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "XL-1608UBC-06A"
+		(property "P/N" "VSSAF510HM3/H"
 			(at 113.03 45.72 0)
 			(effects
 				(font
@@ -4393,7 +4393,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://jlcpcb.com/api/file/downloadByFileSystemAccessId/8601096770898038784"
 			(at 234.315 45.72 0)
 			(effects
 				(font
@@ -4429,7 +4429,7 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "XL-1608UBC-06A"
+		(property "P/N" "VSSAF510HM3/H"
 			(at 234.315 45.72 0)
 			(effects
 				(font

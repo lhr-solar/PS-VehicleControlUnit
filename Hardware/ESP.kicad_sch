@@ -5352,6 +5352,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 50.8 47.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 50.8 47.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "12c9f173-1b04-4cbb-9f17-9d28bfcb5f57")
 		)
@@ -5414,6 +5432,42 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "71-CRCW060310K0FKEI"
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "CRCW060310K0FKEI"
+			(at 217.17 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 217.17 59.69 0)
 			(effects
 				(font
@@ -5509,6 +5563,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 235.585 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 235.585 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5d8302d5-7fff-4be8-a48a-9fba79b74bdc")
 		)
@@ -5589,6 +5661,24 @@
 			)
 		)
 		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 104.14 38.735 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 104.14 38.735 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 104.14 38.735 0)
 			(effects
 				(font
@@ -5818,6 +5908,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 212.725 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 212.725 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9509abe4-f578-41a4-9bbc-d799263894a2")
 		)
@@ -5898,6 +6006,24 @@
 			)
 		)
 		(property "Mouser Part Number" "71-CRCW1206-470-E3"
+			(at 186.055 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 186.055 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 186.055 141.605 0)
 			(effects
 				(font
@@ -6193,6 +6319,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 198.755 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 198.755 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ee0480df-7e89-4f37-97a1-83f7f4505a51")
 		)
@@ -6337,6 +6481,24 @@
 		)
 		(property "Mouser Part Number" "71-CRCW060310K0FKEI"
 			(at 97.79 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 97.79 32.385 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 97.79 32.385 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6499,6 +6661,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 67.945 163.195 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 67.945 163.195 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4223aa8f-fad3-4a97-82a0-56d0b06415de")
 		)
@@ -6584,6 +6764,24 @@
 			)
 		)
 		(property "Mouser Part Number" "963-HMK107B7104KA-T"
+			(at 41.275 36.195 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 41.275 36.195 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 41.275 36.195 0)
 			(effects
 				(font
@@ -6680,6 +6878,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 231.775 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 231.775 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "efc3478b-80af-4c8e-95c2-d2dc05992b00")
 		)
@@ -6757,7 +6973,25 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" " 621-1N5819HW-F"
+		(property "Mouser Part Number" "621-1N5819HW-F"
+			(at 56.515 139.065 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 56.515 139.065 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 56.515 139.065 0)
 			(effects
 				(font
@@ -6852,6 +7086,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 72.39 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 72.39 95.885 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "97c83b3f-ef1b-4799-aaf3-00cbd9a3a8fd")
 		)
@@ -6936,6 +7188,24 @@
 		)
 		(property "Sim.Pins" "1=K 2=A"
 			(at 198.755 149.225 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 198.755 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 198.755 149.225 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7162,6 +7432,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 31.75 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 31.75 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "126e37c2-3b23-4eaf-902a-5beb83d4f552")
 		)
@@ -7250,6 +7538,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 186.055 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 186.055 149.225 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "1acdcb18-694d-41fd-8bd3-1d75d1b20aae")
 		)
@@ -7328,6 +7634,24 @@
 			)
 		)
 		(property "Mouser Part Number" "640-USB4215-03-A"
+			(at 31.115 154.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 31.115 154.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 31.115 154.305 0)
 			(effects
 				(font
@@ -7812,6 +8136,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 69.215 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 69.215 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "9"
 			(uuid "2400ad5a-1370-4072-a346-d5b342e4e564")
 		)
@@ -7902,6 +8244,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 91.44 27.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 91.44 27.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f256413e-3ef9-4543-8464-e7e3b815008b")
 		)
@@ -7979,6 +8339,24 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW06035K10FKEC"
+			(at 112.395 159.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 112.395 159.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 112.395 159.385 0)
 			(effects
 				(font
@@ -8149,6 +8527,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 86.36 98.425 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 86.36 98.425 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "316ead3f-ca09-4b42-96d7-65d500c7e5c8")
 		)
@@ -8229,6 +8625,24 @@
 			)
 		)
 		(property "Mouser Part Number" " 356-ESP32-C6MINI1UN4"
+			(at 177.8 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 177.8 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 177.8 35.56 0)
 			(effects
 				(font
@@ -8479,6 +8893,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 250.825 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 250.825 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0f0b961f-6c2a-4d32-8146-91266cd39230")
 		)
@@ -8559,6 +8991,24 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 231.775 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 231.775 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 231.775 141.605 0)
 			(effects
 				(font
@@ -8778,6 +9228,24 @@
 			)
 		)
 		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 95.885 160.655 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 95.885 160.655 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 95.885 160.655 0)
 			(effects
 				(font
@@ -9271,6 +9739,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 122.555 159.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 122.555 159.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "4c116e4f-3209-4583-bb2b-0290589afeee")
 		)
@@ -9350,6 +9836,24 @@
 			)
 		)
 		(property "Mouser Part Number" "81-GRM21BR61H106KE3K"
+			(at 57.15 98.425 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 57.15 98.425 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 57.15 98.425 0)
 			(effects
 				(font
@@ -9438,6 +9942,24 @@
 			)
 		)
 		(property "Mouser Part Number" " 71-CRCW0603120RFKEC"
+			(at 212.725 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 212.725 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 212.725 141.605 0)
 			(effects
 				(font

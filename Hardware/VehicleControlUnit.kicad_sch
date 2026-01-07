@@ -6177,6 +6177,42 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 248.285 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 248.285 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "538-105309-1103"
+			(at 248.285 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "105309-1103"
+			(at 248.285 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7e164745-9f2d-46f2-aacc-3453f8ba0069")
 		)
@@ -6241,6 +6277,24 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 210.185 71.755 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 210.185 71.755 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 210.185 71.755 0)
 			(effects
 				(font
@@ -6343,6 +6397,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 111.125 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 111.125 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "fe231b01-c833-4ab9-9474-bb33acebb70f")
 		)
@@ -6405,6 +6477,42 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 248.285 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 248.285 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 248.285 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "538-105309-1104"
+			(at 248.285 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "105309-1104"
 			(at 248.285 31.75 0)
 			(effects
 				(font
@@ -6566,6 +6674,24 @@
 			)
 		)
 		(property "p/n" ""
+			(at 267.97 147.955 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 267.97 147.955 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 267.97 147.955 0)
 			(effects
 				(font
@@ -6856,6 +6982,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 111.125 158.115 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 111.125 158.115 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7ce4962e-a986-4015-b1c3-efe27e8c9303")
 		)
@@ -7136,6 +7280,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 198.755 28.575 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 198.755 28.575 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "7"
 			(uuid "469e69e0-6086-4284-9330-bcc01fe11406")
 		)
@@ -7381,6 +7543,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 67.945 176.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 67.945 176.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0428c88f-620e-447e-945c-7ed402dcb0ea")
 		)
@@ -7533,6 +7713,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 107.315 175.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 107.315 175.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "d02b3b24-9a56-4d7f-8d88-7e99c5711a40")
 		)
@@ -7593,6 +7791,42 @@
 			)
 		)
 		(property "Description" "Generic connector, double row, 02x06, counter clockwise pin numbering scheme (similar to DIP package numbering), script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 51.435 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 51.435 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 51.435 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser Part Number" "538-105310-1112 "
+			(at 51.435 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "P/N" "105310-1112 "
 			(at 51.435 165.1 0)
 			(effects
 				(font
@@ -7768,6 +8002,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 245.745 158.115 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 245.745 158.115 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3ece542b-ed86-46d0-b2d0-95123fcfbcb2")
 		)
@@ -7827,6 +8079,24 @@
 			)
 		)
 		(property "Description" "Mounting Hole with connection"
+			(at 245.745 150.495 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 245.745 150.495 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 245.745 150.495 0)
 			(effects
 				(font
@@ -7911,6 +8181,24 @@
 		)
 		(property "Mouser Part Number" "71-CRCW06031K00FKEI"
 			(at 107.315 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 107.315 151.13 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 107.315 151.13 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8138,6 +8426,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 79.375 163.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 79.375 163.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ed5a6fbf-66d9-4a40-a9bd-85e02fabdadf")
 		)
@@ -8218,6 +8524,24 @@
 			)
 		)
 		(property "p/n" ""
+			(at 267.97 156.845 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 267.97 156.845 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
 			(at 267.97 156.845 0)
 			(effects
 				(font
@@ -8357,6 +8681,24 @@
 				(hide yes)
 			)
 		)
+		(property "If" ""
+			(at 245.745 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 245.745 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b9569bed-c3ed-4e3c-aa66-85ed189db05b")
 		)
@@ -8374,7 +8716,7 @@
 		(at 53.34 52.07 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
@@ -8415,6 +8757,24 @@
 		)
 		(property "Description" "Symbol for both board-to-board connectors from the LeaderSOM"
 			(at 53.594 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 53.34 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 53.34 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8790,7 +9150,7 @@
 		(at 133.35 53.34 0)
 		(unit 2)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
@@ -8831,6 +9191,24 @@
 		)
 		(property "Description" "Symbol for both board-to-board connectors from the LeaderSOM"
 			(at 133.604 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "If" ""
+			(at 133.35 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Vf" ""
+			(at 133.35 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)

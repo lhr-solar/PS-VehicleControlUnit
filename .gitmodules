@@ -7,3 +7,6 @@
 [submodule "KiCAD-Bild"]
 	path = KiCAD-Bild
 	url = https://github.com/lhr-solar/KiCAD-Bild.git
+[submodule "Firmware/Embedded-Sharepoint"]
+	path = Firmware/Embedded-Sharepoint
+	url = https://github.com/lhr-solar/Embedded-Sharepoint.git

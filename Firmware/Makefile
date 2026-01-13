@@ -34,7 +34,7 @@ PROJECT_MAIN_DIR ?= core/Src/main
 
 ifneq ($(TEST), main)
 PROJECT_C_SOURCES := $(filter-out $(PROJECT_MAIN_DIR).c, $(PROJECT_C_SOURCES))
-PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES) tests/test_$(TEST).c)
+PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES) tests/$(TEST)_test.c)
 else
 PROJECT_C_SOURCES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_SOURCES))
 endif
@@ -109,7 +109,7 @@ help:
 
 	@echo "${BLUE}TEST${NC}( OPTIONAL ):"
 	@echo "- If you want to run a test, specify ${BLUE}TEST=${PURPLE}<Test name>${NC}, with ${PURPLE}<Test name>${NC}"
-	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix and test_ prefix. \n"
+	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix and test_ suffix. \n"
 
 #-------------- 
 # Documentation

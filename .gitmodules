@@ -1,9 +1,8 @@
-[submodule "VehicleContolUnitLib/UTSVT-KiCadLibraries"]
-	path = VehicleContolUnitLib/UTSVT-KiCadLibraries
-	url = git@github.com:lhr-solar/UTSVT-KiCadLibraries.git
-[submodule "VehicleControlUnitLib/UTSVT-KiCadLibraries"]
-	path = VehicleControlUnitLib/UTSVT-KiCadLibraries
-	url = git@github.com:lhr-solar/UTSVT-KiCadLibraries.git
-[submodule "KiCAD-Bild"]
-	path = KiCAD-Bild
-	url = https://github.com/lhr-solar/KiCAD-Bild.git
+
+[submodule "Hardware/KiCAD-Sharepoint"]
+	path = Hardware/KiCAD-Sharepoint
+	url = https://github.com/lhr-solar/KiCAD-Sharepoint.git
+	branch = VCU-RevB
+[submodule "Firmware/Embedded-Sharepoint"]
+	path = Firmware/Embedded-Sharepoint
+	url = https://github.com/lhr-solar/Embedded-Sharepoint.git

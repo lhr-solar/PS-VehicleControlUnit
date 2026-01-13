@@ -1,7 +1,7 @@
 # VehicleControlUnit
 Vehicle Control Unit (VCU) for the 2026 Longhorn Racing Solar car
 
-![CubeMX Picture](VCU_LSOM_Pinout.png)
+![CubeMX Picture](Firmware/VCU_LSOM_Pinout.png)
 
 
 ## Getting Started

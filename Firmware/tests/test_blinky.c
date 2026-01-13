@@ -1,7 +1,7 @@
 #include "stm32xx_hal.h"
 
 // Heartbeat pin on VCU is PB14
-#define LED_PIN GPIO_PIN_3
+#define LED_PIN GPIO_PIN_14
 #define LED_PORT GPIOB
 
 
@@ -30,7 +30,7 @@ int main(){
     };
     
     Heartbeat_Clock_Init(); // enable clock for LED_PORT
-    HAL_GPIO_Init(LED_PORT, &led_config); // initialize GPIOA with led_config
+    HAL_GPIO_Init(LED_PORT, &led_config); // initialize LED_PORT with led_config
 
     while(1){
         HAL_GPIO_TogglePin(LED_PORT, LED_PIN);

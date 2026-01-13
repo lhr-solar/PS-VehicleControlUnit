@@ -104,15 +104,12 @@ help:
 	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' will compile the production code."
 	@echo "- Specify ${GREEN}TARGET${NC}if different than default; ${BLUE}TEST${NC}is optional. \n"
 
-	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32f413rht${NC}):"
+	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32g473xx${NC}):"
 	@echo "- Specify stm32 target by entering the full stm chip number.\n"
 
 	@echo "${BLUE}TEST${NC}( OPTIONAL ):"
 	@echo "- If you want to run a test, specify ${BLUE}TEST=${PURPLE}<Test name>${NC}, with ${PURPLE}<Test name>${NC}"
-	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix.\n"
-	@echo "PRINT_DEBUG:"
-	@echo "- For debugs, specify ${BLUE}PRINT_DEBUG=${PURPLE}true${NC}."
-	@echo "- For now, this will print the directories that will be compiled (can be useful for troubleshooting)."
+	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix and test_ prefix. \n"
 
 #-------------- 
 # Documentation

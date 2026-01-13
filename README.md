@@ -20,7 +20,7 @@ Additionally, install the [Arduino IDE](https://docs.arduino.cc/software/ide/)
 ## Command Usage
 
 ### Compiling Firmware
-All firmware must be run while in a nix shell. For the first time you will need to run
+All firmware is stored in the Firmware/ directory and must be run while in a nix shell. For the first time you will need to run
 ``` sh
 chmod +x ./run_nix.sh
 ./run_nix.sh

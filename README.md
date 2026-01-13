@@ -37,7 +37,7 @@ make
 ### Compiling Tests
 To compile a specific test file, run:
 ``` sh
-make TEST=[name of test exlcuding .c and test_]
+make TEST=[name of test excluding .c and test_]
 ```
 Test files are located in test/ and must have the prefix `test_` or else the test won't compile correctly. If you want to run the blinky test, which is located in `tests/test_blinky.c` you will run
 ``` sh

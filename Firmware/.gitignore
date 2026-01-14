@@ -1,0 +1,11 @@
+
+# directory containing all build artifacts
+build/
+
+# python venv
+.venv
+
+# Mac specific files
+.DS_Store
+
+.vscode

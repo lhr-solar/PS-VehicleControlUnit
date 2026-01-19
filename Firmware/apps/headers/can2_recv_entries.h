@@ -1,3 +1,7 @@
+//Only need the size to be 1 for latest, but may want to increase this for logging purposes
+//Makefile needs to point to this for FSM entries
+
+
 //CAR CAN
 
 CAN_RECV_ENTRY(CAN_ID_PEDALS, 1, true)

@@ -12,13 +12,13 @@ int main() {
     SystemClock_Config();
     
     xTaskCreateStatic(
-                    Task_SendTritium, /* The function that implements the task. */
-                    "Init Task", /* Text name for the task. */
-                    configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
-                    (void*)NULL, /* Paramter passed into the task. */
-                    tskIDLE_PRIORITY + 2, /* Task Priority. */
-                    Task_FSM_Stack_Array, /* Stack array. */
-                    &Task_FSM_Buffer  /* Buffer for static allocation. */
+        Task_SendTritium, /* The function that implements the task. */
+        "Init Task", /* Text name for the task. */
+        configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
+        (void*)NULL, /* Paramter passed into the task. */
+        tskIDLE_PRIORITY + 2, /* Task Priority. */
+        Task_FSM_Stack_Array, /* Stack array. */
+        &Task_FSM_Buffer  /* Buffer for static allocation. */
    );
 
    //Make watchdogs here...

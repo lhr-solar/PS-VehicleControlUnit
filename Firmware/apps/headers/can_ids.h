@@ -17,6 +17,16 @@
 
 #define SEND_TRITIUM_IDS 8
 
+#define CAN_ID_MOTOR_DRIVE 0x221
+#define CAN_ID_MOTOR_POWER 0x222
+#define CAN_ID_MOTOR_RESET 0x223
+#define CAN_ID_MOTOR_IDENTIFICATION 0x240
+#define CAN_ID_MOTOR_STATUS 0x241
+
+#define MOTOR_SEND_IDS 5
+
+
+
 //Add more defines for other tasks as needed, this is so it works with preprocessing
 
 #endif

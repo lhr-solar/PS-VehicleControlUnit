@@ -16,7 +16,7 @@
 // #include "Tasks.h"
 // #include <cstdint>
 #include "can_ids.h"
-#include <cstdint>
+// #include <cstdint>
 
 //#define SENDTRITIUM_PRINT_MES
 #define CANBUS_MOTOR_SAFE_TO_RUN 1
@@ -88,18 +88,22 @@ float mapToPercent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_mi
 // Function prototypes
 static void assertSendTritiumError(controls_error_e sterr);
 
+void Task_SendTritium(void *p_arg);
+void disableFSM();
 
 
-//Making a source of truth (ts)
 
-typedef struct {
-    controls_error_e       error_code;
-    bool                   is_evac_needed;
-    callback_t             error_callback;
-    error_scheduler_opt_e  lock_scheduler;
-    error_recovery_opt_e   recovery;
-    BPSFaultErr_e          bps_err;
-} TaskErrorParams;
+
+// //Making a source of truth (ts)
+
+// typedef struct {
+//     controls_error_e       error_code;
+//     bool                   is_evac_needed;
+//     callback_t             error_callback;
+//     error_scheduler_opt_e  lock_scheduler;
+//     error_recovery_opt_e   recovery;
+//     BPSFaultErr_e          bps_err;
+// } TaskErrorParams;
 
 //CAN_DATA
 
@@ -115,6 +119,7 @@ typedef struct {
 	uint8_t idx; 		
 	uint8_t data[8]; 
 } CANDATA_t;
+
 
 
 typedef enum {
@@ -139,6 +144,12 @@ static const uint16_t fsm_signal_to_can_id[FSM_SIGNAL_COUNT] = {
   [FSM_BPS_TRIP]          = CAN_ID_BPS_TRIP,
   [FSM_IGNITION_STATE]    = CAN_ID_IGNITION_STATE,
 };
+
+//For convenience and event groups
+
+#define ALL_CAN_MSGS ((1 << FSM_SIGNAL_COUNT) - 1) //all bits set
+#define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
+
 
 
 // // CAN IDS I care about

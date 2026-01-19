@@ -164,19 +164,19 @@ void runFSM() {
   err = checkForAllFaults();
 
   // if you return OS_ERR_PEND_WOULD_BLOCK, one of the bits are not sent, and
-  // would've blocked If the error is ERR_NONE, assertOSError returns without
-  // asserting an error
-  if (err != OS_ERR_PEND_WOULD_BLOCK) {  // What this mean?
-    sendMotorPowerCommand(0.0f);         // Battery tweaking = stop current
-    assertOSError(err);
-  }
+  // // would've blocked If the error is ERR_NONE, assertOSError returns without
+  // // asserting an error
+  // if (err != OS_ERR_PEND_WOULD_BLOCK) {  // What this mean?
+  //   sendMotorPowerCommand(0.0f);         // Battery tweaking = stop current
+  //   assertOSError(err);
+  // }
 
-  memset(&motorSafeCmd.data, 0, sizeof(motorSafeCmd.data));  // not safe to run
-  sendMotorPowerCommand(busCurrentSetPoint);  // Current should still be allowed
-                                              // in the case of recovery as well
+  // memset(&motorSafeCmd.data, 0, sizeof(motorSafeCmd.data));  // not safe to run
+  // sendMotorPowerCommand(busCurrentSetPoint);  // Current should still be allowed
+  //                                             // in the case of recovery as well
 
-  if (err == OS_ERR_NONE) {
-    motorSafeCmd.data[0] |= 0x01;       // Set motor safe to run to true
+  // if (err == OS_ERR_NONE) {
+  //   motorSafeCmd.data[0] |= 0x01;       // Set motor safe to run to true
     carStatus = getControlsBitfield();  // Get the current status of the car as
                                         // a bitfield
     currentState =
@@ -184,11 +184,11 @@ void runFSM() {
                                                   // the current state and car
                                                   // status
     currentState.stateHandler();  // Run the handler for the current state
-  } else {
-    // If we are here, we are not ready to run, so set the state to not ready
-    currentState = FSM[CAR_NOT_READY];  // Recoverable?
-    currentState.stateHandler();
-  }
+  // } else {
+  //   // If we are here, we are not ready to run, so set the state to not ready
+  //   currentState = FSM[CAR_NOT_READY];  // Recoverable?
+  //   currentState.stateHandler();
+  // }
 
   // SendCarCAN_Put(
   //     motorSafeCmd);  // Send the motor safe command, don't know why we do this
@@ -280,8 +280,9 @@ void sendMotorDriveCommand(float velocitySetpoint, float currentSetpoint) {
   CANbus_Send(driveCmd, true, MOTORCAN);
 #endif
 
-  SendCarCAN_Put(
-      driveCmd);  // Send the drive command to the car CAN bus for telemetry
+  // SendCarCAN_Put(
+  //     driveCmd);  // Send the drive command to the car CAN bus for telemetry
+  motor_can
 }
 
 void sendMotorPowerCommand(float powerSetpoint) {
@@ -318,7 +319,18 @@ OS_ERR checkForAllFaults() {
   return err;
 }
 
-void checkWatchDogs() { OS_ERR err; }
+// void checkWatchDogs() { OS_ERR err; }
+
+//It should just lock itself in this state until reset or recovery
+void disableFSM(){
+  currentState = FSM[DISABLED];
+}
+
+//recover FSM state
+void recoverFSM(){
+  currentState = FSM[CAR_NOT_READY];
+}
+
 
 // Methods for handling all the FSM states
 
@@ -448,41 +460,23 @@ uint8_t getControlsBitfield() {
 can_status_t car_can_read(uint8_t *data, FSM_Signal_t id) {
   // Fill the data based on the ID, call the acc receive function here
   // Header can be null, we got the ID and doing nun complex w rtr/ids/etc.
-  return can_recv(hcan2, fsm_signal_to_can_id[id], NULL, data, 0);
+  CAN_RxHeaderTypeDef header;
+  return can_recv(hcan2, fsm_signal_to_can_id[id], &header, data, 0);
 }
 
-can_status_t motor_can_send(uint8_t *data, FSM_Signal_t id) {
+can_status_t motor_can_send(uint8_t *data, int motor_can_id) {
   // Send the data based on the ID, call the acc send function here
-  return can_send(hcan1, fsm_signal_to_can_id[id], NULL, data, 0);
+  //Change this later to motor enum and hash...
+
+  CAN_TxHeaderTypeDef header = {
+    .StdId = motor_can_id,
+    .IDE = CAN_ID_STD,
+    .RTR = CAN_RTR_DATA,
+    .DLC = 8
+};
+
+  return can_send(hcan1, &header, data, 0);
 }
-
-void initFSMCANMessages() {
-  // Initialize the CAN messages we care about
-  // for (int i = 0; i < NUM_FSM_CANFilters; i++) {
-  //   CAR_MSGS[i].CANMessage.ID = FSM_CANFilterList[i];
-  //   CAR_MSGS[i].CANMessage.data = NULL;
-  //   CAR_MSGS[i].timestamp = 0;
-  // }
-
-
-
-
-}
-
-// //Assuming can messages have some lookup
-// void updateFSMCANMessages() {
-//   // Read all of the relevant CAN messages into the FSM CAN data structure
-//   for (int i = 0; i < NUM_FSM_CANFilters; i++) {
-//     if (CAR_MSGS[i].CANMessage.ID != FSM_CANFilterList[i]) {
-//       // ID Mismatch throw some error or just return cuz they dont match and
-//       // user should check
-//       return;
-//     }
-
-//     can_read(CAR_MSGS[i].CANMessage.data, CAR_MSGS[i].CANMessage.ID);
-//     //CAR_MSGS[i].timestamp = OS_TimeGet();  // Update timestamp
-//   }
-// }
 
 // For CAN Architecture, all of the decoding is speculative, need to see how the
 // packaging is done
@@ -667,27 +661,24 @@ static uint8_t getSpeedDependentPower(float speed_mph) {
  * @brief Follows the FSM to update the velocity of the car
  */
 void Task_SendTritium(void *p_arg) {
-  OS_ERR err;
-  // CPU_TS ticks;
 
   // By default assume we are below the motor swoc threshold at startup
-  MotorStatus_ModifyBits(MOTOR_SWOC_THRESHOLD, true, false);
+  // MotorStatus_ModifyBits(MOTOR_SWOC_THRESHOLD, true, false);
 
   while (1) {
 #ifdef TASK_PROFILER
     // DebugIO_Toggle(SEND_TRITIUM_PIN);
 #endif
-    // readInputs(); // read inputs from the system
     runFSM();  // run the FSM to update the velocity and current setpoints
     // updateDisplayState();
 
-    err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
-    maxCurrentPercentage =
-        (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
+    // err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
+    // maxCurrentPercentage =
+    //     (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
 
-    // Delay of FSM_PERIOD ms
-    OSTimeDlyHMSM(0, 0, 0, FSM_PERIOD, OS_OPT_TIME_HMSM_STRICT, &err);
-    assertOSError(err);
+    // // Delay of FSM_PERIOD ms
+    // OSTimeDlyHMSM(0, 0, 0, FSM_PERIOD, OS_OPT_TIME_HMSM_STRICT, &err);
+    // assertOSError(err);
 #ifdef TASK_PROFILER
     // DebugIO_Toggle(SEND_TRITIUM_PIN);
 #endif
@@ -723,4 +714,8 @@ static void assertSendTritiumError(controls_error_e sterr) {
 //ngl for the faults, i might throw it into disabled state, itll work, i can assert some os error later
 
 //CAN integration, make the init + start now, make this an RTOS task called every 50ms or so, make a watchdog for certain CAN messages, prolly abstract to a method, handle faults before ready to roll, otherwise disabled, and god knows what i do with display think it should be handled by someone else...
-//Make rtos task be called, then fault handle, then watch dogs lowk
+//Make a main for this now and attach can macros at main init? ,Make rtos task be called, then fault handle, then watch dogs lowk
+
+//Add a fault state now to activate once wd fails (put in disabled, fault task run indefinitely, print context), figure out the ready to roll 
+
+//Add the RTOS tasks in the main, add the motor can support (Also add to the can 1 recv), make the task handler fr, check if it compiles, and add SWOC + other faults

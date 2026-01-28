@@ -158,10 +158,9 @@ TritiumState_t FSM[NUM_STATES] = {
 // replacing read/send tritium or also read car can (ignition + IO stuff
 // tracking + faults anyways)? Can i throw a flag into not ready for BPS stuff?
 void runFSM() {
-  OS_ERR err;
 
   // Check that motor is ready to run
-  err = checkForAllFaults();
+  // err = checkForAllFaults();
 
   // if you return OS_ERR_PEND_WOULD_BLOCK, one of the bits are not sent, and
   // // would've blocked If the error is ERR_NONE, assertOSError returns without
@@ -307,17 +306,17 @@ bool readyToRoll() {  // Car can escape not ready state, this is all of our
          1;  // Add other checks here
 }
 
-OS_ERR checkForAllFaults() {
-    //checking the bps trip and the ignition state for now
-    OS_ERR err = OS_ERR_NONE;
-    if(bpsTripped) {
-        err = BPS_FAULT;
-    }else if(ignitionState != MOTOR && currentState.stateName != STATE_NOT_READY) {
-        err = IGNITION_FAULT;
-    }
+// OS_ERR checkForAllFaults() {
+//     //checking the bps trip and the ignition state for now
+//     OS_ERR err = OS_ERR_NONE;
+//     if(bpsTripped) {
+//         err = BPS_FAULT;
+//     }else if(ignitionState != MOTOR && currentState.stateName != STATE_NOT_READY) {
+//         err = IGNITION_FAULT;
+//     }
     
-  return err;
-}
+//   return err;
+// }
 
 // void checkWatchDogs() { OS_ERR err; }
 
@@ -668,24 +667,26 @@ void Task_SendTritium(void *p_arg) {
   // By default assume we are below the motor swoc threshold at startup
   // MotorStatus_ModifyBits(MOTOR_SWOC_THRESHOLD, true, false);
 
-  while (1) {
-#ifdef TASK_PROFILER
-    // DebugIO_Toggle(SEND_TRITIUM_PIN);
-#endif
-    runFSM();  // run the FSM to update the velocity and current setpoints
-    // updateDisplayState();
+  runFSM();  // Run periodically
 
-    // err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
-    // maxCurrentPercentage =
-    //     (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
+//   while (1) {
+// #ifdef TASK_PROFILER
+//     // DebugIO_Toggle(SEND_TRITIUM_PIN);
+// #endif
+//     runFSM();  // run the FSM to update the velocity and current setpoints
+//     // updateDisplayState();
 
-    // // Delay of FSM_PERIOD ms
-    // OSTimeDlyHMSM(0, 0, 0, FSM_PERIOD, OS_OPT_TIME_HMSM_STRICT, &err);
-    // assertOSError(err);
-#ifdef TASK_PROFILER
-    // DebugIO_Toggle(SEND_TRITIUM_PIN);
-#endif
-  }
+//     // err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
+//     // maxCurrentPercentage =
+//     //     (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
+
+//     // // Delay of FSM_PERIOD ms
+//     // OSTimeDlyHMSM(0, 0, 0, FSM_PERIOD, OS_OPT_TIME_HMSM_STRICT, &err);
+//     // assertOSError(err);
+// #ifdef TASK_PROFILER
+//     // DebugIO_Toggle(SEND_TRITIUM_PIN);
+// #endif
+//   }
 }
 
 static void assertSendTritiumError(controls_error_e sterr) {

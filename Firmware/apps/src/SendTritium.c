@@ -470,7 +470,7 @@ can_status_t motor_can_send(uint8_t *data, int motor_can_id) {
 
   CAN_TxHeaderTypeDef header = {
     .StdId = motor_can_id,
-    .IDE = CAN_ID_STD,
+    .IDE = CAN_ID_STD, 
     .RTR = CAN_RTR_DATA,
     .DLC = 8
 };
@@ -498,6 +498,9 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
       //No new data, skip
       continue;
     }
+
+    //signal has data, decode based on ID and update event here for watchdogs
+    recieved_CAN_message((FSM_Signal_t)i); //for wd
 
       switch (fsm_signal_to_can_id[i]) {
         case CAN_ID_PEDALS:

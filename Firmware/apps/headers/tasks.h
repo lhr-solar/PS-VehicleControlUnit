@@ -18,9 +18,12 @@ StackType_t Task_FSM_Stack_Array[configMINIMAL_STACK_SIZE];
 
 /* ================= WATCHDOG TASK ================= */
 
-StaticTask_t Task_Watchdog_Buffer;
-StackType_t Task_Watchdog_Stack_Array[configMINIMAL_STACK_SIZE];
-EventGroupHandle_t xWDogEventGroup_handle;
+StaticEventGroup_t xWdEventGroupBuffer;
+EventGroupHandle_t xWdEventGroup;
+
+// StaticTask_t Task_Watchdog_Buffer;
+// StackType_t Task_Watchdog_Stack_Array[configMINIMAL_STACK_SIZE];
+// EventGroupHandle_t xWDogEventGroup_handle;
 
 /* ================= FAULT TASK ================= */
 

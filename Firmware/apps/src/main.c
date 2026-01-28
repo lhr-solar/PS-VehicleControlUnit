@@ -23,15 +23,16 @@ int main() {
 
    //Make watchdogs here...
 
-    xTaskCreateStatic(
-        Task_CANWatchdog,              
-        "CAN Watchdog",
-        configMINIMAL_STACK_SIZE,
-        (void*)NULL,
-        tskIDLE_PRIORITY + 3,      //Higher than FSM  
-        Task_Watchdog_Stack_Array,
-        &Task_Watchdog_Buffer
-    );
+    // xTaskCreateStatic(
+    //     Task_CANWatchdog,              
+    //     "CAN Watchdog",
+    //     configMINIMAL_STACK_SIZE,
+    //     (void*)NULL,
+    //     tskIDLE_PRIORITY + 3,      //Higher than FSM  
+    //     Task_Watchdog_Stack_Array,
+    //     &Task_Watchdog_Buffer
+    // );
+    watchdog_init();
 
     //Fault task
     xTaskCreateStatic(

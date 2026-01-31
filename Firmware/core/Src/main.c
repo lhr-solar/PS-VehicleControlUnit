@@ -3,21 +3,12 @@
 
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "esp_fw.ino"
 
 /* Private includes ----------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
-float Motor_Voltage = 0.0f;
-float Battery_Voltage = 0.0f;
-#define Overvoltage_Threshold 140.0f;
-#define Threshold_1 0.9f;
-#define Threshold_2 0.8f;
-#define Gain_Divider_Constant 3.3f / (4095.0f * 0.4f * 0.024295f);
-float Precharge_Threshold = Threshold_1;
 
 UART_HandleTypeDef huart3;
 
@@ -268,74 +259,4 @@ void Error_Handler(void)
   {
   }
   /* USER CODE END Error_Handler_Debug */
-}
-#ifdef USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
-#endif /* USE_FULL_ASSERT */
-
-void Read_ADC()
-{
-    uint32_t Motor_ADC = 0;
-    uint32_t Battery_ADC = 0;
-
-    HAL_ADC_Start(&hadc1);
-
-    if (HAL_ADC_PollForConversion(&hadc1, 100) == HAL_OK)
-    {
-        Motor_ADC = HAL_ADC_GetValue(&hadc1);
-    }
-
-    HAL_ADC_Stop(&hadc1);
-
-    HAL_ADC_Start(&hadc2);
-
-    if (HAL_ADC_PollForConversion(&hadc2, 100) == HAL_OK)
-    {
-        Battery_ADC = HAL_ADC_GetValue(&hadc2);
-    }
-
-    HAL_ADC_Stop(&hadc2);
-
-    Motor_Voltage = (float) Motor_ADC * Gain_Divider_Constant;
-    Battery_Voltage = (float) Battery_ADC * Gain_Divider_Constant;
-}
-
-void Precharge()
-{
-    /* Close main contactor */
-
-    /* Wait for precharge delay */
---
-    Read_ADC();
-
-    if (Battery_Voltage > Overvoltage_Threshold)
-    {
-        /* BATTERY ABOUT TO GO BOOM */
-    }
-    else if (Motor_Voltage / Battery_Voltage < Precharge_Threshold)
-    {
-        /* Precharge timeout fault */
-        // Set GPIO Pin 12 High
-        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET);
-    }
-    else if (Motor_Voltage / Battery_Voltage >= Precharge_Threshold)
-    {
-        Precharge_Threshold = Threshold_2;
-        /* Close precharge contactor */
-        // Set GPIO Pin 8 High
-        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-    }
 }

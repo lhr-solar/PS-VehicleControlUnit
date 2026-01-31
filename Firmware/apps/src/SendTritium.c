@@ -36,7 +36,7 @@
 
 #include <math.h>
 
-#define NEXT_STATES_LENGTH 128
+// #define NEXT_STATES_LENGTH 128
 
 #define BRAKE_THRESH 42
 #define BRAKE_THRESH_HYST 30
@@ -56,14 +56,6 @@ static float accelPedalPercent = 0.0f;
 static float busCurrentSetPoint =
     1.0f;  // This gets manipulated if the battery not ok
 
-// CAN MSG VARIABLES
-static gear_t gear = DASH_NEU;
-static bool regenButtonPressed = false;
-static bool cruiseControlButton = false;
-static bool regenEnabled = false;
-static bool okToRegen = false;
-static bool bpsTripped = false;
-static ignitionState_t ignitionState = IGNITION_OFF;
 
 // Gear fault counter
 static uint8_t gearFaultCnt = 0;
@@ -118,21 +110,8 @@ typedef enum FSMStates {
   // Add more states as needed
 } FSMStates;
 
-// BITFIELD INPUT ENUM
-typedef enum BitfieldInputs {
-  NEUTRAL_BIT = 0x00,                // If we are trying to go neutral
-  FORWARD_BIT = 0x01,                // If we are trying to go forward
-  REVERSE_BIT = 0x02,                // If we are trying to go reverse
-  NOT_READY_BITS = 0x03,             // For when the car is starting up
-  CRUISE_CONTROL_BUTTON_BIT = 0x04,  // If the cruise control button is pressed
-  REGEN_BUTTON_BIT = 0x08,           // If the regen button is pressed
-  READY_TO_REGEN_BIT = 0x10,         // If we are going slow enough to regen
-  REGEN_ENABLED_BIT = 0x20,          // If regen is enabled
-  BRAKING_BIT = 0x40,                // If the brake is pressed
-  // FAULTED_BIT           = 0x80  // If the car is faulted
-} BitfieldInputs_t;
 
-OS_FLAG_GRP CarStatus_Flags;  // Bitfield for car status
+// OS_FLAG_GRP CarStatus_Flags;  // Bitfield for car status
 
 typedef struct TritiumState {
   FSMStates stateName;
@@ -157,40 +136,12 @@ TritiumState_t FSM[NUM_STATES] = {
 // faults.. Questions: Do i need to make an rtos task for all this? Am i just
 // replacing read/send tritium or also read car can (ignition + IO stuff
 // tracking + faults anyways)? Can i throw a flag into not ready for BPS stuff?
-void runFSM() {
-
-  // Check that motor is ready to run
-  // err = checkForAllFaults();
-
-  // if you return OS_ERR_PEND_WOULD_BLOCK, one of the bits are not sent, and
-  // // would've blocked If the error is ERR_NONE, assertOSError returns without
-  // // asserting an error
-  // if (err != OS_ERR_PEND_WOULD_BLOCK) {  // What this mean?
-  //   sendMotorPowerCommand(0.0f);         // Battery tweaking = stop current
-  //   assertOSError(err);
-  // }
-
-  // memset(&motorSafeCmd.data, 0, sizeof(motorSafeCmd.data));  // not safe to run
-  // sendMotorPowerCommand(busCurrentSetPoint);  // Current should still be allowed
-  //                                             // in the case of recovery as well
-
-  // if (err == OS_ERR_NONE) {
-  //   motorSafeCmd.data[0] |= 0x01;       // Set motor safe to run to true
-    carStatus = getControlsBitfield();  // Get the current status of the car as
-                                        // a bitfield
+void runFSM() {                         // a bitfield
     currentState =
         FSM[currentState.NextStates[carStatus]];  // Get the next state based on
                                                   // the current state and car
                                                   // status
     currentState.stateHandler();  // Run the handler for the current state
-  // } else {
-  //   // If we are here, we are not ready to run, so set the state to not ready
-  //   currentState = FSM[CAR_NOT_READY];  // Recoverable?
-  //   currentState.stateHandler();
-  // }
-
-  // SendCarCAN_Put(
-  //     motorSafeCmd);  // Send the motor safe command, don't know why we do this
 }
 
 void init() {
@@ -347,6 +298,7 @@ void handleFSMForwardDriveState() {
 }
 void handleFSMNeutralState() {
   sendMotorDriveCommand(0, 0);
+  //must wait here until speed is under a certain thresh
   return;
 }
 
@@ -408,61 +360,6 @@ uint8_t generateCustomBitfield(BitfieldInputs_t[] inputs) {
   return bitfield;
 }
 
-uint8_t getControlsBitfield() {
-  // Return the current state of the Car, this is through CAN commands
-  uint8_t status = 0;
-
-  // Update the IO state forceably, will change this later...
-  getAndUpdateControlStatus();
-
-  // Figuring out all the bits for the bitfield, this is only the logic, we have
-  // already gotten the data, i just need to update from the variables I have
-  // now
-
-  //Gear state bits
-
-  if (gear == DASH_FWD) {
-    status |= FORWARD_BIT;
-  } else if (gear == DASH_REV) {
-    status |= REVERSE_BIT;
-  } else if (gear == DASH_NEU) {
-    status |= NEUTRAL_BIT;
-  } else if (gear == DASH_INIT) {
-    status |= NOT_READY_BITS;
-  } else {
-    assertSendTritiumError(C_ERR_STR_GEAR_FAULT);
-  }
-
-  if (brakePedalPercent >= thresholdBrake) {
-    status |= BRAKING_BIT;
-    isBrakeOn = true;
-  } else {
-    isBrakeOn = false;
-  }
-
-  if (status & BRAKING_BIT) {  // If braking, thresh for braking goes down (hysterisis)
-    thresholdBrake = BRAKE_THRESH_HYST;
-  } else {
-    thresholdBrake = BRAKE_THRESH;
-  }
-
-  //Buttons
-    status |= regenButtonPressed ? REGEN_BUTTON_BIT : 0;
-    status |= regenEnabled ? REGEN_ENABLED_BIT : 0;
-    status |= okToRegen ? READY_TO_REGEN_BIT : 0;
-    status |= cruiseControlButton ? CRUISE_CONTROL_BUTTON_BIT : 0;
-
-  return status;
-}
-
-//A little abstraction for readability
-can_status_t car_can_read(uint8_t *data, FSM_Signal_t id) {
-  // Fill the data based on the ID, call the acc receive function here
-  // Header can be null, we got the ID and doing nun complex w rtr/ids/etc.
-  CAN_RxHeaderTypeDef header;
-  return can_recv(hcan2, fsm_signal_to_can_id[id], &header, data, 0);
-}
-
 can_status_t motor_can_send(uint8_t *data, int motor_can_id) {
   // Send the data based on the ID, call the acc send function here
   //Change this later to motor enum and hash...
@@ -476,127 +373,6 @@ can_status_t motor_can_send(uint8_t *data, int motor_can_id) {
 
   return can_send(hcan1, &header, data, 0);
 }
-
-// For CAN Architecture, all of the decoding is speculative, need to see how the
-// packaging is done
-void getAndUpdateControlStatus() {  // This is for getting the data, the logic will
-                            // happen seperately
-  // Reading all of the relevant data on the BUS
-  // updateFSMCANMessages();
-
-  // Have a list of IDs and update the associated one? Needs timestamp as well
-  // for watchdogs, have a thread calling this constantly
-
-  for (int i = 0; i < FSM_SIGNAL_COUNT; i++) {
-
-    uint8_t dataBuf[8] = {0};
-    can_status_t status = car_can_read(dataBuf, (FSM_Signal_t)i);
-    if(status == CAN_ERR) {
-      //Throw some error, will do this later
-    }else if(status == CAN_EMPTY) {
-      //No new data, skip
-      continue;
-    }
-
-    //signal has data, decode based on ID and update event here for watchdogs
-    recieved_CAN_message((FSM_Signal_t)i); //for wd
-
-      switch (fsm_signal_to_can_id[i]) {
-        case CAN_ID_PEDALS:
-          // Byte 0 = brake raw, Byte 1 = accel raw
-          brakePedalPercent = dataBuf[0];
-          accelPedalPercent = dataBuf[1];
-
-          brakePedalPercent = mapToPercent(brakePedalPercent, BRAKE_PEDAL_MIN,
-                                           BRAKE_PEDAL_MAX, 0, 100);
-          accelPedalPercent = mapToPercent(accelPedalPercent, ACCEL_PEDAL_MIN,
-                                           ACCEL_PEDAL_MAX, 0, 100);
-          break;
-        case CAN_ID_GEARS:
-          // Assume gear encoded in byte 0
-          gear = dataBuf[0] & 0x03;
-          break;
-        case CAN_ID_REGEN_BUTTON:
-          // Assume byte 0 bit0 = regen button pressed
-          regenButtonPressed =
-              (dataBuf[0] & 0x01);
-          break;
-        case CAN_ID_CRUISE_CONTROL:
-          // Assume byte 0 bit0 = cruise button toggle
-          cruiseControlButton =
-              (dataBuf[0] & 0x01);
-          break;
-        case CAN_ID_REGEN_ENABLED:
-            // Assume byte 0 bit0 = regen enabled
-            regenEnabled = (dataBuf[0] & 0x01);
-            break;
-        case CAN_ID_BPS_OK_TO_REGEN:
-          // Assume byte 0 bit0 = OK-to-regen flag
-          okToRegen = (dataBuf[0] & 0x01);
-          break;
-
-        case CAN_ID_BPS_TRIP:
-          // Assume byte 0 bit0 = BPS tripped
-          bpsTripped = (dataBuf[0] & 0x01);
-          break;
-
-        case CAN_ID_IGNITION_STATE:
-          // Assume byte 0 = ignition mode enum
-          ignitionState = dataBuf[0];
-          break;
-
-        default:
-          // Future CAN IDs handled here
-          break;
-      }
-  }
-}
-
-// /**
-//  * @brief Update the accel, brake, & gear on the display +
-//  * write to the brakelight
-//  */
-// static void updateDisplayState() {
-//   UpdateDisplay_SetAccel(accelPedalPercent);
-//   UpdateDisplay_SetBrake(isBrakeOn);
-
-//   switch (gear) {
-//     case DASH_FWD:
-//       UpdateDisplay_SetGear(DISP_FORWARD);
-//       break;
-//     case DASH_NEU:
-//       UpdateDisplay_SetGear(DISP_NEUTRAL);
-//       break;
-//     case DASH_REV:
-//       UpdateDisplay_SetGear(DISP_REVERSE);
-//       break;
-//     default:
-//       UpdateDisplay_SetGear(DISP_NEUTRAL);
-//       break;
-//   }
-
-//   isBrakeOn ? Lights_Write(BRAKE_LIGHT, ON)
-//             : Lights_Write(BRAKE_LIGHT,
-//                            OFF);  // Lights sep from the the set brake display??
-// }
-
-// /**
-//  * @brief Reads inputs from the system
-//  */
-// static void readInputs() {
-//   // brakePedalPercent = Pedals_Read(BRAKE);
-//   brakePedalPercent = mapToPercent(Pedals_Read(BRAKE), ACCEL_PEDAL_THRESHOLD,
-//                                    PEDAL_MAX, CURRENT_SP_MIN, 100);
-//   accelPedalPercent =
-//       mapToPercent(Pedals_Read(ACCELERATOR), ACCEL_PEDAL_THRESHOLD, PEDAL_MAX,
-//                    CURRENT_SP_MIN, 100);
-//   CANDATA_t rawPedalmv = {.ID = PEDALS_RAW_VOLTAGE, .idx = 0, .data = {0}};
-
-//   ((int16_t *)rawPedalmv.data)[0] = Pedals_rawVoltage(BRAKE);
-//   ((int16_t *)rawPedalmv.data)[1] = Pedals_rawVoltage(ACCELERATOR);
-//   SendCarCAN_Put(rawPedalmv);
-//   gear = getGear(GEAR_USE_OS_DELAY);
-// }
 
 /**
  * @brief Linearly map range of integers to another range of integers, and
@@ -667,6 +443,7 @@ void Task_SendTritium(void *p_arg) {
   // By default assume we are below the motor swoc threshold at startup
   // MotorStatus_ModifyBits(MOTOR_SWOC_THRESHOLD, true, false);
 
+  carStatus = xEventGroupGetBits(carStatusEventGroup); // Get the current status of the car as a bitfield
   runFSM();  // Run periodically
 
 //   while (1) {
@@ -723,3 +500,5 @@ static void assertSendTritiumError(controls_error_e sterr) {
 //Add a fault state now to activate once wd fails (put in disabled, fault task run indefinitely, print context), figure out the ready to roll 
 
 //Add the RTOS tasks in the main, add the motor can support (Also add to the can 1 recv), make the task handler fr, check if it compiles, and add SWOC + other faults
+
+//Get motor bits from the tritium status, then also extract things like speed / motor params for state logic

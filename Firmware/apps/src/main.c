@@ -1,5 +1,6 @@
 #include "stm32xx_hal.h"
 #include "tasks.h"
+#include "SendTritium.h"
 
 
 void Task_CANWatchdog(void *arg);
@@ -10,6 +11,8 @@ void Task_FaultHandler(void *arg);
 int main() {
     HAL_Init();
     SystemClock_Config();
+
+    initStatusEventGroup();
     
     xTaskCreateStatic(
         Task_SendTritium, /* The function that implements the task. */
@@ -19,6 +22,16 @@ int main() {
         tskIDLE_PRIORITY + 2, /* Task Priority. */
         Task_FSM_Stack_Array, /* Stack array. */
         &Task_FSM_Buffer  /* Buffer for static allocation. */
+   );
+
+   xTaskCreateStatic(
+        Task_UpdateControlStatus, /* The function that implements the task. */
+        "Update Control Status Task", /* Text name for the task. */
+        configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
+        (void*)NULL, /* Paramter passed into the task. */
+        tskIDLE_PRIORITY + 3, /* Task Priority. */
+        Task_UpdateControlStatus_Stack_Array, /* Stack array. */
+        &Task_UpdateControlStatus_Buffer  /* Buffer for static allocation. */
    );
 
    //Make watchdogs here...
@@ -32,6 +45,7 @@ int main() {
     //     Task_Watchdog_Stack_Array,
     //     &Task_Watchdog_Buffer
     // );
+
     watchdog_init();
 
     //Fault task

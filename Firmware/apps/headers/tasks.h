@@ -20,6 +20,10 @@ StackType_t Task_FSM_Stack_Array[configMINIMAL_STACK_SIZE];
 StaticTask_t Task_UpdateControlStatus_Buffer; 
 StackType_t Task_UpdateControlStatus_Stack_Array[configMINIMAL_STACK_SIZE];
 
+/* ================= BROADCAST MOTOR STATUS TASK ================= */
+StaticTask_t Task_BroadcastMotorStatus_Buffer;
+StackType_t Task_BroadcastMotorStatus_Stack_Array[configMINIMAL_STACK_SIZE];
+
 /* ================= WATCHDOG TASK ================= */
 
 StaticEventGroup_t xWdEventGroupBuffer;

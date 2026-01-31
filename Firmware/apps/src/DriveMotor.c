@@ -31,6 +31,7 @@
 #include "Tasks.h"
 #include "UpdateDisplay.h"
 #include "os_cfg_app.h"
+#include "RecieveMotor.h"
 
 // #define USING_PROFINITY
 
@@ -57,13 +58,11 @@ static float busCurrentSetPoint =
     1.0f;  // This gets manipulated if the battery not ok
 
 
-// Gear fault counter
-static uint8_t gearFaultCnt = 0;
+// // Gear fault counter
+// static uint8_t gearFaultCnt = 0;
 
 static bool isBrakeOn = false;  // Used for updating display & brakelight
-
 static uint8_t carStatus = 0;  // Bitfield for car status
-
 bool accelerator_reset = false;
 
 // Outputs
@@ -226,27 +225,30 @@ void sendMotorDriveCommand(float velocitySetpoint, float currentSetpoint) {
   memcpy(&driveCmd.data[4], &currentSetpoint,
          sizeof(float));  // Set current setpoint
 
-#ifndef USING_PROFINITY
-  CANbus_Send(driveCmd, true, MOTORCAN);
-#endif
-
   // SendCarCAN_Put(
   //     driveCmd);  // Send the drive command to the car CAN bus for telemetry
-  motor_can
+  mmotor_can_send(driveCmd.data, MOTOR_DRIVE); //can hardcode this for now
 }
 
 void sendMotorPowerCommand(float powerSetpoint) {
-  memset(&powerCmd.data[0], 0, sizeof(powerCmd.data));  // Clear it
+  memset(&powerCmd.data[0], 0, sizeof(powerCmd.data));  //change later
 
   memcpy(&powerCmd.data[0], &powerSetpoint,
          sizeof(float));  // Set power setpoint
 
-#ifndef USING_PROFINITY
-  CANbus_Send(powerCmd, true, MOTORCAN);
-#endif
-  SendCarCAN_Put(
-      powerCmd);  // Send the power command to the car CAN bus for telemetry
+  motor_can_send(powerCmd.data, MOTOR_POWER); //can hardcode this for now change later
 }
+
+//MUST REINTERPRET and not just cast
+float getCarSpeed(){
+  uint64_t packedData = moco_full_status_arr[MOTOR_VELOCITY];
+  uint32_t rawSpeed = (uint32_t)(packedData >> 32);
+  //convert to float
+  float convertedSpeed;
+  memcpy(&convertedSpeed, &rawSpeed, sizeof(float));
+  return convertedSpeed;
+}
+
 
 bool readyToRoll() {  // Car can escape not ready state, this is all of our
                       // checks for recoverable faults and init states, but init
@@ -351,6 +353,7 @@ void handleFSMInitState() {
   return;
 }
 
+
 uint8_t generateCustomBitfield(BitfieldInputs_t[] inputs) {
   // Inputs are in order of most significant bit to least significant bit
   uint8_t bitfield = 0;
@@ -446,36 +449,22 @@ void Task_SendTritium(void *p_arg) {
   carStatus = xEventGroupGetBits(carStatusEventGroup); // Get the current status of the car as a bitfield
   runFSM();  // Run periodically
 
-//   while (1) {
-// #ifdef TASK_PROFILER
-//     // DebugIO_Toggle(SEND_TRITIUM_PIN);
-// #endif
-//     runFSM();  // run the FSM to update the velocity and current setpoints
-//     // updateDisplayState();
+    // err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
+    // maxCurrentPercentage =
+    //     (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
 
-//     // err = MotorStatus_Wait(MOTOR_SWOC_THRESHOLD, !OS_FLAG_BLOCKING);
-//     // maxCurrentPercentage =
-//     //     (err == OS_ERR_NONE) ? SWOC_CURRENT_SP_MAX : CURRENT_SP_MAX;
-
-//     // // Delay of FSM_PERIOD ms
-//     // OSTimeDlyHMSM(0, 0, 0, FSM_PERIOD, OS_OPT_TIME_HMSM_STRICT, &err);
-//     // assertOSError(err);
-// #ifdef TASK_PROFILER
-//     // DebugIO_Toggle(SEND_TRITIUM_PIN);
-// #endif
-//   }
 }
 
-static void assertSendTritiumError(controls_error_e sterr) {
-  throwTaskError(sterr);
-}
+// static void assertSendTritiumError(controls_error_e sterr) {
+//   throwTaskError(sterr);
+// }
 
 // Lin map, display, task finish and verify, fault check from helper, do some
 // SWOC logic in fault thread, watch dogs... make faults tuff and unify all of
 // em
 
 // Lock in twin, copy paste send tritium and see how they send tasks, make the
-// switch from micrium to free rtos, maybe switch up faults agian, use their
+// switch from micrium to free rtos, maybe switch up faults again, use their
 // methods for everyting
 
 // Trim, integrate w freertos to start w, add the tasks and handle faults

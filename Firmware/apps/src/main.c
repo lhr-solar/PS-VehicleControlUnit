@@ -5,6 +5,7 @@
 
 void Task_CANWatchdog(void *arg);
 void Task_FaultHandler(void *arg);
+void Task_BroadcastMotorStatus(void *p_arg);
 
 //attach this to fsm... and figure out all the defines/sizes
 //Make the main FSM task, make watch dogs, then have a suspended task actiavted via event for faults, and fix all the OS errors
@@ -32,6 +33,16 @@ int main() {
         tskIDLE_PRIORITY + 3, /* Task Priority. */
         Task_UpdateControlStatus_Stack_Array, /* Stack array. */
         &Task_UpdateControlStatus_Buffer  /* Buffer for static allocation. */
+   );
+
+   xTaskCreateStatic(
+        Task_BroadcastMotorStatus, /* The function that implements the task. */
+        "Broadcast Motor Status Task", /* Text name for the task. */
+        configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
+        (void*)NULL, /* Paramter passed into the task. */
+        tskIDLE_PRIORITY + 1, /* Task Priority. */
+        Task_BroadcastMotorStatus_Stack_Array, /* Stack array. */
+        &Task_BroadcastMotorStatus_Buffer  /* Buffer for static allocation. */
    );
 
    //Make watchdogs here...

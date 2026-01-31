@@ -22,6 +22,11 @@ void Faults_ThrowMultipleFaults(fault_id_t faultBits[], int numBits) {
     xEventGroupSetBits(xFaultEventGroup, faultGroup);
 }
 
+void Faults_ThrowFaultsUsingBitfield(EventBits_t bitfield) {
+    xEventGroupSetBits(xFaultEventGroup, bitfield);
+}
+
+
 //I don't know if we ever need this since faults are persistent
 void Faults_ClearFault(fault_id_t faultBit) {
     xEventGroupClearBits(xFaultEventGroup, (1 << faultBit));
@@ -75,7 +80,7 @@ void Task_FaultHandler(void *arg) {
             for(int i = 0; i < NUM_FAULTS; i++) {
                 if(recoverHandlers[i] != NULL) {
                     printf("Attempting recovery for Fault ID %d\n", i);
-                    if(recoverHandlers[i]()){
+                    if(recoverHandlers[i]()){ //The recover handler must return a bool indicating whether recovery was successful
                         printf("Recovery successful for Fault ID %d\n", i);
                     }else{
                         printf("Recovery failed for Fault ID %d\n", i);

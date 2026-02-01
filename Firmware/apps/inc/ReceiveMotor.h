@@ -1,4 +1,4 @@
-#include <cstdint>
+#include <stdint.h>
 #define MOCO_BASE_ADDR 0x69420
 
 typedef enum {
@@ -42,5 +42,7 @@ static const moco_status_t poll_list[] = {
     SLIP_SPEED,
 };
 
-extern uint64_t moco_full_status_arr[sizeof(poll_list)/sizeof(moco_status_t)] = {0};
+uint64_t moco_full_status_arr[sizeof(poll_list)/sizeof(moco_status_t)] = {0};
+
+void initStatusEventGroup();
 

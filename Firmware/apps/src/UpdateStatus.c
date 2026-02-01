@@ -1,6 +1,6 @@
-#include "SendTritium.h"
-#include <cstdint>
-
+#include "DriveMotor.h"
+#include <stdint.h>
+#include "stdbool.h"
 
 
 
@@ -11,7 +11,13 @@ static bool cruiseControlButton = false;
 static bool regenEnabled = false;
 static bool okToRegen = false;
 static bool bpsTripped = false;
-static ignitionState_t ignitionState = IGNITION_OFF;
+static float brakePedalPercent = 0.0f;
+static float accelPedalPercent = 0.0f;
+
+static ignitionState_t ignitionState = IGN_OFF;
+
+static float thresholdBrake = BRAKE_THRESH;
+static
 
 //add a start up sequence bool + a fault recovery status bool later
 
@@ -40,17 +46,10 @@ void getControlsBitfield() {
     status |= REVERSE_BIT;
   } else if (gear == DASH_NEU) {
     status |= NEUTRAL_BIT;
-  } else if (gear == DASH_INIT) {
-    status |= NOT_READY_BITS; //elim this later, gotta figure out not ready logic
-  } else {
-    // assertSendTritiumError(C_ERR_STR_GEAR_FAULT);
   }
 
   if (brakePedalPercent >= thresholdBrake) {
     status |= BRAKING_BIT;
-    isBrakeOn = true;
-  } else {
-    isBrakeOn = false;
   }
 
   if (status & BRAKING_BIT) {  // If braking, thresh for braking goes down (hysterisis)

@@ -1,6 +1,7 @@
 #include "stm32xx_hal.h"
 #include "tasks.h"
-#include "SendTritium.h"
+#include "DriveMotor.h"
+#include "ReceiveMotor.h"
 
 
 void Task_CANWatchdog(void *arg);
@@ -16,7 +17,7 @@ int main() {
     initStatusEventGroup();
     
     xTaskCreateStatic(
-        Task_SendTritium, /* The function that implements the task. */
+        Task_SendMotor, /* The function that implements the task. */
         "Init Task", /* Text name for the task. */
         configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
         (void*)NULL, /* Paramter passed into the task. */

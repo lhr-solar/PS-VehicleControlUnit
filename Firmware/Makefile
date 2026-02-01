@@ -20,9 +20,12 @@ PROJECT_TARGET ?= stm32g473xx
 # STM32G473RET6 
 
 # source and include directories
-PROJECT_C_INCLUDES = $(wildcard */Inc)
-PROJECT_C_SOURCES = $(wildcard */Src/*.c)
+# PROJECT_C_INCLUDES = $(wildcard */Inc)
+# PROJECT_C_SOURCES = $(wildcard */Src/*.c)
 
+# find the soource and include dirs recrusively
+PROJECT_C_INCLUDES = $(shell find . -type d -iname inc)
+PROJECT_C_SOURCES  = $(shell find . -type f -iname "*.c")
 # build directories
 PROJECT_BUILD_DIR = build
 BUILD_MAKEFILE_DIR = Embedded-Sharepoint

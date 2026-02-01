@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "DriveMotor.h"
 //faults struct, fault IDs, fault handling functions, context info, unconditionally throw fault or wait for function to check
 typedef void (*callback_t)(void);
 
@@ -35,7 +36,6 @@ typedef enum {
 
     NUM_FAULTS                         // Always last
 } fault_id_t;
-
 
 // Array of faults with handler pointers and descriptions
 static fault_t faultArray[NUM_FAULTS] = {
@@ -100,6 +100,7 @@ static fault_t faultArray[NUM_FAULTS] = {
         NULL
     },
 };
+
 
 //making an empty array for storing all the recover handlers dynamically in faults task
 static recovery_callback_t recoverHandlers[NUM_FAULTS] = {NULL};

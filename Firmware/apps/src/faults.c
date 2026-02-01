@@ -1,6 +1,8 @@
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include "faults.h"
+#include <stdio.h>
+#include <DriveMotor.h>
 
 StaticEventGroup_t xFaultEventGroupBuffer;
 EventGroupHandle_t xFaultEventGroup;

@@ -16,21 +16,23 @@
 // #include "Tasks.h"
 // #include <cstdint>
 #include "can_ids.h"
-// #include <cstdint>
+#include "FreeRTOS.h"
+#include "event_groups.h"
+#include <stdint.h>
 
 //#define SENDTRITIUM_PRINT_MES
-#define CANBUS_MOTOR_SAFE_TO_RUN 1
+// #define CANBUS_MOTOR_SAFE_TO_RUN 1
 
-#define MOTOR_MSG_PERIOD 100 // in ms
-#define FSM_PERIOD 100 // in ms
-#define DEBOUNCE_PERIOD 2 // in units of FSM_PERIOD
+// #define MOTOR_MSG_PERIOD 100 // in ms
+// #define FSM_PERIOD 100 // in ms
+// #define DEBOUNCE_PERIOD 2 // in units of FSM_PERIOD
 
-#define MAX_VELOCITY 12000.0f // rpm (unobtainable value)
+// #define MAX_VELOCITY 12000.0f // rpm (unobtainable value)
 
-// Used to define accel & brake (hysteresis) thresholds for when to start/stop powering the motor, respectively
-#define ACCEL_PEDAL_THRESHOLD 15 // percent
-#define BRAKE_UNPRESSED_THRESHOLD 40 // percent
-#define BRAKE_PRESSED_THRESHOLD 30 // percent
+// // Used to define accel & brake (hysteresis) thresholds for when to start/stop powering the motor, respectively
+// #define ACCEL_PEDAL_THRESHOLD 15 // percent
+// #define BRAKE_UNPRESSED_THRESHOLD 40 // percent
+// #define BRAKE_PRESSED_THRESHOLD 30 // percent
 
 // Motor Controller current values. Current is in Amps (A)
 #define MAX_MOCO_BATTERY_CURRENT 64.0f  // NOTE: Provided only for reference. This 64A max for daybreak, anticipated to be 135 for next-gen
@@ -43,9 +45,11 @@
 #define CURRENT_SP_MAX 100 // percent
 #define SWOC_CURRENT_SP_MAX 60 // percent
 
-#define GEAR_FAULT_THRESHOLD 3 // number of times gear fault can occur before it is considered a fault
+// #define GEAR_FAULT_THRESHOLD 3 // number of times gear fault can occur before it is considered a fault
 
-#define ACCCEL_PEDAL_RESET_THRESHOLD 20
+// #define ACCCEL_PEDAL_RESET_THRESHOLD 20
+#define BRAKE_THRESH 42
+#define BRAKE_THRESH_HYST 30
 
 extern EventGroupHandle_t carStatusEventGroup; //bitfield for car status (thread-safe)
 
@@ -77,7 +81,6 @@ typedef enum BitfieldBitIndex {
     BIT_IDX_READY_TO_REGEN,             // Index for READY_TO_REGEN_BIT
     BIT_IDX_REGEN_ENABLED,              // Index for REGEN_ENABLED_BIT
     BIT_IDX_BRAKING,                    // Index for BRAKING_BIT
-
     BITFIELD_INPUT_COUNT                // Total number of bits
 } BitfieldBitIndex_t;
 
@@ -98,13 +101,13 @@ typedef enum BitfieldInputs {
 #define NEXT_STATES_LENGTH (1 << BITFIELD_INPUT_COUNT) // 2^number of bits
 #define ALL_STATUS_BITS ((1 << BITFIELD_INPUT_COUNT) - 1) // all bits set
 
-// Getter functions for local variables in SendTritium.c
-EXPOSE_GETTER(uint8_t, brakePedalPercent)
-EXPOSE_GETTER(uint8_t, accelPedalPercent)
-EXPOSE_GETTER(gear_t, gear)
-EXPOSE_GETTER(float, currentSetpoint)
-EXPOSE_GETTER(float, velocitySetpoint)
-EXPOSE_GETTER(bool, isBrakeOn)
+// // Getter functions for local variables in SendTritium.c
+// EXPOSE_GETTER(uint8_t, brakePedalPercent)
+// EXPOSE_GETTER(uint8_t, accelPedalPercent)
+// EXPOSE_GETTER(gear_t, gear)
+// EXPOSE_GETTER(float, currentSetpoint)
+// EXPOSE_GETTER(float, velocitySetpoint)
+// EXPOSE_GETTER(bool, isBrakeOn)
 
 /**
  * @brief Linearly map range of integers to another range of integers, and provide the pecentage result.
@@ -121,23 +124,13 @@ float mapToPercent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_mi
 // Function prototypes
 // static void assertSendTritiumError(controls_error_e sterr);
 
-void Task_SendTritium(void *p_arg);
 void Task_UpdateControlStatus(void *p_arg);
+void Task_SendMotor(void *p_arg);
 void disableFSM();
+void recoverFSM();
 
-
-
-
-// //Making a source of truth (ts)
-
-// typedef struct {
-//     controls_error_e       error_code;
-//     bool                   is_evac_needed;
-//     callback_t             error_callback;
-//     error_scheduler_opt_e  lock_scheduler;
-//     error_recovery_opt_e   recovery;
-//     BPSFaultErr_e          bps_err;
-// } TaskErrorParams;
+//Fault handling
+void handleWatchdogFSMFault();
 
 //CAN_DATA
 
@@ -179,32 +172,24 @@ static const uint16_t fsm_signal_to_can_id[FSM_SIGNAL_COUNT] = {
   [FSM_IGNITION_STATE]    = CAN_ID_IGNITION_STATE,
 };
 
+typedef enum{
+DASH_INIT,
+DASH_NEU,
+DASH_FWD,
+DASH_REV
+}gear_t;
+
+typedef enum{
+IGN_OFF,
+LV_EN,
+ARR_EN,
+MOT_EN
+}ignitionState_t;
+
 //For convenience and event groups
 
 #define ALL_CAN_MSGS ((1 << FSM_SIGNAL_COUNT) - 1) //all bits set
 #define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
-
-
-
-// // CAN IDS I care about
-// typedef enum FSM_CANIDs {
-//   PEDALS = 0x67,  // Example ID, need to change later
-//   GEARS = 0x67,
-//   REGEN_BUTTON = 0x67,
-//   REGEN_ENABLED_BUTTON = 0x67,
-//   CRUISE_CONTROL_BUTTON = 0x67,
-//   BPS_OK_TO_REGEN = 0x67,
-//   BPS_TRIP = 0x67,
-//   IGNITION_STATE = 0x67
-//   // Add more as needed
-// } FSM_CANIDs_t;
-
-// #define NUM_FSM_CANFilters 6
-
-// // Lookup but i need to iterate through them, could make it a LTable but eh
-// uint16_t FSM_CANFilterList[NUM_FSM_CANFilters] = {
-//     PEDALS,   GEARS,         REGEN_BUTTON, CRUISE_CONTROL_BUTTON,
-//     BPS_TRIP, IGNITION_STATE};
 
 
 #endif

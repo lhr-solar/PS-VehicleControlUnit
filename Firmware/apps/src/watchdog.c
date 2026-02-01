@@ -1,7 +1,10 @@
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include "tasks.h"
-#include <SendTritium.h>
+#include <DriveMotor.h>
+#include "faults.h"
+#include <assert.h>
+#include "timers.h"   // for FreeRTOS software timers
 
 #define MAX_CAN_WD_TIMERS 20
 
@@ -10,6 +13,7 @@ static StaticTimer_t xCANWdTimerBuffers[MAX_CAN_WD_TIMERS];
 static TimerHandle_t xCANWdTimers[MAX_CAN_WD_TIMERS];
 static int wd_timer_count = 0;
 
+void generic_can_wd_callback(TimerHandle_t xTimer);
 
 void watchdog_init(void) {
     xWdEventGroup = xEventGroupCreateStatic(&xWdEventGroupBuffer);

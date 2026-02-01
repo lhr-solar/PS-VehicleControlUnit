@@ -1,7 +1,8 @@
 //Only need the size to be 1 for latest, but may want to increase this for logging purposes
 //Makefile needs to point to this for FSM entries
 
-//CAR CAN
+//Motor CAN Receive
+
 CAN_RECV_ENTRY(MOTOR_IDENTITY, 1, true)
 CAN_RECV_ENTRY(MOTOR_ERROR_STATUS, 1, true)
 CAN_RECV_ENTRY(BUS_STATUS, 1, true)

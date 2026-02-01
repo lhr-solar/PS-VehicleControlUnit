@@ -17,21 +17,21 @@
  * including SendTritium.h, debug info will be printed via UART.
  */
 
-#include "SendTritium.h"
-
-#include "CANConfig.h"
-#include "CANbus.h"
-#include "Dashboard.h"
-#include "DebugIO.h"
-#include "Lights.h"
-#include "Pedals.h"
-#include "ReadTritium.h"
-#include "SendCarCAN.h"
-#include "StatusLeds.h"
-#include "Tasks.h"
-#include "UpdateDisplay.h"
-#include "os_cfg_app.h"
-#include "RecieveMotor.h"
+#include "DriveMotor.h"
+#include <stdio.h>
+// #include "CANConfig.h"
+// #include "CANbus.h"
+// #include "Dashboard.h"
+// #include "DebugIO.h"
+// #include "Lights.h"
+// #include "Pedals.h"
+// #include "ReadTritium.h"
+// #include "SendCarCAN.h"
+// #include "StatusLeds.h"
+// #include "Tasks.h"
+// #include "UpdateDisplay.h"
+// #include "os_cfg_app.h"
+#include "ReceiveMotor.h"
 
 // #define USING_PROFINITY
 
@@ -39,10 +39,8 @@
 
 // #define NEXT_STATES_LENGTH 128
 
-#define BRAKE_THRESH 42
-#define BRAKE_THRESH_HYST 30
-#define REGEN_STEP 0.02f
-#define CAN_MSG_BUFFER_SIZE 1
+// #define REGEN_STEP 0.02f
+// #define CAN_MSG_BUFFER_SIZE 1
 
 // CURRENT FSM STATE
 TritiumState_t currentState;
@@ -52,8 +50,6 @@ typedef struct FSMCANDATA {  // May want to add more later..
   uint64_t timestamp;
 } FSMCANDATA_t;
 
-static float brakePedalPercent = 0.0f;
-static float accelPedalPercent = 0.0f;
 static float busCurrentSetPoint =
     1.0f;  // This gets manipulated if the battery not ok
 
@@ -82,13 +78,13 @@ CANDATA_t motorSafeCmd = {.ID = MOTOR_CONTROLLER_SAFE, .idx = 0, .data = {0}};
 // NOTE: Instead of a "velocityObserved" variable, we can just use
 // Motor_Velocity_Get() from ReadTritium when doing cruise logic
 
-// Getter functions for local variables in SendTritium.c
-GETTER(uint8_t, brakePedalPercent)
-GETTER(uint8_t, accelPedalPercent)
-GETTER(gear_t, gear)
-GETTER(float, currentSetpoint)
-GETTER(float, velocitySetpoint)
-GETTER(bool, isBrakeOn)
+// // Getter functions for local variables in SendTritium.c
+// GETTER(uint8_t, brakePedalPercent)
+// GETTER(uint8_t, accelPedalPercent)
+// GETTER(gear_t, gear)
+// GETTER(float, currentSetpoint)
+// GETTER(float, velocitySetpoint)
+// GETTER(bool, isBrakeOn)
 
 // Create the FSM data strcuture, make all the possible states, to do this
 // prolly use
@@ -166,7 +162,7 @@ void initFSM() {
         continue;
       }
 
-      if (j >= BRAKING_BIT) {
+      if (j & BRAKING_BIT) {
         // Braking, -> check regen if ok do that, if not neutral
         if ((j & REGEN_ENABLED_BIT) &&
             (j & READY_TO_REGEN_BIT)) {  // Checking if regen enabled AND ready
@@ -177,8 +173,7 @@ void initFSM() {
         }
       } else if ((j & REGEN_ENABLED_BIT) && (j & READY_TO_REGEN_BIT) &&
                  (j & REGEN_BUTTON_BIT) &&
-                 !(j &
-                   CRUISE_CONTROL_BUTTON_BIT)) {  // Checking if regen enabled
+                 !(j & CRUISE_CONTROL_BUTTON_BIT)) {  // Checking if regen enabled
                                                   // AND regen button AND ready
                                                   // to regen AND NOT cruising
         // Regen
@@ -255,8 +250,8 @@ bool readyToRoll() {  // Car can escape not ready state, this is all of our
                       // stats will have associated flags
 
   // Check all of our status bits here for other random faults
-  return accelPedalPercent < ACCEL_PEDAL_THRESHOLD && 1 &&
-         1;  // Add other checks here
+
+  return getCarSpeed() < 1.0f && ignitionState == MOTOR_EN; //must be stationary to exit not ready
 }
 
 // OS_ERR checkForAllFaults() {
@@ -326,7 +321,7 @@ void handleFSMCruiseControlState() {
 void handleFSMDisabledState() {
   handleFSMNeutralState();  // Just stop motor and current and throw/handle
                             // faults
-  OS_FLAGS flags = MotorStatus_GetBits();  // Do something with this later...
+  // OS_FLAGS flags = MotorStatus_GetBits();  // Do something with this later...
   return;
 }
 
@@ -346,6 +341,16 @@ void handleFSMInitState() {
 
   can_start(hcan1);
   can_start(hcan2);
+
+  //initialize timers here, could make a timer/wd object in the header and just pass that in as well, might do when i have time
+  CAN_MSG_Watchdog_Create("PedalWD", FSM_PEDALS, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("GearsWD", FSM_GEARS, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("RegenBtnWD", FSM_REGEN_BUTTON, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("RegenEnWD", FSM_REGEN_ENABLED, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("CruiseWD", FSM_CRUISE_CONTROL, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("BPSOkRegenWD", FSM_BPS_OK_TO_REGEN, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("BPSTripWD", FSM_BPS_TRIP, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("IgnitionWD", FSM_IGNITION_STATE, 100); //100ms timeout
 
   initFSM();
 
@@ -436,12 +441,21 @@ static uint8_t getSpeedDependentPower(float speed_mph) {
   return cap;
 }
 
+void handleWatchdogFSMFault(){
+    Event_bits_t bits = Faults_GetCurrentFaults();
+    for(int i = 0; i < FSM_SIGNAL_COUNT; i++){
+        if(bits & (1 << i)){
+            printf("Watchdog timeout for FSM Signal %d (CAN Message %x). \n", i, fsm_signal_to_can_id[i]);
+        }
+    }
+}
+
 // Task (main loop)
 
 /**
  * @brief Follows the FSM to update the velocity of the car
  */
-void Task_SendTritium(void *p_arg) {
+void Task_SendMotor(void *p_arg) {
 
   // By default assume we are below the motor swoc threshold at startup
   // MotorStatus_ModifyBits(MOTOR_SWOC_THRESHOLD, true, false);
@@ -491,3 +505,5 @@ void Task_SendTritium(void *p_arg) {
 //Add the RTOS tasks in the main, add the motor can support (Also add to the can 1 recv), make the task handler fr, check if it compiles, and add SWOC + other faults
 
 //Get motor bits from the tritium status, then also extract things like speed / motor params for state logic
+
+//Add other status signals for reading the car can, figure out logic for ready to roll, make sure faults are thrown maybe, do rest of list...

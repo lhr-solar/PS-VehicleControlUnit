@@ -17,11 +17,86 @@
 #define Divider_Numerator   2490
 #define Divider_Denominator (2490 + 100000)
 
-// Public globals
-extern int Motor_Voltage;
-extern int Battery_Voltage;
+#define ADC_Queue_Length 4
+#define ADC_Sampling_Time 20000 // 200 us
 
-void ADC_Sense_Init(void);
-void Read_ADC(void);
+/**
+ * @brief ADC voltage measurement results
+ *
+ * Contains scaled motor and battery voltages in millivolts.
+ */
+typedef struct {
+    int32_t Motor_Voltage;
+    int32_t Battery_Voltage;
+} ADC_Sense_Result;
+
+/**
+ * @brief ADC sense function return status
+ */
+typedef enum {
+    ADC_SENSE_OK = 0,
+    ADC_SENSE_ERR
+} ADC_Sense_Status;
+
+/**
+ * @brief ADC sense error flags (bitmask)
+ *
+ * Multiple error flags may be set simultaneously.
+ */
+typedef enum {
+    ADC_SENSE_ERR_NONE         = 0,
+    ADC_SENSE_ERR_NOT_INIT     = (1u << 0),
+    ADC_SENSE_ERR_MOTOR_STALE  = (1u << 1),
+    ADC_SENSE_ERR_BATT_STALE   = (1u << 2),
+    ADC_SENSE_ERR_ADC1_INIT    = (1u << 3),
+    ADC_SENSE_ERR_ADC2_INIT    = (1u << 4),
+    ADC_SENSE_ERR_BAD_PARAM    = (1u << 5), 
+} ADC_Sense_ErrorMask;
+
+/**
+ * @brief ADC update flags indicating which channels were updated
+ */
+typedef enum {
+    ADC_SENSE_UPD_NONE    = 0,
+    ADC_SENSE_UPD_MOTOR   = (1u << 0),
+    ADC_SENSE_UPD_BATTERY = (1u << 1),
+} ADC_Sense_UpdateMask;
+
+/**
+ * @brief   Get the current ADC error mask
+ *
+ * @return  Bitmask of ADC_SENSE_ERR_* flags
+ */
+uint32_t ADC_Sense_GetErrorMask(void);
+
+/**
+ * @brief   Clear selected ADC error flags
+ *
+ * @param   Mask Bitmask of error flags to clear
+ */
+void     ADC_Sense_ClearErrors(uint32_t Mask);
+
+/**
+ * @brief   Initialize ADC peripherals and internal queues
+ *
+ * Creates ADC queues and initializes both ADC instances.
+ *
+ * @return  ADC_SENSE_OK if successful, ADC_SENSE_ERR otherwise
+ */
+ADC_Sense_Status ADC_Sense_Init(void);
+
+/**
+ * @brief   Read ADC values and compute scaled voltages
+ *
+ * Triggers ADC conversions, waits for samples, and converts raw ADC
+ * counts into millivolt values using fixed-point math.
+ *
+ * @param   Timeout      Maximum time to wait for ADC samples (ticks)
+ * @param   Result       Pointer to result structure for voltages
+ * @param   Updated_Mask Optional pointer to update mask output
+ * @return  ADC_SENSE_OK if both ADC channels updated successfully,
+ *          ADC_SENSE_ERR otherwise
+ */
+ADC_Sense_Status Read_ADC(uint32_t Timeout,  ADC_Sense_Result *Result, uint32_t *Updated_Mask);
 
 #endif

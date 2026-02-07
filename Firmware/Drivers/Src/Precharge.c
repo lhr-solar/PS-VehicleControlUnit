@@ -3,18 +3,11 @@
 #include "ADC_Sense.h"
 #include "Precharge.h"
 
-static int32_t Precharge_Threshold = PRECHARGE_GOOD_THRESHOLD;
-
-typedef enum {
-    PRECHARGE_STATE_IDLE = 0,
-    PRECHARGE_STATE_RUNNING,
-    PRECHARGE_STATE_DONE,
-    PRECHARGE_STATE_FAULT,
-} Precharge_State;
+static uint32_t Precharge_Threshold = PRECHARGE_GOOD_THRESHOLD;
 
 static Precharge_State State = PRECHARGE_STATE_IDLE;
 static TickType_t Start_Tick = 0;
-static Precharge_Status Fault_Reason = PRECHARGE_ERR_TIMEOUT;
+static Precharge_Status Fault_Reason = PRECHARGE_OK;
 
 Precharge_Status PrechargeStart() // Start precharge sequence and return status
 {
@@ -40,7 +33,7 @@ Precharge_Status PrechargeStart() // Start precharge sequence and return status
     ADC_Sense_Result ADC_Result = {0};
 
     uint32_t updated = 0;
-    if (Read_ADC(pdMS_TO_TICKS(20), &ADC_Result, &updated) != ADC_SENSE_OK) {
+    if (Read_ADC(PRECHARGE_ADC_TIMEOUT_MS, &ADC_Result, &updated) != ADC_SENSE_OK) {
         // TODO: open contactors / safe state
 
         State = PRECHARGE_STATE_FAULT;

@@ -10,12 +10,13 @@ static uint32_t Error_Mask = ADC_SENSE_ERR_NONE;
 
 ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
 {   
-    Motor_ADC_Queue   = xQueueCreate(ADC_Queue_Length, sizeof(uint16_t));
-    Battery_ADC_Queue = xQueueCreate(ADC_Queue_Length, sizeof(uint16_t));
+    Motor_ADC_Queue   = xQueueCreate(ADC_QUEUE_LENGTH, sizeof(uint16_t));
+    Battery_ADC_Queue = xQueueCreate(ADC_QUEUE_LENGTH, sizeof(uint16_t));
+
+    Is_Initialized = 0;
 
     if (Motor_ADC_Queue == NULL || Battery_ADC_Queue == NULL) 
     {
-        Is_Initialized = 0;
         Error_Mask |= ADC_SENSE_ERR_NOT_INIT;
         return ADC_SENSE_ERR;
     }
@@ -23,14 +24,12 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
     if (adc_init(&init, hadc1) != ADC_OK) 
     {
         Error_Mask |= ADC_SENSE_ERR_ADC1_INIT;
-        Is_Initialized = 0;
         return ADC_SENSE_ERR;
     }
 
     if (adc_init(&init, hadc2) != ADC_OK) 
     {
         Error_Mask |= ADC_SENSE_ERR_ADC2_INIT;
-        Is_Initialized = 0;
         return ADC_SENSE_ERR;
     }
 
@@ -48,7 +47,7 @@ void ADC_Sense_ClearErrors(uint32_t Mask)
     Error_Mask &= ~Mask;
 }
 
-ADC_Sense_Status Read_ADC(uint32_t Timeout,  ADC_Sense_Result *Result, uint32_t *Updated_Mask) // Read ADC values and calculate voltages
+ADC_Sense_Status Read_ADC(uint32_t Timeout_MS,  ADC_Sense_Result *Result, uint32_t *Updated_Mask) // Read ADC values and calculate voltages
 {
     if (!Is_Initialized) 
     {
@@ -59,16 +58,17 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout,  ADC_Sense_Result *Result, uint32_t 
 
     if (Result == NULL) 
     {
-        Error_Mask |= ADC_SENSE_ERR_BAD_PARAM; // or add a separate BAD_PARAM flag
+        Error_Mask |= ADC_SENSE_ERR_BAD_PARAM;
         return ADC_SENSE_ERR;
     }
 
     uint16_t Motor_ADC = 0;
     uint16_t Battery_ADC = 0;
     uint32_t Updated = ADC_SENSE_UPD_NONE;
+    TickType_t Timeout_Ticks = pdMS_TO_TICKS(Timeout_MS);
 
-    adc_read(ADC1, ADC_Sampling_Time, hadc1, &Motor_ADC_Queue);
-    adc_read(ADC2, ADC_Sampling_Time, hadc2, &Battery_ADC_Queue);
+    adc_read(ADC1, ADC_SAMPLING_TIME, hadc1, &Motor_ADC_Queue);
+    adc_read(ADC2, ADC_SAMPLING_TIME, hadc2, &Battery_ADC_Queue);
 
     if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout) == pdPASS)
     {
@@ -83,7 +83,7 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout,  ADC_Sense_Result *Result, uint32_t 
         Error_Mask |= ADC_SENSE_ERR_MOTOR_STALE;
     }
 
-    if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout) == pdPASS)
+    if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout_Ticks) == pdPASS)
     {
         int64_t Numerator = (int64_t)Battery_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
         int64_t Denominator = (int64_t)ADC_Max * Gain_Numerator * Divider_Numerator;

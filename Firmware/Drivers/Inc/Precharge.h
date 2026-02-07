@@ -14,13 +14,26 @@
 #define PRECHARGE_GOOD_THRESHOLD 900
 #define PRECHARGE_TRANSITION_THRESHOLD 800
 
+#ifndef PRECHARGE_TIMEOUT_MS
+#define PRECHARGE_TIMEOUT_MS 5000
+#endif
+
+#define PRECHARGE_ADC_TIMEOUT_MS 20  // ADC read timeout for precharge monitoring
+
+typedef enum {
+    PRECHARGE_STATE_IDLE = 0,
+    PRECHARGE_STATE_RUNNING,    // Precharge sequence is active, waiting for completion or fault
+    PRECHARGE_STATE_DONE,       // Precharge sequence completed successfully, main contactor can be closed
+    PRECHARGE_STATE_FAULT,      // Precharge sequence failed, contactors should be open and fault reason can be queried via PrechargeStart() return value
+} Precharge_State;
+
 typedef enum {
     PRECHARGE_IN_PROGRESS = 0,
     PRECHARGE_OK,
-    PRECHARGE_ERR_ADC,
-    PRECHARGE_ERR_OVERVOLTAGE,
-    PRECHARGE_ERR_UNDERVOLTAGE,
-    PRECHARGE_ERR_TIMEOUT,
+    PRECHARGE_ERR_ADC,              // Returns when Read_ADC() fails
+    PRECHARGE_ERR_OVERVOLTAGE,      // Returns when battery voltage exceeds OVERVOLTAGE_THRESHOLD_MV
+    PRECHARGE_ERR_UNDERVOLTAGE,     // Returns when battery voltage is below UNDERVOLTAGE_THRESHOLD_MV
+    PRECHARGE_ERR_TIMEOUT,          // Returns when precharge sequence exceeds PRECHARGE_TIMEOUT_MS
 } Precharge_Status;
 
 /**
@@ -42,9 +55,5 @@ typedef enum {
  *          PRECHARGE_ERR_* on fault
  */
 Precharge_Status PrechargeStart(void);
-
-#ifndef PRECHARGE_TIMEOUT_MS
-#define PRECHARGE_TIMEOUT_MS 5000
-#endif
 
 #endif

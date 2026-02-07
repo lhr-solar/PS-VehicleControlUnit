@@ -17,8 +17,8 @@
 #define Divider_Numerator   2490
 #define Divider_Denominator (2490 + 100000)
 
-#define ADC_Queue_Length 4
-#define ADC_Sampling_Time 20000 // 200 us
+#define ADC_QUEUE_LENGTH 4
+#define ADC_SAMPLING_TIME 20000 // 200 us
 
 /**
  * @brief ADC voltage measurement results
@@ -26,8 +26,8 @@
  * Contains scaled motor and battery voltages in millivolts.
  */
 typedef struct {
-    int32_t Motor_Voltage;
-    int32_t Battery_Voltage;
+    uint32_t Motor_Voltage;
+    uint32_t Battery_Voltage;
 } ADC_Sense_Result;
 
 /**
@@ -45,12 +45,12 @@ typedef enum {
  */
 typedef enum {
     ADC_SENSE_ERR_NONE         = 0,
-    ADC_SENSE_ERR_NOT_INIT     = (1u << 0),
-    ADC_SENSE_ERR_MOTOR_STALE  = (1u << 1),
-    ADC_SENSE_ERR_BATT_STALE   = (1u << 2),
-    ADC_SENSE_ERR_ADC1_INIT    = (1u << 3),
-    ADC_SENSE_ERR_ADC2_INIT    = (1u << 4),
-    ADC_SENSE_ERR_BAD_PARAM    = (1u << 5), 
+    ADC_SENSE_ERR_NOT_INIT     = (1u << 0), // Returns when queues are not intialized properly
+    ADC_SENSE_ERR_MOTOR_STALE  = (1u << 1), // Returns when motor ADC stops updating
+    ADC_SENSE_ERR_BATT_STALE   = (1u << 2), // Returns when battery ADC stops updating
+    ADC_SENSE_ERR_ADC1_INIT    = (1u << 3), // Returns when ADC1 adc_init fails
+    ADC_SENSE_ERR_ADC2_INIT    = (1u << 4), // Returns when ADC2 adc_init fails
+    ADC_SENSE_ERR_BAD_PARAM    = (1u << 5), // Returns when READ_ADC is called with a NULL Result pointer
 } ADC_Sense_ErrorMask;
 
 /**
@@ -91,12 +91,12 @@ ADC_Sense_Status ADC_Sense_Init(void);
  * Triggers ADC conversions, waits for samples, and converts raw ADC
  * counts into millivolt values using fixed-point math.
  *
- * @param   Timeout      Maximum time to wait for ADC samples (ticks)
+ * @param   Timeout_MS      Maximum time to wait for ADC samples (ticks)
  * @param   Result       Pointer to result structure for voltages
  * @param   Updated_Mask Optional pointer to update mask output
  * @return  ADC_SENSE_OK if both ADC channels updated successfully,
  *          ADC_SENSE_ERR otherwise
  */
-ADC_Sense_Status Read_ADC(uint32_t Timeout,  ADC_Sense_Result *Result, uint32_t *Updated_Mask);
+ADC_Sense_Status Read_ADC(uint32_t Timeout_MS,  ADC_Sense_Result *Result, uint32_t *Updated_Mask);
 
 #endif

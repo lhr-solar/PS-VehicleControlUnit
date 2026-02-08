@@ -7,6 +7,7 @@
 void Task_CANWatchdog(void *arg);
 void Task_FaultHandler(void *arg);
 void Task_BroadcastMotorStatus(void *p_arg);
+void watchdog_init(void);
 
 //attach this to fsm... and figure out all the defines/sizes
 //Make the main FSM task, make watch dogs, then have a suspended task actiavted via event for faults, and fix all the OS errors

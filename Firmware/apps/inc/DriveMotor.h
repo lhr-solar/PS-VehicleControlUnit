@@ -71,6 +71,8 @@ extern gear_t gear;
 extern bool isBrakeOn; // Used for updating display & brakelight
 #endif
 
+//WARNING: IF YOU CHANGE THIS THE PYTHON SCRIPT MUST CHANGE AS WELL
+// ----------------------------------------------------------------
 typedef enum BitfieldBitIndex {
     BIT_IDX_NEUTRAL = 0,               // Index for NEUTRAL_BIT
     BIT_IDX_FORWARD,                    // Index for FORWARD_BIT
@@ -80,7 +82,7 @@ typedef enum BitfieldBitIndex {
     BIT_IDX_REGEN_BUTTON,               // Index for REGEN_BUTTON_BIT
     BIT_IDX_READY_TO_REGEN,             // Index for READY_TO_REGEN_BIT
     BIT_IDX_REGEN_ENABLED,              // Index for REGEN_ENABLED_BIT
-    BIT_IDX_BRAKING,                    // Index for BRAKING_BIT
+    // BIT_IDX_BRAKING,                    // Index for BRAKING_BIT
     BITFIELD_INPUT_COUNT                // Total number of bits
 } BitfieldBitIndex_t;
 
@@ -94,10 +96,11 @@ typedef enum BitfieldInputs {
   REGEN_BUTTON_BIT = 1 << BIT_IDX_REGEN_BUTTON,           // If the regen button is pressed
   READY_TO_REGEN_BIT = 1 << BIT_IDX_READY_TO_REGEN,         // If we are going slow enough to regen
   REGEN_ENABLED_BIT = 1 << BIT_IDX_REGEN_ENABLED,          // If regen is enabled
-  BRAKING_BIT = 1 << BIT_IDX_BRAKING,                // If the brake is pressed
+  // BRAKING_BIT = 1 << BIT_IDX_BRAKING,                // If the brake is pressed
   // FAULTED_BIT           = 0x80  // If the car is faulted
 } BitfieldInputs_t;
 
+// -------------------------------------------------------------------------------
 #define NEXT_STATES_LENGTH (1 << BITFIELD_INPUT_COUNT) // 2^number of bits
 #define ALL_STATUS_BITS ((1 << BITFIELD_INPUT_COUNT) - 1) // all bits set
 
@@ -146,6 +149,40 @@ typedef struct {
 	uint8_t idx; 		
 	uint8_t data[8]; 
 } CANDATA_t;
+
+
+typedef enum FSMStates {
+  STATE_INIT = 0,
+  FORWARD_DRIVE = 1,
+  NEUTRAL = 2,
+  REVERSE_DRIVE = 3,
+  REGEN = 4,
+  CRUISE_CONTROL = 5,
+  DISABLED = 6,
+  CAR_NOT_READY = 7,
+  NUM_STATES = 8
+  // Add more states as needed
+} FSMStates;
+
+
+// OS_FLAG_GRP CarStatus_Flags;  // Bitfield for car status
+
+typedef struct TritiumState {
+  FSMStates stateName;
+  void (*stateHandler)(void);
+  int NextStates[NEXT_STATES_LENGTH];  // Default is neutral
+} TritiumState_t;
+
+TritiumState_t FSM[NUM_STATES] = {
+    {STATE_INIT, &handleFSMInitState, {0}},
+    {CAR_NOT_READY, &handleFSMNotReadyState, {0}},
+    {FORWARD_DRIVE, &handleFSMForwardDriveState, {0}},
+    {NEUTRAL, &handleFSMNeutralState, {0}},
+    {REVERSE_DRIVE, &handleFSMReverseDriveState, {0}},
+    {REGEN, &handleFSMRegenState, {0}},
+    {CRUISE_CONTROL, &handleFSMCruiseControlState, {0}},
+    {DISABLED, &handleFSMDisabledState, {0}},
+};
 
 
 

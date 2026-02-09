@@ -270,18 +270,18 @@ void initFSM() {
 
   //Rewriting the FSM generation logic... look at it from the point of each individual state
 
-  init -> notReady (forced)
-  not ready -> neu (forced)
-  NEUTRAL (based on the gear bit, but if rev -> fwd or fwd -> rev make sure speed goes below thresh)
-    -> Rev
-    -> Fwd
-  fwd (if regen conditions + button regen OR if cruise control button cruise control or neu if gear)
-    -> Regen
-    -> Neutral
-    -> Cruise control
-  regen -> fwd (once regen stopped)
-  cruis control -> fwd (once disabled)
-  rev -> neutral (gear shift to neu or fw)
+  // init -> notReady (forced)
+  // not ready -> neu (forced)
+  // NEUTRAL (based on the gear bit, but if rev -> fwd or fwd -> rev make sure speed goes below thresh)
+  //   -> Rev
+  //   -> Fwd
+  // fwd (if regen conditions + button regen OR if cruise control button cruise control or neu if gear)
+  //   -> Regen
+  //   -> Neutral
+  //   -> Cruise control
+  // regen -> fwd (once regen stopped)
+  // cruis control -> fwd (once disabled)
+  // rev -> neutral (gear shift to neu or fw)
 
   // SPECIFIC STATE SETUPS (none atm)
 }
@@ -365,6 +365,7 @@ void handleFSMNotReadyState() {
 }
 
 void handleFSMForwardDriveState() {
+  if()
   sendMotorDriveCommand(MAX_VELOCITY, accelPedalPercent);
   return;
 }
@@ -583,7 +584,7 @@ void Task_SendMotor(void *p_arg) {
 
 //Add other status signals for reading the car can, figure out logic for ready to roll, make sure faults are thrown maybe, do rest of list...
 
-//FSM logic fix.. thinking bitmask for each state, then big if-else, ignored bits should be baked in...
+//FSM logic fix.. thinking bitmask for each state, then big if-else, ignored bits should be baked in... done for now
 //switching from reverse to forward
 //figure out ignition states
 //Look into defining watchdogs for each msg + adding it to the faults bitfield

@@ -7,10 +7,6 @@
 #define MOTOR_ADC GPIO_PIN_12
 #define BATTERY_ADC GPIO_PIN_2
 
-#define PRECHARGE_STATUS_LED_PORT GPIOC
-#define PRECHARGE_TIMEOUT_LED GPIO_PIN_12
-#define PRECHARGE_COMPLETELED GPIO_PIN_8 //
-
 #define CAR_STATE_DRIVABLE_PORT GPIOC
 #define CAR_STATE_DRIVABLE_PIN GPIO_PIN_6
 
@@ -64,3 +60,11 @@
 
 #define MOTOR_FAULT_FAULT_PORT GPIOB
 #define MOTOR_FAULT_FAULT_PIN GPIO_PIN_4
+
+/**
+ * @brief object that holds pin num and port of a GPIO pin
+ */
+typedef struct {
+    GPIO_TypeDef* port; // e.g., GPIOA
+    uint16_t      pin;  // e.g., GPIO_PIN_3
+} GpioPin_t;

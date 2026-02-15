@@ -1,5 +1,6 @@
 #include "stm32xx_hal.h"
 #include "pinDefs.h"
+#include "StatusLEDs.h"
 
 typedef struct {
     GPIO_TypeDef *Port;
@@ -8,8 +9,6 @@ typedef struct {
 
 // LED list (uses the LED-related defines from pinDefs.h)
 static const Led_t leds[] = {
-    { PRECHARGE_STATUS_LED_PORT, PRECHARGE_TIMEOUT_LED },
-    { PRECHARGE_STATUS_LED_PORT, PRECHARGE_COMPLETELED },
     { CAR_STATE_DRIVABLE_PORT,   CAR_STATE_DRIVABLE_PIN },
     { CAR_STATE_DRIVING_PORT,    CAR_STATE_DRIVING_PIN },
     { CAR_STATE_CRUISE_PORT,     CAR_STATE_CRUISE_PIN },
@@ -95,8 +94,8 @@ int main(){
 
     while (1) {
         // Turn LEDs on one-by-one
-        for (size_t i = 0; i < led_count; ++i) {
-            HAL_GPIO_WritePin(leds[i].Port, leds[i].Pin, GPIO_PIN_SET);
+        for (size_t i = 0; i < numLEDs; ++i) {
+            Toggle_LED(DebugLEDs[i], ON);
             HAL_Delay(200);
         }
 
@@ -104,8 +103,8 @@ int main(){
         HAL_Delay(500);
 
         // Turn LEDs off one-by-one
-        for (size_t i = 0; i < led_count; ++i) {
-            HAL_GPIO_WritePin(leds[i].Port, leds[i].Pin, GPIO_PIN_RESET);
+        for (size_t i = 0; i < numLEDs; ++i) {
+             Toggle_LED(DebugLEDs[i], OFF);
             HAL_Delay(200);
         }
 

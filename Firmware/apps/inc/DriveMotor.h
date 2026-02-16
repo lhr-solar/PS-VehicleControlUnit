@@ -15,10 +15,13 @@
 // #include "Dashboard.h"
 // #include "Tasks.h"
 // #include <cstdint>
+#include "stm32f4xx.h"
+#include "CAN.h"
 #include "can_ids.h"
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include <stdint.h>
+#include "UpdateStatus.h"
 
 //#define SENDTRITIUM_PRINT_MES
 // #define CANBUS_MOTOR_SAFE_TO_RUN 1
@@ -50,7 +53,7 @@
 // #define ACCCEL_PEDAL_RESET_THRESHOLD 20
 #define BRAKE_THRESH 42
 #define BRAKE_THRESH_HYST 30
-
+#define MAX_VELOCITY 20000
 extern EventGroupHandle_t carStatusEventGroup; //bitfield for car status (thread-safe)
 
 // /**
@@ -132,8 +135,13 @@ void Task_SendMotor(void *p_arg);
 void disableFSM();
 void recoverFSM();
 
-//Fault handling
+//watchdog stuffs
+void recieved_CAN_message(FSM_Signal_t signal);
+void CAN_MSG_Watchdog_Create(const char* timerName,
+                            FSM_Signal_t signal,
+                            uint32_t timeout_ms);
 void handleWatchdogFSMFault();
+
 
 //CAN_DATA
 
@@ -227,6 +235,9 @@ MOT_EN
 
 #define ALL_CAN_MSGS ((1 << FSM_SIGNAL_COUNT) - 1) //all bits set
 #define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
+
+//IMPORTANT
+#define DRIVER_CONTROLS_BASE_ADDR 0x42069
 
 
 #endif

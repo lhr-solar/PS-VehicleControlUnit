@@ -19,6 +19,7 @@
 
 #include "DriveMotor.h"
 #include <stdio.h>
+#include "CAN.h"
 // #include "CANConfig.h"
 // #include "CANbus.h"
 // #include "Dashboard.h"
@@ -297,7 +298,7 @@ void sendMotorDriveCommand(float velocitySetpoint, float currentSetpoint) {
 
   // SendCarCAN_Put(
   //     driveCmd);  // Send the drive command to the car CAN bus for telemetry
-  mmotor_can_send(driveCmd.data, MOTOR_DRIVE); //can hardcode this for now
+  mmotor_can_send(driveCmd.data, DRIVER_CONTROLS_BASE_ADDR + 0x1); //can hardcode this for now
 }
 
 void sendMotorPowerCommand(float powerSetpoint) {
@@ -306,12 +307,20 @@ void sendMotorPowerCommand(float powerSetpoint) {
   memcpy(&powerCmd.data[0], &powerSetpoint,
          sizeof(float));  // Set power setpoint
 
-  motor_can_send(powerCmd.data, MOTOR_POWER); //can hardcode this for now change later
+  motor_can_send(powerCmd.data, DRIVER_CONTROLS_BASE_ADDR + 0x2); //can hardcode this for now change later
 }
 
 //MUST REINTERPRET and not just cast
 float getCarSpeed(){
-  uint64_t packedData = moco_full_status_arr[MOTOR_VELOCITY];
+  int idx = -1;
+  for(int i = 0; i < MOCO_FULL_STATUS_ARR_LEN; i++){
+    if(moco_full_status_arr[i] == MOTOR_VELOCITY){
+      idx = i;
+      break;
+    }
+  }
+
+  uint64_t packedData = moco_full_status_arr[idx];
   uint32_t rawSpeed = (uint32_t)(packedData >> 32);
   //convert to float
   float convertedSpeed;
@@ -326,7 +335,7 @@ bool readyToRoll() {  // Car can escape not ready state, this is all of our
 
   // Check all of our status bits here for other random faults
 
-  return getCarSpeed() < 1.0f && ignitionState == MOTOR_EN; //must be stationary to exit not ready
+  return getCarSpeed() < 1.0f && ignitionState == MOT_EN && accelPedalPercent == 0; //must be stationary to exit not ready
 }
 
 // OS_ERR checkForAllFaults() {
@@ -365,7 +374,10 @@ void handleFSMNotReadyState() {
 }
 
 void handleFSMForwardDriveState() {
-  if()
+  if(getCarSpeed() < -1){ //still going backward
+    //forcibly return to neutral
+    currentState = FSM[NEUTRAL];
+  }
   sendMotorDriveCommand(MAX_VELOCITY, accelPedalPercent);
   return;
 }
@@ -376,6 +388,10 @@ void handleFSMNeutralState() {
 }
 
 void handleFSMReverseDriveState() {
+  if(getCarSpeed() > 1){ //still going forward
+    //forcibly return to neutral
+    currentState = FSM[NEUTRAL];
+  }
   sendMotorDriveCommand(MAX_VELOCITY, -accelPedalPercent);
   return;
 }
@@ -435,8 +451,7 @@ void handleFSMInitState() {
 }
 
 
-uint8_t generateCustomBitfield(BitfieldInputs_t[] inputs) {
-  // Inputs are in order of most significant bit to least significant bit
+uint8_t generateCustomBitfield(BitfieldInputs_t inputs[]) {
   uint8_t bitfield = 0;
   for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++) {
     bitfield |= inputs[i];
@@ -517,15 +532,6 @@ static uint8_t getSpeedDependentPower(float speed_mph) {
   return cap;
 }
 
-void handleWatchdogFSMFault(){
-    Event_bits_t bits = Faults_GetCurrentFaults();
-    for(int i = 0; i < FSM_SIGNAL_COUNT; i++){
-        if(bits & (1 << i)){
-            printf("Watchdog timeout for FSM Signal %d (CAN Message %x). \n", i, fsm_signal_to_can_id[i]);
-        }
-    }
-}
-
 // Task (main loop)
 
 /**
@@ -585,9 +591,11 @@ void Task_SendMotor(void *p_arg) {
 //Add other status signals for reading the car can, figure out logic for ready to roll, make sure faults are thrown maybe, do rest of list...
 
 //FSM logic fix.. thinking bitmask for each state, then big if-else, ignored bits should be baked in... done for now
-//switching from reverse to forward
-//figure out ignition states
-//Look into defining watchdogs for each msg + adding it to the faults bitfield
-//make sure everything is clean and makes sense...
+//switching from reverse to forward done
+//figure out ignition states done
+//Look into defining watchdogs for each msg + adding it to the faults bitfield later, have logic to differentiate in the ISR for now so will keep that...
+//make sure everything is clean and makes sense... bro there's so so many random things that pmo, like its not clean at all, headers call each other + god knows if i need a chip to make it compile + it's all guesswork
+//switch to real CAN msgs...
+//make compile again
 //add mutexes for shared vars / threads
 //make compile...

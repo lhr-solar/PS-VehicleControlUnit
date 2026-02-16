@@ -31,7 +31,7 @@ typedef enum {
     FAULT_ID_HARDWARE_OVER_CURRENT,    // Hardware over current
     //ending motor flag group
 
-    FAULT_ID_WATCHDOG_FSM,             // existing
+    FAULT_ID_WATCHDOG_FSM,             
 
 
     NUM_FAULTS                         // Always last

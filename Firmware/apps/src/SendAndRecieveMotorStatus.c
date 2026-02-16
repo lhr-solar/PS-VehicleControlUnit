@@ -1,12 +1,10 @@
 //A little abstraction for readability
 #include <stdint.h>
-#include "CAN.h"
 #include "ReceiveMotor.h"
+#include "CAN.h"
 #include "FreeRTOS.h"
 #include <event_groups.h>
 #include "faults.h"
-// #include <stm32f4xx_hal_can.h>
-// #include <stm32l4xx_hal_can.h>
 
 #define UPDATE_RATE_MS 200 //ms
 #define MOTOR_BROADCAST_ID_1 0xABCD
@@ -92,6 +90,7 @@ void Task_BroadcastMotorStatus(void *p_arg) {
         getMotorStatus();
 
         //package/send over CAR CAN 
+        //This is wrong data sizing, need to use uint8_t will fix later...
         uint64_t motor_broadcast_data_packet_1[8] = {0};
         uint64_t motor_broadcast_data_packet_2[8] = {0};
         

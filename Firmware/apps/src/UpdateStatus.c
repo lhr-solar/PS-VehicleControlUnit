@@ -1,24 +1,4 @@
-#include "DriveMotor.h"
-#include <stdint.h>
-#include "stdbool.h"
-
-
-
-// CAN MSG VARIABLES
-static gear_t gear = DASH_NEU;
-static bool regenButtonPressed = false;
-static bool cruiseControlButton = false;
-static bool regenEnabled = false;
-static bool okToRegen = false;
-static bool bpsTripped = false;
-static float brakePedalPercent = 0.0f;
-static float accelPedalPercent = 0.0f;
-
-static ignitionState_t ignitionState = IGN_OFF;
-
-static float thresholdBrake = BRAKE_THRESH;
-static
-
+#include "UpdateStatus.h"
 //add a start up sequence bool + a fault recovery status bool later
 
 
@@ -48,15 +28,12 @@ void getControlsBitfield() {
     status |= NEUTRAL_BIT;
   }
 
+  // If braking, thresh for braking goes down (hysterisis)
   if (brakePedalPercent >= thresholdBrake) {
-    status |= BRAKING_BIT;
-  }
-
-  if (status & BRAKING_BIT) {  // If braking, thresh for braking goes down (hysterisis)
     thresholdBrake = BRAKE_THRESH_HYST;
   } else {
     thresholdBrake = BRAKE_THRESH;
-  }
+  }    
 
   //Buttons
     status |= regenButtonPressed ? REGEN_BUTTON_BIT : 0;
@@ -99,10 +76,9 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
           brakePedalPercent = dataBuf[0];
           accelPedalPercent = dataBuf[1];
 
-          brakePedalPercent = mapToPercent(brakePedalPercent, BRAKE_PEDAL_MIN,
-                                           BRAKE_PEDAL_MAX, 0, 100);
-          accelPedalPercent = mapToPercent(accelPedalPercent, ACCEL_PEDAL_MIN,
-                                           ACCEL_PEDAL_MAX, 0, 100);
+          brakePedalPercent = brakePedalPercent;
+          accelPedalPercent = accelPedalPercent;
+          
           break;
         case CAN_ID_GEARS:
           // Assume gear encoded in byte 0

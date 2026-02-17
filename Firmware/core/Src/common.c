@@ -1,6 +1,6 @@
 #include "Contactors.h"
 #include "StatusLEDs.h"
-#include "common.h"
+// #include "common.h"
 
 
 // for actual faults
@@ -9,12 +9,12 @@ void Fault_Handler() {
     // Kill Main Task
     
     // open every contactor, bypasses semaphore
-    for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+    // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
         // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-    }
+    // }
     
     // turns on fault led
-    LED_set(FAULT_LED, ON);
+    LED_set(MOTOR_FAULT, ON);
     
 }
 
@@ -24,16 +24,16 @@ void Error_Handler() {
   // Kill Main Task
 
   // open every contactor, bypasses semaphore
-  for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+  // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
     // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-  }
+  // }
     
   // turns on fault led, and blink DEBUG led to show the error was software
-  LED_set(FAULT_LED, ON);
+  LED_set(MOTOR_FAULT, ON);
   while (true) {
-    LED_set(DEBUG_LED, ON);
+    LED_set(CAR_HB, ON);
     HAL_Delay(1000);
-    LED_set(DEBUG_LED, OFF);
+    LED_set(CAR_HB, OFF);
     HAL_Delay(1000);
   }
 }

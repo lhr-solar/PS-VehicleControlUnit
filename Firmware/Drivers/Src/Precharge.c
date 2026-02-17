@@ -1,6 +1,3 @@
-#include <stdint.h>
-#include "pinDefs.h"
-#include "ADC_Sense.h"
 #include "Precharge.h"
 
 static uint32_t Precharge_Threshold = PRECHARGE_GOOD_THRESHOLD;

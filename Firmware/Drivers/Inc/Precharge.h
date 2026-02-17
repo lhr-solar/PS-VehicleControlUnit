@@ -1,7 +1,8 @@
 #ifndef PRECHARGE_H
 #define PRECHARGE_H
 
-#include <stdint.h>
+#include "common.h"
+#include "ADC_Sense.h"
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV   140000  // 140 V

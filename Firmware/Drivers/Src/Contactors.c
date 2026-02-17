@@ -4,17 +4,15 @@ static SemaphoreHandle_t contactorsMutex = NULL;
 static StaticSemaphore_t contactorsMutexBuffer;
 
 static const char* CONTACTOR_NAMES[NUM_CONTACTORS] = {
-    // "HV Pos Contactor",
-    // "HV Neg Contactor",
-    // "Array Contactor",
-    // "Array Pre Contactor"
+    "Motor Contactor",
+    "Motor Pre Contactor"
 };
 
 // array to hold the contactor structs
 static contactor_t contactors[NUM_CONTACTORS];
 
 // get
-bool contactor_get(contactor_num_t contactor_num) {
+bool contactor_get(contactor_num_t contactor_num    ) {
     
     // check that contactor exists
     if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS)) {
@@ -75,17 +73,18 @@ void contactor_init() {
     // INITIALIZE MUTEX
     contactorsMutex = xSemaphoreCreateMutexStatic(&contactorsMutexBuffer);
 
-    // initializing the pindef into contactor structs 
-    contactors[MOTOR_CONTACTOR] = (contactor_t){
-        .control_pin = { PRECHARGE_PRE_ENABLE_PORT, PRECHARGE_PRE_ENABLE_PIN },
-        .sense_pin  = { PRECHARGE_PRE_SENSE_PORT,  PRECHARGE_PRE_SENSE_PIN  }
-    };
 
-    contactors[MOTOR_PRE_CONTACTOR] = (contactor_t){
-        .control_pin = { MOTOR_CONTACTOR_ENABLE_PORT, MOTOR_CONTACTOR_ENABLE_PIN },
-        .sense_pin  = { MOTOR_CONTACTOR_SENSE_PORT,  MOTOR_CONTACTOR_SENSE_PIN  }
-    };
+    const GpioPin_t Motor_Contactor_Enable = {MOTOR_CONTACTOR_ENABLE_PORT, MOTOR_CONTACTOR_ENABLE_PIN};
+    const GpioPin_t Motor_Contactor_Sense = {MOTOR_CONTACTOR_SENSE_PORT, MOTOR_CONTACTOR_SENSE_PIN};
+    const GpioPin_t Precharge_Contactor_Enable = {PRECHARGE_PRE_ENABLE_PORT, PRECHARGE_PRE_ENABLE_PIN};
+    const GpioPin_t Precharge_Contactor_Sense = {PRECHARGE_PRE_SENSE_PORT, PRECHARGE_PRE_SENSE_PIN};
 
+    contactors[MOTOR_CONTACTOR].state= OPEN;
+    contactors[MOTOR_CONTACTOR].sense_pin= Motor_Contactor_Sense;
+    contactors[MOTOR_CONTACTOR].control_pin = Motor_Contactor_Enable;
+    contactors[MOTOR_PRE_CONTACTOR].state = OPEN;
+    contactors[MOTOR_PRE_CONTACTOR].sense_pin = Precharge_Contactor_Sense;
+    contactors[MOTOR_PRE_CONTACTOR].control_pin = Precharge_Contactor_Enable;
     
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 

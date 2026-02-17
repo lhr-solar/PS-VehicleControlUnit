@@ -1,8 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include "stm32xx_hal.h"
-
 #include <stdio.h>
 #include <stdbool.h>
 #include "pinDefs.h"

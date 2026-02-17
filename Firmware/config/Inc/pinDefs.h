@@ -1,3 +1,6 @@
+#ifndef PINDEFS_H
+#define PINDEFS_H
+
 #include "stm32xx_hal.h"
 
 #define HB_LED_PORT GPIOC
@@ -68,3 +71,5 @@ typedef struct {
     GPIO_TypeDef* port; // e.g., GPIOA
     uint16_t      pin;  // e.g., GPIO_PIN_3
 } GpioPin_t;
+
+#endif

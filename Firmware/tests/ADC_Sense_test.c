@@ -54,3 +54,4 @@ void ADC_Test_Task(void *arg)
         vTaskDelay(pdMS_TO_TICKS(ADC_TEST_PERIOD_MS));
     }
 }
+

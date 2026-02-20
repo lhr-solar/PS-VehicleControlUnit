@@ -3,7 +3,7 @@
 
 static uint16_t LEDbitmap;
 
-static GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_PRE_COMPLETE_PORT, PRECHARGE_PRE_COMPLETE_PIN}, 
+static const GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_PRE_COMPLETE_PORT, PRECHARGE_PRE_COMPLETE_PIN}, 
                                 {PRECHARGE_PRECHARGE_TO_PORT, PRECHARGE_PRECHARGE_TO_PIN},
                                 {PRECHARGE_PRE_SENSE_TO_PORT, PRECHARGE_PRE_SENSE_TO_PIN},
                                 {MOTOR_CONTACTOR_M_SENSE_TO_PORT, MOTOR_CONTACTOR_M_SENSE_TO_PIN},
@@ -63,31 +63,6 @@ void LEDs_init() {
         };
 
         HAL_GPIO_Init(DebugLEDs[i].port, &led_config);
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, GPIO_PIN_SET);
     }
-
-    /*Configure GPIO pin Output Level */
-    // HAL_GPIO_WritePin(LED_RCLK_PORT, LED_SRCLK_PIN|LED_RCLK_PIN|LED_SER_PIN, GPIO_PIN_RESET);
-
-    // GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-    // GPIO_InitStruct.Pin = LED_SRCLK_PIN;
-    // GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    // GPIO_InitStruct.Pull = GPIO_NOPULL;
-    // GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    // HAL_GPIO_Init(LED_SRCLK_PORT, &GPIO_InitStruct);
-
-    // GPIO_InitStruct.Pin = LED_RCLK_PIN;
-    // GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    // GPIO_InitStruct.Pull = GPIO_NOPULL;
-    // GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    // HAL_GPIO_Init(LED_RCLK_PORT, &GPIO_InitStruct);
-
-    // GPIO_InitStruct.Pin = LED_SER_PIN;
-    // GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    // GPIO_InitStruct.Pull = GPIO_NOPULL;
-    // GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    // HAL_GPIO_Init(LED_SER_PORT, &GPIO_InitStruct);
-
-    LEDs_clear(); 
 }

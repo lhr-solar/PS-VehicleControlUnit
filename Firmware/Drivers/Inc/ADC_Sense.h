@@ -35,7 +35,10 @@ typedef struct {
  */
 typedef enum {
     ADC_SENSE_OK = 0,
-    ADC_SENSE_ERR
+    ADC_SENSE_ERR,
+    ADC_SENSE_ERR_0,
+    ADC_SENSE_ERR_1,
+    ADC_SENSE_ERR_2,
 } ADC_Sense_Status;
 
 /**

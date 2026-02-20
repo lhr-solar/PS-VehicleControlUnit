@@ -99,4 +99,18 @@ ADC_Sense_Status ADC_Sense_Init(void);
  */
 ADC_Sense_Status Read_ADC(uint32_t Timeout_MS,  ADC_Sense_Result *Result, uint32_t *Updated_Mask);
 
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+void MX_ADC1_Init(void);
+
+/**
+  * @brief ADC2 Initialization Function
+  * @param None
+  * @retval None
+  */
+void MX_ADC2_Init(void);
+
 #endif

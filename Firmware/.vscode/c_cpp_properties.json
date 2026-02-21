@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Embedded-Sharepoint/middleware/FreeRTOS-Kernel/include",
+                "${workspaceFolder}/Embedded-Sharepoint/common/Inc",
+                "${workspaceFolder}/apps/headers"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang-17",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

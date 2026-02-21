@@ -100,17 +100,15 @@ void runFSM() {                         // a bitfield
 
 void init() {
   //set each handler individually here... will do later
+FSM[STATE_INIT].stateHandler = &handleFSMInitState;
+FSM[CAR_NOT_READY].stateHandler = &handleFSMNotReadyState;
+FSM[FORWARD_DRIVE].stateHandler = &handleFSMForwardDriveState;
+FSM[NEUTRAL].stateHandler = &handleFSMNeutralState;
+FSM[REVERSE_DRIVE].stateHandler = &handleFSMReverseDriveState;
+FSM[REGEN].stateHandler = &handleFSMRegenState;
+FSM[CRUISE_CONTROL].stateHandler = &handleFSMCruiseControlState;
+FSM[DISABLED].stateHandler = &handleFSMDisabledState;
 
-  TritiumState_t FSM[NUM_STATES] = {
-    {STATE_INIT, &handleFSMInitState, {0}},
-    {CAR_NOT_READY, &handleFSMNotReadyState, {0}},
-    {FORWARD_DRIVE, &handleFSMForwardDriveState, {0}},
-    {NEUTRAL, &handleFSMNeutralState, {0}},
-    {REVERSE_DRIVE, &handleFSMReverseDriveState, {0}},
-    {REGEN, &handleFSMRegenState, {0}},
-    {CRUISE_CONTROL, &handleFSMCruiseControlState, {0}},
-    {DISABLED, &handleFSMDisabledState, {0}},
-};
   assert(FSM_SIGNAL_COUNT != SEND_TRITIUM_IDS); //ensuring signal for every ID
   currentState = FSM[STATE_INIT];  // Start in init state
   currentState.stateHandler();     // Run init handler

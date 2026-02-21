@@ -1,3 +1,4 @@
+#include <stm32f4xx.h>
 #include <stdint.h>
 #include "stm32f4xx.h"
 #define MOCO_BASE_ADDR 0x69420

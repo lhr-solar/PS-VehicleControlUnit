@@ -5,6 +5,7 @@
 #include "FreeRTOS.h"
 #include <event_groups.h>
 #include "faults.h"
+// #include <stm32l4xx_hal_can.h>
 
 #define UPDATE_RATE_MS 200 //ms
 #define MOTOR_BROADCAST_ID_1 0xABCD

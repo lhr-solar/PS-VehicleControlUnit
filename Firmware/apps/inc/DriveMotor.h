@@ -15,6 +15,7 @@
 // #include "Dashboard.h"
 // #include "Tasks.h"
 // #include <cstdint>
+#include "CAN.h"
 #include "can_ids.h"
 #include "FreeRTOS.h"
 #include "event_groups.h"

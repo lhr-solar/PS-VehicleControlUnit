@@ -1,11 +1,11 @@
 //A little abstraction for readability
+#include <stm32f4xx.h>
 #include <stdint.h>
 #include "CAN.h"
 #include "ReceiveMotor.h"
 #include "FreeRTOS.h"
 #include <event_groups.h>
 #include "faults.h"
-// #include <stm32f4xx_hal_can.h>
 // #include <stm32l4xx_hal_can.h>
 
 #define UPDATE_RATE_MS 200 //ms

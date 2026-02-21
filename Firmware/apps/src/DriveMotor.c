@@ -17,7 +17,6 @@
  * including SendTritium.h, debug info will be printed via UART.
  */
 
-#include "DriveMotor.h"
 #include <stdio.h>
 // #include "CANConfig.h"
 // #include "CANbus.h"
@@ -32,6 +31,8 @@
 // #include "UpdateDisplay.h"
 // #include "os_cfg_app.h"
 #include "ReceiveMotor.h"
+#include "DriveMotor.h"
+
 #include "stdbool.h"
 
 // #define USING_PROFINITY
@@ -365,7 +366,11 @@ void handleFSMNotReadyState() {
 }
 
 void handleFSMForwardDriveState() {
-  if()
+  if(getCarSpeed() < -1.0f){ //dont go fwd in reverse
+    currentState = FSM[NEUTRAL];
+    return;
+  }
+
   sendMotorDriveCommand(MAX_VELOCITY, accelPedalPercent);
   return;
 }
@@ -376,6 +381,11 @@ void handleFSMNeutralState() {
 }
 
 void handleFSMReverseDriveState() {
+  if(getCarSpeed() > 11.0f){ //dont go rev while in fwd
+    currentState = FSM[NEUTRAL];
+    return;
+  }
+
   sendMotorDriveCommand(MAX_VELOCITY, -accelPedalPercent);
   return;
 }
@@ -585,9 +595,9 @@ void Task_SendMotor(void *p_arg) {
 //Add other status signals for reading the car can, figure out logic for ready to roll, make sure faults are thrown maybe, do rest of list...
 
 //FSM logic fix.. thinking bitmask for each state, then big if-else, ignored bits should be baked in... done for now
-//switching from reverse to forward
+//switching from reverse to forward done
 //figure out ignition states
-//Look into defining watchdogs for each msg + adding it to the faults bitfield
+//Look into defining watchdogs for each msg + adding it to the faults bitfield later alligator
 //make sure everything is clean and makes sense...
 //add mutexes for shared vars / threads
 //make compile...

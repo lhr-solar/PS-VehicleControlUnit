@@ -1,7 +1,5 @@
 //A little abstraction for readability
-#include <stm32f4xx.h>
-#include <stdint.h>
-#include "CAN.h"
+
 #include "ReceiveMotor.h"
 #include "FreeRTOS.h"
 #include <event_groups.h>

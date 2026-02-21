@@ -15,6 +15,7 @@
 // #include "Dashboard.h"
 // #include "Tasks.h"
 // #include <cstdint>
+#include <stm32f4xx.h>
 #include "CAN.h"
 #include "can_ids.h"
 #include "FreeRTOS.h"
@@ -83,7 +84,7 @@ typedef enum BitfieldBitIndex {
     BIT_IDX_REGEN_BUTTON,               // Index for REGEN_BUTTON_BIT
     BIT_IDX_READY_TO_REGEN,             // Index for READY_TO_REGEN_BIT
     BIT_IDX_REGEN_ENABLED,              // Index for REGEN_ENABLED_BIT
-    // BIT_IDX_BRAKING,                    // Index for BRAKING_BIT
+    BIT_IDX_BRAKING,                    // Index for BRAKING_BIT
     BITFIELD_INPUT_COUNT                // Total number of bits
 } BitfieldBitIndex_t;
 
@@ -97,7 +98,7 @@ typedef enum BitfieldInputs {
   REGEN_BUTTON_BIT = 1 << BIT_IDX_REGEN_BUTTON,           // If the regen button is pressed
   READY_TO_REGEN_BIT = 1 << BIT_IDX_READY_TO_REGEN,         // If we are going slow enough to regen
   REGEN_ENABLED_BIT = 1 << BIT_IDX_REGEN_ENABLED,          // If regen is enabled
-  // BRAKING_BIT = 1 << BIT_IDX_BRAKING,                // If the brake is pressed
+  BRAKING_BIT = 1 << BIT_IDX_BRAKING,                // If the brake is pressed
   // FAULTED_BIT           = 0x80  // If the car is faulted
 } BitfieldInputs_t;
 
@@ -132,6 +133,7 @@ void Task_UpdateControlStatus(void *p_arg);
 void Task_SendMotor(void *p_arg);
 void disableFSM();
 void recoverFSM();
+
 
 //Fault handling
 void handleWatchdogFSMFault();
@@ -173,17 +175,6 @@ typedef struct TritiumState {
   void (*stateHandler)(void);
   int NextStates[NEXT_STATES_LENGTH];  // Default is neutral
 } TritiumState_t;
-
-TritiumState_t FSM[NUM_STATES] = {
-    {STATE_INIT, &handleFSMInitState, {0}},
-    {CAR_NOT_READY, &handleFSMNotReadyState, {0}},
-    {FORWARD_DRIVE, &handleFSMForwardDriveState, {0}},
-    {NEUTRAL, &handleFSMNeutralState, {0}},
-    {REVERSE_DRIVE, &handleFSMReverseDriveState, {0}},
-    {REGEN, &handleFSMRegenState, {0}},
-    {CRUISE_CONTROL, &handleFSMCruiseControlState, {0}},
-    {DISABLED, &handleFSMDisabledState, {0}},
-};
 
 
 
@@ -228,6 +219,12 @@ MOT_EN
 
 #define ALL_CAN_MSGS ((1 << FSM_SIGNAL_COUNT) - 1) //all bits set
 #define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
+
+
+//extra vars for logic in updateStatus
+extern ignitionState_t ignitionState;
+extern bool isBraking;
+extern float accelPedalPercent = 0.0f;
 
 
 #endif

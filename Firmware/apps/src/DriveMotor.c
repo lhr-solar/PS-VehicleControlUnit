@@ -18,18 +18,7 @@
  */
 
 #include <stdio.h>
-// #include "CANConfig.h"
-// #include "CANbus.h"
-// #include "Dashboard.h"
-// #include "DebugIO.h"
-// #include "Lights.h"
-// #include "Pedals.h"
-// #include "ReadTritium.h"
-// #include "SendCarCAN.h"
-// #include "StatusLeds.h"
-// #include "Tasks.h"
-// #include "UpdateDisplay.h"
-// #include "os_cfg_app.h"
+
 #include "ReceiveMotor.h"
 #include "DriveMotor.h"
 
@@ -38,6 +27,7 @@
 // #define USING_PROFINITY
 
 #include <math.h>
+#include "FSM.h"
 
 // #define NEXT_STATES_LENGTH 128
 
@@ -62,6 +52,7 @@ static float busCurrentSetPoint =
 static bool isBrakeOn = false;  // Used for updating display & brakelight
 static uint8_t carStatus = 0;  // Bitfield for car status
 bool accelerator_reset = false;
+float cruiseControlPercent = -1;
 
 // Outputs
 // static float currentSetpoint = 0.0f;
@@ -71,11 +62,10 @@ int thresholdBrake = BRAKE_THRESH;
 // CAN messages
 // static FSMCANDATA_t CAR_MSGS[NUM_FSM_CANFilters] = {0};
 
-CANDATA_t driveCmd = {.ID = MOTOR_DRIVE, .idx = 0, .data = {0.0f, 0.0f}};
+CANDATA_t driveCmd = {.can_id = 0x1234, .idx = 0, .data = {0.0f, 0.0f}};
 
-CANDATA_t powerCmd = {.ID = MOTOR_POWER, .idx = 0, .data = {0.0f, 0.0f}};
+CANDATA_t powerCmd = {.can_id = 0x4321, .idx = 0, .data = {0.0f, 0.0f}};
 
-CANDATA_t motorSafeCmd = {.ID = MOTOR_CONTROLLER_SAFE, .idx = 0, .data = {0}};
 
 // NOTE: Instead of a "velocityObserved" variable, we can just use
 // Motor_Velocity_Get() from ReadTritium when doing cruise logic
@@ -109,183 +99,23 @@ void runFSM() {                         // a bitfield
 }
 
 void init() {
+  //set each handler individually here... will do later
+
+  TritiumState_t FSM[NUM_STATES] = {
+    {STATE_INIT, &handleFSMInitState, {0}},
+    {CAR_NOT_READY, &handleFSMNotReadyState, {0}},
+    {FORWARD_DRIVE, &handleFSMForwardDriveState, {0}},
+    {NEUTRAL, &handleFSMNeutralState, {0}},
+    {REVERSE_DRIVE, &handleFSMReverseDriveState, {0}},
+    {REGEN, &handleFSMRegenState, {0}},
+    {CRUISE_CONTROL, &handleFSMCruiseControlState, {0}},
+    {DISABLED, &handleFSMDisabledState, {0}},
+};
   assert(FSM_SIGNAL_COUNT != SEND_TRITIUM_IDS); //ensuring signal for every ID
   currentState = FSM[STATE_INIT];  // Start in init state
   currentState.stateHandler();     // Run init handler
 }
 
-void initFSM() {
-  // The states in the for loop may be overwritten later, they are just a base
-
-  // for (int i = 0; i < NUM_STATES; i++) {
-  //   for (int j = 0; j < NEXT_STATES_LENGTH - 1; j++) {
-  //     if (i == CAR_NOT_READY) {
-  //       FSM[i].NextStates[j] =
-  //           CAR_NOT_READY;  // If we are not ready, stay in this state
-  //       continue;
-  //     }
-
-  //     if (i == DISABLED) {
-  //       FSM[i].NextStates[j] =
-  //           DISABLED;  // If we are disabled, stay in this state
-  //       continue;
-  //     }
-
-  //     if (j & BRAKING_BIT) {
-  //       // Braking, -> check regen if ok do that, if not neutral
-  //       if ((j & REGEN_ENABLED_BIT) &&
-  //           (j & READY_TO_REGEN_BIT)) {  // Checking if regen enabled AND ready
-  //                                        // to regen
-  //         FSM[i].NextStates[j] = REGEN;  // Blended braking
-  //       } else {
-  //         FSM[i].NextStates[j] = FSM[i].stateName; //next is same as before
-  //       }
-  //     } else if ((j & FORWARD_BIT) && (j & REGEN_ENABLED_BIT) && (j & READY_TO_REGEN_BIT) &&
-  //                (j & REGEN_BUTTON_BIT) &&
-  //                !(j & CRUISE_CONTROL_BUTTON_BIT)) {  // Checking if forward AND regen enabled
-  //                                                 // AND regen button AND ready
-  //                                                 // to regen AND NOT cruising
-  //       // Regen
-  //       FSM[i].NextStates[j] = REGEN;
-  //     } else if ((j & CRUISE_CONTROL_BUTTON_BIT) && ((j & FORWARD_BIT) == 1) &&
-  //                (j & REGEN_ENABLED_BIT)) {  // If we tryna cruise control AND
-  //                                            // forward AND Regen ok
-  //       // Cruise control
-  //       FSM[i].NextStates[j] = CRUISE_CONTROL;
-  //     } else if ((j & 0x3) == FORWARD_BIT) {  // If we are tryna go forward
-  //       // Forward drive, check if we are going from rev to forward as well
-  //       if (i == REVERSE_DRIVE) {
-  //         // If we are going from rev to forward, go to neutral first
-  //         FSM[i].NextStates[j] = NEUTRAL;
-  //       } else {
-  //         FSM[i].NextStates[j] = FORWARD_DRIVE;
-  //       }
-  //     } else if ((j & 0x3) == REVERSE_BIT) {  // If we are tryna go reverse
-  //       // Reverse drive, check if we are going from forward to rev as well
-  //       if (i == FORWARD_DRIVE) {
-  //         // If we are going from forward to rev, go to neutral first
-  //         FSM[i].NextStates[j] = NEUTRAL;
-  //       } else {
-  //         FSM[i].NextStates[j] = REVERSE_DRIVE;
-  //       }
-  //     } else if ((j & 0x3) == NOT_READY_BITS) {
-  //       // Not ready
-  //       FSM[i].NextStates[j] = CAR_NOT_READY;
-  //     } else {
-  //       // Neutral
-  //       FSM[i].NextStates[j] = NEUTRAL;
-  //     }
-  //   }
-  // }
-
-    for (int i = 0; i < NUM_STATES; i++) {
-      for (int j = 0; j < NEXT_STATES_LENGTH; j++) {
-        FSM[i].NextStates[j] = NEUTRAL; //default... if we get something that's a weird combo I go to neutral
-
-        if (i == CAR_NOT_READY || i == STATE_INIT) {
-          FSM[i].NextStates[j] = CAR_NOT_READY;  // If we are not ready, stay in this state
-          continue;
-        }
-
-        if (i == DISABLED) {
-          FSM[i].NextStates[j] = DISABLED;  // If we are disabled, stay in this state
-          continue;
-        }
-
-        //this is all state specific now (using j) but must first get the bitifield for each state to get allowed/tracked inputs
-        //ORDER MATTERS WITHIN EACH STATE  
-        switch (i) {
-
-          case NEUTRAL: {
-            if ((j & FORWARD_BIT) && !(j & REVERSE_BIT)) {
-              FSM[i].NextStates[j] = FORWARD_DRIVE;
-            } 
-            else if ((j & REVERSE_BIT)) {
-              FSM[i].NextStates[j] = REVERSE_DRIVE;
-            }
-            break;
-          }
-
-          case FORWARD_DRIVE: {
-            //do gear switching first
-            if((j & REVERSE_BIT) || (j & NEUTRAL_BIT)){
-                FSM[i].NextStates[j] = NEUTRAL;
-            }
-            // Regen button
-            else if ((j & REGEN_ENABLED_BIT) &&
-                    (j & READY_TO_REGEN_BIT) &&
-                    (j & REGEN_BUTTON_BIT)) {
-              FSM[i].NextStates[j] = REGEN;
-            }
-            // Cruise control
-            else if ((j & CRUISE_CONTROL_BUTTON_BIT) &&
-                    (j & REGEN_ENABLED_BIT)) {
-              FSM[i].NextStates[j] = CRUISE_CONTROL;
-            }else{
-              FSM[i].NextStates[j] = FORWARD_DRIVE;
-            }
-            break;
-          }
-
-          case REVERSE_DRIVE: {
-            // Stay in reverse
-            if ((j & REVERSE_BIT) && !(j & FORWARD_BIT)) {
-              FSM[i].NextStates[j] = REVERSE_DRIVE;
-            }
-            // Not reverse -> neutral
-            else {
-              FSM[i].NextStates[j] = NEUTRAL;
-            }
-            break;
-          }
-
-          case REGEN: {
-            // Regen ends -> forward if still in forward gear
-            if((j & REGEN_BUTTON_BIT) && (j & READY_TO_REGEN_BIT) && (j & REGEN_ENABLED_BIT) && (j & FORWARD_BIT)){
-                FSM[i].NextStates[j] = REGEN;
-            }
-            else{
-              FSM[i].NextStates[j] = FORWARD_DRIVE;
-            }
-            break;
-          }
-
-          case CRUISE_CONTROL: {
-            // Cruise disabled -> back to forward
-            if (!(j & CRUISE_CONTROL_BUTTON_BIT)) {
-              FSM[i].NextStates[j] = FORWARD_DRIVE;
-            }else{
-              FSM[i].NextStates[j] = CRUISE_CONTROL;
-            }
-            break;
-          }
-
-          default:
-            FSM[i].NextStates[j] = NEUTRAL;
-            break;
-        }
-
-      }
-    }
-  
-
-  //Rewriting the FSM generation logic... look at it from the point of each individual state
-
-  // init -> notReady (forced)
-  // not ready -> neu (forced)
-  // NEUTRAL (based on the gear bit, but if rev -> fwd or fwd -> rev make sure speed goes below thresh)
-  //   -> Rev
-  //   -> Fwd
-  // fwd (if regen conditions + button regen OR if cruise control button cruise control or neu if gear)
-  //   -> Regen
-  //   -> Neutral
-  //   -> Cruise control
-  // regen -> fwd (once regen stopped)
-  // cruis control -> fwd (once disabled)
-  // rev -> neutral (gear shift to neu or fw)
-
-  // SPECIFIC STATE SETUPS (none atm)
-}
 
 //These are not packaging right atm (should do everything in floats)
 void sendMotorDriveCommand(float velocitySetpoint, float currentSetpoint) {
@@ -296,9 +126,7 @@ void sendMotorDriveCommand(float velocitySetpoint, float currentSetpoint) {
   memcpy(&driveCmd.data[4], &currentSetpoint,
          sizeof(float));  // Set current setpoint
 
-  // SendCarCAN_Put(
-  //     driveCmd);  // Send the drive command to the car CAN bus for telemetry
-  mmotor_can_send(driveCmd.data, MOTOR_DRIVE); //can hardcode this for now
+  motor_can_send(driveCmd.data, 0x6676); //can hardcode this for now
 }
 
 void sendMotorPowerCommand(float powerSetpoint) {
@@ -307,7 +135,7 @@ void sendMotorPowerCommand(float powerSetpoint) {
   memcpy(&powerCmd.data[0], &powerSetpoint,
          sizeof(float));  // Set power setpoint
 
-  motor_can_send(powerCmd.data, MOTOR_POWER); //can hardcode this for now change later
+  motor_can_send(powerCmd.data, 0x7676); //can hardcode this for now change later
 }
 
 //MUST REINTERPRET and not just cast
@@ -327,22 +155,8 @@ bool readyToRoll() {  // Car can escape not ready state, this is all of our
 
   // Check all of our status bits here for other random faults
 
-  return getCarSpeed() < 1.0f && ignitionState == MOTOR_EN; //must be stationary to exit not ready
+  return getCarSpeed() < 1.0f && ignitionState == MOT_EN && !isBraking && accelPedalPercent == 0.0f; //must be stationary to exit not ready
 }
-
-// OS_ERR checkForAllFaults() {
-//     //checking the bps trip and the ignition state for now
-//     OS_ERR err = OS_ERR_NONE;
-//     if(bpsTripped) {
-//         err = BPS_FAULT;
-//     }else if(ignitionState != MOTOR && currentState.stateName != STATE_NOT_READY) {
-//         err = IGNITION_FAULT;
-//     }
-    
-//   return err;
-// }
-
-// void checkWatchDogs() { OS_ERR err; }
 
 //It should just lock itself in this state until reset or recovery
 void disableFSM(){
@@ -366,12 +180,13 @@ void handleFSMNotReadyState() {
 }
 
 void handleFSMForwardDriveState() {
+  cruiseControlPercent = -1; //reset cruise control when we go back into drive
   if(getCarSpeed() < -1.0f){ //dont go fwd in reverse
     currentState = FSM[NEUTRAL];
     return;
   }
 
-  sendMotorDriveCommand(MAX_VELOCITY, accelPedalPercent);
+  sendMotorDriveCommand(20000, accelPedalPercent);
   return;
 }
 void handleFSMNeutralState() {
@@ -381,12 +196,12 @@ void handleFSMNeutralState() {
 }
 
 void handleFSMReverseDriveState() {
-  if(getCarSpeed() > 11.0f){ //dont go rev while in fwd
+  if(getCarSpeed() > 1.0f){ //dont go rev while in fwd
     currentState = FSM[NEUTRAL];
     return;
   }
 
-  sendMotorDriveCommand(MAX_VELOCITY, -accelPedalPercent);
+  sendMotorDriveCommand(-20000, accelPedalPercent);
   return;
 }
 
@@ -397,10 +212,11 @@ void handleFSMRegenState() {
 }
 
 void handleFSMCruiseControlState() {
-  float cruiseControlPercent =
-      accelPedalPercent;  // Set this to some actual velocity later, when button
-                          // pressed
-  sendMotorDriveCommand(MAX_VELOCITY, cruiseControlPercent);
+  if(cruiseControlPercent == -1){
+    cruiseControlPercent = getCarSpeed(); //set this to current speed when we first enter cruise control, will update later with buttons and stuff
+  }
+
+  sendMotorDriveCommand(20000, cruiseControlPercent);
   return;
 }
 
@@ -412,15 +228,6 @@ void handleFSMDisabledState() {
 }
 
 void handleFSMInitState() {
-  // Was going to init CANBUS but we shall see
-  // Relavant CAN messages to read
-  // carCANFilterList[0] = IO_STATE;
-  //...Finish this in a bit
-
-  // for (int i = 0; i < NUM_CARCAN_FILTERS; i++) {
-  //   CAR_MSGS[i].ID =
-  //       carCANFilterList[i];  // Shouldn't matter if all the IDs aren't filled
-  // }
 
   can_init(hcan1, NULL);
   can_init(hcan2, NULL);
@@ -445,7 +252,7 @@ void handleFSMInitState() {
 }
 
 
-uint8_t generateCustomBitfield(BitfieldInputs_t[] inputs) {
+uint8_t generateCustomBitfield(BitfieldInputs_t inputs[]) {
   // Inputs are in order of most significant bit to least significant bit
   uint8_t bitfield = 0;
   for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++) {
@@ -528,7 +335,8 @@ static uint8_t getSpeedDependentPower(float speed_mph) {
 }
 
 void handleWatchdogFSMFault(){
-    Event_bits_t bits = Faults_GetCurrentFaults();
+    EventBits_t bits = xEventGroupGetBits(xWdEventGroup);
+
     for(int i = 0; i < FSM_SIGNAL_COUNT; i++){
         if(bits & (1 << i)){
             printf("Watchdog timeout for FSM Signal %d (CAN Message %x). \n", i, fsm_signal_to_can_id[i]);

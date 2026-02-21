@@ -9,7 +9,7 @@ import os
 
 # === Config ===
 NUM_STATES = 8
-NEXT_STATES_LENGTH = 1 << 7  # 2^BITFIELD_INPUT_COUNT = 128
+NEXT_STATES_LENGTH = 1 << 8  # 2^BITFIELD_INPUT_COUNT = 128
 
 # Bitfield flags (must match DriveMotor.h order)
 NEUTRAL_BIT = 0x1
@@ -19,6 +19,7 @@ CRUISE_CONTROL_BUTTON_BIT = 0x8
 REGEN_BUTTON_BIT = 0x10
 READY_TO_REGEN_BIT = 0x20
 REGEN_ENABLED_BIT = 0x40
+BRAKING_BIT = 0x80
 
 # FSM states
 STATE_INIT = 0
@@ -79,7 +80,9 @@ def compute_next_state(i, j):
             return FORWARD_DRIVE
 
     elif i == CRUISE_CONTROL:
-        if not (j & CRUISE_CONTROL_BUTTON_BIT):
+        if (j & BRAKING_BIT):
+            return FORWARD_DRIVE
+        elif not (j & CRUISE_CONTROL_BUTTON_BIT):
             return FORWARD_DRIVE
         else:
             return CRUISE_CONTROL

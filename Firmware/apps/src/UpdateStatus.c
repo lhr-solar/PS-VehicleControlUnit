@@ -17,7 +17,7 @@ static float accelPedalPercent = 0.0f;
 static ignitionState_t ignitionState = IGN_OFF;
 
 static float thresholdBrake = BRAKE_THRESH;
-static
+static bool isBraking = false; //used for exiting cruise control/other things (could/should be in bitfield but will do later)
 
 //add a start up sequence bool + a fault recovery status bool later
 
@@ -48,11 +48,9 @@ void getControlsBitfield() {
     status |= NEUTRAL_BIT;
   }
 
-  if (brakePedalPercent >= thresholdBrake) {
-    status |= BRAKING_BIT;
-  }
-
-  if (status & BRAKING_BIT) {  // If braking, thresh for braking goes down (hysterisis)
+  isBraking = brakePedalPercent >= thresholdBrake;
+  
+  if (isBraking) {  // If braking, thresh for braking goes down (hysterisis)
     thresholdBrake = BRAKE_THRESH_HYST;
   } else {
     thresholdBrake = BRAKE_THRESH;

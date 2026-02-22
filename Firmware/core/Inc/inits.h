@@ -1,5 +1,6 @@
 #include "FreeRTOS.h"
 #include "stm32xx_hal.h"
+#include "printf.h"
 
 void SystemClock_Config(void);
 
@@ -20,3 +21,5 @@ void MX_USART3_UART_Init(void);
 void MX_UART_INIT(UART_HandleTypeDef *uartHandle);
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle);
+
+void Init_UART_Printf();

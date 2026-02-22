@@ -1,7 +1,6 @@
 #ifndef PRECHARGE_H
 #define PRECHARGE_H
 
-#include "common.h"
 #include "ADC_Sense.h"
 
 // Precharge thresholds

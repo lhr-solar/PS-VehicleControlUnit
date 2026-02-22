@@ -1,5 +1,6 @@
 #include "StatusLEDs.h"    
-
+#include <stdint.h>
+#include "pinDefs.h"
 
 static uint16_t LEDbitmap;
 
@@ -23,7 +24,7 @@ void Toggle_LED(Fault_Mapping_t LED, LED_state_t state) {
     HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
 }
 
-void LED_set(Fault_Mapping_t LED, bool state) {
+void LED_set(Fault_Mapping_t LED, LED_state_t state) {
 
     // make sure LED is in range
     if (LED<0 || LED>=num_LEDs) {

@@ -1,0 +1,64 @@
+#include "ADC_Sense.h"
+#include "ReadADCTask.h"
+#include "inits.h"
+#include "StatusLEDs.h"
+
+TimerHandle_t xWindowTimer;
+StaticTimer_t xTimerBuffer;
+
+StaticEventGroup_t xReadADCEventGroup;
+EventGroupHandle_t xReadADCEventGroup_handle;
+
+void Init_ReadADCTask() {
+    // Event Group init
+    xReadADCEventGroup_handle = xEventGroupCreateStatic( &xReadADCEventGroup );
+    configASSERT( xReadADCEventGroup_handle );         // check if handle is set 
+    // xEventGroupClearBits(xReadADCEventGroup_handle,    /* The event group being updated. */
+    //                      0xFF );                    /* The bits being cleared. */
+
+    // Inits ADC & printf
+    ADC_Sense_Status status = ADC_Sense_Init();
+    Init_UART_Printf();
+
+    if (status == ADC_SENSE_ERR_0)
+    {
+        Toggle_LED(CAR_CRUISE, OFF);
+    }
+    else if (status == ADC_SENSE_ERR_1)
+    {
+        Toggle_LED(CAR_BPSFAULT, OFF);
+    }
+    else if (status == ADC_SENSE_ERR_2)
+    {
+        Toggle_LED(CAR_HB, OFF);
+    }
+    else if (status == ADC_SENSE_OK)
+    {
+        Toggle_LED(CAR_DRIVING, OFF);
+    }
+}
+
+void Task_ReadADC() 
+{
+    Init_ReadADCTask();
+
+    ADC_Sense_Result values = {0};
+    uint32_t updated = 0;
+
+    while(1)
+    {
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+        ADC_Sense_Status read = Read_ADC(pdMS_TO_TICKS(50), &values, &updated);
+
+        if (read == ADC_SENSE_OK)
+        {
+            printf("Motor: %ld mV | Battery: %ld mV\r\n",
+                values.Motor_Voltage,
+                values.Battery_Voltage);
+        }
+        else
+        {
+            printf("Read_ADC failed\r\n");
+        }
+    }
+}

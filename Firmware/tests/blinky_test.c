@@ -1,4 +1,6 @@
 #include "StatusLEDs.h"
+#include "pinDefs.h"
+#include "inits.h"
 
 typedef struct {
     GPIO_TypeDef *Port;

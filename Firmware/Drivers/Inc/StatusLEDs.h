@@ -1,6 +1,5 @@
 #ifndef STATUSLED_H
 #define STATUSLED_H
-#include "pinDefs.h"
 
 /** @brief Number of bits in the module fault bitmap. */
 #define MOD_FAULT_BITS 5
@@ -34,7 +33,7 @@ typedef enum {
 } Fault_Mapping_t;
 
 /** @brief Sets a specific LED to on (true) or off (false). */
-void LED_set(Fault_Mapping_t LED, bool state);
+void LED_set(Fault_Mapping_t LED, LED_state_t state);
 
 /** @brief Turns off all LEDs. */
 void LEDs_clear(void);

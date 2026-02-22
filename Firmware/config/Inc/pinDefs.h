@@ -7,8 +7,8 @@
 #define HB_LED_PIN GPIO_PIN_3
 
 #define ADC_PORT GPIOB
-#define MOTOR_ADC GPIO_PIN_12
-#define BATTERY_ADC GPIO_PIN_2
+#define MOTOR_ADC_CHANNEL 11 // ADC channel for motor voltage sensing
+#define BATTERY_ADC_CHANNEL 12 // ADC channel for battery voltage sensing
 
 #define CAR_STATE_DRIVABLE_PORT GPIOC
 #define CAR_STATE_DRIVABLE_PIN GPIO_PIN_6

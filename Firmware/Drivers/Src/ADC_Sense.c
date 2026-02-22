@@ -3,25 +3,27 @@
 #include "ADC_Sense.h"
 #include "stm32xx_hal.h"
 #include "inits.h"
-
-QueueHandle_t Motor_ADC_Queue;
-QueueHandle_t Battery_ADC_Queue;
+#include "UART.h"
+#include "printf.h"
 
 static uint8_t Is_Initialized = 0;
 static uint32_t Error_Mask = ADC_SENSE_ERR_NONE;
 
-uint8_t qStorage[ADC_QUEUE_LENGTH * sizeof(uint16_t)];
-static StaticQueue_t xStaticQueue;
-uint8_t qStorage2[ADC_QUEUE_LENGTH * sizeof(uint16_t)];
-static StaticQueue_t xStaticQueue2;
-
 ADC_InitTypeDef adc_init_1 = {0};
 ADC_InitTypeDef adc_init_2 = {0};
 
+QueueHandle_t Motor_ADC_Queue;
+QueueHandle_t Battery_ADC_Queue;
+
+static StaticQueue_t xStaticQueue1;
+static StaticQueue_t xStaticQueue2;
+uint8_t qStorage1[ADC_QUEUE_LENGTH * ITEM_SIZE];
+uint8_t qStorage2[ADC_QUEUE_LENGTH * ITEM_SIZE];
+
 ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
 {
-    Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, sizeof(uint16_t), qStorage, &xStaticQueue);
-    Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, sizeof(uint16_t), qStorage2, &xStaticQueue2);
+    Motor_ADC_Queue =  (ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage1, &xStaticQueue1);
+    Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage2, &xStaticQueue2);
 
     Is_Initialized = 0;
 
@@ -114,10 +116,10 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result, uint32_
     uint32_t Updated = ADC_SENSE_UPD_NONE;
     TickType_t Timeout_Ticks = pdMS_TO_TICKS(Timeout_MS);
 
-    adc_read(MOTOR_ADC, ADC_SAMPLING_TIME, hadc1, Motor_ADC_Queue);
-    adc_read(BATTERY_ADC, ADC_SAMPLING_TIME, hadc2, Battery_ADC_Queue);
+    adc_read(ADC_CHANNEL_11, ADC_SAMPLING_TIME, hadc1, Motor_ADC_Queue);
+    adc_read(ADC_CHANNEL_12, ADC_SAMPLING_TIME, hadc2, Battery_ADC_Queue);
 
-    if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
+    if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, portMAX_DELAY) == pdPASS)
     {
         int64_t Numerator = (int64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
         int64_t Denominator = (int64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
@@ -155,3 +157,4 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result, uint32_
 
     return ADC_SENSE_OK;
 }
+

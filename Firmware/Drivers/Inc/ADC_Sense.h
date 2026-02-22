@@ -18,6 +18,7 @@
 #define Divider_Denominator (2490 + 100000)
 
 #define ADC_QUEUE_LENGTH 4
+#define ITEM_SIZE sizeof(uint16_t)
 #define ADC_SAMPLING_TIME 20000 // 200 us
 
 /**

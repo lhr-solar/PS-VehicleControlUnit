@@ -1,7 +1,6 @@
-#include "inits.h"
 #include "stm32xx_hal.h"
 #include "UART.h"
-#include "pinDefs.h"
+#include "printf.h"
 
 void SystemClock_Config(void)
 {
@@ -69,7 +68,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
-void MX_USART3_UART_Init(void)
+void MX_USART3_UART_Init(void)  
 {
   husart3->Instance = USART3;
   husart3->Init.BaudRate = 115200;
@@ -218,4 +217,17 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
   /* USER CODE END ADC2_MspInit 1 */
   }
+}
+
+void Init_UART_Printf() 
+{
+    husart3->Init.BaudRate = 115200;
+    husart3->Init.WordLength = UART_WORDLENGTH_8B;
+    husart3->Init.StopBits = UART_STOPBITS_1;
+    husart3->Init.Parity = UART_PARITY_NONE;
+    husart3->Init.Mode = UART_MODE_TX_RX;
+    husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    husart3->Init.OverSampling = UART_OVERSAMPLING_16;
+
+    printf_init(husart3);
 }

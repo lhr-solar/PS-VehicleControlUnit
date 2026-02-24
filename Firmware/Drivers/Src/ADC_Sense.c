@@ -22,7 +22,10 @@ uint8_t qStorage2[ADC_QUEUE_LENGTH * ITEM_SIZE];
 
 ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
 {
-    Motor_ADC_Queue =  (ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage1, &xStaticQueue1);
+    ADC_MultiModeTypeDef multimode = {0};
+    ADC_ChannelConfTypeDef sConfig = {0};
+
+    Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage1, &xStaticQueue1);
     Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage2, &xStaticQueue2);
 
     Is_Initialized = 0;
@@ -34,11 +37,9 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
     }
 
     ADC_InitTypeDef adc_init_1 = {0};
-    hadc1->Instance = ADC1;
     adc_init_1.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_1.Resolution = ADC_RESOLUTION_12B;
     adc_init_1.DataAlign = ADC_DATAALIGN_RIGHT;
-    adc_init_1.GainCompensation = 0;
     adc_init_1.ScanConvMode = ADC_SCAN_DISABLE;
     adc_init_1.EOCSelection = ADC_EOC_SINGLE_CONV;
     adc_init_1.LowPowerAutoWait = DISABLE;
@@ -57,12 +58,27 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         return ADC_SENSE_ERR_1;
     }
 
+      multimode.Mode = ADC_MODE_INDEPENDENT;
+    if (HAL_ADCEx_MultiModeConfigChannel(hadc1, &multimode) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    sConfig.Channel = ADC_CHANNEL_11;
+    sConfig.Rank = ADC_REGULAR_RANK_1;
+    sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+    sConfig.SingleDiff = ADC_SINGLE_ENDED;
+    sConfig.OffsetNumber = ADC_OFFSET_NONE;
+    sConfig.Offset = 0;
+    if (HAL_ADC_ConfigChannel(hadc1, &sConfig) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
     ADC_InitTypeDef adc_init_2 = {0};
-    hadc2->Instance = ADC2;
     adc_init_2.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_2.Resolution = ADC_RESOLUTION_12B;
     adc_init_2.DataAlign = ADC_DATAALIGN_RIGHT;
-    adc_init_2.GainCompensation = 0;
     adc_init_2.ScanConvMode = ADC_SCAN_DISABLE;
     adc_init_2.EOCSelection = ADC_EOC_SINGLE_CONV;
     adc_init_2.LowPowerAutoWait = DISABLE;
@@ -79,6 +95,17 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
     {
         Error_Mask |= ADC_SENSE_ERR_ADC2_INIT;
         return ADC_SENSE_ERR_2;
+    }
+
+    sConfig.Channel = ADC_CHANNEL_12;
+    sConfig.Rank = ADC_REGULAR_RANK_1;
+    sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+    sConfig.SingleDiff = ADC_SINGLE_ENDED;
+    sConfig.OffsetNumber = ADC_OFFSET_NONE;
+    sConfig.Offset = 0;
+    if (HAL_ADC_ConfigChannel(hadc2, &sConfig) != HAL_OK)
+    {
+        Error_Handler();
     }
 
     Is_Initialized = 1;
@@ -116,11 +143,25 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result, uint32_
     uint32_t Updated = ADC_SENSE_UPD_NONE;
     TickType_t Timeout_Ticks = pdMS_TO_TICKS(Timeout_MS);
 
-    adc_read(ADC_CHANNEL_11, ADC_SAMPLING_TIME, hadc1, Motor_ADC_Queue);
-    adc_read(ADC_CHANNEL_12, ADC_SAMPLING_TIME, hadc2, Battery_ADC_Queue);
+    HAL_ADCEx_Calibration_Start(hadc1, ADC_SINGLE_ENDED);
+    HAL_ADCEx_Calibration_Start(hadc2, ADC_SINGLE_ENDED);
 
-    if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, portMAX_DELAY) == pdPASS)
+    adc_status_t adc1_status = adc_read(ADC_CHANNEL_11, ADC_SAMPLING_TIME, hadc1, Motor_ADC_Queue);
+    adc_status_t adc2_status = adc_read(ADC_CHANNEL_12, ADC_SAMPLING_TIME, hadc2, Battery_ADC_Queue);
+
+    if (adc1_status != ADC_OK)
     {
+        return ADC_SENSE_ERR;
+    }
+    if (adc2_status != ADC_OK)
+    {
+        return ADC_SENSE_ERR;
+    }
+
+    if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
+    {
+        uint32_t raw = ADC1->DR;
+        (void)raw;
         int64_t Numerator = (int64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
         int64_t Denominator = (int64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
         Result->Motor_Voltage = (int32_t)(Numerator / Denominator);

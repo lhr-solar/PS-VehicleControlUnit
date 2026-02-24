@@ -108,6 +108,8 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         Error_Handler();
     }
 
+    
+
     Is_Initialized = 1;
     return ADC_SENSE_OK;
 }

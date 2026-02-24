@@ -20,7 +20,7 @@
 
 #define ADC_QUEUE_LENGTH 4
 #define ITEM_SIZE sizeof(uint16_t)
-#define ADC_SAMPLING_TIME ADC_SAMPLETIME_47CYCLES_5 // 200 us
+#define ADC_SAMPLING_TIME ADC_SAMPLETIME_2CYCLES_5
 
 /**
  * @brief ADC voltage measurement results

@@ -22,25 +22,26 @@ void Init_ReadADCTask() {
 
     if (status == ADC_SENSE_ERR_0)
     {
-        Toggle_LED(CAR_CRUISE, OFF);
+        Toggle_LED(CAR_CRUISE, ON);
     }
     else if (status == ADC_SENSE_ERR_1)
     {
-        Toggle_LED(CAR_BPSFAULT, OFF);
+        Toggle_LED(CAR_BPSFAULT, ON);
     }
     else if (status == ADC_SENSE_ERR_2)
     {
-        Toggle_LED(CAR_HB, OFF);
+        Toggle_LED(CAR_HB, ON);
     }
     else if (status == ADC_SENSE_OK)
     {
-        Toggle_LED(CAR_DRIVING, OFF);
+        Toggle_LED(CAR_DRIVING, ON);
     }
 }
 
 void Task_ReadADC() 
 {
     Init_ReadADCTask();
+    Toggle_LED(CAR_CRUISE,ON);
 
     ADC_Sense_Result values = {0};
     uint32_t updated = 0;
@@ -55,10 +56,12 @@ void Task_ReadADC()
             printf("Motor: %ld mV | Battery: %ld mV\r\n",
                 values.Motor_Voltage,
                 values.Battery_Voltage);
+            Toggle_LED(CAR_REGEN, ON);
         }
         else
         {
             printf("Read_ADC failed\r\n");
+            Toggle_LED(CAR_BPSFAULT, ON);
         }
     }
 }

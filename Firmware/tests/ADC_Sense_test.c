@@ -18,11 +18,6 @@ int main()
     // Initialize all LED GPIOs
     LEDs_init();
 
-    Toggle_LED(CAR_REGEN, OFF);
-    HAL_Delay(500);
-    Toggle_LED(CAR_REGEN, ON);
-    HAL_Delay(500);
-
     MX_UART_INIT(husart3);
 
     MX_USART3_UART_Init();

@@ -20,10 +20,27 @@ static StaticQueue_t xStaticQueue2;
 uint8_t qStorage1[ADC_QUEUE_LENGTH * ITEM_SIZE];
 uint8_t qStorage2[ADC_QUEUE_LENGTH * ITEM_SIZE];
 
+static ADC_ChannelConfTypeDef sConfig1 = {
+    .Channel = ADC_CHANNEL_11,
+    .Rank = ADC_REGULAR_RANK_1,
+    .SamplingTime = ADC_SAMPLETIME_2CYCLES_5,
+    .SingleDiff = ADC_SINGLE_ENDED,
+    .OffsetNumber = ADC_OFFSET_NONE,
+    .Offset = 0
+};
+
+static ADC_ChannelConfTypeDef sConfig2 = {
+    .Channel = ADC_CHANNEL_12,
+    .Rank = ADC_REGULAR_RANK_1,
+    .SamplingTime = ADC_SAMPLETIME_2CYCLES_5,
+    .SingleDiff = ADC_SINGLE_ENDED,
+    .OffsetNumber = ADC_OFFSET_NONE,
+    .Offset = 0
+};
+
 ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
 {
     ADC_MultiModeTypeDef multimode = {0};
-    ADC_ChannelConfTypeDef sConfig = {0};
 
     Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage1, &xStaticQueue1);
     Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage2, &xStaticQueue2);
@@ -64,13 +81,7 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         Error_Handler();
     }
 
-    sConfig.Channel = ADC_CHANNEL_11;
-    sConfig.Rank = ADC_REGULAR_RANK_1;
-    sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-    sConfig.SingleDiff = ADC_SINGLE_ENDED;
-    sConfig.OffsetNumber = ADC_OFFSET_NONE;
-    sConfig.Offset = 0;
-    if (HAL_ADC_ConfigChannel(hadc1, &sConfig) != HAL_OK)
+    if (HAL_ADC_ConfigChannel(hadc1, &sConfig1) != HAL_OK)
     {
         Error_Handler();
     }
@@ -97,13 +108,7 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         return ADC_SENSE_ERR_2;
     }
 
-    sConfig.Channel = ADC_CHANNEL_12;
-    sConfig.Rank = ADC_REGULAR_RANK_1;
-    sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-    sConfig.SingleDiff = ADC_SINGLE_ENDED;
-    sConfig.OffsetNumber = ADC_OFFSET_NONE;
-    sConfig.Offset = 0;
-    if (HAL_ADC_ConfigChannel(hadc2, &sConfig) != HAL_OK)
+    if (HAL_ADC_ConfigChannel(hadc2, &sConfig2) != HAL_OK)
     {
         Error_Handler();
     }
@@ -148,8 +153,8 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result, uint32_
     HAL_ADCEx_Calibration_Start(hadc1, ADC_SINGLE_ENDED);
     HAL_ADCEx_Calibration_Start(hadc2, ADC_SINGLE_ENDED);
 
-    adc_status_t adc1_status = adc_read(ADC_CHANNEL_11, ADC_SAMPLING_TIME, hadc1, Motor_ADC_Queue);
-    adc_status_t adc2_status = adc_read(ADC_CHANNEL_12, ADC_SAMPLING_TIME, hadc2, Battery_ADC_Queue);
+    adc_status_t adc1_status = adc_read(hadc1, &sConfig1, Motor_ADC_Queue);
+    adc_status_t adc2_status = adc_read(hadc2, &sConfig2, Battery_ADC_Queue);
 
     if (adc1_status != ADC_OK)
     {

@@ -1,4 +1,6 @@
 #include "Precharge.h"
+#include "ADC_Sense.h"
+#include "Contactors.h"
 
 static uint32_t Precharge_Threshold = PRECHARGE_GOOD_THRESHOLD;
 
@@ -15,6 +17,11 @@ Precharge_Status PrechargeStart() // Start precharge sequence and return status
         State = PRECHARGE_STATE_RUNNING;
 
         // TODO: close precharge contactor here (and open main until threshold is reached)
+        ErrorStatus contactor_status = contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false);
+        if (contactor_status != SUCCESS) 
+        {
+            State = PRECHARGE_STATE_FAULT; // Contactor didn't close
+        }
     }
 
     if (State == PRECHARGE_STATE_DONE) 
@@ -63,6 +70,12 @@ Precharge_Status PrechargeStart() // Start precharge sequence and return status
         Precharge_Threshold = PRECHARGE_TRANSITION_THRESHOLD;
 
         // TODO: close precharge contactor
+        ErrorStatus precharge_ready = contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false);
+        if (precharge_ready != SUCCESS) 
+        {
+            State = PRECHARGE_STATE_FAULT; // Contactor didn't close
+            return PRECHARGE_ERR_ADC;
+        }
 
         State = PRECHARGE_STATE_DONE;
         return PRECHARGE_OK;

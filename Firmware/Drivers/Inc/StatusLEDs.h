@@ -8,8 +8,8 @@
 
 /** * @brief LED States  */
 typedef enum {
-    OFF = 0,
-    ON = 1
+    OFF = !0,   // Negative logic
+    ON = !1
 } LED_state_t;
 
 /** * @brief Logic-to-Hardware mapping for diagnostic LEDs.

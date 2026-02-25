@@ -47,10 +47,10 @@
 #define PRECHARGE_PRE_SENSE_TO_PIN GPIO_PIN_12
 
 #define PRECHARGE_PRE_ENABLE_PORT GPIOC
-#define PRECHARGE_PRE_ENABLE_PIN GPIO_PIN_5
+#define PRECHARGE_PRE_ENABLE_PIN GPIO_PIN_4
 
 #define PRECHARGE_PRE_SENSE_PORT GPIOC
-#define PRECHARGE_PRE_SENSE_PIN GPIO_PIN_4 //
+#define PRECHARGE_PRE_SENSE_PIN GPIO_PIN_5 //
 
 #define MOTOR_FAULT_HALL_PORT GPIOB
 #define MOTOR_FAULT_HALL_PIN GPIO_PIN_3
@@ -71,5 +71,10 @@ typedef struct {
     GPIO_TypeDef* port; // e.g., GPIOA
     uint16_t      pin;  // e.g., GPIO_PIN_3
 } GpioPin_t;
+
+typedef enum {
+    NORMAL = 0,   // We good
+    EMERGENCY = 1  // We bad
+} fault_state_t;    
 
 #endif

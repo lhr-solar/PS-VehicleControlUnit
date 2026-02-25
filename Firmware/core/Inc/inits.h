@@ -23,3 +23,6 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle);
 void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle);
 
 void Init_UART_Printf();
+
+void Fault_Handler(void);
+void Error_Handler(void);

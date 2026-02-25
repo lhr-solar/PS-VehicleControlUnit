@@ -59,15 +59,6 @@ typedef enum {
 } ADC_Sense_ErrorMask;
 
 /**
- * @brief ADC update flags indicating which channels were updated
- */
-typedef enum {
-    ADC_SENSE_UPD_NONE    = 0,
-    ADC_SENSE_UPD_MOTOR   = (1u << 0),
-    ADC_SENSE_UPD_BATTERY = (1u << 1),
-} ADC_Sense_UpdateMask;
-
-/**
  * @brief   Get the current ADC error mask
  *
  * @return  Bitmask of ADC_SENSE_ERR_* flags
@@ -98,11 +89,10 @@ ADC_Sense_Status ADC_Sense_Init(void);
  *
  * @param   Timeout_MS      Maximum time to wait for ADC samples (ticks)
  * @param   Result       Pointer to result structure for voltages
- * @param   Updated_Mask Optional pointer to update mask output
  * @return  ADC_SENSE_OK if both ADC channels updated successfully,
  *          ADC_SENSE_ERR otherwise
  */
-ADC_Sense_Status Read_ADC(uint32_t Timeout_MS,  ADC_Sense_Result *Result, uint32_t *Updated_Mask);
+ADC_Sense_Status Read_ADC(uint32_t Timeout_MS,  ADC_Sense_Result *Result);
 
 /**
   * @brief ADC1 Initialization Function

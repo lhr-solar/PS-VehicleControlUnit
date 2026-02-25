@@ -44,12 +44,11 @@ void Task_ReadADC()
     Toggle_LED(CAR_CRUISE,ON);
 
     ADC_Sense_Result values = {0};
-    uint32_t updated = 0;
 
     while(1)
     {
         vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
-        ADC_Sense_Status read = Read_ADC(pdMS_TO_TICKS(50), &values, &updated);
+        ADC_Sense_Status read = Read_ADC(pdMS_TO_TICKS(50), &values);
 
         if (read == ADC_SENSE_OK)
         {

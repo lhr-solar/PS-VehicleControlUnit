@@ -57,6 +57,7 @@ ErrorStatus contactor_set(contactor_num_t contactor_num, contactor_state_t state
     when the contactor is set to another value, so no possible error with expected value changing from when timer is called*/
     if (!emergency) { 
         xTimerStart(contactor->senseTimer, 0); 
+        // TODO: implement callback to set fault bits if not set properly
         xSemaphoreGive(contactorsMutex);
     }
 

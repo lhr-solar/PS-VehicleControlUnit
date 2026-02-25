@@ -68,7 +68,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
-void MX_USART3_UART_Init(void)  
+void MX_USART3_UART_Init(void)
 {
   husart3->Instance = USART3;
   husart3->Init.BaudRate = 115200;
@@ -142,21 +142,21 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
   }
 }
 
-static uint32_t HAL_RCC_ADC12_CLK_ENABLED=0;
+static uint32_t HAL_RCC_ADC12_CLK_ENABLED = 0;
 
-void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
+void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-  if(adcHandle->Instance==ADC1)
+  if (adcHandle->Instance == ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspInit 0 */
+    /* USER CODE BEGIN ADC1_MspInit 0 */
 
-  /* USER CODE END ADC1_MspInit 0 */
+    /* USER CODE END ADC1_MspInit 0 */
 
-  /** Initializes the peripherals clocks
-  */
+    /** Initializes the peripherals clocks
+     */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
     PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -166,7 +166,8 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     /* ADC1 clock enable */
     HAL_RCC_ADC12_CLK_ENABLED++;
-    if(HAL_RCC_ADC12_CLK_ENABLED==1){
+    if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+    {
       __HAL_RCC_ADC12_CLK_ENABLE();
     }
 
@@ -182,14 +183,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   }
-  else if(adcHandle->Instance==ADC2)
+  else if (adcHandle->Instance == ADC2)
   {
-  /* USER CODE BEGIN ADC2_MspInit 0 */
+    /* USER CODE BEGIN ADC2_MspInit 0 */
 
-  /* USER CODE END ADC2_MspInit 0 */
+    /* USER CODE END ADC2_MspInit 0 */
 
-  /** Initializes the peripherals clocks
-  */
+    /** Initializes the peripherals clocks
+     */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
     PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -199,7 +200,8 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     /* ADC2 clock enable */
     HAL_RCC_ADC12_CLK_ENABLED++;
-    if(HAL_RCC_ADC12_CLK_ENABLED==1){
+    if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+    {
       __HAL_RCC_ADC12_CLK_ENABLE();
     }
 
@@ -217,44 +219,50 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   }
 }
 
-void Init_UART_Printf() 
+void Init_UART_Printf()
 {
-    husart3->Init.BaudRate = 115200;
-    husart3->Init.WordLength = UART_WORDLENGTH_8B;
-    husart3->Init.StopBits = UART_STOPBITS_1;
-    husart3->Init.Parity = UART_PARITY_NONE;
-    husart3->Init.Mode = UART_MODE_TX_RX;
-    husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    husart3->Init.OverSampling = UART_OVERSAMPLING_16;
+  husart3->Init.BaudRate = 115200;
+  husart3->Init.WordLength = UART_WORDLENGTH_8B;
+  husart3->Init.StopBits = UART_STOPBITS_1;
+  husart3->Init.Parity = UART_PARITY_NONE;
+  husart3->Init.Mode = UART_MODE_TX_RX;
+  husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  husart3->Init.OverSampling = UART_OVERSAMPLING_16;
 
-    printf_init(husart3);
+  printf_init(husart3);
 }
 
 // for actual faults
-void Fault_Handler() {
+void Fault_Handler()
+{
 
-    // Kill Main Task
-    
-    // open every contactor, bypasses semaphore
-    // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
-        // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-    // }
-    
-    // turns on fault led
-    // LED_set(MOTOR_FAULT, ON);
-    
-}
-
-// for software errors
-void Error_Handler() {
+  while (1)
+  {
+    printf("FAULT!\n");
+  }
 
   // Kill Main Task
 
   // open every contactor, bypasses semaphore
   // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
-    // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
+  // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
   // }
-    
+
+  // turns on fault led
+  // LED_set(MOTOR_FAULT, ON);
+}
+
+// for software errors
+void Error_Handler()
+{
+
+  // Kill Main Task
+
+  // open every contactor, bypasses semaphore
+  // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+  // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
+  // }
+
   // turns on fault led, and blink DEBUG led to show the error was software
   // LED_set(MOTOR_FAULT, ON);
   // while (true) {
@@ -263,4 +271,4 @@ void Error_Handler() {
   //   LED_set(CAR_HB, OFF);
   //   HAL_Delay(1000);
   // }
-} 
+}

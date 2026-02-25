@@ -49,49 +49,46 @@ void Task_Precharge()
                Motor_Voltage,
                Battery_Voltage);
 
-        if (Motor_Voltage > (Battery_Voltage * 21 / 20)) // +5% tolerance
-        {
-            // Fault handler
-            Toggle_LED(PRECHARGE_COMPLETE, ON);
-            printf("Motor Voltage > Battery Voltage\r\n");
-        }
-
-        if (Battery_Voltage > OVERVOLTAGE_THRESHOLD_MV)
-        {
-            /* BATTERY ABOUT TO GO BOOM */
-            // Fault handler
-            Toggle_LED(PRECHARGE_TIMEOUT, ON);
-            printf("Overvoltage\r\n");
-        }
-
-        if (Battery_Voltage < UNDERVOLTAGE_THRESHOLD_MV)
-        {
-            /* Battery voltage is too low or battery is disconnected, treat as fault */
-            // Fault handler
-            Toggle_LED(PRECHARGE_SENSE_TIMEOUT, ON);
-            printf("Undervoltage\r\n");
-        }
-
         switch (State)
         {
         case PRECHARGE_STATE_INITIAL:
             // Startup state: Closes main contactor and moves to precharging state
-            Toggle_LED(CAR_HB, OFF);
             printf("In Initial State\r\n");
             if (contactor_set(MOTOR_CONTACTOR, CLOSED, 100, NORMAL) != SUCCESS)
             {
                 // TODO: Fault handler
                 printf("Main contactor didn't close\r\n");
+                Fault_Handler();
             }
-            vTaskDelay(1000);
             State = PRECHARGE_STATE_PRECHARGING;
-
-            Toggle_LED(CAR_HB, ON);
 
             // Start a timer for precharging
             Start_Tick = xTaskGetTickCount();
             break;
         case PRECHARGE_STATE_PRECHARGING:
+            if (Motor_Voltage > (Battery_Voltage * 21 / 20)) // +5% tolerance
+            {
+                // Fault handler
+                printf("Motor Voltage > Battery Voltage\r\n");
+                Fault_Handler();
+            }
+
+            if (Battery_Voltage > OVERVOLTAGE_THRESHOLD_MV)
+            {
+                /* BATTERY ABOUT TO GO BOOM */
+                // Fault handler
+                printf("Overvoltage\r\n");
+                Fault_Handler();
+            }
+
+            if (Battery_Voltage < UNDERVOLTAGE_THRESHOLD_MV)
+            {
+                /* Battery voltage is too low or battery is disconnected, treat as fault */
+                // Fault handler
+                printf("Undervoltage\r\n");
+                Fault_Handler();
+            }
+
             const TickType_t Current_Tick = xTaskGetTickCount();
             printf("In Precharging State\r\n");
             if ((Current_Tick - Start_Tick) > pdMS_TO_TICKS(PRECHARGE_TIMEOUT_MS)) // Faults if precharging takes too long
@@ -103,6 +100,7 @@ void Task_Precharge()
                     {
                         // TODO: Fault handler
                         printf("Precharge contactor didn't close\r\n");
+                        Fault_Handler();
                     }
                     State = PRECHARGE_STATE_RUN;
                 }
@@ -111,11 +109,34 @@ void Task_Precharge()
                     // Precharging took too long
                     // Fault handler
                     printf("Precharge timeout\r\n");
-                    Toggle_LED(CAR_BPSFAULT, ON);
+                    Fault_Handler();
                 }
             }
             break;
         case PRECHARGE_STATE_RUN:
+            if (Motor_Voltage > (Battery_Voltage * 21 / 20)) // +5% tolerance
+            {
+                // Fault handler
+                printf("Motor Voltage > Battery Voltage\r\n");
+                Fault_Handler();
+            }
+
+            if (Battery_Voltage > OVERVOLTAGE_THRESHOLD_MV)
+            {
+                /* BATTERY ABOUT TO GO BOOM */
+                // Fault handler
+                printf("Overvoltage\r\n");
+                Fault_Handler();
+            }
+
+            if (Battery_Voltage < UNDERVOLTAGE_THRESHOLD_MV)
+            {
+                /* Battery voltage is too low or battery is disconnected, treat as fault */
+                // Fault handler
+                printf("Undervoltage\r\n");
+                Fault_Handler();
+            }
+
             // Use 80% threshold for hysteresis
             printf("In Run State\r\n");
             if ((int64_t)Motor_Voltage * RATIO_SCALE < (int64_t)Battery_Voltage * PRECHARGE_THRESHOLD_80)

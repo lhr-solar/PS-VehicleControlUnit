@@ -1,6 +1,7 @@
 #include "stm32xx_hal.h"
 #include "UART.h"
 #include "printf.h"
+#include "Contactors.h"
 
 void SystemClock_Config(void)
 {
@@ -235,10 +236,12 @@ void Init_UART_Printf()
 // for actual faults
 void Fault_Handler()
 {
-
+  contactor_set(MOTOR_CONTACTOR, OPEN, 100, EMERGENCY);
+  contactor_set(MOTOR_PRE_CONTACTOR, OPEN, 100, EMERGENCY);
   while (1)
   {
-    printf("FAULT!\n");
+    vTaskDelay(1000);
+    printf("FAULT!\r\n");
   }
 
   // Kill Main Task

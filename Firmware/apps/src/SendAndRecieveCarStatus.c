@@ -1,7 +1,12 @@
 #include "DriveMotor.h"
 #include <stdint.h>
 #include "stdbool.h"
+#include "semphr.h"
+#include "faults.h"
+#include "SendAndRecieveCarStatus.h"
 
+SemaphoreHandle_t vcu_status_lock;
+SemaphoreHandle_t controls_lock;
 
 
 // CAN MSG VARIABLES
@@ -25,7 +30,7 @@ static bool isBraking = false; //used for exiting cruise control/other things (c
 
 void initStatusEventGroup() {
     carStatusEventGroup = xEventGroupCreate();
-    configASSERT(carStatusEventGroup != NULL); //making sure it's created
+    configASSERT(carStatusEventGroup != NULL);
 }
 
 void getControlsBitfield() {
@@ -93,6 +98,7 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
     //I have the actual DBC now so let's parse this fr fr
     recieved_CAN_message((FSM_Signal_t)i); //for wd
 
+  xSemaphoreTake(controls_lock, portMAX_DELAY);
   for (int i = 0; i < FSM_SIGNAL_COUNT; i++) {
       switch (i) {  // use enum index directly
         case BPS_STATUS: {
@@ -100,9 +106,14 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
             bps_status_unpack(&bpsData, dataBuf, FILTERED_BPS_STATUS_LENGTH);
 
             okToRegen = bpsData.bps_regen_ok;
+
+            xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
+            vcu_status.vcu_regen_ok = okToRegen;
+            xSemaphoreGive(vcu_status_lock);
+
             bpsTripped = (bpsData.bps_fault != 0);
 
-            if (bpsData.bps_fault) {
+            if (bpsTripped) {
                 Faults_ThrowFault(FAULT_ID_GENERIC_CUZ_IM_LAZY);
             }
 
@@ -150,24 +161,24 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
 
             // Gear mapping
             if (driverData.gear_forward) {
-                gear = 1;
+                gear = DASH_FWD;
             } else if (driverData.gear_reverse) {
-                gear = 2;
+                gear = DASH_REV;
             } else if (driverData.gear_neutral) {
-                gear = 0;
+                gear = DASH_NEU;
             } else {
-                gear = 0; // Default/fallback
+                gear = DASH_NEU; // Default/fallback
             }
 
             // Ignition state
             if (driverData.ignition_array) {
-                ignitionState = 1;
+                ignitionState = ARR_EN;
             } else if (driverData.ignition_motor) {
-                ignitionState = 2;
+                ignitionState = MOT_EN
             } else if (driverData.ignition_off) {
-                ignitionState = 0;
+                ignitionState = IGN_OFF;
             } else {
-                ignitionState = 0; // Default/fallback
+                ignitionState = IGN_OFF; // Default/fallback
             }
 
             break;
@@ -178,6 +189,7 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
       }
 
     }
+  xSemaphoreGive(controls_lock);
   }
 }
 
@@ -202,7 +214,11 @@ void Task_SendVCUStatus(void *p_arg) {
         //send vcu status every 100ms or so, this is separate from the update task since this is not needed for the logic and can be slower
         //also we want to make sure this goes out on time for telemetry reasons
         uint8_t data[8] = {0};
+        xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
+        vcu_status.vcu_driver_input_ok = 1;
+        vcu_status.vcu_pedals_ok = 1;
         filtered_vcu_status_pack(data, &vcu_status, FILTERED_VCU_STATUS_LENGTH);
+        xSemaphoreGive(vcu_status_lock);
         car_can_send(data, FILTERED_VCU_STATUS_FRAME_ID);
         vTaskDelay(pdMS_TO_TICKS(100));
     }

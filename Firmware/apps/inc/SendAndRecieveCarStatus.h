@@ -1,21 +1,29 @@
-#include "DriveMotor.h"
+#ifndef SEND_AND_RECIEVE_CAR_STATUS_H
+#define SEND_AND_RECIEVE_CAR_STATUS_H
+
 #include <stdint.h>
 #include "stdbool.h"
 #include "faults.h"
+#include "semphr.h"
 
 #define BRAKE_THRESH 42
 #define BRAKE_THRESH_HYST 30
 
+extern SemaphoreHandle_t vcu_status_lock;
+extern SemaphoreHandle_t controls_lock;
+
 // CAN MSG VARIABLES
-static gear_t gear = DASH_NEU;
-static bool regenButtonPressed = false;
-static bool cruiseControlButton = false;
-static bool regenEnabled = false;
-static bool okToRegen = false;
-static bool bpsTripped = false;
-static float brakePedalPercent = 0.0f;
-static float accelPedalPercent = 0.0f;
+extern gear_t gear;
+extern bool regenButtonPressed;
+extern bool cruiseControlButton;
+extern bool regenEnabled;
+extern bool okToRegen;
+extern bool bpsTripped;
+extern float brakePedalPercent;
+extern float accelPedalPercent;
 
-static ignitionState_t ignitionState = IGN_OFF;
+extern ignitionState_t ignitionState = IGN_OFF;
 
-static float thresholdBrake = BRAKE_THRESH;
+extern float thresholdBrake = BRAKE_THRESH;
+
+#endif /* SEND_AND_RECIEVE_CAR_STATUS_H */

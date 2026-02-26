@@ -21,8 +21,8 @@
 #include "can_parsing_generated.h"
 #include "FreeRTOS.h"
 #include "event_groups.h"
+#include "semphr.h"
 #include <stdint.h>
-#include "SendAndRecieveCarStatus.h"
 
 
 // Motor Controller current values. Current is in Amps (A)
@@ -154,7 +154,6 @@ static const uint16_t fsm_signal_to_can_id[FSM_SIGNAL_COUNT] = {
 };
 
 typedef enum{
-DASH_INIT,
 DASH_NEU,
 DASH_FWD,
 DASH_REV
@@ -162,7 +161,6 @@ DASH_REV
 
 typedef enum{
 IGN_OFF,
-LV_EN,
 ARR_EN,
 MOT_EN
 }ignitionState_t;
@@ -179,8 +177,9 @@ MOT_EN
 //extra vars for logic in updateStatus
 extern ignitionState_t ignitionState;
 extern bool isBraking;
-extern float accelPedalPercent = 0.0f;
+extern float accelPedalPercent;
 
+extern SemaphoreHandle_t controls_lock;
 
 #endif
 

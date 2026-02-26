@@ -1,6 +1,14 @@
 #include "tasks.h"
+#include "SendAndRecieveCarStatus.h"
 
 void Task_Init(void *arg){
+    vcu_status_lock = xSemaphoreCreateMutex();
+    configASSERT(vcu_status_lock != NULL);
+    controls_lock = xSemaphoreCreateMutex();
+    configASSERT(controls_lock != NULL);
+    moco_status_lock = xSemaphoreCreateMutex();
+    configASSERT(moco_status_lock != NULL);
+
     
     xTaskCreateStatic(
         Task_SendMotor, /* The function that implements the task. */

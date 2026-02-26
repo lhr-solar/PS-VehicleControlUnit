@@ -1,3 +1,6 @@
+#ifndef FAULTS_H
+#define FAULTS_H
+
 #include <stdbool.h>
 #include "DriveMotor.h"
 //faults struct, fault IDs, fault handling functions, context info, unconditionally throw fault or wait for function to check
@@ -45,81 +48,5 @@ typedef enum {
     NUM_FAULTS                         // Always last
 } fault_id_t;
 
-// Array of faults with handler pointers and descriptions
-static fault_t faultArray[NUM_FAULTS] = {
-    [FAULT_ID_WATCHDOG_FSM] = {
-        &handleWatchdogFSMFault,
-        "FSM Watchdog Fault: Missing CAN messages in watchdog window.",
-        false,
-        NULL
-    },
-    [FAULT_ID_MOTOR_OVERSPEED] = {
-        NULL,
-        "Motor Over Speed: 15% above max RPM.",
-        false,
-        NULL
-    },
-    [FAULT_ID_IGBT_DESAT] = {
-        NULL,
-        "Desaturation Fault: IGBT desaturation or driver OVLO.",
-        false,
-        NULL
-    },
-    [FAULT_ID_15V_RAIL_UVLO] = {
-        NULL,
-        "15V Rail Under Voltage Lockout (UVLO).",
-        false,
-        NULL
-    },
-    [FAULT_ID_CONFIG_READ_ERROR] = {
-        NULL,
-        "Configuration Read Error: Some values reset to defaults.",
-        false,
-        NULL
-    },
-    [FAULT_ID_WATCHDOG_LAST_RESET] = {
-        NULL,
-        "Watchdog caused last reset.",
-        false,
-        NULL
-    },
-    [FAULT_ID_BAD_HALL_SEQUENCE] = {
-        NULL,
-        "Bad motor position hall sequence.",
-        false,
-        NULL
-    },
-    [FAULT_ID_DC_BUS_OV] = {
-        NULL,
-        "DC Bus Over Voltage.",
-        false,
-        NULL
-    },
-    [FAULT_ID_SOFTWARE_OVER_CURRENT] = {
-        NULL,
-        "Software Over Current.",
-        false,
-        NULL
-    },
-    [FAULT_ID_HARDWARE_OVER_CURRENT] = {
-        NULL,
-        "Hardware Over Current.",
-        false,
-        NULL
-    },
-    [FAULT_ID_GENERIC_CUZ_IM_LAZY] = {
-        NULL,
-        "Generic Fault: Placeholder for testing.",
-        true,
-        NULL
-    }
-};
 
-
-//making an empty array for storing all the recover handlers dynamically in faults task
-static recovery_callback_t recoverHandlers[NUM_FAULTS] = {NULL};
-
-
-
-
-    
+#endif /* FAULTS_H */

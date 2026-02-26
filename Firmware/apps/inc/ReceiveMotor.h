@@ -1,6 +1,11 @@
+#ifndef RECEIVE_MOTOR_H
+#define RECEIVE_MOTOR_H
+
 #include <stm32f4xx.h>
 #include <stdint.h>
 #include "stm32f4xx.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 #define MOCO_BASE_ADDR 0x69420
 
 typedef enum {
@@ -46,7 +51,9 @@ static const moco_status_t poll_list[] = {
 
 #define MOCO_FULL_STATUS_ARR_LEN sizeof(poll_list)/sizeof(moco_status_t)
 
-uint64_t moco_full_status_arr[MOCO_FULL_STATUS_ARR_LEN] = {0};
+extern uint64_t moco_full_status_arr[MOCO_FULL_STATUS_ARR_LEN];
+extern SemaphoreHandle_t moco_status_lock;
 
 void initStatusEventGroup();
 
+#endif /* RECEIVE_MOTOR_H */

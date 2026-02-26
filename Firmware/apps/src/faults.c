@@ -3,9 +3,81 @@
 #include "faults.h"
 #include <stdio.h>
 #include <DriveMotor.h>
+#include "SendAndRecieveCarStatus.h"
 
 StaticEventGroup_t xFaultEventGroupBuffer;
 EventGroupHandle_t xFaultEventGroup;
+
+static fault_t faultArray[NUM_FAULTS] = {
+    [FAULT_ID_WATCHDOG_FSM] = {
+        &handleWatchdogFSMFault,
+        "FSM Watchdog Fault: Missing CAN messages in watchdog window.",
+        false,
+        NULL
+    },
+    [FAULT_ID_MOTOR_OVERSPEED] = {
+        NULL,
+        "Motor Over Speed: 15% above max RPM.",
+        false,
+        NULL
+    },
+    [FAULT_ID_IGBT_DESAT] = {
+        NULL,
+        "Desaturation Fault: IGBT desaturation or driver OVLO.",
+        false,
+        NULL
+    },
+    [FAULT_ID_15V_RAIL_UVLO] = {
+        NULL,
+        "15V Rail Under Voltage Lockout (UVLO).",
+        false,
+        NULL
+    },
+    [FAULT_ID_CONFIG_READ_ERROR] = {
+        NULL,
+        "Configuration Read Error: Some values reset to defaults.",
+        false,
+        NULL
+    },
+    [FAULT_ID_WATCHDOG_LAST_RESET] = {
+        NULL,
+        "Watchdog caused last reset.",
+        false,
+        NULL
+    },
+    [FAULT_ID_BAD_HALL_SEQUENCE] = {
+        NULL,
+        "Bad motor position hall sequence.",
+        false,
+        NULL
+    },
+    [FAULT_ID_DC_BUS_OV] = {
+        NULL,
+        "DC Bus Over Voltage.",
+        false,
+        NULL
+    },
+    [FAULT_ID_SOFTWARE_OVER_CURRENT] = {
+        NULL,
+        "Software Over Current.",
+        false,
+        NULL
+    },
+    [FAULT_ID_HARDWARE_OVER_CURRENT] = {
+        NULL,
+        "Hardware Over Current.",
+        false,
+        NULL
+    },
+    [FAULT_ID_GENERIC_CUZ_IM_LAZY] = {
+        NULL,
+        "Generic Fault: Placeholder for testing.",
+        true,
+        NULL
+    }
+};
+
+static recovery_callback_t recoverHandlers[NUM_FAULTS] = {NULL};
 
 void Faults_Init(void) {
     xFaultEventGroup = xEventGroupCreateStatic(&xFaultEventGroupBuffer);
@@ -100,7 +172,9 @@ void Task_FaultHandler(void *arg) {
         }else{
             // Lock the scheduler or take other necessary actions
             printf("One or more faults are non-recoverable. System requires reset.\n");
+            xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
             vcu_status.vcu_fault = true; //update vcu status for telemetry
+            xSemaphoreGive(vcu_status_lock);
             // Implement system reset or halt
             vTaskSuspendAll(); // no new scheduling
             while(1); // halt

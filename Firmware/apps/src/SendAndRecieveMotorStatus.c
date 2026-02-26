@@ -5,7 +5,11 @@
 #include "FreeRTOS.h"
 #include <event_groups.h>
 #include "faults.h"
+#include "semphr.h"
 // #include <stm32l4xx_hal_can.h>
+
+uint64_t moco_full_status_arr[MOCO_FULL_STATUS_ARR_LEN] = {0};
+SemaphoreHandle_t moco_status_lock;
 
 #define UPDATE_RATE_MS 200 //ms
 #define MOTOR_BROADCAST_ID_1 0xABCD
@@ -34,7 +38,9 @@ void getMotorStatus() {
       for (int byte_index = 0; byte_index < 8; byte_index++) {
           packed_data |= ((uint64_t)dataBuf[byte_index] << (8 * byte_index));
       }
+      xSemaphoreTake(moco_status_lock, portMAX_DELAY);
       moco_full_status_arr[i] = packed_data;
+      xSemaphoreGive(moco_status_lock);
   }
 
   //check error flags and flip anything that's high + this is why motor fault enums have to be grouped

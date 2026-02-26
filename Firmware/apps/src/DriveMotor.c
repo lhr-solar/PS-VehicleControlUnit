@@ -19,20 +19,10 @@
 
 #include <stdio.h>
 #include "CAN.h"
-// #include "CANConfig.h"
-// #include "CANbus.h"
-// #include "Dashboard.h"
-// #include "DebugIO.h"
-// #include "Lights.h"
-// #include "Pedals.h"
-// #include "ReadTritium.h"
-// #include "SendCarCAN.h"
-// #include "StatusLeds.h"
-// #include "Tasks.h"
-// #include "UpdateDisplay.h"
-// #include "os_cfg_app.h"
+
 #include "ReceiveMotor.h"
 #include "DriveMotor.h"
+#include "SendAndRecieveCarStatus.h"
 
 #include "stdbool.h"
 
@@ -40,6 +30,7 @@
 
 #include <math.h>
 #include "FSM.h"
+#include "semphr.h"
 
 // #define NEXT_STATES_LENGTH 128
 
@@ -98,13 +89,13 @@ CANDATA_t powerCmd = {.can_id = 0x4321, .idx = 0, .data = {0.0f, 0.0f}};
 // faults.. Questions: Do i need to make an rtos task for all this? Am i just
 // replacing read/send tritium or also read car can (ignition + IO stuff
 // tracking + faults anyways)? Can i throw a flag into not ready for BPS stuff?
-void runFSM() {                         // a bitfield
-    currentState =
-        FSM[currentState.NextStates[carStatus]];  // Get the next state based on
-                                                  // the current state and car
-                                                  // status
-    currentState.stateHandler();  // Run the handler for the current state
-    vcu_status.vcu_fsm_state = currentState.stateName; //update the vcu status for telemetry
+void runFSM() {
+    currentState = FSM[currentState.NextStates[carStatus]];
+    currentState.stateHandler();
+
+    xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
+    vcu_status.vcu_fsm_state = currentState.stateName;
+    xSemaphoreGive(vcu_status_lock);
 }
 
 void init() {
@@ -148,6 +139,7 @@ void sendMotorPowerCommand(float powerSetpoint) {
 
 //MUST REINTERPRET and not just cast
 float getCarSpeed(){
+  xSemaphoreTake(moco_status_lock, portMAX_DELAY);
   int idx = -1;
   for(int i = 0; i < MOCO_FULL_STATUS_ARR_LEN; i++){
     if(moco_full_status_arr[i] == MOTOR_VELOCITY){
@@ -157,6 +149,8 @@ float getCarSpeed(){
   }
 
   uint64_t packedData = moco_full_status_arr[idx];
+  xSemaphoreGive(moco_status_lock);
+
   uint32_t rawSpeed = (uint32_t)(packedData >> 32);
   //convert to float
   float convertedSpeed;
@@ -165,12 +159,14 @@ float getCarSpeed(){
 }
 
 
-bool readyToRoll() {  // Car can escape not ready state, this is all of our
-                      // checks for recoverable faults and init states, but init
-                      // stats will have associated flags
+bool readyToRoll() {
+  xSemaphoreTake(controls_lock, portMAX_DELAY);
+  ignitionState_t ign = ignitionState;
+  bool braking = isBraking;
+  float accel = accelPedalPercent;
+  xSemaphoreGive(controls_lock);
 
-  // Check all of our status bits here for other random faults
-  if(getCarSpeed() < 1.0f && ignitionState == MOT_EN && !isBraking && accelPedalPercent == 0.0f){
+  if(getCarSpeed() < 1.0f && ign == MOT_EN && !braking && accel == 0.0f){
     return true;
   }
 
@@ -199,15 +195,22 @@ void handleFSMNotReadyState() {
 }
 
 void handleFSMForwardDriveState() {
-  cruiseControlPercent = -1; //reset cruise control when we go back into drive
-  vcu_status.vcu_regen_active = false; //make sure regen is not active when we are trying to drive forward
+  cruiseControlPercent = -1;
+
+  xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
+  vcu_status.vcu_regen_active = false;
+  xSemaphoreGive(vcu_status_lock);
 
   if(getCarSpeed() < -1.0f){ //dont go fwd in reverse
     currentState = FSM[NEUTRAL];
     return;
   }
 
-  sendMotorDriveCommand(20000, accelPedalPercent);
+  xSemaphoreTake(controls_lock, portMAX_DELAY);
+  float accel = accelPedalPercent;
+  xSemaphoreGive(controls_lock);
+
+  sendMotorDriveCommand(20000, accel);
   return;
 }
 void handleFSMNeutralState() {
@@ -222,14 +225,20 @@ void handleFSMReverseDriveState() {
     return;
   }
 
-  sendMotorDriveCommand(-20000, accelPedalPercent);
+  xSemaphoreTake(controls_lock, portMAX_DELAY);
+  float accel = accelPedalPercent;
+  xSemaphoreGive(controls_lock);
+
+  sendMotorDriveCommand(-20000, accel);
   return;
 }
 
 void handleFSMRegenState() {
   float regenCurrent = 100.0f;
   sendMotorDriveCommand(0, regenCurrent);
+  xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
   vcu_status.vcu_regen_active = true;
+  xSemaphoreGive(vcu_status_lock);
   return;
 }
 
@@ -419,8 +428,10 @@ void Task_SendMotor(void *p_arg) {
 //FINAL PUSHHH
 //Make sure my CAN parsing makes sense for packaging -> made cantools do it so im green here
 //switch to real CAN msgs... done!? Idk but lets see
-//make an init task rq... 
+//make an init task rq... done
 //add mutexes for shared vars / threads
+//figure out the can recv entries...
+//compile with can??
 //have claude check it all since gemini keeps frying me and I miss things
 //make compile...
 //forwarding motor messages is a later issue...

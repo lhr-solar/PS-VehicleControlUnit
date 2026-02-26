@@ -13,10 +13,6 @@
 extern EventGroupHandle_t xWDogEventGroup_handle;
 extern EventGroupHandle_t xFaultEventGroup_handle;
 
-/*================== INIT TASK ================*/
-StaticTask_t Task_Init_Buffer;
-StackType_t Task_Init_Stack_Array[configMINIMAL_STACK_SIZE];
-
 /* ================= FSM TASK ================= */
 
 StaticTask_t Task_FSM_Buffer;
@@ -47,6 +43,7 @@ EventGroupHandle_t xWdEventGroup;
 
 StaticTask_t Task_Fault_Buffer;
 StackType_t Task_Fault_Stack_Array[configMINIMAL_STACK_SIZE];
+
 
 void Task_CANWatchdog(void *arg);
 void Task_FaultHandler(void *arg);

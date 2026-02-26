@@ -7,7 +7,8 @@
 // CAN MSG VARIABLES
 static gear_t gear = DASH_NEU;
 static bool regenButtonPressed = false;
-static bool cruiseControlButton = false;
+static bool cruiseControlSet = false;
+static bool cruiseControlEnabled = false;
 static bool regenEnabled = false;
 static bool okToRegen = false;
 static bool bpsTripped = false;
@@ -51,6 +52,7 @@ void getControlsBitfield() {
   // If braking, thresh for braking goes down (hysterisis)
   if (brakePedalPercent >= thresholdBrake) {
     thresholdBrake = BRAKE_THRESH_HYST;
+    isBraking = true;
   } else {
     thresholdBrake = BRAKE_THRESH;
   }    
@@ -91,56 +93,93 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
     //I have the actual DBC now so let's parse this fr fr
     recieved_CAN_message((FSM_Signal_t)i); //for wd
 
-      switch (fsm_signal_to_can_id[i]) {
-        case CAN_ID_PEDALS:
-          // Byte 0 = brake raw, Byte 1 = accel raw
-          brakePedalPercent = dataBuf[0];
-          accelPedalPercent = dataBuf[1];
+  for (int i = 0; i < FSM_SIGNAL_COUNT; i++) {
+      switch (i) {  // use enum index directly
+        case BPS_STATUS: {
+            struct filtered_bps_status_t bpsData;
+            bps_status_unpack(&bpsData, dataBuf, FILTERED_BPS_STATUS_LENGTH);
 
-          brakePedalPercent = brakePedalPercent;
-          accelPedalPercent = accelPedalPercent;
-          
-          break;
-        case CAN_ID_GEARS:
-          // Assume gear encoded in byte 0
-          gear = dataBuf[0] & 0x03;
-          break;
-        case CAN_ID_REGEN_BUTTON:
-          // Assume byte 0 bit0 = regen button pressed
-          regenButtonPressed =
-              (dataBuf[0] & 0x01);
-          break;
-        case CAN_ID_CRUISE_CONTROL:
-          // Assume byte 0 bit0 = cruise button toggle
-          cruiseControlButton =
-              (dataBuf[0] & 0x01);
-          break;
-        case CAN_ID_REGEN_ENABLED:
-            // Assume byte 0 bit0 = regen enabled
-            regenEnabled = (dataBuf[0] & 0x01);
+            okToRegen = bpsData.bps_regen_ok;
+            bpsTripped = (bpsData.bps_fault != 0);
+
+            if (bpsData.bps_fault) {
+                Faults_ThrowFault(FAULT_ID_GENERIC_CUZ_IM_LAZY);
+            }
+
             break;
-        case CAN_ID_BPS_OK_TO_REGEN:
-          // Assume byte 0 bit0 = OK-to-regen flag
-          okToRegen = (dataBuf[0] & 0x01);
-          break;
+        }
 
-        case CAN_ID_BPS_TRIP:
-          // Assume byte 0 bit0 = BPS tripped
-          bpsTripped = (dataBuf[0] & 0x01);
-          break;
+        case ACCEL_BRAKE_POS: {
+            struct filtered_accel_brake_position_t pedalsData;
+            accel_brake_position_unpack(
+                &pedalsData,
+                dataBuf,
+                FILTERED_ACCEL_BRAKE_POSITION_LENGTH
+            );
 
-        case CAN_ID_IGNITION_STATE:
-          // Assume byte 0 = ignition mode enum
-          ignitionState = dataBuf[0];
-          break;
+            accelPedalPercent = pedalsData.accel_pos_main_fault
+                ? pedalsData.accel_pos_redundant
+                : pedalsData.accel_pos_main;
 
-        default:
-          // Future CAN IDs handled here
-          break;
+            brakePedalPercent = pedalsData.brake_pos_redundant_fault
+                ? pedalsData.brake_pos_redundant
+                : pedalsData.brake_pos_main;
+
+            if ((pedalsData.brake_pressure_1_fault &&
+                pedalsData.brake_pressure_2_fault) ||
+                (pedalsData.accel_pos_main_fault &&
+                pedalsData.accel_pos_redundant_fault)) {
+
+                Faults_ThrowFault(FAULT_ID_GENERIC_CUZ_IM_LAZY);
+            }
+
+            break;
+        }
+
+        case DRIVER_INPUT_STATUS: {
+            struct filtered_driver_input_status_t driverData;
+            driver_input_status_unpack(
+                &driverData,
+                dataBuf,
+                FILTERED_DRIVER_INPUT_STATUS_LENGTH
+            );
+
+            regenButtonPressed   = driverData.regen_activate && driverData.regen_enable; //combining these
+            cruiseControlSet  = driverData.cruise_set;
+            cruiseControlEnabled = driverData.cruise_enable;
+
+            // Gear mapping
+            if (driverData.gear_forward) {
+                gear = 1;
+            } else if (driverData.gear_reverse) {
+                gear = 2;
+            } else if (driverData.gear_neutral) {
+                gear = 0;
+            } else {
+                gear = 0; // Default/fallback
+            }
+
+            // Ignition state
+            if (driverData.ignition_array) {
+                ignitionState = 1;
+            } else if (driverData.ignition_motor) {
+                ignitionState = 2;
+            } else if (driverData.ignition_off) {
+                ignitionState = 0;
+            } else {
+                ignitionState = 0; // Default/fallback
+            }
+
+            break;
+        }
+
+    default:
+        break;
       }
+
+    }
   }
 }
-
 
 
 //A little abstraction for readability

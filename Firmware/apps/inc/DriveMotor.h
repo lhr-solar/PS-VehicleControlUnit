@@ -15,17 +15,15 @@
 // #include "Dashboard.h"
 // #include "Tasks.h"
 // #include <cstdint>
-<<<<<<< HEAD
 #include "stm32f4xx.h"
-=======
-#include <stm32f4xx.h>
->>>>>>> b6e13c514fd87391896772785b30118b8374e3bd
 #include "CAN.h"
 #include "can_ids.h"
+#include "can_parsing_generated.h"
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include <stdint.h>
 #include "UpdateStatus.h"
+
 
 //#define SENDTRITIUM_PRINT_MES
 // #define CANBUS_MOTOR_SAFE_TO_RUN 1
@@ -55,8 +53,6 @@
 // #define GEAR_FAULT_THRESHOLD 3 // number of times gear fault can occur before it is considered a fault
 
 // #define ACCCEL_PEDAL_RESET_THRESHOLD 20
-#define BRAKE_THRESH 42
-#define BRAKE_THRESH_HYST 30
 #define MAX_VELOCITY 20000
 extern EventGroupHandle_t carStatusEventGroup; //bitfield for car status (thread-safe)
 
@@ -188,26 +184,18 @@ typedef struct TritiumState {
 
 
 typedef enum {
-  FSM_PEDALS,
-  FSM_GEARS,
-  FSM_REGEN_BUTTON,
-  FSM_REGEN_ENABLED,
-  FSM_CRUISE_CONTROL,
-  FSM_BPS_OK_TO_REGEN,
-  FSM_BPS_TRIP,
-  FSM_IGNITION_STATE,
-  FSM_SIGNAL_COUNT
+    BPS_STATUS,
+    VCU_STATUS,
+    ACCEL_BRAKE_POS,
+    DRIVER_INPUT_STATUS,
+    FSM_SIGNAL_COUNT
 } FSM_Signal_t;
 
 static const uint16_t fsm_signal_to_can_id[FSM_SIGNAL_COUNT] = {
-  [FSM_PEDALS]            = CAN_ID_PEDALS,
-  [FSM_GEARS]             = CAN_ID_GEARS,
-  [FSM_REGEN_BUTTON]      = CAN_ID_REGEN_BUTTON,
-  [FSM_REGEN_ENABLED]     = CAN_ID_REGEN_ENABLED,
-  [FSM_CRUISE_CONTROL]    = CAN_ID_CRUISE_CONTROL,
-  [FSM_BPS_OK_TO_REGEN]   = CAN_ID_BPS_OK_TO_REGEN,
-  [FSM_BPS_TRIP]          = CAN_ID_BPS_TRIP,
-  [FSM_IGNITION_STATE]    = CAN_ID_IGNITION_STATE,
+    [BPS_STATUS]           = FILTERED_BPS_STATUS_FRAME_ID,
+    [VCU_STATUS]           = FILTERED_VCU_STATUS_FRAME_ID, 
+    [ACCEL_BRAKE_POS]      = FILTERED_ACCEL_BRAKE_POSITION_FRAME_ID,
+    [DRIVER_INPUT_STATUS]  = FILTERED_DRIVER_INPUT_STATUS_FRAME_ID
 };
 
 typedef enum{
@@ -227,7 +215,7 @@ MOT_EN
 //For convenience and event groups
 
 #define ALL_CAN_MSGS ((1 << FSM_SIGNAL_COUNT) - 1) //all bits set
-#define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
+// #define WD_WINDOW_DONE (1 << FSM_SIGNAL_COUNT)  // next bit after CAN signals
 
 //IMPORTANT
 #define DRIVER_CONTROLS_BASE_ADDR 0x42069

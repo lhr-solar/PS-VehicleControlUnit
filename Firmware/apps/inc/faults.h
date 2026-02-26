@@ -6,6 +6,13 @@ typedef void (*callback_t)(void);
 //For the recovery handler, should return true if recovery successful, false otherwise
 typedef bool (*recovery_callback_t)(void);
 
+void Faults_ThrowFault(fault_id_t faultBit);
+void Faults_ThrowMultipleFaults(fault_id_t faultBits[], int numBits);
+void Faults_ThrowFaultsUsingBitfield(EventBits_t bitfield);
+void Faults_ClearFault(fault_id_t faultBit);
+EventBits_t Faults_GetCurrentFaults(void);
+void Task_FaultHandler(void *arg);
+
 #define ALL_FAULT_BITS ((1 << NUM_FAULTS) - 1)
 
 typedef struct faults_t{
@@ -31,7 +38,8 @@ typedef enum {
     FAULT_ID_HARDWARE_OVER_CURRENT,    // Hardware over current
     //ending motor flag group
 
-    FAULT_ID_WATCHDOG_FSM,             
+    FAULT_ID_WATCHDOG_FSM,       
+    FAULT_ID_GENERIC_CUZ_IM_LAZY,      
 
 
     NUM_FAULTS                         // Always last
@@ -99,11 +107,19 @@ static fault_t faultArray[NUM_FAULTS] = {
         false,
         NULL
     },
+    [FAULT_ID_GENERIC_CUZ_IM_LAZY] = {
+        NULL,
+        "Generic Fault: Placeholder for testing.",
+        true,
+        NULL
+    }
 };
 
 
 //making an empty array for storing all the recover handlers dynamically in faults task
 static recovery_callback_t recoverHandlers[NUM_FAULTS] = {NULL};
+
+
 
 
     

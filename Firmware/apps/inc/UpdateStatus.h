@@ -1,7 +1,10 @@
 #include "DriveMotor.h"
 #include <stdint.h>
 #include "stdbool.h"
+#include "faults.h"
 
+#define BRAKE_THRESH 42
+#define BRAKE_THRESH_HYST 30
 
 // CAN MSG VARIABLES
 static gear_t gear = DASH_NEU;

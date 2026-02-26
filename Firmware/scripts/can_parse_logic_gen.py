@@ -15,9 +15,7 @@ TARGET_MESSAGES = {
         "BPS_Status",
         "VCU_Status",
         "Accel_Brake_Position",
-        "Accel_Brake_Position_Voltage",
         "Driver_Input_Status",
-        "Brake_Pressure"
     ],
     "mppt": [
         "MPPT_A_Status", "MPPT_A_Power",

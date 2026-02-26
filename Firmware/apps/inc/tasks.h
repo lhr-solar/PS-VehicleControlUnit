@@ -1,15 +1,21 @@
 #ifndef TASK_H__
 #define TASK_H__
 
+#include "stm32xx_hal.h"
 #include "FreeRTOS.h" /* Must come first. */
 #include "task.h" 
 #include <event_groups.h>
 #include "DriveMotor.h"
+#include "ReceiveMotor.h"
+
 
 
 extern EventGroupHandle_t xWDogEventGroup_handle;
 extern EventGroupHandle_t xFaultEventGroup_handle;
 
+/*================== INIT TASK ================*/
+StaticTask_t Task_Init_Buffer;
+StackType_t Task_Init_Stack_Array[configMINIMAL_STACK_SIZE];
 
 /* ================= FSM TASK ================= */
 
@@ -38,6 +44,11 @@ EventGroupHandle_t xWdEventGroup;
 StaticTask_t Task_Fault_Buffer;
 StackType_t Task_Fault_Stack_Array[configMINIMAL_STACK_SIZE];
 
+void Task_CANWatchdog(void *arg);
+void Task_FaultHandler(void *arg);
+void Task_BroadcastMotorStatus(void *p_arg);
+void Task_Init(void *arg);
+void watchdog_init(void);
 
 
 

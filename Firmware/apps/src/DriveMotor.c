@@ -256,14 +256,10 @@ void handleFSMInitState() {
   can_start(hcan2);
 
   //initialize timers here, could make a timer/wd object in the header and just pass that in as well, might do when i have time
-  CAN_MSG_Watchdog_Create("PedalWD", FSM_PEDALS, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("GearsWD", FSM_GEARS, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("RegenBtnWD", FSM_REGEN_BUTTON, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("RegenEnWD", FSM_REGEN_ENABLED, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("CruiseWD", FSM_CRUISE_CONTROL, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("BPSOkRegenWD", FSM_BPS_OK_TO_REGEN, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("BPSTripWD", FSM_BPS_TRIP, 100); //100ms timeout
-  CAN_MSG_Watchdog_Create("IgnitionWD", FSM_IGNITION_STATE, 100); //100ms timeout
+  CAN_MSG_Watchdog_Create("BPSWD",           BPS_STATUS,          100); //100ms timeout
+  CAN_MSG_Watchdog_Create("VCUWD",           VCU_STATUS,          100); //100ms timeout
+  CAN_MSG_Watchdog_Create("AccelBrakeWD",    ACCEL_BRAKE_POS,     100); //100ms timeout
+  CAN_MSG_Watchdog_Create("DriverInputWD",   DRIVER_INPUT_STATUS, 100); //100ms timeout
 
   initFSM();
 
@@ -419,9 +415,9 @@ void Task_SendMotor(void *p_arg) {
 //make sure everything is clean and makes sense... bro there's so so many random things that pmo, like its not clean at all, headers call each other + god knows if i need a chip to make it compile + it's all guesswork
 
 //FINAL PUSHHH
-//switch to real CAN msgs...
-//Make sure my CAN parsing makes sense for packaging
-//add mutexes for shared vars / threads
+//Make sure my CAN parsing makes sense for packaging -> made cantools do it so im green here
+//switch to real CAN msgs... done!? Idk but lets see
 //make an init task rq... 
+//add mutexes for shared vars / threads
 //have claude check it all since gemini keeps frying me and I miss things
 //make compile...

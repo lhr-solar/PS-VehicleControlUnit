@@ -1,0 +1,21 @@
+//Only need the size to be 1 for latest, but may want to increase this for logging purposes
+//Makefile needs to point to this for FSM entries
+#pragma once
+#include "motor_can.h"
+#define CAN1 1
+#include "Embedded-Sharepoint/bsp/Inc/CAN.h"
+//Motor CAN Receive
+CAN_RECV_ENTRY(MOCO_IDENTIFICATION_INFO, 1, true);
+CAN_RECV_ENTRY(MOCO_STATUS_INFO, 1, true);
+CAN_RECV_ENTRY(MOCO_BUS_MEASUREMENT, 1, true);
+CAN_RECV_ENTRY(MOCO_VELOCITY_MEASUREMENT, 1, true);
+CAN_RECV_ENTRY(MOCO_PHASE_CURRENT, 1, true);
+CAN_RECV_ENTRY(MOCO_MOTOR_VOLTAGE_VECTOR, 1, true);
+CAN_RECV_ENTRY(MOCO_MOTOR_CURRENT_VECTOR, 1, true);
+CAN_RECV_ENTRY(MOCO_BACKEMF_MEASUREMENT, 1, true);
+CAN_RECV_ENTRY(MOCO_15V_RAIL_MEASUREMENT, 1, true);
+CAN_RECV_ENTRY(MOCO_3V3_19V_RAIL_MEASUREMENT, 1, true);
+CAN_RECV_ENTRY(MOCO_HEAT_MOTOR_TEMP, 1, true);
+CAN_RECV_ENTRY(MOCO_DSP_BOARD_TEMP, 1, true);
+CAN_RECV_ENTRY(MOCO_AMPHOURS_ODOMETER, 1, true);
+CAN_RECV_ENTRY(MOCO_CMD_SLIP_SPEED, 1, true);

@@ -10,29 +10,10 @@
 #ifndef __SENDTRITIUM_H
 #define __SENDTRITIUM_H
 
-// #include "common.h"
-// #include "os.h"
-// #include "Dashboard.h"
-// #include "Tasks.h"
-// #include <cstdint>
 #include "can_ids.h"
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include <stdint.h>
-
-//#define SENDTRITIUM_PRINT_MES
-// #define CANBUS_MOTOR_SAFE_TO_RUN 1
-
-// #define MOTOR_MSG_PERIOD 100 // in ms
-// #define FSM_PERIOD 100 // in ms
-// #define DEBOUNCE_PERIOD 2 // in units of FSM_PERIOD
-
-// #define MAX_VELOCITY 12000.0f // rpm (unobtainable value)
-
-// // Used to define accel & brake (hysteresis) thresholds for when to start/stop powering the motor, respectively
-// #define ACCEL_PEDAL_THRESHOLD 15 // percent
-// #define BRAKE_UNPRESSED_THRESHOLD 40 // percent
-// #define BRAKE_PRESSED_THRESHOLD 30 // percent
 
 // Motor Controller current values. Current is in Amps (A)
 #define MAX_MOCO_BATTERY_CURRENT 64.0f  // NOTE: Provided only for reference. This 64A max for daybreak, anticipated to be 135 for next-gen
@@ -53,15 +34,6 @@
 
 extern EventGroupHandle_t carStatusEventGroup; //bitfield for car status (thread-safe)
 
-// /**
-//  * Error types
-//  * 
-//  */
-// typedef enum
-// {
-//     SENDTRITIUM_ERR_NONE,
-//     SENDTRITIUM_ERR_GEAR_FAULT,     // Received multiple or no gear inputs (e.g. FOR_SW, REV_SW)
-// } SendTritium_error_code_t;
 
 #ifdef SENDTRITIUM_EXPOSE_VARS
 // Inputs

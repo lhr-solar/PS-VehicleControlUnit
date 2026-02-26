@@ -15,7 +15,7 @@
 // #include "Dashboard.h"
 // #include "Tasks.h"
 // #include <cstdint>
-#include "stm32f4xx.h"
+#include "stm32g4xx.h"
 #include "CAN.h"
 #include "can_ids.h"
 #include "can_parsing_generated.h"

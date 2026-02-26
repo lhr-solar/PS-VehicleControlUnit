@@ -1,4 +1,6 @@
 //A little abstraction for readability
+#include "stm32xx_hal.h"
+#include "stm32g4xx.h"
 #include <stdint.h>
 #include "ReceiveMotor.h"
 #include "CAN.h"
@@ -6,6 +8,7 @@
 #include <event_groups.h>
 #include "faults.h"
 #include "semphr.h"
+
 // #include <stm32l4xx_hal_can.h>
 
 uint64_t moco_full_status_arr[MOCO_FULL_STATUS_ARR_LEN] = {0};

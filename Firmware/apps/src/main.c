@@ -1,3 +1,10 @@
+#include "stm32xx_hal.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "ReceiveMotor.h"
+
+void Task_Init(void *arg);
+
 /*================== INIT TASK ================*/
 StaticTask_t Task_Init_Buffer;
 StackType_t Task_Init_Stack_Array[configMINIMAL_STACK_SIZE];
@@ -20,6 +27,7 @@ int main() {
         &Task_Init_Buffer
     );
 
+    vTaskStartScheduler();
 
     while(1){
         // Scheduler should've started by now

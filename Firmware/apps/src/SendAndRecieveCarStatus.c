@@ -215,8 +215,6 @@ void Task_SendVCUStatus(void *p_arg) {
         //also we want to make sure this goes out on time for telemetry reasons
         uint8_t data[8] = {0};
         xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
-        vcu_status.vcu_driver_input_ok = 1;
-        vcu_status.vcu_pedals_ok = 1;
         filtered_vcu_status_pack(data, &vcu_status, FILTERED_VCU_STATUS_LENGTH);
         xSemaphoreGive(vcu_status_lock);
         car_can_send(data, FILTERED_VCU_STATUS_FRAME_ID);

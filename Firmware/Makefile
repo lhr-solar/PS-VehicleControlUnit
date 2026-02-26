@@ -25,7 +25,7 @@ PROJECT_TARGET ?= stm32g473xx
 
 # find the soource and include dirs recrusively
 PROJECT_C_INCLUDES = $(shell find . -type d -iname inc)
-PROJECT_C_SOURCES  = $(shell find . -type f -iname "*.c")
+PROJECT_C_SOURCES  = $(shell find ./apps ./core ./config -type f -iname "*.c")
 # build directories
 PROJECT_BUILD_DIR = build
 BUILD_MAKEFILE_DIR = Embedded-Sharepoint

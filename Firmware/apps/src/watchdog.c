@@ -5,6 +5,7 @@
 #include "faults.h"
 #include <assert.h>
 #include "timers.h"   // for FreeRTOS software timers
+#include "SendAndRecieveCarStatus.h"
 
 #define MAX_CAN_WD_TIMERS 20
 
@@ -59,7 +60,20 @@ void generic_can_wd_callback(TimerHandle_t xTimer){
     //Handle the timeout event for the specific CAN message
     //e.g., log error, set fault flag, etc.
     // printf("Watchdog timeout for CAN message %d\n", fsm_signal_to_can_id[signal]);
+    xSemaphoreTake(vcu_status_lock, portMAX_DELAY);
+    switch(signal) {
+        case ACCEL_BRAKE_POS:
+            vcu_status.vcu_pedals_ok = 0; // Set pedals not ok if we miss the message
+            break;
+        case DRIVER_INPUT_STATUS:
+            vcu_status.vcu_driver_input_ok = 0; // Set driver input not ok if we miss the message
+            break;
+        default:
+    }
+    xSemaphoreGive(vcu_status_lock);
+
     Faults_ThrowFault(FAULT_ID_WATCHDOG_FSM);
+
 }
 
 

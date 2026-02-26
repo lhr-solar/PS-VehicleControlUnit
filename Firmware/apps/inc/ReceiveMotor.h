@@ -1,9 +1,9 @@
 #ifndef RECEIVE_MOTOR_H
 #define RECEIVE_MOTOR_H
 
-#include <stm32f4xx.h>
+#include <stm32g4xx.h>
 #include <stdint.h>
-#include "stm32f4xx.h"
+#include "stm32g4xx.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #define MOCO_BASE_ADDR 0x69420

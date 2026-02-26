@@ -65,9 +65,4 @@ void Task_Init(void *arg){
         &Task_Fault_Buffer
     );
 
-
-
-    // Start the scheduler
-    vTaskStartScheduler();
-
 }

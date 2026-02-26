@@ -48,7 +48,6 @@ StackType_t Task_Fault_Stack_Array[configMINIMAL_STACK_SIZE];
 void Task_CANWatchdog(void *arg);
 void Task_FaultHandler(void *arg);
 void Task_BroadcastMotorStatus(void *p_arg);
-void Task_Init(void *arg);
 void Task_SendVCUStatus(void *p_arg);
 void watchdog_init(void);
 

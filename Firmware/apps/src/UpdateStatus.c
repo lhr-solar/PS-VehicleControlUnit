@@ -88,6 +88,7 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
     }
 
     //signal has data, decode based on ID and update event here for watchdogs
+    //I have the actual DBC now so let's parse this fr fr
     recieved_CAN_message((FSM_Signal_t)i); //for wd
 
       switch (fsm_signal_to_can_id[i]) {

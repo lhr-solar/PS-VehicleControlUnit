@@ -22,57 +22,18 @@
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #include <stdint.h>
-#include "UpdateStatus.h"
+#include "SendAndRecieveCarStatus.h"
 
-
-//#define SENDTRITIUM_PRINT_MES
-// #define CANBUS_MOTOR_SAFE_TO_RUN 1
-
-// #define MOTOR_MSG_PERIOD 100 // in ms
-// #define FSM_PERIOD 100 // in ms
-// #define DEBOUNCE_PERIOD 2 // in units of FSM_PERIOD
-
-// #define MAX_VELOCITY 12000.0f // rpm (unobtainable value)
-
-// // Used to define accel & brake (hysteresis) thresholds for when to start/stop powering the motor, respectively
-// #define ACCEL_PEDAL_THRESHOLD 15 // percent
-// #define BRAKE_UNPRESSED_THRESHOLD 40 // percent
-// #define BRAKE_PRESSED_THRESHOLD 30 // percent
 
 // Motor Controller current values. Current is in Amps (A)
 #define MAX_MOCO_BATTERY_CURRENT 64.0f  // NOTE: Provided only for reference. This 64A max for daybreak, anticipated to be 135 for next-gen
 #define CONT_MOCO_BATTERY_CURRENT 30.0f // Continuous 
 #define MAX_MOCO_CURRENT 122.0f
 
-#define PEDAL_MIN 0        // percent
-#define PEDAL_MAX 100      // percent
-#define CURRENT_SP_MIN 0   // percent
-#define CURRENT_SP_MAX 100 // percent
-#define SWOC_CURRENT_SP_MAX 60 // percent
-
-// #define GEAR_FAULT_THRESHOLD 3 // number of times gear fault can occur before it is considered a fault
-
 // #define ACCCEL_PEDAL_RESET_THRESHOLD 20
 #define MAX_VELOCITY 20000
 extern EventGroupHandle_t carStatusEventGroup; //bitfield for car status (thread-safe)
-
-// /**
-//  * Error types
-//  * 
-//  */
-// typedef enum
-// {
-//     SENDTRITIUM_ERR_NONE,
-//     SENDTRITIUM_ERR_GEAR_FAULT,     // Received multiple or no gear inputs (e.g. FOR_SW, REV_SW)
-// } SendTritium_error_code_t;
-
-#ifdef SENDTRITIUM_EXPOSE_VARS
-// Inputs
-extern uint8_t brakePedalPercent;
-extern uint8_t accelPedalPercent;
-extern gear_t gear;
-extern bool isBrakeOn; // Used for updating display & brakelight
-#endif
+extern struct filtered_vcu_status_t vcu_status;
 
 //WARNING: IF YOU CHANGE THIS THE PYTHON SCRIPT MUST CHANGE AS WELL
 // ----------------------------------------------------------------
@@ -107,13 +68,6 @@ typedef enum BitfieldInputs {
 #define NEXT_STATES_LENGTH (1 << BITFIELD_INPUT_COUNT) // 2^number of bits
 #define ALL_STATUS_BITS ((1 << BITFIELD_INPUT_COUNT) - 1) // all bits set
 
-// // Getter functions for local variables in SendTritium.c
-// EXPOSE_GETTER(uint8_t, brakePedalPercent)
-// EXPOSE_GETTER(uint8_t, accelPedalPercent)
-// EXPOSE_GETTER(gear_t, gear)
-// EXPOSE_GETTER(float, currentSetpoint)
-// EXPOSE_GETTER(float, velocitySetpoint)
-// EXPOSE_GETTER(bool, isBrakeOn)
 
 /**
  * @brief Linearly map range of integers to another range of integers, and provide the pecentage result.
@@ -141,6 +95,7 @@ void CAN_MSG_Watchdog_Create(const char* timerName,
                             FSM_Signal_t signal,
                             uint32_t timeout_ms);
 void handleWatchdogFSMFault();
+void car_can_send(uint8_t *data, uint16_t can_id);
 
 
 //CAN_DATA

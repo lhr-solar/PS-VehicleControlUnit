@@ -66,10 +66,6 @@ static uint8_t carStatus = 0;  // Bitfield for car status
 bool accelerator_reset = false;
 float cruiseControlPercent = -1;
 
-// Outputs
-// static float currentSetpoint = 0.0f;
-// static float velocitySetpoint = 0.0f;
-int thresholdBrake = BRAKE_THRESH;
 
 // CAN messages
 // static FSMCANDATA_t CAR_MSGS[NUM_FSM_CANFilters] = {0};
@@ -108,6 +104,7 @@ void runFSM() {                         // a bitfield
                                                   // the current state and car
                                                   // status
     currentState.stateHandler();  // Run the handler for the current state
+    vcu_status.vcu_fsm_state = currentState.stateName; //update the vcu status for telemetry
 }
 
 void init() {
@@ -121,7 +118,6 @@ FSM[REGEN].stateHandler = &handleFSMRegenState;
 FSM[CRUISE_CONTROL].stateHandler = &handleFSMCruiseControlState;
 FSM[DISABLED].stateHandler = &handleFSMDisabledState;
 
-  assert(FSM_SIGNAL_COUNT != SEND_TRITIUM_IDS); //ensuring signal for every ID
   currentState = FSM[STATE_INIT];  // Start in init state
   currentState.stateHandler();     // Run init handler
 }
@@ -174,8 +170,11 @@ bool readyToRoll() {  // Car can escape not ready state, this is all of our
                       // stats will have associated flags
 
   // Check all of our status bits here for other random faults
+  if(getCarSpeed() < 1.0f && ignitionState == MOT_EN && !isBraking && accelPedalPercent == 0.0f){
+    return true;
+  }
 
-  return getCarSpeed() < 1.0f && ignitionState == MOT_EN && !isBraking && accelPedalPercent == 0.0f; //must be stationary to exit not ready
+  return false;  //must be stationary to exit not ready
 }
 
 //It should just lock itself in this state until reset or recovery
@@ -201,6 +200,8 @@ void handleFSMNotReadyState() {
 
 void handleFSMForwardDriveState() {
   cruiseControlPercent = -1; //reset cruise control when we go back into drive
+  vcu_status.vcu_regen_active = false; //make sure regen is not active when we are trying to drive forward
+
   if(getCarSpeed() < -1.0f){ //dont go fwd in reverse
     currentState = FSM[NEUTRAL];
     return;
@@ -211,7 +212,7 @@ void handleFSMForwardDriveState() {
 }
 void handleFSMNeutralState() {
   sendMotorDriveCommand(0, 0);
-  //must wait here until speed is under a certain thresh
+  //must route here until speed is under a certain thresh
   return;
 }
 
@@ -228,6 +229,7 @@ void handleFSMReverseDriveState() {
 void handleFSMRegenState() {
   float regenCurrent = 100.0f;
   sendMotorDriveCommand(0, regenCurrent);
+  vcu_status.vcu_regen_active = true;
   return;
 }
 
@@ -421,3 +423,4 @@ void Task_SendMotor(void *p_arg) {
 //add mutexes for shared vars / threads
 //have claude check it all since gemini keeps frying me and I miss things
 //make compile...
+//forwarding motor messages is a later issue...

@@ -98,8 +98,8 @@ void Task_BroadcastMotorStatus(void *p_arg) {
         memcpy(&motor_broadcast_data_packet_1[0], &moco_full_status_arr[0], 8 * sizeof(uint64_t)); //first 8 messages
         memcpy(&motor_broadcast_data_packet_2[0], &moco_full_status_arr[8], 6 * sizeof(uint64_t)); //next 6 messages
 
-        car_can_send((uint8_t*)motor_broadcast_data_packet_1, MOTOR_BROADCAST_ID_1);
-        car_can_send((uint8_t*)motor_broadcast_data_packet_2, MOTOR_BROADCAST_ID_2);
+        // car_can_send((uint8_t*)motor_broadcast_data_packet_1, MOTOR_BROADCAST_ID_1);
+        // car_can_send((uint8_t*)motor_broadcast_data_packet_2, MOTOR_BROADCAST_ID_2);
 
         // make the task sleep for whatever update rate is
         vTaskDelay(pdMS_TO_TICKS(UPDATE_RATE_MS)); //update every UPDATE_RATE ms

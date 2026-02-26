@@ -13,6 +13,16 @@ void Task_Init(void *arg){
    );
 
    xTaskCreateStatic(
+        Task_SendVCUStatus, /* The function that implements the task. */
+        "Send VCU Status", /* Text name for the task. */
+        configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */
+        (void*)NULL, /* Paramter passed into the task. */
+        tskIDLE_PRIORITY + 2, /* Task Priority. */
+        Task_SendVCUStatus_Stack_Array, /* Stack array. */
+        &Task_SendVCUStatus_Buffer  /* Buffer for static allocation. */
+   );
+
+   xTaskCreateStatic(
         Task_UpdateControlStatus, /* The function that implements the task. */
         "Update Control Status Task", /* Text name for the task. */
         configMINIMAL_STACK_SIZE, /* The size (in words) of the stack that should be created for the task. */

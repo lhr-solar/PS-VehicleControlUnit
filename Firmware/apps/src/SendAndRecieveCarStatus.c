@@ -181,7 +181,6 @@ void getAndUpdateControlStatus() {  // This is for getting the data, the logic w
   }
 }
 
-
 //A little abstraction for readability
 can_status_t car_can_read(uint8_t *data, FSM_Signal_t id) {
   // Fill the data based on the ID, call the acc receive function here
@@ -193,7 +192,19 @@ can_status_t car_can_read(uint8_t *data, FSM_Signal_t id) {
 void Task_UpdateControlStatus(void *p_arg) {
     while(true) {
         getControlsBitfield();
+
         vTaskDelay(pdMS_TO_TICKS(50)); //update every 50ms
+    }
+}
+
+void Task_SendVCUStatus(void *p_arg) {
+    while(true) {
+        //send vcu status every 100ms or so, this is separate from the update task since this is not needed for the logic and can be slower
+        //also we want to make sure this goes out on time for telemetry reasons
+        uint8_t data[8] = {0};
+        filtered_vcu_status_pack(data, &vcu_status, FILTERED_VCU_STATUS_LENGTH);
+        car_can_send(data, FILTERED_VCU_STATUS_FRAME_ID);
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 

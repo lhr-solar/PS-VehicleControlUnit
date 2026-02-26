@@ -100,6 +100,7 @@ void Task_FaultHandler(void *arg) {
         }else{
             // Lock the scheduler or take other necessary actions
             printf("One or more faults are non-recoverable. System requires reset.\n");
+            vcu_status.vcu_fault = true; //update vcu status for telemetry
             // Implement system reset or halt
             vTaskSuspendAll(); // no new scheduling
             while(1); // halt

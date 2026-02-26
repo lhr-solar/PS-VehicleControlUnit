@@ -30,6 +30,10 @@ StackType_t Task_UpdateControlStatus_Stack_Array[configMINIMAL_STACK_SIZE];
 StaticTask_t Task_BroadcastMotorStatus_Buffer;
 StackType_t Task_BroadcastMotorStatus_Stack_Array[configMINIMAL_STACK_SIZE];
 
+/* ================= UPDATE VCU STATUS ================= */
+StaticTask_t Task_SendVCUStatus_Buffer;
+StackType_t Task_SendVCUStatus_Stack_Array[configMINIMAL_STACK_SIZE];
+
 /* ================= WATCHDOG TASK ================= */
 
 StaticEventGroup_t xWdEventGroupBuffer;
@@ -48,6 +52,7 @@ void Task_CANWatchdog(void *arg);
 void Task_FaultHandler(void *arg);
 void Task_BroadcastMotorStatus(void *p_arg);
 void Task_Init(void *arg);
+void Task_SendVCUStatus(void *p_arg);
 void watchdog_init(void);
 
 

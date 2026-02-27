@@ -2,11 +2,6 @@
 #include "pinDefs.h"
 #include "inits.h"
 
-typedef struct {
-    GPIO_TypeDef *Port;
-    uint16_t Pin;
-} Led_t;
-
 // Enable GPIO clock for a given port
 // static void Enable_Port_Clock(GPIO_TypeDef *port)
 // {
@@ -57,9 +52,11 @@ int main(){
 
     // Initialize all LED GPIOs
     LEDs_init();
-    while (1) {
+    while (1) 
+    {
         // Turn LEDs on one-by-one
-        for (size_t i = 0; i < num_LEDs; ++i) {
+        for (size_t i = 0; i < num_LEDs; ++i) 
+        {
             Toggle_LED(i, ON);
             HAL_Delay(200);
         }
@@ -68,8 +65,9 @@ int main(){
         HAL_Delay(500);
 
         // Turn LEDs off one-by-one
-        for (size_t i = 0; i < num_LEDs; ++i) {
-             Toggle_LED(i, OFF);
+        for (size_t i = 0; i < num_LEDs; ++i) 
+        {
+            Toggle_LED(i, OFF);
             HAL_Delay(200);
         }
 

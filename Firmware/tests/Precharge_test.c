@@ -23,13 +23,13 @@ int main()
 
     // Task
     xTaskCreateStatic(
-        Task_Precharge,               // Task function
-        "Precharge",                  // Name of the task (for debugging)
+        Task_Precharge,             // Task function
+        "Precharge",                // Name of the task (for debugging)
         configMINIMAL_STACK_SIZE,   // Stack size in words
         NULL,                       // Task input parameter
         tskIDLE_PRIORITY + 1,       // Task priority
-        Precharge_Task_Stack,         // Task handle
-        &Precharge_Task_Buffer        // Static task buffer (optional)
+        Precharge_Task_Stack,       // Task handle
+        &Precharge_Task_Buffer      // Static task buffer (optional)
     );
 
     vTaskStartScheduler();

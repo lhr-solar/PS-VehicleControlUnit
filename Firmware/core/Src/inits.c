@@ -59,16 +59,17 @@ void MX_GPIO_Init(void)
   __HAL_RCC_TIM17_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8 | GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(PRECHARGE_COMPLETE_LED_PORT, PRECHARGE_COMPLETE_LED_PIN | PRECHARGE_SENSE_TO_LED_PIN, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PC8 PC12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_12;
+  GPIO_InitStruct.Pin = PRECHARGE_COMPLETE_LED_PIN | PRECHARGE_SENSE_TO_LED_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;x
+  HAL_GPIO_Init(PRECHARGE_COMPLETE_LED_PORT, &GPIO_InitStruct);
 }
 
+// Initializes USART3 for printf
 void MX_USART3_UART_Init(void)
 {
   husart3->Instance = USART3;
@@ -101,6 +102,7 @@ void MX_USART3_UART_Init(void)
   }
 }
 
+// Initializes the UART specified
 void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
 {
 
@@ -109,10 +111,6 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
 
   if (uartHandle->Instance == USART3)
   {
-    /* USER CODE BEGIN USART3_MspInit 0 */
-
-    /* USER CODE END USART3_MspInit 0 */
-
     /** Initializes the peripherals clocks
      */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART3;

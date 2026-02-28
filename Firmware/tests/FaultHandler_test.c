@@ -1,8 +1,12 @@
 #include "FaultHandlerTask.h"
+#include "PrechargeTask.h"
 #include "inits.h"
 
 StaticTask_t    FaultHandlerTask_Buffer;
 StackType_t     FaultHandlerTask_Stack[configMINIMAL_STACK_SIZE];
+
+StaticTask_t    Precharge_Task_Buffer;
+StackType_t     Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
 
 int main()
 {

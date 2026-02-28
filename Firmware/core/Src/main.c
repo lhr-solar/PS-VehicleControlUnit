@@ -2,6 +2,7 @@
 #include "stm32xx_hal.h"
 #include "ADC_Sense.h"
 #include "inits.h"
+#include "UART.h"
 
 int main(void)
 {

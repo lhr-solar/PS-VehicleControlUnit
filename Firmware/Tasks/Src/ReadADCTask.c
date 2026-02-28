@@ -20,6 +20,7 @@ void Init_ReadADCTask() {
     ADC_Sense_Status status = ADC_Sense_Init();
     Init_UART_Printf();
 
+    // TODO: Implement event group bits
     if (status == ADC_SENSE_ERR_0)
     {
         Toggle_LED(CAR_CRUISE, ON);
@@ -47,10 +48,7 @@ void Task_ReadADC()
 
     while(1)
     {
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
-        ADC_Sense_Status read = Read_ADC(pdMS_TO_TICKS(50), &values);
-
-        if (read == ADC_SENSE_OK)
+        if (Read_ADC(pdMS_TO_TICKS(50), &values) == ADC_SENSE_OK)
         {
             printf("Motor: %ld mV | Battery: %ld mV\r\n",
                 values.Motor_Voltage,
@@ -62,5 +60,7 @@ void Task_ReadADC()
             printf("Read_ADC failed\r\n");
             Toggle_LED(CAR_BPSFAULT, ON);
         }
+
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
     }
 }

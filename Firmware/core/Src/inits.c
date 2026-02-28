@@ -59,47 +59,14 @@ void MX_GPIO_Init(void)
   __HAL_RCC_TIM17_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(PRECHARGE_COMPLETE_LED_PORT, PRECHARGE_COMPLETE_LED_PIN | PRECHARGE_SENSE_TO_LED_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIO_INIT_PORT, GPIO_ONE_PIN | GPIO_TWO_PIN, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PC8 PC12 */
-  GPIO_InitStruct.Pin = PRECHARGE_COMPLETE_LED_PIN | PRECHARGE_SENSE_TO_LED_PIN;
+  GPIO_InitStruct.Pin = GPIO_ONE_PIN | GPIO_TWO_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;x
-  HAL_GPIO_Init(PRECHARGE_COMPLETE_LED_PORT, &GPIO_InitStruct);
-}
-
-// Initializes USART3 for printf
-void MX_USART3_UART_Init(void)
-{
-  husart3->Instance = USART3;
-  husart3->Init.BaudRate = 115200;
-  husart3->Init.WordLength = UART_WORDLENGTH_8B;
-  husart3->Init.StopBits = UART_STOPBITS_1;
-  husart3->Init.Parity = UART_PARITY_NONE;
-  husart3->Init.Mode = UART_MODE_TX_RX;
-  husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  husart3->Init.OverSampling = UART_OVERSAMPLING_16;
-  husart3->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  husart3->Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  husart3->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-
-  if (HAL_UART_Init(husart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetTxFifoThreshold(husart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(husart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(husart3) != HAL_OK)
-  {
-    Error_Handler();
-  }
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIO_INIT_PORT, &GPIO_InitStruct);
 }
 
 // Initializes the UART specified
@@ -128,16 +95,41 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
     PC10     ------> USART3_TX
     PC11     ------> USART3_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_11;
+    GPIO_InitStruct.Pin = USART3_TX_PIN | USART3_RX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    HAL_GPIO_Init(USART3_PORT, &GPIO_InitStruct);
 
-    /* USER CODE BEGIN USART3_MspInit 1 */
+    husart3->Instance = USART3;
+    husart3->Init.BaudRate = 115200;
+    husart3->Init.WordLength = UART_WORDLENGTH_8B;
+    husart3->Init.StopBits = UART_STOPBITS_1;
+    husart3->Init.Parity = UART_PARITY_NONE;
+    husart3->Init.Mode = UART_MODE_TX_RX;
+    husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    husart3->Init.OverSampling = UART_OVERSAMPLING_16;
+    husart3->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+    husart3->Init.ClockPrescaler = UART_PRESCALER_DIV1;
+    husart3->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
-    /* USER CODE END USART3_MspInit 1 */
+    if (HAL_UART_Init(husart3) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_UARTEx_SetTxFifoThreshold(husart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_UARTEx_SetRxFifoThreshold(husart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_UARTEx_DisableFifoMode(husart3) != HAL_OK)
+    {
+      Error_Handler();
+    }
   }
 }
 
@@ -150,10 +142,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if (adcHandle->Instance == ADC1)
   {
-    /* USER CODE BEGIN ADC1_MspInit 0 */
-
-    /* USER CODE END ADC1_MspInit 0 */
-
     /** Initializes the peripherals clocks
      */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
@@ -174,20 +162,16 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
     /**ADC1 GPIO Configuration
     PB12     ------> ADC1_IN11
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_12;
+    GPIO_InitStruct.Pin = ADC1_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
 
     HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   }
   else if (adcHandle->Instance == ADC2)
   {
-    /* USER CODE BEGIN ADC2_MspInit 0 */
-
-    /* USER CODE END ADC2_MspInit 0 */
-
     /** Initializes the peripherals clocks
      */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
@@ -208,10 +192,10 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
     /**ADC2 GPIO Configuration
     PB2     ------> ADC2_IN12
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Pin = ADC2_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
 
     HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
@@ -234,23 +218,23 @@ void Init_UART_Printf()
 // for actual faults
 void Fault_Handler()
 {
-  contactor_set(MOTOR_CONTACTOR, OPEN, 100, EMERGENCY);
-  contactor_set(MOTOR_PRE_CONTACTOR, OPEN, 100, EMERGENCY);
+  // open every contactor, bypasses semaphore
+  for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+  contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
+  }
+
+  // turns on fault led
+  LED_set(MOTOR_FAULT, ON);
+
+  update_status();
+
   while (1)
   {
     vTaskDelay(1000);
     printf("FAULT!\r\n");
+
+    // TODO: Send fault message over CAN
   }
-
-  // Kill Main Task
-
-  // open every contactor, bypasses semaphore
-  // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
-  // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-  // }
-
-  // turns on fault led
-  // LED_set(MOTOR_FAULT, ON);
 }
 
 // for software errors

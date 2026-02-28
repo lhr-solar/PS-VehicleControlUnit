@@ -1,8 +1,4 @@
-#ifndef STATUSLED_H
-#define STATUSLED_H
-
-/** @brief Number of bits in the module fault bitmap. */
-#define MOD_FAULT_BITS 5
+#pragma once
 
 #define num_LEDs 14
 
@@ -30,10 +26,10 @@ typedef enum {
     WATCHDOG,                   //moco watchdog fault
     SWOC,                       //moco swoc fault
     MOTOR_FAULT                 //moco generic fault
-} Fault_Mapping_t;
+} Status_Mapping_t;
 
 /** @brief Sets a specific LED to on (true) or off (false). */
-void LED_set(Fault_Mapping_t LED, LED_state_t state);
+void LED_set(Status_Mapping_t LED, LED_state_t state);
 
 /** @brief Turns off all LEDs. */
 void LEDs_clear(void);
@@ -42,9 +38,7 @@ void LEDs_clear(void);
 void LEDs_init(void);
 
 /** @brief Toggle the LED */
-void Toggle_LED(Fault_Mapping_t LED, LED_state_t state);
+void Toggle_LED(Status_Mapping_t LED, LED_state_t state);
 
 /** @brief sets all LEDs based on LEDbitmap */
 void update_status(void);
-
-#endif

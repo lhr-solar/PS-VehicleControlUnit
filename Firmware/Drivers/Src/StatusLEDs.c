@@ -1,3 +1,5 @@
+// NOTE: LEDs are negative logic, however ON and OFF are defined such that they reflect the actual state of the LED
+
 #include "StatusLEDs.h"    
 #include <stdint.h>
 #include "pinDefs.h"
@@ -20,11 +22,11 @@ static const GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_PRE_COMPLETE_PORT, PRECH
                                 {MOTOR_FAULT_FAULT_PORT, MOTOR_FAULT_FAULT_PIN}
 };
 
-void Toggle_LED(Fault_Mapping_t LED, LED_state_t state) {
+void Toggle_LED(Status_Mapping_t LED, LED_state_t state) {
     HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
 }
 
-void LED_set(Fault_Mapping_t LED, LED_state_t state) {
+void LED_set(Status_Mapping_t LED, LED_state_t state) {
 
     // make sure LED is in range
     if (LED<0 || LED>=num_LEDs) {

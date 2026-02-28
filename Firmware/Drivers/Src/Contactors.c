@@ -12,7 +12,7 @@ static const char* CONTACTOR_NAMES[NUM_CONTACTORS] = {
 static contactor_t contactors[NUM_CONTACTORS];
 
 // get
-bool contactor_get(contactor_num_t contactor_num    ) {
+contactor_state_t contactor_get(contactor_num_t contactor_num) {
     
     // check that contactor exists
     if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS)) {
@@ -90,7 +90,7 @@ void contactor_init() {
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
     // loop to intialize contactor GPIO and timers
-    for (uint32_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+    for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
 
         contactor_t* contactor = &contactors[contactor_num];
 

@@ -20,8 +20,6 @@ int main()
 
     MX_UART_INIT(husart3);
 
-    MX_USART3_UART_Init();
-
     xTaskCreateStatic(
         Task_ReadADC,               // Task function
         "ReadADC",                  // Name of the task (for debugging)

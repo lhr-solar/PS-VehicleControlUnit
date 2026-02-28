@@ -18,7 +18,6 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_UART_INIT(huart3);
-  MX_USART3_UART_Init();
 
   /* Infinite loop */
   while (1)

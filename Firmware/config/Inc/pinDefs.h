@@ -5,8 +5,6 @@
 #define HB_LED_PORT GPIOC
 #define HB_LED_PIN GPIO_PIN_3
 
-// ADC Channel 11 (Motor Voltage) and 12 (Battery Voltage) are GPIOB 12 and 2
-
 // Car State LEDs
 #define DRIVABLE_LED_PORT GPIOC
 #define DRIVABLE_LED_PIN GPIO_PIN_6
@@ -65,9 +63,18 @@
 #define FAULT_LED_PORT GPIOB
 #define FAULT_LED_PIN GPIO_PIN_4
 
-#
+// Other pins
+#define USART3_PORT GPIOC
 #define USART3_TX_PIN GPIO_PIN_10
 #define USART3_RX_PIN GPIO_PIN_11
+
+#define GPIO_INIT_PORT GPIOC
+#define GPIO_ONE_PIN GPIO_PIN_8
+#define GPIO_TWO_PIN GPIO_PIN_12
+
+#define ADC_PORT GPIOB
+#define ADC1_PIN GPIO_PIN_12
+#define ADC2_PIN GPIO_PIN_2
 
 /**
  * @brief object that holds pin num and port of a GPIO pin

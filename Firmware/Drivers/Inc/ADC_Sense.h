@@ -1,5 +1,4 @@
-#ifndef ADC_SENSE_H
-#define ADC_SENSE_H
+#pragma once
 
 #include <stdint.h>
 #include "FreeRTOS.h"
@@ -18,8 +17,11 @@
 #define Divider_Numerator   2490
 #define Divider_Denominator (2490 + 100000)
 
+// ADC Channel 11 (Motor Voltage) and 12 (Battery Voltage) are GPIOB 12 and 2
+#define ADC1_CHANNEL ADC_CHANNEL_11
+#define ADC2_CHANNEL ADC_CHANNEL_12
 #define ADC_QUEUE_LENGTH 4
-#define ITEM_SIZE sizeof(uint16_t)
+#define ADC_QUEUE_ITEM_SIZE sizeof(uint16_t)
 #define ADC_SAMPLING_TIME ADC_SAMPLETIME_2CYCLES_5
 
 /**
@@ -36,41 +38,31 @@ typedef struct {
  * @brief ADC sense function return status
  */
 typedef enum {
-    ADC_SENSE_OK = 0,
-    ADC_SENSE_ERR,
-    ADC_SENSE_ERR_0,
-    ADC_SENSE_ERR_1,
-    ADC_SENSE_ERR_2,
+    ADC_SENSE_OK,
+    ADC_QUEUE_ERR,              // Queue creation failed
+    ADC_1_INIT_ERR,             // ADC1 initialization failed
+    ADC_2_INIT_ERR,             // ADC2 initialization failed
+    ADC_1_READ_ERR,             // ADC1 read failed
+    ADC_2_READ_ERR,             // ADC2 read failed
+    ADC_SENSE_INIT_ERR,         // Initialization not called or failed
+    READ_ADC_BAD_PARAM_ERR,     // Bad result parameter
+    MOTOR_QUEUE_RECEIVE_ERR,    // ADC values not received from motor ADC queue
+    BATTERY_QUEUE_RECEIVE_ERR   // ADC values not received from battery ADC queue
 } ADC_Sense_Status;
 
 /**
- * @brief ADC sense error flags (bitmask)
- *
- * Multiple error flags may be set simultaneously.
+ * @brief Initialize ADC1 struct and calls the wrapper adc_init function to initialize ADC1 peripheral
+ * @param None
+ * @retval None
  */
-typedef enum {
-    ADC_SENSE_ERR_NONE         = 0,
-    ADC_SENSE_ERR_NOT_INIT     = (1u << 0), // Returns when queues are not intialized properly
-    ADC_SENSE_ERR_MOTOR_STALE  = (1u << 1), // Returns when motor ADC stops updating
-    ADC_SENSE_ERR_BATT_STALE   = (1u << 2), // Returns when battery ADC stops updating
-    ADC_SENSE_ERR_ADC1_INIT    = (1u << 3), // Returns when ADC1 adc_init fails
-    ADC_SENSE_ERR_ADC2_INIT    = (1u << 4), // Returns when ADC2 adc_init fails
-    ADC_SENSE_ERR_BAD_PARAM    = (1u << 5), // Returns when READ_ADC is called with a NULL Result pointer
-} ADC_Sense_ErrorMask;
+ADC_Sense_Status ADC_1_Init(void);
 
 /**
- * @brief   Get the current ADC error mask
- *
- * @return  Bitmask of ADC_SENSE_ERR_* flags
+ * @brief Initialize ADC2 struct and calls the wrapper adc_init function to initialize ADC2 peripheral
+ * @param None
+ * @retval None
  */
-uint32_t ADC_Sense_GetErrorMask(void);
-
-/**
- * @brief   Clear selected ADC error flags
- *
- * @param   Mask Bitmask of error flags to clear
- */
-void     ADC_Sense_ClearErrors(uint32_t Mask);
+ADC_Sense_Status ADC_2_Init(void);
 
 /**
  * @brief   Initialize ADC peripherals and internal queues
@@ -87,8 +79,8 @@ ADC_Sense_Status ADC_Sense_Init(void);
  * Triggers ADC conversions, waits for samples, and converts raw ADC
  * counts into millivolt values using fixed-point math.
  *
- * @param   Timeout_MS      Maximum time to wait for ADC samples (ticks)
- * @param   Result       Pointer to result structure for voltages
+ * @param   Timeout_MS  Maximum time to wait for ADC samples in milliseconds
+ * @param   Result      Pointer to result structure for voltages
  * @return  ADC_SENSE_OK if both ADC channels updated successfully,
  *          ADC_SENSE_ERR otherwise
  */
@@ -107,5 +99,3 @@ void MX_ADC1_Init(void);
   * @retval None
   */
 void MX_ADC2_Init(void);
-
-#endif

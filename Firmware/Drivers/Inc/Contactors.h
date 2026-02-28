@@ -1,12 +1,11 @@
-#ifndef CONTACTORS_H
-#define CONTACTORS_H
+#pragma once
 
 #include "pinDefs.h"
 #include "inits.h"
 
 /* Timing Definitions */
 /** Time to wait for the physical contactor to settle before reading feedback */
-#define CONTACTOR_SENSE_DELAY      pdMS_TO_TICKS(1000)  
+#define CONTACTOR_SENSE_DELAY      pdMS_TO_TICKS(250)  
 /** Maximum time allowed for callback execution to prevent task starvation */
 #define CALLBACK_BLOCKING_TIME     pdMS_TO_TICKS(20)    
 
@@ -23,7 +22,7 @@ typedef enum {
  */
 typedef enum {
     MOTOR_CONTACTOR,            /**< Battery to Motor Contactor */
-    MOTOR_PRE_CONTACTOR,        /**< Post-Precharge Short Contactor */
+    MOTOR_PRE_CONTACTOR,        /**< Post-Precharge Bypass Contactor */
     NUM_CONTACTORS              /**< Total count helper */
 } contactor_num_t;
 
@@ -31,7 +30,7 @@ typedef enum {
  * @brief Contactor hardware abstraction object.
  */
 typedef struct {
-    bool state;                  /**< Current commanded state (true = closed) */
+    contactor_state_t state;     /**< Current state */
     GpioPin_t sense_pin;         /**< Digital input for auxiliary feedback loop */
     GpioPin_t control_pin;       /**< Digital output to coil driver/relay */
     
@@ -46,9 +45,9 @@ typedef struct {
 void contactor_init(void);
 
 /** * @brief Reads the physical sense pin for a specific contactor.
- * @return true if CLOSED, false if OPEN.
+ * @return 1 if CLOSED, 0 if OPEN.
  */
-bool contactor_get(contactor_num_t contactor_num);
+contactor_state_t contactor_get(contactor_num_t contactor_num);
 
 /** * @brief Commands a contactor state change with safety verification via callback function.
  * @param wait_ms  Wait time for sense delay before returning.
@@ -56,5 +55,3 @@ bool contactor_get(contactor_num_t contactor_num);
  * @return SUCCESS or hardware ERROR code.
  */
 ErrorStatus contactor_set(contactor_num_t contactor_num, contactor_state_t state, uint32_t wait_ms, fault_state_t emergency);
-
-#endif

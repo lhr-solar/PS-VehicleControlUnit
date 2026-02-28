@@ -19,8 +19,6 @@ int main()
 
     MX_UART_INIT(husart3);
 
-    MX_USART3_UART_Init();
-
     // Task
     xTaskCreateStatic(
         Task_Precharge,             // Task function

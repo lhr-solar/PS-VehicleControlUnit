@@ -5,6 +5,7 @@
 #include "inits.h"
 #include "UART.h"
 #include "printf.h"
+#include "FaultBits.h"
 
 static uint8_t Is_Initialized = 0;
 
@@ -16,11 +17,11 @@ QueueHandle_t Battery_ADC_Queue;
 
 static StaticQueue_t xStaticQueue1;
 static StaticQueue_t xStaticQueue2;
-uint8_t qStorage1[ADC_QUEUE_LENGTH * ITEM_SIZE];
-uint8_t qStorage2[ADC_QUEUE_LENGTH * ITEM_SIZE];
+uint8_t qStorage1[ADC_QUEUE_LENGTH * ADC_QUEUE_ITEM_SIZE];
+uint8_t qStorage2[ADC_QUEUE_LENGTH * ADC_QUEUE_ITEM_SIZE];
 
 static ADC_ChannelConfTypeDef sConfig1 = {
-    .Channel = ADC1_CHANNEL
+    .Channel = ADC1_CHANNEL,
     .Rank = ADC_REGULAR_RANK_1,
     .SamplingTime = ADC_SAMPLING_TIME,
     .SingleDiff = ADC_SINGLE_ENDED,
@@ -57,6 +58,7 @@ ADC_Sense_Status ADC_1_Init()
     if (adc_init(&adc_init_1, hadc1) != ADC_OK)
     {
         // ADC1 initialization failed
+        set_faultBit(ADC_1_INIT_ERR);
         return ADC_1_INIT_ERR;
     }
 
@@ -95,6 +97,7 @@ ADC_Sense_Status ADC_2_Init()
     if (adc_init(&adc_init_2, hadc2) != ADC_OK)
     {
         // ADC2 initialization failed
+        set_faultBit(ADC_2_INIT_ERR);
         return ADC_2_INIT_ERR;
     }
 
@@ -108,20 +111,22 @@ ADC_Sense_Status ADC_2_Init()
 
 ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
 {
-    Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage1, &xStaticQueue1);
-    Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ITEM_SIZE, qStorage2, &xStaticQueue2);
+    Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage1, &xStaticQueue1);
+    Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage2, &xStaticQueue2);
 
     Is_Initialized = 0;
 
     if (Motor_ADC_Queue == NULL || Battery_ADC_Queue == NULL)
     {
         // Queue creation failed
+        set_faultBit(ADC_QUEUE_ERR);
         return ADC_QUEUE_ERR;
     }
     
     if (ADC_1_Init() != ADC_SENSE_OK || ADC_2_Init() != ADC_SENSE_OK)
     {
         // One or both ADC initializations failed
+        set_faultBit(ADC_SENSE_INIT_ERR);
         return ADC_SENSE_INIT_ERR;
     }
 
@@ -134,12 +139,14 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
     if (!Is_Initialized)
     {
         // ADC_Sense_Init has not been called or failed
+        set_faultBit(ADC_SENSE_INIT_ERR);
         return ADC_SENSE_INIT_ERR;
     }
 
     if (Result == NULL)
     {
         // Invalid result pointer
+        set_faultBit(READ_ADC_BAD_PARAM_ERR);
         return READ_ADC_BAD_PARAM_ERR;
     }
 
@@ -153,35 +160,39 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
     if (adc_read(hadc1, &sConfig1, Motor_ADC_Queue) != ADC_OK)
     {
         // Motor ADC read failed
+        set_faultBit(ADC_1_READ_ERR);
         return ADC_1_READ_ERR;
     }
     if (adc_read(hadc2, &sConfig2, Battery_ADC_Queue) != ADC_OK)
     {
         // Battery ADC read failed
+        set_faultBit(ADC_2_READ_ERR);
         return ADC_2_READ_ERR;
     }
 
     if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
     {
-        int64_t Numerator = (int64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        int64_t Denominator = (int64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Motor_Voltage = (int32_t)(Numerator / Denominator);
+        uint64_t Numerator = (uint64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
+        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
+        Result->Motor_Voltage = (uint32_t)(Numerator / Denominator);
     }
     else
     {
         // Queue receive failed for motor ADC
+        set_faultBit(MOTOR_QUEUE_RECEIVE_ERR);
         return MOTOR_QUEUE_RECEIVE_ERR;
     }
 
     if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout_Ticks) == pdPASS)
     {
-        int64_t Numerator = (int64_t)Battery_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        int64_t Denominator = (int64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Battery_Voltage = (int32_t)(Numerator / Denominator);
+        uint64_t Numerator = (uint64_t)Battery_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
+        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
+        Result->Battery_Voltage = (uint32_t)(Numerator / Denominator);
     }
     else
     {
         // Queue receive failed for battery ADC
+        set_faultBit(BATTERY_QUEUE_RECEIVE_ERR);
         return BATTERY_QUEUE_RECEIVE_ERR;
     }
 

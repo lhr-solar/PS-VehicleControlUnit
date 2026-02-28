@@ -2,6 +2,7 @@
 #include "UART.h"
 #include "printf.h"
 #include "Contactors.h"
+#include "StatusLEDs.h"
 
 void SystemClock_Config(void)
 {
@@ -240,20 +241,8 @@ void Fault_Handler()
 // for software errors
 void Error_Handler()
 {
-
-  // Kill Main Task
-
-  // open every contactor, bypasses semaphore
-  // for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
-  // contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-  // }
-
-  // turns on fault led, and blink DEBUG led to show the error was software
-  // LED_set(MOTOR_FAULT, ON);
-  // while (true) {
-  //   LED_set(CAR_HB, ON);
-  //   HAL_Delay(1000);
-  //   LED_set(CAR_HB, OFF);
-  //   HAL_Delay(1000);
-  // }
+  while (1) {
+    printf("Initialization Error!\r\n");
+    vTaskDelay(1000);
+  }
 }

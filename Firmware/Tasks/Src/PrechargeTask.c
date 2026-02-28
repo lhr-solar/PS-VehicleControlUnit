@@ -1,10 +1,10 @@
 #include "ADC_Sense.h"
 #include "PrechargeTask.h"
 #include "inits.h"
-#include "StatusLEDs.h"
 #include "Contactors.h"
 #include "stm32xx_hal.h"
 #include "pinDefs.h"
+#include "FaultBits.h"
 
 StaticEventGroup_t xPrechargeEventGroup;
 EventGroupHandle_t xPrechargeEventGroup_handle;
@@ -23,32 +23,26 @@ void Init_PrechargeTask()
     contactor_init();
 }
 
-void Fault_Checker()
+void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
 {
     if (Motor_Voltage > (Battery_Voltage * VOLTAGE_TOLERANCE))
     {
         // Fault handler
-        printf("Fault: Motor Voltage > Battery Voltage\r\n");
-        LED_set(MOTOR_FAULT, ON);   // TODO: Figure out which LED to turn on since there isn't a dedicated fault LED
-        Fault_Handler();
+        set_faultBit(MOTOR_GREATER_THAN_BATTERY_FAULT);
     }
 
     if (Battery_Voltage > OVERVOLTAGE_THRESHOLD_MV)
     {
         /* BATTERY ABOUT TO GO BOOM */
         // Fault handler
-        printf("Fault: Battery Voltage > 140 V\r\n");
-        LED_set(MOTOR_FAULT, ON);   // TODO: Figure out which LED to turn on since there isn't a dedicated fault LED
-        Fault_Handler();
+        set_faultBit(BATTERY_OVERVOLTAGE_FAULT);
     }
 
     if (Battery_Voltage < UNDERVOLTAGE_THRESHOLD_MV)
     {
         /* Battery voltage is too low or battery is disconnected, treat as fault */
         // Fault handler
-        printf("Fault: Battery Voltage < 80 V\r\n");
-        LED_set(MOTOR_FAULT, ON);   // TODO: Figure out which LED to turn on since there isn't a dedicated fault LED
-        Fault_Handler();
+        set_faultBit(BATTERY_UNDERVOLTAGE_FAULT);
     }
 }
 
@@ -66,10 +60,7 @@ void Task_Precharge()
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
         {
-            // TODO: open contactors / safe state
-            printf("Fault: ADC Sense Error\n");
-            LED_set(MOTOR_FAULT, ON);   // TODO: Figure out which LED to turn on since there isn't a dedicated fault LED
-            Fault_Handler();
+            Error_Handler();
         }
 
         uint32_t Battery_Voltage = ADC_Result.Battery_Voltage;
@@ -86,9 +77,7 @@ void Task_Precharge()
             if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
             {
                 // TODO: Fault handler
-                printf("Fault: Main contactor failed to close\r\n");
-                LED_set(MOTOR_SENSE_TIMEOUT, ON);                
-                Fault_Handler();
+                set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
             }
             State = PRECHARGE_STATE_PRECHARGING;
 
@@ -97,7 +86,7 @@ void Task_Precharge()
             break;
         case PRECHARGE_STATE_PRECHARGING:   // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
             
-            Fault_Checker();  // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+            Fault_Checker(Motor_Voltage, Battery_Voltage);  // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
 
             const TickType_t Current_Tick = xTaskGetTickCount();    // Check how long we've been precharging for, fault if not precharged after PRECHARGE_TIMEOUT_MS
             printf("Precharge State: Precharging\r\n");
@@ -109,9 +98,7 @@ void Task_Precharge()
                     if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
                     {
                         // TODO: Fault handler
-                        printf("Fault: Precharge contactor failed to close\r\n");
-                        LED_set(PRECHARGE_SENSE_TIMEOUT, ON);
-                        Fault_Handler();
+                        set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
                     }
                     State = PRECHARGE_STATE_RUN;
                 }
@@ -119,15 +106,13 @@ void Task_Precharge()
                 {
                     // Precharging took too long
                     // Fault handler
-                    printf("Fault: Precharge timeout\r\n");
-                    LED_set(PRECHARGE_TIMEOUT, ON);
-                    Fault_Handler();
+                    set_faultBit(PRECHARGE_TIMEOUT_FAULT);
                 }
             }
             break;
         case PRECHARGE_STATE_RUN:   // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
         
-            Fault_Checker();  // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+            Fault_Checker(Motor_Voltage, Battery_Voltage);  // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
 
             // Use 80% threshold for hysteresis
             printf("Precharge State: Run\r\n");

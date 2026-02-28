@@ -38,7 +38,7 @@ typedef struct {
  * @brief ADC sense function return status
  */
 typedef enum {
-    ADC_SENSE_OK,
+    ADC_SENSE_OK = 0,           // Operation successful 
     ADC_QUEUE_ERR,              // Queue creation failed
     ADC_1_INIT_ERR,             // ADC1 initialization failed
     ADC_2_INIT_ERR,             // ADC2 initialization failed

@@ -75,10 +75,10 @@ void contactor_init() {
     contactorsMutex = xSemaphoreCreateMutexStatic(&contactorsMutexBuffer);
 
 
-    const GpioPin_t Motor_Contactor_Enable = {MOTOR_CONTACTOR_ENABLE_PORT, MOTOR_CONTACTOR_ENABLE_PIN};
-    const GpioPin_t Motor_Contactor_Sense = {MOTOR_CONTACTOR_SENSE_PORT, MOTOR_CONTACTOR_SENSE_PIN};
-    const GpioPin_t Precharge_Contactor_Enable = {PRECHARGE_PRE_ENABLE_PORT, PRECHARGE_PRE_ENABLE_PIN};
-    const GpioPin_t Precharge_Contactor_Sense = {PRECHARGE_PRE_SENSE_PORT, PRECHARGE_PRE_SENSE_PIN};
+    const GpioPin_t Motor_Contactor_Enable = {MOTOR_ENABLE_LED_PORT, MOTOR_ENABLE_LED_PIN};
+    const GpioPin_t Motor_Contactor_Sense = {MOTOR_SENSE_LED_PORT, MOTOR_SENSE_LED_PIN};
+    const GpioPin_t Precharge_Contactor_Enable = {PRECHARGE_ENABLE_LED_PORT, PRECHARGE_ENABLE_LED_PIN};
+    const GpioPin_t Precharge_Contactor_Sense = {PRECHARGE_SENSE_LED_PORT, PRECHARGE_SENSE_LED_PIN};
 
     contactors[MOTOR_CONTACTOR].state= OPEN;
     contactors[MOTOR_CONTACTOR].sense_pin= Motor_Contactor_Sense;
@@ -90,7 +90,7 @@ void contactor_init() {
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
     // loop to intialize contactor GPIO and timers
-    for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+    for (uint32_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
 
         contactor_t* contactor = &contactors[contactor_num];
 

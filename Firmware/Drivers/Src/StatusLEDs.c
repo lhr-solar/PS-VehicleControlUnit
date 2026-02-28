@@ -6,20 +6,20 @@
 
 static uint16_t LEDbitmap;
 
-static const GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_PRE_COMPLETE_PORT, PRECHARGE_PRE_COMPLETE_PIN}, 
-                                {PRECHARGE_PRECHARGE_TO_PORT, PRECHARGE_PRECHARGE_TO_PIN},
-                                {PRECHARGE_PRE_SENSE_TO_PORT, PRECHARGE_PRE_SENSE_TO_PIN},
-                                {MOTOR_CONTACTOR_M_SENSE_TO_PORT, MOTOR_CONTACTOR_M_SENSE_TO_PIN},
-                                {CAR_STATE_DRIVABLE_PORT, CAR_STATE_DRIVABLE_PIN},
-                                {CAR_STATE_DRIVING_PORT, CAR_STATE_DRIVING_PIN},
-                                {CAR_STATE_CRUISE_PORT, CAR_STATE_CRUISE_PIN},
-                                {CAR_STATE_REGEN_PORT, CAR_STATE_REGEN_PIN},
-                                {CAR_STATE_BPSFAULT_PORT, CAR_STATE_BPSFAULT_PIN},
-                                {CAR_STATE_HB_PORT, CAR_STATE_HB_PIN},
-                                {MOTOR_FAULT_HALL_PORT, MOTOR_FAULT_HALL_PIN},
-                                {MOTOR_FAULT_DAWG_PORT, MOTOR_FAULT_DAWG_PIN},
-                                {MOTOR_FAULT_SWOC_PORT, MOTOR_FAULT_SWOC_PIN},
-                                {MOTOR_FAULT_FAULT_PORT, MOTOR_FAULT_FAULT_PIN}
+static const GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_COMPLETE_LED_PORT, PRECHARGE_COMPLETE_LED_PIN}, 
+                                {PRECHARGE_TO_LED_PORT, PRECHARGE_TO_LED_PIN},
+                                {PRECHARGE_SENSE_TO_LED_PORT, PRECHARGE_SENSE_TO_LED_PIN},
+                                {MOTOR_SENSE_TO_LED_PORT, MOTOR_SENSE_TO_LED_PIN},
+                                {DRIVABLE_LED_PORT, DRIVABLE_LED_PIN},
+                                {DRIVING_LED_PORT, DRIVING_LED_PIN},
+                                {CRUISE_LED_PORT, CRUISE_LED_PIN},
+                                {REGEN_LED_PORT, REGEN_LED_PIN},
+                                {BPS_FAULT_LED_PORT, BPS_FAULT_LED_PIN},
+                                {CAR_HB_LED_PORT, CAR_HB_LED_PIN},
+                                {HALL_EFFECT_LED_PORT, HALL_EFFECT_LED_PIN},
+                                {DAWG_LED_PORT, DAWG_LED_PIN},
+                                {SWOC_LED_PORT, SWOC_LED_PIN},
+                                {FAULT_LED_PORT, FAULT_LED_PIN}
 };
 
 void Toggle_LED(Status_Mapping_t LED, LED_state_t state) {

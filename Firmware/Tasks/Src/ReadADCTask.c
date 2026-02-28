@@ -17,26 +17,8 @@ void Init_ReadADCTask() {
     //                      0xFF );                    /* The bits being cleared. */
 
     // Inits ADC & printf
-    ADC_Sense_Status status = ADC_Sense_Init();
+    ADC_Sense_Init();
     Init_UART_Printf();
-
-    // TODO: Implement event group bits
-    if (status == ADC_SENSE_ERR_0)
-    {
-        Toggle_LED(CAR_CRUISE, ON);
-    }
-    else if (status == ADC_SENSE_ERR_1)
-    {
-        Toggle_LED(CAR_BPSFAULT, ON);
-    }
-    else if (status == ADC_SENSE_ERR_2)
-    {
-        Toggle_LED(CAR_HB, ON);
-    }
-    else if (status == ADC_SENSE_OK)
-    {
-        Toggle_LED(CAR_DRIVING, ON);
-    }
 }
 
 void Task_ReadADC() 

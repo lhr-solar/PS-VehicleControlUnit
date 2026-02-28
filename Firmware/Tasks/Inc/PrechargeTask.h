@@ -34,10 +34,11 @@ void Init_PrechargeTask();
 
 /**
  * @brief Checks the repeated fault conditions for precharge sequence, if any fault condition is met, will call fault handler and not return
- * @param None
+ * @param Motor_Voltage most recent motor voltage reading in mV
+ * @param Battery_Voltage most recent battery voltage reading in mV
  * @retval None
  */
-void Fault_Checker();
+void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
 
 /**
  * @brief Precharge task main execution function, implements precharge pseudo state machine and fault handling

@@ -18,7 +18,7 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
-  MX_UART_INIT(huart3);
+  MX_UART_INIT(husart3);
 
   /* Infinite loop */
   while (1)

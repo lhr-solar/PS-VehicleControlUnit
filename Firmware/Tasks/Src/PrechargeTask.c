@@ -77,7 +77,7 @@ void Task_Precharge()
             if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
             {
                 // TODO: Fault handler
-                set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
+                // set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
             }
             State = PRECHARGE_STATE_PRECHARGING;
 
@@ -98,7 +98,7 @@ void Task_Precharge()
                     if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
                     {
                         // TODO: Fault handler
-                        set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+                        // set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
                     }
                     State = PRECHARGE_STATE_RUN;
                 }
@@ -106,7 +106,7 @@ void Task_Precharge()
                 {
                     // Precharging took too long
                     // Fault handler
-                    set_faultBit(PRECHARGE_TIMEOUT_FAULT);
+                    // set_faultBit(PRECHARGE_TIMEOUT_FAULT);
                 }
             }
             break;

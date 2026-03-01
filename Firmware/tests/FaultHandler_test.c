@@ -18,6 +18,10 @@ int main()
 
     MX_UART_INIT(husart3);
 
+    ADC_Sense_Init();
+    Init_UART_Printf();
+    contactor_init();
+
     // Task
     xTaskCreateStatic(
         Task_FaultHandler,             // Task function

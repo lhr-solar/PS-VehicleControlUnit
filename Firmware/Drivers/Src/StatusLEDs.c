@@ -14,7 +14,7 @@ static const GpioPin_t DebugLEDs[num_LEDs]= {{PRECHARGE_COMPLETE_LED_PORT, PRECH
                                 {DRIVING_LED_PORT, DRIVING_LED_PIN},
                                 {CRUISE_LED_PORT, CRUISE_LED_PIN},
                                 {REGEN_LED_PORT, REGEN_LED_PIN},
-                                {BPS_FAULT_LED_PORT, BPS_FAULT_LED_PIN},
+                                 {BPS_FAULT_LED_PORT, BPS_FAULT_LED_PIN},
                                 {CAR_HB_LED_PORT, CAR_HB_LED_PIN},
                                 {HALL_EFFECT_LED_PORT, HALL_EFFECT_LED_PIN},
                                 {DAWG_LED_PORT, DAWG_LED_PIN},

@@ -50,7 +50,8 @@ EventBits_t faultBit_wait(fault_bit_t bit, TickType_t xTicksToWait){
     }
 
     // if NUM
-    EventBits_t uxBitsToWaitFor = bit == NUM_FAULTS ? ALL_FAULT_BITS : (FAULT_BIT(bit));
+    // EventBits_t uxBitsToWaitFor = bit == NUM_FAULTS ? ALL_FAULT_BITS : (FAULT_BIT(bit));
+    EventBits_t uxBitsToWaitFor = bit == NUM_FAULTS ? FAULT_BITMASK : (FAULT_BIT(bit));
 
     EventBits_t pending = xEventGroupWaitBits(
         faultStateBits,

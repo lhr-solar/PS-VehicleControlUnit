@@ -13,7 +13,8 @@
 // TODO: Test and increase hysterisis threshold closer to 90%
 #define PRECHARGE_THRESHOLD_90 900
 #define PRECHARGE_THRESHOLD_80 800  // NOTE: The second threshold exists to account for hysteresis, so that we don't drop out of the run state after successfully precharging just because of a small ADC reading change
-#define VOLTAGE_TOLERANCE (21 / 20) // Motor voltage can at most 5% higher than battery voltage
+#define VOLTAGE_TOLERANCE_NUMERATOR 22
+#define VOLTAGE_TOLERANCE_DENOMINATOR 20 // Motor voltage can at most 5% higher than battery voltage
 
 #define PRECHARGE_TIMEOUT_MS 400    // Precharge time to 90% -> 0.9 = 1 - e^(-t/RC), so t = -RC * ln(1-0.9) = 2.3*RC. For our case, R = 110 Ohms and C = 1 mF -> t = 253 ms.
 #define ADC_TIMEOUT_MS 20
@@ -45,4 +46,8 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
  * @param None
  * @retval None
  */
+
+/* handle for the Precharge task, defined in PrechargeTask.c */
+extern TaskHandle_t hprecharge_task;
+
 void Task_Precharge();

@@ -17,17 +17,28 @@
 
 typedef enum
 {
-    MOTOR_GREATER_THAN_BATTERY_FAULT,     // Motor voltage is greater than battery voltage
-    BATTERY_OVERVOLTAGE_FAULT,            // Battery voltage is greater than OVERVOLTAGE_THRESHOLD_MV
-    BATTERY_UNDERVOLTAGE_FAULT,           // Battery voltage is less than UNDERVOLTAGE_THRESHOLD_MV
-    MOTOR_SENSE_TIMEOUT_FAULT,            // Motor voltage was not received within expected time
-    PRECHARGE_SENSE_TIMEOUT_FAULT,        // Precharge voltage was not received within expected time
-    PRECHARGE_TIMEOUT_FAULT,              // Precharge sequence took too long
+    PRECHARGE_IN_INITIAL,               // Indiciates we are in the inital state when set
+    PRECHARGE_IN_PRECHARGING,           // Indicates we are in the precharging state when set
+    PRECHARGE_IN_RUN,                   // Indicates we are in the run state when set
+    MOTOR_GREATER_THAN_BATTERY_FAULT,   // Motor voltage is greater than battery voltage
+    BATTERY_OVERVOLTAGE_FAULT,          // Battery voltage is greater than OVERVOLTAGE_THRESHOLD_MV
+    BATTERY_UNDERVOLTAGE_FAULT,         // Battery voltage is less than UNDERVOLTAGE_THRESHOLD_MV
+    MOTOR_SENSE_TIMEOUT_FAULT,          // Motor voltage was not received within expected time
+    PRECHARGE_SENSE_TIMEOUT_FAULT,      // Precharge voltage was not received within expected time
+    PRECHARGE_TIMEOUT_FAULT,            // Precharge sequence took too long
     NUM_FAULTS
 } fault_bit_t;
 
 /* Convert enum to bitmask */
 #define FAULT_BIT(fault)   (1UL << (fault))
+
+/* Mask containing only the actual fault bits (exclude precharge state bits)
+    Precharge state enum values are the first entries, so keep bits from
+    MOTOR_GREATER_THAN_BATTERY_FAULT upwards. */
+#define FAULTS_ONLY_MASK ((EventBits_t)(ALL_FAULT_BITS & ~((1UL << (MOTOR_GREATER_THAN_BATTERY_FAULT)) - 1UL)))
+
+/* Legacy name kept for callers that expect a mask of fault bits */
+#define FAULT_BITMASK (FAULTS_ONLY_MASK)
 
 _Static_assert(NUM_FAULTS <= MAX_FAULT_BITS, "Too many fault bits for EventGroup");
 

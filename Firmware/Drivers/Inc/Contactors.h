@@ -47,7 +47,12 @@ void contactor_init(void);
 /** * @brief Reads the physical sense pin for a specific contactor.
  * @return 1 if CLOSED, 0 if OPEN.
  */
-contactor_state_t contactor_get(contactor_num_t contactor_num);
+contactor_state_t contactor_get_sense(contactor_num_t contactor_num);
+
+/** * @brief Reads the current logical state for a specific contactor.
+ * @return 1 if CLOSED, 0 if OPEN.
+ */
+contactor_state_t contactor_get_state(contactor_num_t contactor_num);
 
 /** * @brief Commands a contactor state change with safety verification via callback function.
  * @param wait_ms  Wait time for sense delay before returning.
@@ -55,3 +60,6 @@ contactor_state_t contactor_get(contactor_num_t contactor_num);
  * @return SUCCESS or hardware ERROR code.
  */
 ErrorStatus contactor_set(contactor_num_t contactor_num, contactor_state_t state, uint32_t wait_ms, fault_state_t emergency);
+
+/** @brief When fault is detected, opens all contactors. */
+void contactor_emergency_open_all();

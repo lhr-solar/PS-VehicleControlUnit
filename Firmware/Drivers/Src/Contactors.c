@@ -1,4 +1,5 @@
 #include "Contactors.h"
+#include "FaultBits.h"
 
 static SemaphoreHandle_t contactorsMutex = NULL;
 static StaticSemaphore_t contactorsMutexBuffer;
@@ -12,7 +13,7 @@ static const char* CONTACTOR_NAMES[NUM_CONTACTORS] = {
 static contactor_t contactors[NUM_CONTACTORS];
 
 // get
-contactor_state_t contactor_get(contactor_num_t contactor_num) {
+contactor_state_t contactor_get_sense(contactor_num_t contactor_num) {
     
     // check that contactor exists
     if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS)) {
@@ -23,13 +24,22 @@ contactor_state_t contactor_get(contactor_num_t contactor_num) {
     return HAL_GPIO_ReadPin(contactor->sense_pin.port, contactor->sense_pin.pin);
 }
 
+contactor_state_t contactor_get_state(contactor_num_t contactor_num) {
+    // check that contactor exists
+    if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS)) {
+        Error_Handler();
+    }
+
+    return contactors[contactor_num].state;
+}
+
 static void vContactorCallback( TimerHandle_t senseTimer ) {
 
     contactor_num_t contactor_num = (contactor_num_t)pvTimerGetTimerID(senseTimer);
     contactor_t* contactor = &contactors[contactor_num];
 
-    if (contactor->state != contactor_get(contactor_num)) {
-        Fault_Handler();
+    if (contactor->state != contactor_get_sense(contactor_num)) {
+        set_faultBit(CALLBACK_FAULT);
     }
 }
 
@@ -108,7 +118,7 @@ void contactor_init() {
         GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
         HAL_GPIO_Init(contactor->sense_pin.port, &GPIO_InitStruct);
 
-        contactor->state = contactor_get(contactor_num);
+        contactor->state = contactor_get_sense(contactor_num);
 
         // making timers and putting them into contactor structs
         contactor->senseTimer = xTimerCreateStatic(
@@ -119,5 +129,11 @@ void contactor_init() {
             vContactorCallback,                                 /* Callback function */
             &(contactor->senseTimerBuffer)       /* Buffer to hold timer data */
         );
+    }
+}
+
+void contactor_emergency_open_all() {
+    for (uint32_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
+        contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
     }
 }

@@ -26,6 +26,9 @@ typedef enum
     MOTOR_SENSE_TIMEOUT_FAULT,          // Motor voltage was not received within expected time
     PRECHARGE_SENSE_TIMEOUT_FAULT,      // Precharge voltage was not received within expected time
     PRECHARGE_TIMEOUT_FAULT,            // Precharge sequence took too long
+    CALLBACK_FAULT,                     // Contactor state did not match expected state after being set
+    MOTOR_SENSE_MISMATCH_FAULT,         // Motor contactor sense pin reading does not match contactor state
+    PRECHARGE_SENSE_MISMATCH_FAULT,     // Precharge contactor sense pin reading does not match contactor state
     NUM_FAULTS
 } fault_bit_t;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#define num_LEDs 14
+#define num_LEDs 15
 
 /** * @brief LED States  */
 typedef enum {

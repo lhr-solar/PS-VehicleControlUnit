@@ -24,7 +24,7 @@ can_status_t Motor_CANBus_Init(void){
     hfdcan1->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
     // accepts all CAN IDs from 
-    // FDCAN3 Filter Config
+    // FDCAN1 Filter Config
     FDCAN_FilterTypeDef sFilterConfig1;
     sFilterConfig1.IdType = FDCAN_STANDARD_ID;
     sFilterConfig1.FilterIndex = 0;
@@ -47,7 +47,7 @@ can_status_t Motor_CANBus_Init(void){
 
 can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
   
-  return can_fd_send(hfdcan3, header, data, delay_ticks);
+  return can_fd_send(hfdcan1, header, data, delay_ticks);
 
 }
 

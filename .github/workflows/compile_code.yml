@@ -17,9 +17,6 @@ jobs:
       - name: Install Nix
         run: |
           sudo ./Firmware/Embedded-Sharepoint/nix_install.sh
-        with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
 
       - name: Test Production Build
         run: |

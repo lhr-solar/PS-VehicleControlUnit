@@ -89,7 +89,8 @@ void Task_MotorControl(void){
         printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
         printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        // minimum delay for drive command, or else the wavesculptor will reset to neutral
+        vTaskDelay(pdMS_TO_TICKS(150));
 
     }
 }

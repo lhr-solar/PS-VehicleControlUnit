@@ -5,6 +5,8 @@
 #include <string.h>
 #include "CANbus.h"
 #include "inits.h"
+#include "StatusLEDs.h"
+#include "pinDefs.h"
 
 void MotorTelemetryTask_Init(void);
 

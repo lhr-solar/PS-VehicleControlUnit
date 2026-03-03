@@ -62,6 +62,7 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
         &recv_payload,
         &higherPriorityTaskWoken
     );
+    HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
 }
 
 void Task_MotorTelemetry(){
@@ -78,4 +79,3 @@ void Task_MotorTelemetry(){
         }
     }
 }
-

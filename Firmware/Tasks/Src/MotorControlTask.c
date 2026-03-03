@@ -58,10 +58,8 @@ void Task_MotorControl(void){
             can_send_errors = 0;
         }
 
-#if defined(PRINTF_DEBUG)
-        printf("Motor Current Setpoint: %f\r\n", mocoDrivmotorDriveCommandeCommandHeader.MC_MotorCurrentSetpoint);
-        printf("Motor Velocity Setpoint: %f\r\n", mocoDriveCommandHeader.MC_MotorVelocitySetpoint);
-#endif
+        printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
+        printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
 
         vTaskDelay(pdMS_TO_TICKS(1000));
 

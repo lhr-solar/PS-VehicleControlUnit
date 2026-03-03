@@ -198,6 +198,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
 
+
     HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   }
@@ -214,28 +215,6 @@ void Init_UART_Printf()
   husart3->Init.OverSampling = UART_OVERSAMPLING_16;
 
   printf_init(husart3);
-}
-
-// for actual faults
-void Fault_Handler()
-{
-  // open every contactor, bypasses semaphore
-  for (uint8_t contactor_num = 0; contactor_num < NUM_CONTACTORS; contactor_num++) {
-  contactor_set(contactor_num, OPEN, portMAX_DELAY, EMERGENCY);
-  }
-
-  // turns on fault led
-  LED_set(MOTOR_FAULT, ON);
-
-  update_status();
-
-  while (1)
-  {
-    vTaskDelay(1000);
-    printf("FAULT!\r\n");
-
-    // TODO: Send fault message over CAN
-  }
 }
 
 // for software errors

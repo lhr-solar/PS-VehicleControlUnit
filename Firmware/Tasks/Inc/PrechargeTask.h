@@ -4,7 +4,7 @@
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V
-#define UNDERVOLTAGE_THRESHOLD_MV 80000  // 80.0 V
+#define UNDERVOLTAGE_THRESHOLD_MV 80000 // 80.0 V
 
 // Fixed-point scaling for ratio comparisons
 #define RATIO_SCALE 1000
@@ -12,18 +12,21 @@
 // 900/1000 = 0.900, 800/1000 = 0.800
 // TODO: Test and increase hysterisis threshold closer to 90%
 #define PRECHARGE_THRESHOLD_90 900
-#define PRECHARGE_THRESHOLD_80 800  // NOTE: The second threshold exists to account for hysteresis, so that we don't drop out of the run state after successfully precharging just because of a small ADC reading change
-#define VOLTAGE_TOLERANCE_NUMERATOR 22
-#define VOLTAGE_TOLERANCE_DENOMINATOR 20 // Motor voltage can at most 5% higher than battery voltage
+#define PRECHARGE_THRESHOLD_80 800 // NOTE: The second threshold exists to account for hysteresis, so that we don't drop out of the run state after successfully precharging just because of a small ADC reading change
 
-#define PRECHARGE_TIMEOUT_MS 400    // Precharge time to 90% -> 0.9 = 1 - e^(-t/RC), so t = -RC * ln(1-0.9) = 2.3*RC. For our case, R = 110 Ohms and C = 1 mF -> t = 253 ms.
+// Allowed difference between motor and battery voltage
+#define VOLTAGE_TOLERANCE_NUMERATOR 22
+#define VOLTAGE_TOLERANCE_DENOMINATOR 20 // Motor voltage can at most 10% higher than battery voltage
+
+#define PRECHARGE_TIMEOUT_MS 400 // Precharge time to 90% -> 0.9 = 1 - e^(-t/RC), so t = -RC * ln(1-0.9) = 2.3*RC. For our case, R = 110 Ohms and C = 1 mF -> t = 253 ms.
 #define ADC_TIMEOUT_MS 20
+#define PRECHARGE_TASK_DELAY_MS 100
 
 typedef enum
 {
-    PRECHARGE_STATE_INITIAL = 0,    // Precharge sequence hasn't started, start by closing main contactor and starting a timer to check for precharge timeout
-    PRECHARGE_STATE_PRECHARGING,    // Precharge sequence started successfully, close contactor and check hysterisis
-    PRECHARGE_STATE_RUN             // Precharge got through hysterisis, now continuously polling ADC
+    PRECHARGE_STATE_INITIAL = 0, // Precharge sequence hasn't started, start by closing main contactor and starting a timer to check for precharge timeout
+    PRECHARGE_STATE_PRECHARGING, // Precharge sequence started successfully, close contactor and check hysterisis
+    PRECHARGE_STATE_RUN          // Precharge got through hysterisis, now continuously polling ADC
 } Precharge_State_t;
 
 /**
@@ -46,8 +49,7 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
  * @param None
  * @retval None
  */
+void Task_Precharge();
 
 /* handle for the Precharge task, defined in PrechargeTask.c */
 extern TaskHandle_t hprecharge_task;
-
-void Task_Precharge();

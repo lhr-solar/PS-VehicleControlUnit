@@ -26,8 +26,7 @@ static ADC_ChannelConfTypeDef sConfig1 = {
     .SamplingTime = ADC_SAMPLING_TIME,
     .SingleDiff = ADC_SINGLE_ENDED,
     .OffsetNumber = ADC_OFFSET_NONE,
-    .Offset = 0
-};
+    .Offset = 0};
 
 static ADC_ChannelConfTypeDef sConfig2 = {
     .Channel = ADC2_CHANNEL,
@@ -35,10 +34,9 @@ static ADC_ChannelConfTypeDef sConfig2 = {
     .SamplingTime = ADC_SAMPLING_TIME,
     .SingleDiff = ADC_SINGLE_ENDED,
     .OffsetNumber = ADC_OFFSET_NONE,
-    .Offset = 0 
-};
+    .Offset = 0};
 
-ADC_Sense_Status ADC_1_Init()
+ADC_Sense_Status_t ADC_1_Init()
 {
     adc_init_1.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_1.Resolution = ADC_RESOLUTION_12B;
@@ -62,22 +60,22 @@ ADC_Sense_Status ADC_1_Init()
         return ADC_1_INIT_ERR;
     }
 
-      ADC_MultiModeTypeDef multimode = {0};
-      multimode.Mode = ADC_MODE_INDEPENDENT;
-      if (HAL_ADCEx_MultiModeConfigChannel(hadc1, &multimode) != HAL_OK)
-      {
-          Error_Handler();
-      }
+    ADC_MultiModeTypeDef multimode = {0};
+    multimode.Mode = ADC_MODE_INDEPENDENT;
+    if (HAL_ADCEx_MultiModeConfigChannel(hadc1, &multimode) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-      if (HAL_ADC_ConfigChannel(hadc1, &sConfig1) != HAL_OK)
-      {
-          Error_Handler();
-      }
+    if (HAL_ADC_ConfigChannel(hadc1, &sConfig1) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-      return ADC_SENSE_OK;
+    return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status ADC_2_Init()
+ADC_Sense_Status_t ADC_2_Init()
 {
     adc_init_2.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_2.Resolution = ADC_RESOLUTION_12B;
@@ -109,7 +107,7 @@ ADC_Sense_Status ADC_2_Init()
     return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
+ADC_Sense_Status_t ADC_Sense_Init(void) // Initialize ADCs and queues
 {
     Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage1, &xStaticQueue1);
     Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage2, &xStaticQueue2);
@@ -122,7 +120,7 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         set_faultBit(ADC_QUEUE_ERR);
         return ADC_QUEUE_ERR;
     }
-    
+
     if (ADC_1_Init() != ADC_SENSE_OK || ADC_2_Init() != ADC_SENSE_OK)
     {
         // One or both ADC initializations failed
@@ -131,10 +129,10 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
     }
 
     Is_Initialized = 1;
-    return ADC_SENSE_OK;
+    z return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read ADC values and calculate voltages
+ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read ADC values and calculate voltages
 {
     if (!Is_Initialized)
     {
@@ -198,4 +196,3 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
 
     return ADC_SENSE_OK;
 }
-

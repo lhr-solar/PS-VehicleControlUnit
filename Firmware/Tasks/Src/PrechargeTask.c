@@ -4,6 +4,7 @@
 #include "stm32xx_hal.h"
 #include "pinDefs.h"
 #include "FaultBits.h"
+#include "StatusLEDs.h"
 
 /* handle for the Precharge task, defined here */
 TaskHandle_t hprecharge_task = NULL;
@@ -73,6 +74,11 @@ void Task_Precharge()
 
     while (1)
     {
+        LED_set(HB, ON);
+        vTaskDelay(250);
+        LED_set(HB, OFF);
+        vTaskDelay(250);
+
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
         {
@@ -137,6 +143,6 @@ void Task_Precharge()
             break;
         }
 
-        vTaskDelay(1000);
+        vTaskDelayUntil(PRECHARGE_TASK_DELAY_MS);
     }
 }

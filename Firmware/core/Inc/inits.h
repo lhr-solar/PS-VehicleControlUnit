@@ -40,13 +40,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle);
 void Init_UART_Printf();
 
 /**
- * @brief Handles faults for precharge by opening all contactors and entering an infinite loop
- * @param None
- * @retval None
- */
-void Fault_Handler(void);
-
-/**
  * @brief Does nothing at the moment
  * @param None
  * @retval None

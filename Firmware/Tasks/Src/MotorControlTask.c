@@ -1,6 +1,14 @@
 #include "MotorControlTask.h"
 #include "CAN_FD.h"
 
+// Period the motor control thread runs at
+#define MOTOR_CONTROL_TASK_PERIOD_MS 150
+
+#define PRINT_DEBUG_PERIOD 1000
+
+// number of times the thread will run before we print out debug info
+#define PRINT_DEBUG_COUNT (PRINT_DEBUG_PERIOD/MOTOR_CONTROL_TASK_PERIOD_MS)
+
 
 static FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
 
@@ -9,10 +17,8 @@ static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header);
 
 
 void MotorControlTask_Init(void){
-
     // set necessary motor drive command parameters
     initDriveCommandHeader(&mocoDriveCommandHeader);
-
 }
 
 static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header){
@@ -65,6 +71,7 @@ void Task_MotorControl(void){
     uint8_t motor_drive_tx_data[8];
 
     uint8_t can_send_errors = 0;
+    uint8_t print_debug_counter = 0;
 
     // sets the max power of the motor
     mc_powercommand_t motorPowerCommand = {0};
@@ -86,11 +93,17 @@ void Task_MotorControl(void){
             can_send_errors = 0;
         }
 
-        printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
-        printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
+        print_debug_counter++;
+        if(print_debug_counter > PRINT_DEBUG_COUNT){
+            printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
+            printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
+            printf("Drive command can send errors: %d\r\n", can_send_errors);
+            print_debug_counter = 0;
+        }
 
-        // minimum delay for drive command, or else the wavesculptor will reset to neutral
-        vTaskDelay(pdMS_TO_TICKS(150));
+
+        // minimum delay for drive command is 250ms, or else the wavesculptor will reset to neutral
+        vTaskDelay(pdMS_TO_TICKS(MOTOR_CONTROL_TASK_PERIOD_MS));
 
     }
 }

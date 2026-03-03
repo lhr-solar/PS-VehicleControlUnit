@@ -4,40 +4,40 @@
 
 can_status_t Motor_CANBus_Init(void){
   
-    hfdcan3->Instance = FDCAN3;
-    hfdcan3->Init.ClockDivider = FDCAN_CLOCK_DIV1;
-    hfdcan3->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
-    hfdcan3->Init.Mode = FDCAN_MODE_NORMAL;
-    hfdcan3->Init.AutoRetransmission = ENABLE;
-    hfdcan3->Init.TransmitPause = DISABLE;
-    hfdcan3->Init.ProtocolException = DISABLE;
-    hfdcan3->Init.NominalPrescaler = 20;
-    hfdcan3->Init.NominalSyncJumpWidth = 1;
-    hfdcan3->Init.NominalTimeSeg1 = 13;
-    hfdcan3->Init.NominalTimeSeg2 = 2;
-    hfdcan3->Init.DataPrescaler = 1;
-    hfdcan3->Init.DataSyncJumpWidth = 1;
-    hfdcan3->Init.DataTimeSeg1 = 1;
-    hfdcan3->Init.DataTimeSeg2 = 1;
-    hfdcan3->Init.StdFiltersNbr = 1;
-    hfdcan3->Init.ExtFiltersNbr = 0;
-    hfdcan3->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+    hfdcan1->Instance = FDCAN1;
+    hfdcan1->Init.ClockDivider = FDCAN_CLOCK_DIV1;
+    hfdcan1->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+    hfdcan1->Init.Mode = FDCAN_MODE_NORMAL;
+    hfdcan1->Init.AutoRetransmission = ENABLE;
+    hfdcan1->Init.TransmitPause = DISABLE;
+    hfdcan1->Init.ProtocolException = DISABLE;
+    hfdcan1->Init.NominalPrescaler = 20;
+    hfdcan1->Init.NominalSyncJumpWidth = 1;
+    hfdcan1->Init.NominalTimeSeg1 = 13;
+    hfdcan1->Init.NominalTimeSeg2 = 2;
+    hfdcan1->Init.DataPrescaler = 1;
+    hfdcan1->Init.DataSyncJumpWidth = 1;
+    hfdcan1->Init.DataTimeSeg1 = 1;
+    hfdcan1->Init.DataTimeSeg2 = 1;
+    hfdcan1->Init.StdFiltersNbr = 1;
+    hfdcan1->Init.ExtFiltersNbr = 0;
+    hfdcan1->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
     // accepts all CAN IDs from 
     // FDCAN3 Filter Config
-    FDCAN_FilterTypeDef sFilterConfig3;
-    sFilterConfig3.IdType = FDCAN_STANDARD_ID;
-    sFilterConfig3.FilterIndex = 0;
-    sFilterConfig3.FilterType = FDCAN_FILTER_MASK;
-    sFilterConfig3.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
-    sFilterConfig3.FilterID1 = 0x000;
-    sFilterConfig3.FilterID2 = 0x000;
+    FDCAN_FilterTypeDef sFilterConfig1;
+    sFilterConfig1.IdType = FDCAN_STANDARD_ID;
+    sFilterConfig1.FilterIndex = 0;
+    sFilterConfig1.FilterType = FDCAN_FILTER_MASK;
+    sFilterConfig1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
+    sFilterConfig1.FilterID1 = 0x000;
+    sFilterConfig1.FilterID2 = 0x000;
 
-    if(can_fd_init(hfdcan3, &sFilterConfig3) != CAN_OK){
+    if(can_fd_init(hfdcan1, &sFilterConfig1) != CAN_OK){
        return CAN_ERR;
     }
 
-    if(can_fd_start(hfdcan3) != CAN_OK){
+    if(can_fd_start(hfdcan1) != CAN_OK){
        return CAN_ERR;
     }
 

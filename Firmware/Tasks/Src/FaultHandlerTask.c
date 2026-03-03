@@ -112,9 +112,9 @@ void Task_FaultHandler()
     {
         {
             LED_set(HB, ON);
-            vTaskDelay(250);
+            vTaskDelay(500);
             LED_set(HB, OFF);
-            vTaskDelay(250);
+            vTaskDelay(500);
 
             fault_bits = faultBit_wait(NUM_FAULTS, portMAX_DELAY);
 

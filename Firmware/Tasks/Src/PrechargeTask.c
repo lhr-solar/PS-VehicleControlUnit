@@ -69,9 +69,9 @@ void Task_Precharge()
     while (1)
     {
         LED_set(HB, ON);
-        vTaskDelay(250);
+        vTaskDelay(500);
         LED_set(HB, OFF);
-        vTaskDelay(250);
+        vTaskDelay(500);
 
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)

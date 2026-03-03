@@ -16,7 +16,6 @@ void Task_Init()
 
     MX_UART_INIT(husart3);
     Init_UART_Printf();
-    LEDs_init();
 
     xTaskCreateStatic(
         Task_FaultHandler,        // Task function

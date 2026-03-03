@@ -25,6 +25,11 @@ void Toggle_LED(Status_Mapping_t LED, LED_state_t state)
     HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
 }
 
+int Get_LED_Bitmap()
+{
+    return LEDbitmap;
+}
+
 void LED_set(Status_Mapping_t LED, LED_state_t state)
 {
 
@@ -34,10 +39,16 @@ void LED_set(Status_Mapping_t LED, LED_state_t state)
         Error_Handler();
     }
 
+    uint16_t mask = (1u << (uint16_t)LED);
+
     // clears specified bit
-    LEDbitmap &= ~(1 << LED);
+    LEDbitmap &= ~mask;
     // sets bit if state = 1, otherwise stays cleared if state = 0
-    LEDbitmap |= (1 << LED);
+    if (state)
+    {
+        LEDbitmap |= mask;
+    }
+
     update_status();
 }
 
@@ -51,7 +62,9 @@ void update_status()
 {
     for (int i = 0; i < num_LEDs; i++)
     {
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, LEDbitmap & (1 << i));
+        uint16_t mask = (1u << i);
+        uint8_t led_on = (LEDbitmap & mask) ? 1u : 0u;
+        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, led_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
     }
 }
 
@@ -70,7 +83,8 @@ void LEDs_init()
             .Pull = GPIO_NOPULL,
             .Pin = DebugLEDs[i].pin};
 
+        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, OFF);
         HAL_GPIO_Init(DebugLEDs[i].port, &led_config);
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, GPIO_PIN_SET);
+        // HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, OFF);
     }
 }

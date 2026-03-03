@@ -10,7 +10,6 @@ static QueueHandle_t motorTelemetryQueue;
 #define FDCAN3_RECV_HOOK_EN
 
 
-
 void print_slcan(const can_rx_payload_t payload)
 {
 
@@ -52,9 +51,8 @@ void MotorTelemetryTask_Init(void){
         return;
     }
 }
-
 void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
-
+    
     BaseType_t higherPriorityTaskWoken = pdFALSE;
 
     xQueueSendFromISR(
@@ -62,14 +60,13 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
         &recv_payload,
         &higherPriorityTaskWoken
     );
-    HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
 }
 
 void Task_MotorTelemetry(){
 
     // motor canbus should be initialized here
 
-    printf("balls\r\n");
+    // printf("balls\r\n");
 
     can_rx_payload_t payload;
 

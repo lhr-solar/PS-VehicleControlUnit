@@ -2,7 +2,7 @@
 #include "CAN_FD.h"
 
 
-FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
+static FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
 
 static void initDriveCommandHeader(FDCAN_TxHeaderTypeDef *tx_header);
 
@@ -54,11 +54,13 @@ void Task_MotorControl(void){
         if (Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY) == CAN_ERR){
             can_send_errors++;
         }
+        else{
+            can_send_errors = 0;
+        }
 
-#ifdef PRINTF_DEBUG
-        printf("Motor Current Setpoint: %f\r\n", mocoDriveCommandHeader.MC_MotorCurrentSetpoint);
+#if defined(PRINTF_DEBUG)
+        printf("Motor Current Setpoint: %f\r\n", mocoDrivmotorDriveCommandeCommandHeader.MC_MotorCurrentSetpoint);
         printf("Motor Velocity Setpoint: %f\r\n", mocoDriveCommandHeader.MC_MotorVelocitySetpoint);
-
 #endif
 
         vTaskDelay(pdMS_TO_TICKS(1000));

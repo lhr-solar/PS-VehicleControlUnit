@@ -6,6 +6,7 @@
 #include "CANbus.h"
 #include "inits.h"
 
-void MotorControlTask_Init(void);
+void MotorTelemetryTask_Init(void);
 
-void Task_MotorControl();
+void Task_MotorTelemetry();
+

@@ -1,8 +1,4 @@
 #include "FaultHandlerTask.h"
-#include "StatusLEDs.h"
-#include "Contactors.h"
-#include "FreeRTOS.h"
-#include "task.h"
 #include "PrechargeTask.h" // for hprecharge_task handle
 
 EventBits_t fault_bits = 0;
@@ -32,43 +28,79 @@ void Fault_Loop()
         {
         case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
             printf("Fault: Motor Voltage Greater Than Battery Voltage\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(BATTERY_OVERVOLTAGE_FAULT):
             printf("Fault: Overvoltage\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(BATTERY_UNDERVOLTAGE_FAULT):
             printf("Fault: Undervoltage\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(MOTOR_SENSE_TIMEOUT_FAULT):
             printf("Fault: Motor Sense Timeout\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(PRECHARGE_SENSE_TIMEOUT_FAULT):
             printf("Fault: Precharge Sense Timeout\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(PRECHARGE_TIMEOUT_FAULT):
             printf("Fault: Precharge Sequence Timeout\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(CALLBACK_FAULT):
             printf("Fault: Contactor Sense Fault\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(MOTOR_SENSE_MISMATCH_FAULT):
             printf("Fault: Motor Sense Mismatch\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
             printf("Fault: Precharge Sense Mismatch\r\n");
-            vTaskDelay(250);
+            vTaskDelay(PRINTF_DELAY_MS);
             break;
         default:
             break;
         }
+    }
+}
+
+void Set_Fault_LED()
+{
+    switch (fault_bits) // compare against individual bitmasks
+    {
+    case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(BATTERY_OVERVOLTAGE_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(BATTERY_UNDERVOLTAGE_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(MOTOR_SENSE_TIMEOUT_FAULT):
+        LED_set(MOTOR_SENSE_TIMEOUT, ON);
+        break;
+    case FAULT_BIT(PRECHARGE_SENSE_TIMEOUT_FAULT):
+        LED_set(PRECHARGE_SENSE_TIMEOUT, ON);
+        break;
+    case FAULT_BIT(PRECHARGE_TIMEOUT_FAULT):
+        LED_set(PRECHARGE_TIMEOUT, ON);
+        break;
+    case FAULT_BIT(CALLBACK_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(MOTOR_SENSE_MISMATCH_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    default:
+        break;
     }
 }
 
@@ -93,39 +125,7 @@ void Task_FaultHandler()
 
                 printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
 
-                switch (fault_bits) // compare against individual bitmasks
-                {
-                case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                case FAULT_BIT(BATTERY_OVERVOLTAGE_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                case FAULT_BIT(BATTERY_UNDERVOLTAGE_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                case FAULT_BIT(MOTOR_SENSE_TIMEOUT_FAULT):
-                    LED_set(MOTOR_SENSE_TIMEOUT, ON);
-                    break;
-                case FAULT_BIT(PRECHARGE_SENSE_TIMEOUT_FAULT):
-                    LED_set(PRECHARGE_SENSE_TIMEOUT, ON);
-                    break;
-                case FAULT_BIT(PRECHARGE_TIMEOUT_FAULT):
-                    LED_set(PRECHARGE_TIMEOUT, ON);
-                    break;
-                case FAULT_BIT(CALLBACK_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                case FAULT_BIT(MOTOR_SENSE_MISMATCH_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
-                    LED_set(CAR_BPSFAULT, ON);
-                    break;
-                default:
-                    break;
-                }
-
+                Set_Fault_LED();
                 Fault_Loop();
             }
         }

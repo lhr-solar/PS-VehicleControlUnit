@@ -1,28 +1,30 @@
-#include "FreeRTOS.h"
-#include "stm32xx_hal.h"
-#include "ADC_Sense.h"
 #include "inits.h"
 #include "UART.h"
+#include "InitTask.h"
 
 int main(void)
 {
-  /* MCU Configuration--------------------------------------------------------*/
+  // HAL_Init();
+  // SystemClock_Config();
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  // xTaskCreateStatic(
+  //     Task_Init,                // Task function
+  //     "Init",                   // Name of the task (for debugging)
+  //     configMINIMAL_STACK_SIZE, // Stack size in words
+  //     NULL,                     // Task input parameter
+  //     tskIDLE_PRIORITY + 1,     // Task priority
+  //     Init_Task_Stack,          // Task handle
+  //     &Init_Task_Buffer         // Static task buffer (optional)
+  // );
 
-  /* Configure the system clock */
-  SystemClock_Config();
+  // vTaskStartScheduler();
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
-  MX_UART_INIT(husart3);
+  // Error_Handler();
 
   /* Infinite loop */
   while (1)
   {
-    
   }
+
+  return 0;
 }

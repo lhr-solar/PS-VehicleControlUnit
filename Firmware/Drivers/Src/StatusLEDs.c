@@ -1,8 +1,6 @@
 // NOTE: LEDs are negative logic, however ON and OFF are defined such that they reflect the actual state of the LED
 
 #include "StatusLEDs.h"
-#include <stdint.h>
-#include "pinDefs.h"
 
 static uint16_t LEDbitmap;
 

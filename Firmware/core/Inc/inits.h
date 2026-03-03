@@ -1,6 +1,8 @@
-#include "FreeRTOS.h"
-#include "stm32xx_hal.h"
+#pragma once
+
+#include "pinDefs.h"
 #include "printf.h"
+#include "FreeRTOS.h"
 
 void SystemClock_Config(void);
 

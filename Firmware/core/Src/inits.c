@@ -1,6 +1,5 @@
-#include "stm32xx_hal.h"
+#include "inits.h"
 #include "UART.h"
-#include "printf.h"
 #include "Contactors.h"
 #include "StatusLEDs.h"
 

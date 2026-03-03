@@ -1,11 +1,4 @@
-#include "ADC.h"
-#include "pinDefs.h"
 #include "ADC_Sense.h"
-#include "stm32xx_hal.h"
-#include "inits.h"
-#include "UART.h"
-#include "printf.h"
-#include "FaultBits.h"
 
 static uint8_t Is_Initialized = 0;
 
@@ -129,7 +122,7 @@ ADC_Sense_Status_t ADC_Sense_Init(void) // Initialize ADCs and queues
     }
 
     Is_Initialized = 1;
-    z return ADC_SENSE_OK;
+    return ADC_SENSE_OK;
 }
 
 ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read ADC values and calculate voltages

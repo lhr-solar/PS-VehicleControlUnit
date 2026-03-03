@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdint.h>
+#include "inits.h"
+
 #define num_LEDs 15
 
 /** * @brief LED States  */

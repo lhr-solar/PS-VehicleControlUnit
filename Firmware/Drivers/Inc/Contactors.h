@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pinDefs.h"
 #include "inits.h"
 
 /* Timing Definitions */

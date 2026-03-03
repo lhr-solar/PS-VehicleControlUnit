@@ -1,7 +1,5 @@
 #pragma once
 
-#include "FreeRTOS.h"
-#include "stm32xx_hal.h"
 #include "inits.h"
 #include <event_groups.h>
 #include <stdint.h>

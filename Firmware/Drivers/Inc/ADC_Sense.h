@@ -1,9 +1,10 @@
 #pragma once
 
-#include <stdint.h>
-#include "FreeRTOS.h"
+#include "inits.h"
 #include "queue.h"
-#include "stm32xx_hal.h"
+#include "UART.h"
+#include "ADC.h"
+#include "FaultBits.h"
 
 // ADC scaling constants
 #define ADC_Max 4095

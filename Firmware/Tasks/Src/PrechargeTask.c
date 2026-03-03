@@ -1,10 +1,4 @@
-#include "ADC_Sense.h"
 #include "PrechargeTask.h"
-#include "Contactors.h"
-#include "stm32xx_hal.h"
-#include "pinDefs.h"
-#include "FaultBits.h"
-#include "StatusLEDs.h"
 
 /* handle for the Precharge task, defined here */
 TaskHandle_t hprecharge_task = NULL;
@@ -47,13 +41,13 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
         set_faultBit(BATTERY_UNDERVOLTAGE_FAULT);
     }
 
-    if (contactor_get_sense(MOTOR_CONTACTOR) != contactor_get_state(MOTOR_CONTACTOR))
+    if (contactor_get_sense(MOTOR_CONTACTOR) != contactor_get_commanded_state(MOTOR_CONTACTOR))
     {
         // Fault handler
         set_faultBit(MOTOR_SENSE_MISMATCH_FAULT);
     }
 
-    if (contactor_get_sense(MOTOR_PRE_CONTACTOR) != contactor_get_state(MOTOR_PRE_CONTACTOR))
+    if (contactor_get_sense(MOTOR_PRE_CONTACTOR) != contactor_get_commanded_state(MOTOR_PRE_CONTACTOR))
     {
         // Fault handler
         set_faultBit(PRECHARGE_SENSE_MISMATCH_FAULT);
@@ -61,8 +55,8 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
 
     printf("Motor Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_CONTACTOR));
     printf("Precharge Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_PRE_CONTACTOR));
-    printf("Motor Contactor State: %d\r\n", contactor_get_state(MOTOR_CONTACTOR));
-    printf("Precharge Contactor State: %d\r\n", contactor_get_state(MOTOR_PRE_CONTACTOR));
+    printf("Motor Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_CONTACTOR));
+    printf("Precharge Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_PRE_CONTACTOR));
 }
 
 void Task_Precharge()
@@ -143,6 +137,6 @@ void Task_Precharge()
             break;
         }
 
-        vTaskDelayUntil(PRECHARGE_TASK_DELAY_MS);
+        vTaskDelay(PRECHARGE_TASK_DELAY_MS);
     }
 }

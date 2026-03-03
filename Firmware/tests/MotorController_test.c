@@ -17,7 +17,6 @@ StackType_t motorControllerTask_stack[512];
 void can_error_handler(){
     
     while(1){
-        //LED_set(MOTOR_FAULT, GPIO_PIN_SET);
         HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
         HAL_Delay(500);
     }

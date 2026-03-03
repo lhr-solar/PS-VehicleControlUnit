@@ -9,6 +9,8 @@ static QueueHandle_t motorTelemetryQueue;
 // enables the fdcan3 recieve hook, calls can_fd_rx_callback_hook everytime a can rx interrupt happens
 #define FDCAN3_RECV_HOOK_EN
 
+// bus current for power
+// static float busCurrentSetPoint = 1.0f;
 
 void print_slcan(const can_rx_payload_t payload)
 {
@@ -66,7 +68,6 @@ void Task_MotorTelemetry(){
 
     // motor canbus should be initialized here
 
-    // printf("balls\r\n");
 
     can_rx_payload_t payload;
 

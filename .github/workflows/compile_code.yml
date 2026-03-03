@@ -13,6 +13,15 @@ jobs:
       - name: Initialize Submodules
         run: git submodule update --init Firmware/Embedded-Sharepoint
 
+      - name: Cache Nix
+        uses: actions/cache@v3
+        with:
+          path: |
+            /nix/store
+            ~/.cache/nix
+          key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-keys: |
+            nix-${{ runner.os }}-
 
       - name: Install Nix
         run: |

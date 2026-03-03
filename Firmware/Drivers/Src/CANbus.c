@@ -2,7 +2,8 @@
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
-static can_status_t Motor_CANBus_Init(void){
+can_status_t Motor_CANBus_Init(void){
+  
     hfdcan3->Instance = FDCAN3;
     hfdcan3->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     hfdcan3->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
@@ -44,13 +45,12 @@ static can_status_t Motor_CANBus_Init(void){
 
 }
 
-can_status_t CANBus_Init(void){
+can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+  
+  return can_fd_send(hfdcan3, header, data, delay_ticks);
 
-    if(Motor_CANBus_Init() != CAN_OK){
-        return CAN_ERR;
-    }
-    return CAN_OK;
 }
+
 
 
 static uint32_t HAL_RCC_FDCAN_CLK_ENABLED=0;

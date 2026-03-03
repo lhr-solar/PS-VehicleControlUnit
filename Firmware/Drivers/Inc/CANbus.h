@@ -3,4 +3,6 @@
 #include "stm32xx_hal.h"
 #include "CAN_FD.h"
 
-can_status_t CANBus_Init(void);
+can_status_t Motor_CANBus_Init(void);
+
+can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks);

@@ -8,20 +8,19 @@
 #include "ADC_Motor_LUT.h"
 #include "FaultBits.h"
 
-// ADC scaling constants
-#define ADC_Max 4095
-#define V_Ref 3300 // mV
-
-// Isolated amp gain: 2/5 = 0.4
-#define Gain_Numerator 2
-#define Gain_Denominator 5
-
 // ADC Channel 11 (Motor Voltage) and 12 (Battery Voltage) are GPIOB 12 and 2
 #define ADC1_CHANNEL ADC_CHANNEL_11
 #define ADC2_CHANNEL ADC_CHANNEL_12
 #define ADC_QUEUE_LENGTH 4
 #define ADC_QUEUE_ITEM_SIZE sizeof(uint16_t)
 #define ADC_SAMPLING_TIME ADC_SAMPLETIME_2CYCLES_5
+
+/**
+ * @brief ADC Initialization Function
+ * @param adcHandle Pointer to ADC handle struct
+ * @retval None
+ */
+void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle);
 
 /**
  * @brief ADC voltage measurement results
@@ -100,4 +99,3 @@ void MX_ADC1_Init(void);
  * @retval None
  */
 void MX_ADC2_Init(void);
-

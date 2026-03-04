@@ -29,6 +29,75 @@ static ADC_ChannelConfTypeDef sConfig2 = {
     .OffsetNumber = ADC_OFFSET_NONE,
     .Offset = 0};
 
+static uint32_t HAL_RCC_ADC12_CLK_ENABLED = 0;
+
+void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
+{
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+    if (adcHandle->Instance == ADC1)
+    {
+        /** Initializes the peripherals clocks
+         */
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+        PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        /* ADC1 clock enable */
+        HAL_RCC_ADC12_CLK_ENABLED++;
+        if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+        {
+            __HAL_RCC_ADC12_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+        /**ADC1 GPIO Configuration
+        PB12     ------> ADC1_IN11
+        */
+        GPIO_InitStruct.Pin = ADC1_PIN;
+        GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
+
+        HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
+        HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+    }
+    else if (adcHandle->Instance == ADC2)
+    {
+        /** Initializes the peripherals clocks
+         */
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+        PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        /* ADC2 clock enable */
+        HAL_RCC_ADC12_CLK_ENABLED++;
+        if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+        {
+            __HAL_RCC_ADC12_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+        /**ADC2 GPIO Configuration
+        PB2     ------> ADC2_IN12
+        */
+        GPIO_InitStruct.Pin = ADC2_PIN;
+        GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
+
+        HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
+        HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+    }
+}
+
 ADC_Sense_Status_t ADC_1_Init()
 {
     adc_init_1.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;

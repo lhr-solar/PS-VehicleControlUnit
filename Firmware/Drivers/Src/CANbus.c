@@ -51,6 +51,11 @@ can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], Ti
 
 }
 
+can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+  
+  return can_fd_recv(hfdcan1, id, header, data, delay_ticks);
+
+}
 
 
 static uint32_t HAL_RCC_FDCAN_CLK_ENABLED=0;

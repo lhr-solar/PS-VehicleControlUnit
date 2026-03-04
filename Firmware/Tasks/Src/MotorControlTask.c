@@ -2,7 +2,7 @@
 #include "CAN_FD.h"
 
 // Period the motor control thread runs at
-#define MOTOR_CONTROL_TASK_PERIOD_MS 150
+#define MOTOR_CONTROL_TASK_PERIOD_MS 100
 
 #define PRINT_DEBUG_PERIOD 1000
 
@@ -66,8 +66,8 @@ void Task_MotorControl(void){
 
     // current and velocity setpoint control speed of motor
     mc_drivecommand_t motorDriveCommand = {0};
-    motorDriveCommand.MC_MotorCurrentSetpoint = 0.1f;
-    motorDriveCommand.MC_MotorVelocitySetpoint = 0.1f;
+    motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
+    motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
     uint8_t motor_drive_tx_data[8];
 
     uint8_t can_send_errors = 0;
@@ -80,11 +80,13 @@ void Task_MotorControl(void){
     uint8_t motor_power_tx_data[8]; // the message being sent on the CANbus
     initMotorPowerCommandHeader(&mocoPowerCommandHeader); // initializes the can tx header
     packPowerCommand(motorPowerCommand, motor_power_tx_data); // packs the motorPower struct into an array of bytes
-    Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
+    // Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
     while(1){
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
+
+         Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
         if (Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY) == CAN_ERR){
             can_send_errors++;

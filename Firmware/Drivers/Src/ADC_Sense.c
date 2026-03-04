@@ -1,11 +1,4 @@
-#include "ADC.h"
-#include "pinDefs.h"
 #include "ADC_Sense.h"
-#include "stm32xx_hal.h"
-#include "inits.h"
-#include "UART.h"
-#include "printf.h"
-#include "FaultBits.h"
 
 static uint8_t Is_Initialized = 0;
 
@@ -26,8 +19,7 @@ static ADC_ChannelConfTypeDef sConfig1 = {
     .SamplingTime = ADC_SAMPLING_TIME,
     .SingleDiff = ADC_SINGLE_ENDED,
     .OffsetNumber = ADC_OFFSET_NONE,
-    .Offset = 0
-};
+    .Offset = 0};
 
 static ADC_ChannelConfTypeDef sConfig2 = {
     .Channel = ADC2_CHANNEL,
@@ -35,10 +27,78 @@ static ADC_ChannelConfTypeDef sConfig2 = {
     .SamplingTime = ADC_SAMPLING_TIME,
     .SingleDiff = ADC_SINGLE_ENDED,
     .OffsetNumber = ADC_OFFSET_NONE,
-    .Offset = 0 
-};
+    .Offset = 0};
 
-ADC_Sense_Status ADC_1_Init()
+static uint32_t HAL_RCC_ADC12_CLK_ENABLED = 0;
+
+void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle)
+{
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+    if (adcHandle->Instance == ADC1)
+    {
+        /** Initializes the peripherals clocks
+         */
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+        PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        /* ADC1 clock enable */
+        HAL_RCC_ADC12_CLK_ENABLED++;
+        if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+        {
+            __HAL_RCC_ADC12_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+        /**ADC1 GPIO Configuration
+        PB12     ------> ADC1_IN11
+        */
+        GPIO_InitStruct.Pin = ADC1_PIN;
+        GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
+
+        HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
+        HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+    }
+    else if (adcHandle->Instance == ADC2)
+    {
+        /** Initializes the peripherals clocks
+         */
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+        PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        /* ADC2 clock enable */
+        HAL_RCC_ADC12_CLK_ENABLED++;
+        if (HAL_RCC_ADC12_CLK_ENABLED == 1)
+        {
+            __HAL_RCC_ADC12_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOB_CLK_ENABLE();
+        /**ADC2 GPIO Configuration
+        PB2     ------> ADC2_IN12
+        */
+        GPIO_InitStruct.Pin = ADC2_PIN;
+        GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        HAL_GPIO_Init(ADC_PORT, &GPIO_InitStruct);
+
+        HAL_NVIC_SetPriority(ADC1_2_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY, 0);
+        HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+    }
+}
+
+ADC_Sense_Status_t ADC_1_Init()
 {
     adc_init_1.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_1.Resolution = ADC_RESOLUTION_12B;
@@ -62,22 +122,22 @@ ADC_Sense_Status ADC_1_Init()
         return ADC_1_INIT_ERR;
     }
 
-      ADC_MultiModeTypeDef multimode = {0};
-      multimode.Mode = ADC_MODE_INDEPENDENT;
-      if (HAL_ADCEx_MultiModeConfigChannel(hadc1, &multimode) != HAL_OK)
-      {
-          Error_Handler();
-      }
+    ADC_MultiModeTypeDef multimode = {0};
+    multimode.Mode = ADC_MODE_INDEPENDENT;
+    if (HAL_ADCEx_MultiModeConfigChannel(hadc1, &multimode) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-      if (HAL_ADC_ConfigChannel(hadc1, &sConfig1) != HAL_OK)
-      {
-          Error_Handler();
-      }
+    if (HAL_ADC_ConfigChannel(hadc1, &sConfig1) != HAL_OK)
+    {
+        Error_Handler();
+    }
 
-      return ADC_SENSE_OK;
+    return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status ADC_2_Init()
+ADC_Sense_Status_t ADC_2_Init()
 {
     adc_init_2.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adc_init_2.Resolution = ADC_RESOLUTION_12B;
@@ -109,7 +169,7 @@ ADC_Sense_Status ADC_2_Init()
     return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
+ADC_Sense_Status_t ADC_Sense_Init(void) // Initialize ADCs and queues
 {
     Motor_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage1, &xStaticQueue1);
     Battery_ADC_Queue = xQueueCreateStatic(ADC_QUEUE_LENGTH, ADC_QUEUE_ITEM_SIZE, qStorage2, &xStaticQueue2);
@@ -122,7 +182,7 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
         set_faultBit(ADC_QUEUE_ERR);
         return ADC_QUEUE_ERR;
     }
-    
+
     if (ADC_1_Init() != ADC_SENSE_OK || ADC_2_Init() != ADC_SENSE_OK)
     {
         // One or both ADC initializations failed
@@ -134,7 +194,7 @@ ADC_Sense_Status ADC_Sense_Init(void) // Initialize ADCs and queues
     return ADC_SENSE_OK;
 }
 
-ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read ADC values and calculate voltages
+ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read ADC values and calculate voltages
 {
     if (!Is_Initialized)
     {
@@ -172,9 +232,7 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
 
     if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
     {
-        uint64_t Numerator = (uint64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Motor_Voltage = (uint32_t)(Numerator / Denominator);
+        Result->Motor_Voltage = Motor_LUT[Motor_ADC];
     }
     else
     {
@@ -185,9 +243,7 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
 
     if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout_Ticks) == pdPASS)
     {
-        uint64_t Numerator = (uint64_t)Battery_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Battery_Voltage = (uint32_t)(Numerator / Denominator);
+        Result->Battery_Voltage = Battery_LUT[Battery_ADC];
     }
     else
     {
@@ -198,4 +254,3 @@ ADC_Sense_Status Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Read
 
     return ADC_SENSE_OK;
 }
-

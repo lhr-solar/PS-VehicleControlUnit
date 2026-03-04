@@ -1,6 +1,8 @@
+#pragma once
+
+#include "pinDefs.h"
+#include "UART_Init.h"
 #include "FreeRTOS.h"
-#include "stm32xx_hal.h"
-#include "printf.h"
 
 void SystemClock_Config(void);
 
@@ -10,41 +12,6 @@ void SystemClock_Config(void);
  * @retval None
  */
 void MX_GPIO_Init(void);
-
-/**
- * @brief USART3 Initialization Function
- * @param None
- * @retval None
- */
-void MX_USART3_UART_Init(void);
-
-/**
- * @brief USART Initialization Function
- * @param uartHandle Pointer to UART handle struct
- * @retval None
- */
-void MX_UART_INIT(UART_HandleTypeDef *uartHandle);
-
-/**
- * @brief ADC Initialization Function
- * @param adcHandle Pointer to ADC handle struct
- * @retval None
- */
-void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle);
-
-/**
- * @brief Printf Initialization Function
- * @param None
- * @retval None
- */
-void Init_UART_Printf();
-
-/**
- * @brief Handles faults for precharge by opening all contactors and entering an infinite loop
- * @param None
- * @retval None
- */
-void Fault_Handler(void);
 
 /**
  * @brief Does nothing at the moment

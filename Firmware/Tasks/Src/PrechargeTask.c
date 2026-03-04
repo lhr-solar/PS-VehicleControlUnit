@@ -1,9 +1,4 @@
-#include "ADC_Sense.h"
 #include "PrechargeTask.h"
-#include "Contactors.h"
-#include "stm32xx_hal.h"
-#include "pinDefs.h"
-#include "FaultBits.h"
 
 /* handle for the Precharge task, defined here */
 TaskHandle_t hprecharge_task = NULL;
@@ -46,13 +41,13 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
         set_faultBit(BATTERY_UNDERVOLTAGE_FAULT);
     }
 
-    if (contactor_get_sense(MOTOR_CONTACTOR) != contactor_get_state(MOTOR_CONTACTOR))
+    if (contactor_get_sense(MOTOR_CONTACTOR) != contactor_get_commanded_state(MOTOR_CONTACTOR))
     {
         // Fault handler
         set_faultBit(MOTOR_SENSE_MISMATCH_FAULT);
     }
 
-    if (contactor_get_sense(MOTOR_PRE_CONTACTOR) != contactor_get_state(MOTOR_PRE_CONTACTOR))
+    if (contactor_get_sense(MOTOR_PRE_CONTACTOR) != contactor_get_commanded_state(MOTOR_PRE_CONTACTOR))
     {
         // Fault handler
         set_faultBit(PRECHARGE_SENSE_MISMATCH_FAULT);
@@ -60,8 +55,8 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
 
     printf("Motor Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_CONTACTOR));
     printf("Precharge Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_PRE_CONTACTOR));
-    printf("Motor Contactor State: %d\r\n", contactor_get_state(MOTOR_CONTACTOR));
-    printf("Precharge Contactor State: %d\r\n", contactor_get_state(MOTOR_PRE_CONTACTOR));
+    printf("Motor Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_CONTACTOR));
+    printf("Precharge Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_PRE_CONTACTOR));
 }
 
 void Task_Precharge()
@@ -73,6 +68,11 @@ void Task_Precharge()
 
     while (1)
     {
+        LED_set(HB, ON);
+        vTaskDelay(500);
+        LED_set(HB, OFF);
+        vTaskDelay(500);
+
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
         {
@@ -137,6 +137,6 @@ void Task_Precharge()
             break;
         }
 
-        vTaskDelay(1000);
+        vTaskDelay(PRECHARGE_TASK_DELAY_MS);
     }
 }

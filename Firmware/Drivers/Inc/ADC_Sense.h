@@ -4,6 +4,8 @@
 #include "queue.h"
 #include "UART.h"
 #include "ADC.h"
+#include "ADC_Battery_LUT.h"
+#include "ADC_Motor_LUT.h"
 #include "FaultBits.h"
 
 // ADC scaling constants
@@ -13,10 +15,6 @@
 // Isolated amp gain: 2/5 = 0.4
 #define Gain_Numerator 2
 #define Gain_Denominator 5
-
-// Divider ratio: Rbottom / (Rbottom + Rtop)
-#define Divider_Numerator 2490
-#define Divider_Denominator (2490 + 100000)
 
 // ADC Channel 11 (Motor Voltage) and 12 (Battery Voltage) are GPIOB 12 and 2
 #define ADC1_CHANNEL ADC_CHANNEL_11
@@ -102,3 +100,4 @@ void MX_ADC1_Init(void);
  * @retval None
  */
 void MX_ADC2_Init(void);
+

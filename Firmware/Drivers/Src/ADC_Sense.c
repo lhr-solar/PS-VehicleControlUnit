@@ -163,9 +163,7 @@ ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Re
 
     if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
     {
-        uint64_t Numerator = (uint64_t)Motor_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Motor_Voltage = (uint32_t)(Numerator / Denominator);
+        Result->Motor_Voltage = Motor_LUT[Motor_ADC];
     }
     else
     {
@@ -176,9 +174,7 @@ ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Re
 
     if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout_Ticks) == pdPASS)
     {
-        uint64_t Numerator = (uint64_t)Battery_ADC * V_Ref * Gain_Denominator * Divider_Denominator; // Convert ADC reading to voltage in mV with scaling factors
-        uint64_t Denominator = (uint64_t)ADC_Max * Gain_Numerator * Divider_Numerator;
-        Result->Battery_Voltage = (uint32_t)(Numerator / Denominator);
+        Result->Battery_Voltage = Battery_LUT[Battery_ADC];
     }
     else
     {

@@ -32,42 +32,16 @@ def parse_args():
                         help="Show this help message and exit")
     return parser.parse_args()
 
-<<<<<<< HEAD
-def find_ports(stm_dir: Path):
-    if not stm_dir.is_dir():
-        error("Something is horribly wrong. No stm directory found.")
-
-    ports = []
-    for ld in stm_dir.rglob("*.ld"):
-        name = ld.stem
-        name = name.replace("_FLASH", "")
-        name = name.replace("x", "")
-        name = name.replace("_", "")
-        ports.append(name.lower())
-
-    if not ports:
-        error("Something is horribly wrong. No port linker scripts found.")
-
-    return ports
-
-def find_tests(tests_dir: Path):
-=======
 def find_tests(tests_dir: Path):
     print(tests_dir)
->>>>>>> main
     if not tests_dir.is_dir():
         error("Something is horribly wrong. No tests directory found.")
 
     tests = []
-<<<<<<< HEAD
-    for cfile in tests_dir.glob("*_test.c"):
-        tests.append(cfile.stem.replace("_test", ""))
-=======
     for cfile in tests_dir.glob("*.c"):
         # Remove "_test" and ".c" from filename
         clean_name = cfile.name.replace("_test.c", "")
         tests.append(clean_name)
->>>>>>> main
 
     if not tests:
         error("Something is horribly wrong. No test files found in the tests directory.")
@@ -84,14 +58,8 @@ def compile_test(script_dir: Path, port: str, test_name: str,
         "make",
         "-C", str(script_dir),
         f"TEST={test_name}",
-<<<<<<< HEAD
-        f"PROJECT_TARGET={port}",
-        "BEAR_ENABLE=0",
-        f"PROJECT_BUILD_DIR={build_dir}",
-=======
         f"PROJECT_BUILD_DIR={build_dir}",
         "BEAR_ENABLE=0",
->>>>>>> main
         *make_flags,
     ]
 
@@ -122,22 +90,14 @@ def compile_test(script_dir: Path, port: str, test_name: str,
 
 def main():
     args = parse_args()
-<<<<<<< HEAD
-    script_dir = Path(__file__).resolve().parent
-=======
     git_dir = Path(
         os.popen("git rev-parse --show-toplevel").read().strip()
     )
->>>>>>> main
 
     make_flags = ["-B", "-s"]
     if args.verbose:
         make_flags = ["-B"]
 
-<<<<<<< HEAD
-    ports = find_ports(script_dir / "../stm")
-    tests = find_tests(script_dir / "tests")
-=======
 
     ports = ["stm32g473xx"]
 
@@ -146,7 +106,6 @@ def main():
 
     makefile_dir = Path("Firmware")
     script_dir = git_dir / makefile_dir
->>>>>>> main
 
     info("Compiling all tests for the following ports:")
     for p in ports:
@@ -183,7 +142,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-<<<<<<< HEAD
-=======
-
->>>>>>> main

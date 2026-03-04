@@ -1,48 +1,42 @@
-// #include "FaultHandlerTask.h"
-// #include "PrechargeTask.h"
-// #include "StatusLEDs.h"
-// #include "inits.h"
+#include "FaultHandlerTask.h"
+#include "PrechargeTask.h"
+#include "StatusLEDs.h"
+#include "inits.h"
 
-// StaticTask_t    FaultHandlerTask_Buffer;
-// StackType_t     FaultHandlerTask_Stack[configMINIMAL_STACK_SIZE];
+int main()
+{
+    if (HAL_Init() != HAL_OK)
+        Error_Handler();
+    SystemClock_Config();
+    __HAL_RCC_SYSCFG_CLK_ENABLE();
+    __HAL_RCC_PWR_CLK_ENABLE();
 
-// StaticTask_t    Precharge_Task_Buffer;
-// StackType_t     Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
+    MX_UART_INIT(husart3);
+    Init_UART_Printf();
+    LEDs_init();
 
-// int main()
-// {
-//     if (HAL_Init() != HAL_OK)
-//         Error_Handler();
-//     SystemClock_Config();
-//     __HAL_RCC_SYSCFG_CLK_ENABLE();
-//     __HAL_RCC_PWR_CLK_ENABLE();
+    // Task
+    xTaskCreateStatic(
+        Task_FaultHandler,          // Task function
+        "FaultHandler",             // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,   // Stack size in words
+        NULL,                       // Task input parameter
+        tskIDLE_PRIORITY + 2,       // Task priority
+        FaultHandlerTask_Stack,     // Task handle
+        &FaultHandlerTask_Buffer    // Static task buffer (optional)
+    );
 
-//     MX_UART_INIT(husart3);
-//     Init_UART_Printf();
-//     LEDs_init();
+    hprecharge_task = xTaskCreateStatic(
+        Task_Precharge,             // Task function
+        "Precharge",               // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,   // Stack size in words
+        NULL,                       // Task input parameter
+        tskIDLE_PRIORITY + 1,       // Task priority
+        Precharge_Task_Stack,       // Task handle
+        &Precharge_Task_Buffer      // Static task buffer (optional)
+    );
 
-//     // Task
-//     xTaskCreateStatic(
-//         Task_FaultHandler,          // Task function
-//         "FaultHandler",             // Name of the task (for debugging)
-//         configMINIMAL_STACK_SIZE,   // Stack size in words
-//         NULL,                       // Task input parameter
-//         tskIDLE_PRIORITY + 2,       // Task priority
-//         FaultHandlerTask_Stack,     // Task handle
-//         &FaultHandlerTask_Buffer    // Static task buffer (optional)
-//     );
+    vTaskStartScheduler();
 
-//     hprecharge_task = xTaskCreateStatic(
-//         Task_Precharge,             // Task function
-//         "Precharge",               // Name of the task (for debugging)
-//         configMINIMAL_STACK_SIZE,   // Stack size in words
-//         NULL,                       // Task input parameter
-//         tskIDLE_PRIORITY + 1,       // Task priority
-//         Precharge_Task_Stack,       // Task handle
-//         &Precharge_Task_Buffer      // Static task buffer (optional)
-//     );
-
-//     vTaskStartScheduler();
-
-//     return 0;
-// }
+    return 0;
+}

@@ -2,9 +2,8 @@
 #include "stm32xx_hal.h"
 #include "PrechargeTask.h"
 #include "StatusLEDs.h"
+#include "InitTask.h"
 
-StaticTask_t    Precharge_Task_Buffer;
-StackType_t     Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
 
 int main()
 {

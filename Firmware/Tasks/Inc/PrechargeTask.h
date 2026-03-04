@@ -4,6 +4,8 @@
 #include "Contactors.h"
 #include "StatusLEDs.h"
 #include "ADC_Sense.h"
+#include "InitTask.h"
+
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V

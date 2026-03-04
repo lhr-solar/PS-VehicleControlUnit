@@ -60,7 +60,7 @@ int main(){
     LEDs_init();
 
 
-    if(CANBus_Init() != CAN_OK){
+    if(Motor_CANBus_Init() != CAN_OK){
         can_error_handler();
     }
 

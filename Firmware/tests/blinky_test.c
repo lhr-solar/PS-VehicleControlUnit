@@ -2,17 +2,7 @@
 #include "pinDefs.h"
 #include "inits.h"
 
-// Enable GPIO clock for a given port
-static void Enable_Port_Clock(GPIO_TypeDef *port)
-{
-    switch ((uint32_t)port) {
-        case (uint32_t)GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); break;
-        case (uint32_t)GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); break;
-        case (uint32_t)GPIOC: __HAL_RCC_GPIOC_CLK_ENABLE(); break;
-        case (uint32_t)GPIOD: __HAL_RCC_GPIOD_CLK_ENABLE(); break;
-        default: break;
-    }
-}
+
 
 // Initialize clock for heartbeat LED port
 void Heartbeat_Clock_Init() {

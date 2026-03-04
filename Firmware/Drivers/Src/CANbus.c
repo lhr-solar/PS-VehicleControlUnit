@@ -2,26 +2,31 @@
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
+FDCAN_HandleTypeDef* motorfdcan;
+
 can_status_t Motor_CANBus_Init(void){
   
-    hfdcan1->Instance = FDCAN1;
-    hfdcan1->Init.ClockDivider = FDCAN_CLOCK_DIV1;
-    hfdcan1->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
-    hfdcan1->Init.Mode = FDCAN_MODE_NORMAL;
-    hfdcan1->Init.AutoRetransmission = ENABLE;
-    hfdcan1->Init.TransmitPause = DISABLE;
-    hfdcan1->Init.ProtocolException = DISABLE;
-    hfdcan1->Init.NominalPrescaler = 20;
-    hfdcan1->Init.NominalSyncJumpWidth = 1;
-    hfdcan1->Init.NominalTimeSeg1 = 13;
-    hfdcan1->Init.NominalTimeSeg2 = 2;
-    hfdcan1->Init.DataPrescaler = 1;
-    hfdcan1->Init.DataSyncJumpWidth = 1;
-    hfdcan1->Init.DataTimeSeg1 = 1;
-    hfdcan1->Init.DataTimeSeg2 = 1;
-    hfdcan1->Init.StdFiltersNbr = 1;
-    hfdcan1->Init.ExtFiltersNbr = 0;
-    hfdcan1->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+    motorfdcan = hfdcan1;
+    motorfdcan->Instance = FDCAN1;
+
+
+    motorfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
+    motorfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+    motorfdcan->Init.Mode = FDCAN_MODE_NORMAL;
+    motorfdcan->Init.AutoRetransmission = ENABLE;
+    motorfdcan->Init.TransmitPause = DISABLE;
+    motorfdcan->Init.ProtocolException = DISABLE;
+    motorfdcan->Init.NominalPrescaler = 20;
+    motorfdcan->Init.NominalSyncJumpWidth = 1;
+    motorfdcan->Init.NominalTimeSeg1 = 13;
+    motorfdcan->Init.NominalTimeSeg2 = 2;
+    motorfdcan->Init.DataPrescaler = 1;
+    motorfdcan->Init.DataSyncJumpWidth = 1;
+    motorfdcan->Init.DataTimeSeg1 = 1;
+    motorfdcan->Init.DataTimeSeg2 = 1;
+    motorfdcan->Init.StdFiltersNbr = 1;
+    motorfdcan->Init.ExtFiltersNbr = 0;
+    motorfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
     // accepts all CAN IDs from 
     // FDCAN1 Filter Config
@@ -33,11 +38,11 @@ can_status_t Motor_CANBus_Init(void){
     sFilterConfig1.FilterID1 = 0x000;
     sFilterConfig1.FilterID2 = 0x000;
 
-    if(can_fd_init(hfdcan1, &sFilterConfig1) != CAN_OK){
+    if(can_fd_init(motorfdcan, &sFilterConfig1) != CAN_OK){
        return CAN_ERR;
     }
 
-    if(can_fd_start(hfdcan1) != CAN_OK){
+    if(can_fd_start(motorfdcan) != CAN_OK){
        return CAN_ERR;
     }
 
@@ -47,13 +52,13 @@ can_status_t Motor_CANBus_Init(void){
 
 can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
   
-  return can_fd_send(hfdcan1, header, data, delay_ticks);
+  return can_fd_send(motorfdcan, header, data, delay_ticks);
 
 }
 
 can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
   
-  return can_fd_recv(hfdcan1, id, header, data, delay_ticks);
+  return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
 
 }
 

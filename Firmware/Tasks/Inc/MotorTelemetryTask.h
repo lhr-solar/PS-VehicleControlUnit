@@ -7,7 +7,7 @@
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "initTask.h"
+#include "InitTask.h"
 
 
 void MotorTelemetryTask_Init(void);

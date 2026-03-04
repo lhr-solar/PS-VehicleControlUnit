@@ -4,7 +4,7 @@
 #include "StatusLEDs.h"
 #include "Contactors.h"
 #include "task.h"
-#include "initTask.h"
+#include "InitTask.h"
 
 #define PRINTF_DELAY_MS 250
 

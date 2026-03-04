@@ -2,8 +2,6 @@
 #include "PrechargeTask.h"
 #include "StatusLEDs.h"
 #include "inits.h"
-#include "initTask.h"
-
 
 int main()
 {

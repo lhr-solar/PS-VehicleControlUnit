@@ -22,9 +22,8 @@ jobs:
           restore-keys: |
             nix-${{ runner.os }}-
 
-
       - name: Install Nix Action
-              uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@v31
 
       - name: Test Production Build
         run: |

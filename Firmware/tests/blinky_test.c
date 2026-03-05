@@ -1,5 +1,8 @@
-#include "stm32xx_hal.h"
+#include "StatusLEDs.h"
 #include "pinDefs.h"
+#include "inits.h"
+
+
 
 // Initialize clock for heartbeat LED port
 void Heartbeat_Clock_Init() {
@@ -19,7 +22,7 @@ void Heartbeat_Clock_Init() {
 int main(){
     HAL_Init();
 
-    // Heartbeat LED on VCU is PB14
+    /* 
     GPIO_InitTypeDef led_config = {
         .Mode = GPIO_MODE_OUTPUT_PP,
         .Pull = GPIO_NOPULL,
@@ -31,6 +34,33 @@ int main(){
 
     while(1){
         HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
+        HAL_Delay(500);
+    }
+
+    return 0; 
+    */
+
+    // Initialize all LED GPIOs
+    LEDs_init();
+    while (1) 
+    {
+        // Turn LEDs on one-by-one
+        for (size_t i = 0; i < num_LEDs; ++i) 
+        {
+            Toggle_LED(i, ON);
+            HAL_Delay(200);
+        }
+
+        // Short pause with all LEDs on
+        HAL_Delay(500);
+
+        // Turn LEDs off one-by-one
+        for (size_t i = 0; i < num_LEDs; ++i) 
+        {
+            Toggle_LED(i, OFF);
+            HAL_Delay(200);
+        }
+
         HAL_Delay(500);
     }
 

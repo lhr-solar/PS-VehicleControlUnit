@@ -1,4 +1,4 @@
-name: Build Tests
+name: Build Production & Tests
 
 on:
   push:
@@ -11,21 +11,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Initialize Submodules
-        run: git submodule update --init --recursive
+        run: git submodule update --init Firmware/Embedded-Sharepoint
 
       - name: Cache Nix
         uses: actions/cache@v3
         with:
           path: |
-            /nix/store
             ~/.cache/nix
           key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
           restore-keys: |
             nix-${{ runner.os }}-
 
-      - name: Install Nix
-        run: |
-          sudo ./Firmware/Embedded-Sharepoint/nix_install.sh
+      - name: Install Nix Action
+        uses: cachix/install-nix-action@v31
 
       - name: Test Production Build
         run: |

@@ -1,120 +1,143 @@
 #!/usr/bin/env python3
 """
-FSM header generator for Tritium FSM
-Matches DriveMotor.h BitfieldInputs enum order.
-Generates FSM.h directly in the correct Firmware/apps/inc folder.
+generate_fsm.py  --full | --dnr | --all
+Hardcoded FSM bits and states — must match fsm.h exactly.
+Output: Firmware/apps/inc/fsm_table[_dnr].h
 """
 
-import os
+import argparse
+from pathlib import Path
 
-# === Config ===
-NUM_STATES = 8
-NEXT_STATES_LENGTH = 1 << 8  # 2^BITFIELD_INPUT_COUNT = 128
+OUT_DIR = Path(__file__).resolve().parent.parent / "core/Inc"
 
-# Bitfield flags (must match DriveMotor.h order)
-NEUTRAL_BIT = 0x1
-FORWARD_BIT = 0x2
-REVERSE_BIT = 0x4
-CRUISE_CONTROL_BUTTON_BIT = 0x8
-REGEN_BUTTON_BIT = 0x10
-READY_TO_REGEN_BIT = 0x20
-REGEN_ENABLED_BIT = 0x40
-BRAKING_BIT = 0x80
+# Must match BitfieldBitIndex in fsm.h (in order)
+BITS = {
+    "NEUTRAL_BIT":               1 << 0,
+    "FORWARD_BIT":               1 << 1,
+    "REVERSE_BIT":               1 << 2,
+    "CRUISE_CONTROL_BUTTON_BIT": 1 << 3,
+    "REGEN_BUTTON_BIT":          1 << 4,
+    "READY_TO_REGEN_BIT":        1 << 5,
+    "REGEN_ENABLED_BIT":         1 << 6,
+    "BRAKE_BIT":                 1 << 7,
+    "PRECHARGE_BIT":             1 << 8,
+}
 
-# FSM states
-STATE_INIT = 0
-FORWARD_DRIVE = 1
-NEUTRAL = 2
-REVERSE_DRIVE = 3
-REGEN = 4
-CRUISE_CONTROL = 5
-DISABLED = 6
-CAR_NOT_READY = 7
-
-state_names = [
+# Must match FSMStates in fsm.h (in order)
+STATES = [
     "STATE_INIT",
     "FORWARD_DRIVE",
-    "NEUTRAL",
+    "NEUTRAL_DRIVE",
     "REVERSE_DRIVE",
     "REGEN",
     "CRUISE_CONTROL",
     "DISABLED",
-    "CAR_NOT_READY"
+    "CAR_NOT_READY",
 ]
 
-# === FSM logic ===
-def compute_next_state(i, j):
-    """Compute the next state given current state i and input bitfield j."""
-    if i == CAR_NOT_READY or i == STATE_INIT:
-        return CAR_NOT_READY
-    if i == DISABLED:
-        return DISABLED
+STATE_IDX = {name: i for i, name in enumerate(STATES)}
+NSL       = 1 << len(BITS)   # 512
 
-    if i == NEUTRAL:
-        if (j & FORWARD_BIT) and not (j & REVERSE_BIT):
-            return FORWARD_DRIVE
-        elif (j & REVERSE_BIT):
-            return REVERSE_DRIVE
 
-    elif i == FORWARD_DRIVE:
-        if (j & REVERSE_BIT) or (j & NEUTRAL_BIT):
-            return NEUTRAL
-        elif (j & REGEN_ENABLED_BIT) and (j & READY_TO_REGEN_BIT) and (j & REGEN_BUTTON_BIT):
-            return REGEN
-        elif (j & CRUISE_CONTROL_BUTTON_BIT) and (j & REGEN_ENABLED_BIT):
-            return CRUISE_CONTROL
-        else:
-            return FORWARD_DRIVE
 
-    elif i == REVERSE_DRIVE:
-        if (j & REVERSE_BIT) and not (j & FORWARD_BIT):
-            return REVERSE_DRIVE
-        else:
-            return NEUTRAL
+def transition_full(cur, bits):
+    m = BITS
+    s = STATE_IDX
+    FWD,REV,NEU,CC,RB,RTR,REN,BRK,PC = (m[k] for k in (
+        "FORWARD_BIT","REVERSE_BIT","NEUTRAL_BIT","CRUISE_CONTROL_BUTTON_BIT",
+        "REGEN_BUTTON_BIT","READY_TO_REGEN_BIT","REGEN_ENABLED_BIT","BRAKE_BIT","PRECHARGE_BIT"))
 
-    elif i == REGEN:
-        if ((j & REGEN_BUTTON_BIT) and (j & READY_TO_REGEN_BIT) and
-            (j & REGEN_ENABLED_BIT) and (j & FORWARD_BIT)):
-            return REGEN
-        else:
-            return FORWARD_DRIVE
+    if cur in (s["STATE_INIT"], s["CAR_NOT_READY"]):
+        return s["NEUTRAL_DRIVE"] if (bits & PC) else s["CAR_NOT_READY"]
+    if cur == s["DISABLED"]:                    return s["DISABLED"]
+    if cur == s["NEUTRAL_DRIVE"]:
+        if (bits & FWD) and not (bits & REV) and not (bits & BRK): return s["FORWARD_DRIVE"]
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK): return s["REVERSE_DRIVE"]
+        return s["NEUTRAL_DRIVE"]
+    if cur == s["FORWARD_DRIVE"]:
+        if (bits & REV) or (bits & NEU) or (bits & BRK):           return s["NEUTRAL_DRIVE"]
+        if (bits & REN) and (bits & RTR) and (bits & RB):          return s["REGEN"]
+        if (bits & CC)  and (bits & REN):                          return s["CRUISE_CONTROL"]
+        return s["FORWARD_DRIVE"]
+    if cur == s["REVERSE_DRIVE"]:
+        return s["REVERSE_DRIVE"] if (bits & REV) and not (bits & FWD) and not (bits & BRK) else s["NEUTRAL_DRIVE"]
+    if cur == s["REGEN"]:
+        return s["REGEN"] if (bits & RB) and (bits & RTR) and (bits & REN) and (bits & FWD) else s["FORWARD_DRIVE"]
+    if cur == s["CRUISE_CONTROL"]:
+        return s["CRUISE_CONTROL"] if (bits & CC) else s["FORWARD_DRIVE"]
+    return s["NEUTRAL_DRIVE"]
 
-    elif i == CRUISE_CONTROL:
-        if (j & BRAKING_BIT):
-            return FORWARD_DRIVE
-        elif not (j & CRUISE_CONTROL_BUTTON_BIT):
-            return FORWARD_DRIVE
-        else:
-            return CRUISE_CONTROL
 
-    return NEUTRAL  # fallback safety
+def transition_dnr(cur, bits):
+    m = BITS
+    s = STATE_IDX
+    FWD,REV,NEU,BRK,PC = (m[k] for k in (
+        "FORWARD_BIT","REVERSE_BIT","NEUTRAL_BIT","BRAKE_BIT","PRECHARGE_BIT"))
 
-# === Main generation ===
+    if cur in (s["STATE_INIT"], s["CAR_NOT_READY"]):
+        return s["NEUTRAL_DRIVE"] if (bits & PC) else s["CAR_NOT_READY"]
+    if cur == s["DISABLED"]:
+        return s["DISABLED"]
+    
+    if cur == s["NEUTRAL_DRIVE"]:
+        if (bits & FWD) and not (bits & REV) and not (bits & BRK): 
+            return s["FORWARD_DRIVE"]
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK): 
+            return s["REVERSE_DRIVE"]
+        return s["NEUTRAL_DRIVE"]
+    if cur in (s["FORWARD_DRIVE"], s["REGEN"], s["CRUISE_CONTROL"]):
+        return s["NEUTRAL_DRIVE"] if (bits & REV) or (bits & NEU) or (bits & BRK) else s["FORWARD_DRIVE"]
+    if cur == s["REVERSE_DRIVE"]:
+        return s["REVERSE_DRIVE"] if (bits & REV) and not (bits & FWD) and not (bits & BRK) else s["NEUTRAL_DRIVE"]
+    return s["NEUTRAL_DRIVE"]
+
+
+
+def write_table(path, fn, label):
+    rows = []
+    for i, name in enumerate(STATES):
+        ns     = [STATES[fn(i, j)] for j in range(NSL)]
+        chunks = [", ".join(ns[x:x+8]) for x in range(0, NSL, 8)]
+        body   = ",\n".join(f"            {c}" for c in chunks)
+        rows.append(f"    [{name}] = {{ {name}, NULL, {{\n{body}\n    }}}},\n")
+
+    path.write_text(
+        f"/**\n"
+        f" * @file {path.name}\n"
+        f" * @brief Auto-generated FSM table ({label});  do not directly edit\n"
+        f" *        Regenerate: python3 generate_fsm.py --{label.lower()}\n"
+        f" */\n\n"
+        f"#pragma once\n"
+        f'#include "fsm.h"\n\n'
+        f"extern MocoState_t FSM[NUM_STATES];\n\n"
+        f"#ifdef DEFINE_FSM_TABLE\n"
+        f"MocoState_t FSM[NUM_STATES] = {{\n\n"
+        + "".join(f"{r}\n" for r in rows)
+        + f"}};\n"
+        f"#endif\n"
+    )
+    print(f"[{label:4}] {path.name}  ({len(STATES)} states × {NSL} inputs, ~{len(STATES)*NSL*4//1024} KB)")
+
+
+
+
+
+
 def main():
-    # Determine the project root based on this script's location
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    project_root = os.path.abspath(os.path.join(script_dir, ".."))  # assume script is in Firmware/scripts
+    parser = argparse.ArgumentParser()
+    g = parser.add_mutually_exclusive_group(required=True)
+    g.add_argument("--full", action="store_true")
+    g.add_argument("--dnr",  action="store_true")
+    g.add_argument("--all",  action="store_true")
+    args = parser.parse_args()
 
-    # Correct target path inside repo
-    output_path = os.path.join(project_root, "apps", "inc", "FSM.h")
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Ensure folder exists
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    if args.full or args.all:
+        write_table(OUT_DIR / "fsm_table.h",     transition_full, "FULL")
+    if args.dnr  or args.all:
+        write_table(OUT_DIR / "fsm_table_dnr.h", transition_dnr,  "DNR")
 
-    # Write FSM header (overwrite if it exists)
-    with open(output_path, "w") as f:
-        f.write("#pragma once\n\n")
-        f.write('#include "DriveMotor.h"\n\n')
-        f.write("TritiumState_t FSM[NUM_STATES] = {\n")
-
-        for i in range(NUM_STATES):
-            next_states = [compute_next_state(i, j) for j in range(NEXT_STATES_LENGTH)]
-            c_array = ", ".join(state_names[state] for state in next_states)
-            f.write(f"    {{{state_names[i]}, NULL, {{{c_array}}}}},\n")
-
-        f.write("};\n")
-
-    print(f"Generated {output_path} successfully!")
 
 if __name__ == "__main__":
     main()

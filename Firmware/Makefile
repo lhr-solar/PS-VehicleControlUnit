@@ -92,11 +92,36 @@ endif
 	@echo -e "${BLUE}Compiled for VCU! Splendid! Jolly Good!!${NC}"
 #---------------------------------
 
-
 #-------------------------------
 # Flash
 flash: 	
 	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash
+
+
+#-------------------------------
+# ESP32 Build
+.PHONY: esp32
+ESP32_DIR := $(MAKEFILE_DIR)/esp32_fw
+
+esp32:
+ifndef SKETCH
+	$(error Please provide SKETCH=<name>)
+endif
+	$(MAKE) -C $(ESP32_DIR) SKETCH=$(SKETCH)
+#-------------------------------
+
+#-------------------------------
+# ESP32 flash
+.PHONY: esp32_flash
+esp32_flash:
+ifndef SKETCH
+	$(error Please provide SKETCH=<name>)
+endif
+ifndef PORT
+	$(error Please provide PORT=<serial_port>)
+endif
+	$(MAKE) -C $(ESP32_DIR) flash SKETCH=$(SKETCH) PORT=$(PORT)
+#-------------------------------
 
 # Help
 .PHONY: help

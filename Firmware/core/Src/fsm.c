@@ -10,16 +10,17 @@
 #include "fsm.h"
 #include "rollover_speed_table.h"
 #include "watchdogs.h"
-#include "CAN.h"
+#include "CAN_FD.h"
 #include "faults.h"
 #include "CarCAN_can_msgs.h"
 #include "MotorCAN_can_msgs.h"
+#include "BPSCAN_can_msgs.h"
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_VELOCITY        100.0f
-#define BRAKE_THRESH        42.0f
-#define BRAKE_THRESH_HYST   30.0f
+#define MAX_VELOCITY        100.0f // meters per second
+#define BRAKE_THRESH        42.0f  // percent
+#define BRAKE_THRESH_HYST   30.0f  // percent
 
 
 MocoState_t currentState;
@@ -31,7 +32,7 @@ static controls_status_t      controls_status = {0};
 
 // Only the BPS fields consumed by the FSM
 static struct { uint8_t BPS_Fault; uint8_t BPS_Regen_OK; } bps_status = {0};
-// Only the MC field consumed by the FSM
+// Only the MC field consumed by the FSM, this is in meters per second
 static struct { float MC_VehicleVelocity; } motor_velocity = {0};
 
 static float  accel_pedal_pct     = 0.0f;
@@ -124,18 +125,34 @@ static void unpack_motor_velocity(const uint8_t *b) {
 ///// can helpers
 
 
-static void carcan_send(uint16_t id, const uint8_t *data, uint8_t len) {
-    CAN_TxHeaderTypeDef hdr = {
-        .StdId = id, .IDE = CAN_ID_STD, .RTR = CAN_RTR_DATA, .DLC = len
+static void carcan_send(uint16_t id, uint8_t *data, uint8_t len) {
+    FDCAN_TxHeaderTypeDef hdr = {
+        .Identifier = id, 
+        .IdType = FDCAN_STANDARD_ID, 
+        .TxFrameType = FDCAN_DATA_FRAME, 
+        .DataLength = len << 16,
+        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+        .BitRateSwitch = FDCAN_BRS_OFF,
+        .FDFormat = FDCAN_CLASSIC_CAN,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+        .MessageMarker = 0
     };
-    can_send(hcan2, &hdr, data, 0);
+    can_fd_send(hfdcan2, &hdr, data, 0);
 }
 
-static void motorcan_send(uint16_t id, const uint8_t *data, uint8_t len) {
-    CAN_TxHeaderTypeDef hdr = {
-        .StdId = id, .IDE = CAN_ID_STD, .RTR = CAN_RTR_DATA, .DLC = len
+static void motorcan_send(uint16_t id, uint8_t *data, uint8_t len) {
+    FDCAN_TxHeaderTypeDef hdr = {
+        .Identifier = id, 
+        .IdType = FDCAN_STANDARD_ID, 
+        .TxFrameType = FDCAN_DATA_FRAME, 
+        .DataLength = len << 16,
+        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+        .BitRateSwitch = FDCAN_BRS_OFF,
+        .FDFormat = FDCAN_CLASSIC_CAN,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+        .MessageMarker = 0
     };
-    can_send(hcan1, &hdr, data, 0);
+    can_fd_send(hfdcan1, &hdr, data, 0);
 }
 
 
@@ -173,38 +190,38 @@ bool     fsm_is_over_rollover_speed(void)     { return rollover_limit_active;   
  * ========================================================= */
 
 static void update_from_can(void) {
-    CAN_RxHeaderTypeDef hdr;
+    FDCAN_RxHeaderTypeDef hdr;
     uint8_t buf[8] = {0};
 
-    if (can_recv(hcan2, CAN_ID_DRIVER_INPUT_STATUS, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan2, CAN_ID_DRIVER_INPUT_STATUS, &hdr, buf, 0) == CAN_OK) {
         unpack_driver_input(buf, &driver_input);
         watchdog_received_can_message(WD_IDX_DRIVER_INPUT);
     }
 
-    if (can_recv(hcan2, CAN_ID_ACCEL_BRAKE_POSITION, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan2, CAN_ID_ACCEL_BRAKE_POSITION, &hdr, buf, 0) == CAN_OK) {
         unpack_accel_brake(buf, &accel_brake);
         watchdog_received_can_message(WD_IDX_ACCEL_BRAKE);
     }
 
-    if (can_recv(hcan2, CAN_ID_LWS_STANDARD, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan2, CAN_ID_LWS_STANDARD, &hdr, buf, 0) == CAN_OK) {
         unpack_lws(buf, &lws);
         watchdog_received_can_message(WD_IDX_STEERING_ANGLE);
-        if (!lws.LWS_OK) Faults_ThrowFault(FAULT_ID_STEERING_SENSOR_BAD_DATA);
+        if (!lws.LWS_OK) faults_throw_fault(FAULT_ID_STEERING_SENSOR_BAD_DATA);
     }
 
-    if (can_recv(hcan2, CAN_ID_CONTROLS_STATUS, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan2, CAN_ID_CONTROLS_STATUS, &hdr, buf, 0) == CAN_OK) {
         unpack_controls_status(buf, &controls_status);
         watchdog_received_can_message(WD_IDX_CONTROLS_STATUS);
-        if (controls_status.Controls_Leader_Fault) Faults_ThrowFault(FAULT_ID_CONTROLS_FAULT);
+        if (controls_status.Controls_Leader_Fault) faults_throw_fault(FAULT_ID_CONTROLS_FAULT);
     }
 
-    if (can_recv(hcan2, CAN_ID_BPS_STATUS, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan2, CAN_ID_BPS_STATUS, &hdr, buf, 0) == CAN_OK) {
         unpack_bps_status(buf);
         watchdog_received_can_message(WD_IDX_BPS_STATUS);
-        if (bps_status.BPS_Fault) Faults_ThrowFault(FAULT_ID_BPS_FAULT);
+        if (bps_status.BPS_Fault) faults_throw_fault(FAULT_ID_BPS_FAULT);
     }
 
-    if (can_recv(hcan1, CAN_ID_MC_VELOCITYMEASUREMENT, &hdr, buf, 0) == CAN_RECV) {
+    if (can_fd_recv(hfdcan1, CAN_ID_MC_VELOCITYMEASUREMENT, &hdr, buf, 0) == CAN_OK) {
         unpack_motor_velocity(buf);
     }
 }
@@ -223,10 +240,8 @@ static void rebuild_bitfield(void) {
     if (bps_status.BPS_Regen_OK)     s |= READY_TO_REGEN_BIT;
     if (precharge_complete)          s |= PRECHARGE_COMPLETE_BIT;
 
-    accel_pedal_pct = map_to_percent(accel_brake.Accel_Pos_Main,
-                                     ACCEL_PEDAL_MIN, ACCEL_PEDAL_MAX, 0, 100);
-    brake_pedal_pct = map_to_percent(accel_brake.Brake_Pos_Main,
-                                     BRAKE_PEDAL_MIN, BRAKE_PEDAL_MAX, 0, 100);
+    accel_pedal_pct = accel_brake.Accel_Pos_Main;
+    brake_pedal_pct = accel_brake.Brake_Pos_Main;
 
     if (brake_pedal_pct >= brake_threshold) {
         s |= BRAKE_BIT;
@@ -261,7 +276,7 @@ static void send_motor_drive_cmd(float velocity, float current) {
     uint8_t data[8] = {0};
     memcpy(&data[0], &velocity, sizeof(float));
     memcpy(&data[4], &current,  sizeof(float));
-    motorcan_send(MOTOR_DRIVE, data, 8);
+    motorcan_send(CAN_ID_MC_DRIVECOMMAND, data, 8);
 }
 
 static bool ready_to_roll(void) {
@@ -294,7 +309,12 @@ static void handle_state_not_ready(void) {
 }
 
 static void handle_state_forward(void) {
-    send_motor_drive_cmd(MAX_VELOCITY, apply_rollover_limit(accel_pedal_pct));
+    if (motor_velocity.MC_VehicleVelocity < -0.5f) {
+        // if we're actually going backwards, let off the pedal until we slow down
+        send_motor_drive_cmd(0.0f, 0.0f);
+    } else {
+        send_motor_drive_cmd(MAX_VELOCITY, apply_rollover_limit(accel_pedal_pct));
+    }
 }
 
 static void handle_state_reverse(void) {
@@ -309,7 +329,7 @@ static void handle_state_cruise(void) {
 
 //////// rtos tasks
 
-void Task_UpdateControlStatus() {
+void Task_UpdateControlStatus(void *args  __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
     while (1) {
         update_from_can();
@@ -318,7 +338,7 @@ void Task_UpdateControlStatus() {
     }
 }
 
-void Task_FSM() {
+void Task_FSM(void *args  __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
     while (1) {
         fsm_step();
@@ -327,25 +347,25 @@ void Task_FSM() {
 }
 
 // VCU_Status  0x10  3 bytes  100ms
-void Task_BroadcastVCUStatus() {
+void Task_BroadcastVCUStatus(void *args  __attribute__((unused))) {
     uint8_t buf[3];
 
     while (1) {
         // Byte 0: VCU_Fault — map internal faults to DBC enum
         uint8_t vcu_fault = VCU_STATUS_VCU_FAULT_NO_FAULT;
-        if (Faults_IsActive(FAULT_ID_PRECHARGE_TIMEOUT))
+        if (faults_is_active(FAULT_ID_PRECHARGE_TIMEOUT))
             vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_PRECHARGE_TIMEOUT;
-        else if (Faults_IsActive(FAULT_ID_MOTOR_DC_BUS_OVERVOLTAGE))
+        else if (faults_is_active(FAULT_ID_MOTOR_DC_BUS_OVERVOLTAGE))
             vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_HV_OVERVOLTAGE;
-        else if (Faults_IsActive(FAULT_ID_MOTOR_15V_UNDERVOLTAGE))
+        else if (faults_is_active(FAULT_ID_MOTOR_15V_UNDERVOLTAGE))
             vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_HV_UNDERVOLTAGE;
-        else if (Faults_IsActive(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT) ||
-                 Faults_IsActive(FAULT_ID_MOTOR_SOFTWARE_OVERCURRENT) ||
-                 Faults_IsActive(FAULT_ID_MOTOR_BAD_HALL_SEQUENCE)    ||
-                 Faults_IsActive(FAULT_ID_MOTOR_WD_RESET)             ||
-                 Faults_IsActive(FAULT_ID_MOTOR_CONFIG_READ)          ||
-                 Faults_IsActive(FAULT_ID_MOTOR_DESATURATION)         ||
-                 Faults_IsActive(FAULT_ID_MOTOR_OVERSPEED))
+        else if (faults_is_active(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT) ||
+                 faults_is_active(FAULT_ID_MOTOR_SOFTWARE_OVERCURRENT) ||
+                 faults_is_active(FAULT_ID_MOTOR_BAD_HALL_SEQUENCE)    ||
+                 faults_is_active(FAULT_ID_MOTOR_WD_RESET)             ||
+                 faults_is_active(FAULT_ID_MOTOR_CONFIG_READ)          ||
+                 faults_is_active(FAULT_ID_MOTOR_DESATURATION)         ||
+                 faults_is_active(FAULT_ID_MOTOR_OVERSPEED))
             vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_CONTROLLER_FAULT;
         buf[0] = vcu_fault;
 
@@ -359,8 +379,8 @@ void Task_BroadcastVCUStatus() {
             !accel_brake.Brake_Pressure_2_Fault;
 
         bool driver_input_ok =
-            !Faults_IsActive(FAULT_ID_CONTROLS_STATUS_WATCHDOG) &&
-            !Faults_IsActive(FAULT_ID_CONTROLS_FAULT);
+            !faults_is_active(FAULT_ID_CONTROLS_STATUS_WATCHDOG) &&
+            !faults_is_active(FAULT_ID_CONTROLS_FAULT);
 
         buf[1] =
             ((uint8_t)precharge_complete                       << 0) |  // Motor_Contactor_State

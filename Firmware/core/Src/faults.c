@@ -20,37 +20,37 @@ static StaticEventGroup_t xFaultEventGroupBuffer;
 EventGroupHandle_t        xFaultEventGroup = NULL;
 
 
-void Faults_Init(void) {
+void faults_init(void) {
     xFaultEventGroup = xEventGroupCreateStatic(&xFaultEventGroupBuffer);
     configASSERT(xFaultEventGroup != NULL);
     xEventGroupClearBits(xFaultEventGroup, FAULT_MASK_ALL);
 }
 
-void Faults_ThrowFault(FaultID_e fault_id) {
+void faults_throw_fault(FaultID_e fault_id) {
     configASSERT(fault_id < FAULT_ID_COUNT);
     xEventGroupSetBits(xFaultEventGroup, 1U << fault_id);
 }
 
-void Faults_ThrowFaultsUsingBitfield(EventBits_t fault_bits) {
+void faults_throw_faults_using_bitfield(EventBits_t fault_bits) {
     xEventGroupSetBits(xFaultEventGroup, fault_bits & FAULT_MASK_ALL);
 }
 
 // for if we want recoverable faults maybe??
-void Faults_ClearFault(FaultID_e fault_id) {
+void faults_clear_fault(FaultID_e fault_id) {
     configASSERT(fault_id < FAULT_ID_COUNT);
     xEventGroupClearBits(xFaultEventGroup, 1U << fault_id);
 }
 
-bool Faults_AnyActive(void) {
+bool faults_any_active(void) {
     return (xEventGroupGetBits(xFaultEventGroup) & FAULT_MASK_ALL) != 0;
 }
 
-bool Faults_IsActive(FaultID_e fault_id) {
+bool faults_is_active(FaultID_e fault_id) {
     configASSERT(fault_id < FAULT_ID_COUNT);
     return (xEventGroupGetBits(xFaultEventGroup) & (1U << fault_id)) != 0;
 }
 
-EventBits_t Faults_GetCurrentFaults(void) {
+EventBits_t faults_get_current_faults(void) {
     return xEventGroupGetBits(xFaultEventGroup) & FAULT_MASK_ALL;
 }
 
@@ -62,7 +62,7 @@ EventBits_t Faults_GetCurrentFaults(void) {
  * should be highest priority and blocks waiting for any fault bit
  * then responds immediately once a bit is set
  */
-void Task_FaultHandler() {
+void Task_FaultHandler(void *args  __attribute__((unused))) {
 
     while (true) {
         // Block until any fault bit is set (do not clear on exit

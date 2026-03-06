@@ -13,13 +13,14 @@
 static StaticTimer_t  wd_buffers[MAX_WD_TIMERS];
 static TimerHandle_t  wd_timers[MAX_WD_TIMERS];
 static bool           wd_alive[MAX_WD_TIMERS];
-static int            wd_count = 0;
+static FaultID_e      wd_fault_ids[MAX_WD_TIMERS];
+static uint8_t            wd_count = 0;
 
 static void wd_callback(TimerHandle_t xTimer) {
-    int idx = (int)(uintptr_t)pvTimerGetTimerID(xTimer);
+    uint8_t idx = (uint8_t)(uintptr_t)pvTimerGetTimerID(xTimer);
     wd_alive[idx] = false;
     printf("WD timeout: signal %d\n", idx);
-    Faults_ThrowFault(wd_fault_ids[idx]);
+    faults_throw_fault(wd_fault_ids[idx]);
 }
 
 void watchdog_init(void) {
@@ -49,24 +50,24 @@ void watchdog_create(const char *name, uint8_t idx, uint32_t timeout_ms, FaultID
 }
 
 void watchdog_start_all(void) {
-    for (int i = 0; i < wd_count; i++) {
+    for (uint8_t i = 0; i < wd_count; i++) {
         configASSERT(xTimerStart(wd_timers[i], portMAX_DELAY) == pdPASS);
     }
 }
 
 void watchdog_stop_all(void) {
-    for (int i = 0; i < wd_count; i++) {
+    for (uint8_t i = 0; i < wd_count; i++) {
         xTimerStop(wd_timers[i], portMAX_DELAY);
     }
 }
 
-void watchdog_received_can_message(int idx) {
+void watchdog_received_can_message(uint8_t idx) {
     configASSERT(idx < MAX_WD_TIMERS && wd_timers[idx] != NULL);
     wd_alive[idx] = true;
     xTimerReset(wd_timers[idx], 0);
 }
 
-void watchdog_received_can_message_ISR(int idx, BaseType_t *pxHigherPriorityTaskWoken) {
+void watchdog_received_can_message_ISR(uint8_t idx, BaseType_t *pxHigherPriorityTaskWoken) {
     configASSERT(idx < MAX_WD_TIMERS && wd_timers[idx] != NULL);
     wd_alive[idx] = true;
     xTimerResetFromISR(wd_timers[idx], pxHigherPriorityTaskWoken);

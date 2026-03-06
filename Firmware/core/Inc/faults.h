@@ -62,26 +62,26 @@ _Static_assert(FAULT_ID_COUNT <= 24, "Too many fault bits for fault EventGroup")
 #define FAULT_MASK_MOTOR_ALL  ((1U << FAULT_ID_MOTOR_OVERSPEED + 1) - 1)
 #define FAULT_MASK_ALL        ((1U << FAULT_ID_COUNT) - 1)
 
-void Faults_Init(void);
+void faults_init(void);
 
 // Throw a single fault by ID
-void Faults_ThrowFault(FaultID_e fault_id);
+void faults_throw_fault(FaultID_e fault_id);
 
 // Throw multiple faults at once using a pre-shifted bitfield
-void Faults_ThrowFaultsUsingBitfield(EventBits_t fault_bits);
+void faults_throw_faults_using_bitfield(EventBits_t fault_bits);
 
 // Clear a single fault (for recoverable faults only)
-void Faults_ClearFault(FaultID_e fault_id);
+void faults_clear_fault(FaultID_e fault_id);
 
 // Check if any fault is currently active
-bool Faults_AnyActive(void);
+bool faults_any_active(void);
 
 // Check if a specific fault is active
-bool Faults_IsActive(FaultID_e fault_id);
+bool faults_is_active(FaultID_e fault_id);
 
 // Get the full fault bitfield
-EventBits_t Faults_GetCurrentFaults(void);
+EventBits_t faults_get_current_faults(void);
 
 
 
-void Task_FaultHandler(void);
+void Task_FaultHandler(void *args);

@@ -10,13 +10,14 @@
 #include "task.h"
 #include "event_groups.h"
 #include "fsm.h"
+#include "faults.h"
 
 
 
 #define TASK_INIT_STACK_SIZE            (configMINIMAL_STACK_SIZE)
 #define TASK_FSM_STACK_SIZE             (2 * configMINIMAL_STACK_SIZE)
-#define TASK_UPDATE_STATUS_STACK_SIZE   (configMINIMAL_STACK_SIZE)
-#define TASK_BROADCAST_STACK_SIZE       (configMINIMAL_STACK_SIZE)
+#define TASK_UPDATE_STATUS_STACK_SIZE   (2 * configMINIMAL_STACK_SIZE)
+#define TASK_BROADCAST_STACK_SIZE       (2 * configMINIMAL_STACK_SIZE)
 #define TASK_FAULT_STACK_SIZE           (configMINIMAL_STACK_SIZE)
 
 // SHould go Fault > FSM > UpdateStatus > Broadcast > Init
@@ -32,11 +33,3 @@ extern TaskHandle_t Task_FSM_Handle;
 extern TaskHandle_t Task_UpdateControlStatus_Handle;
 extern TaskHandle_t Task_BroadcastMotorStatus_Handle;
 extern TaskHandle_t Task_FaultHandler_Handle;
-
-
-
-void Task_Init(void);
-void Task_FSM(void);
-void Task_UpdateControlStatus(void);
-void Task_BroadcastMotorStatus(void);
-void Task_FaultHandler(void);

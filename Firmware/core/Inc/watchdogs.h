@@ -45,19 +45,21 @@ void watchdog_start_all(void);
 void watchdog_stop_all(void);
 
 // Pet the dog so call on every successful CAN receive (task context)
-void watchdog_received_can_message(int idx);
+void watchdog_received_can_message(uint8_t idx);
 
 // pet from ISR context
-void watchdog_received_can_message_ISR(int idx, BaseType_t *pxHigherPriorityTaskWoken);
+void watchdog_received_can_message_ISR(uint8_t idx, BaseType_t *pxHigherPriorityTaskWoken);
 
 
 bool watchdog_is_alive(int idx);
 int  watchdog_count(void);
 
 // create all the watchdogs macro
-#define X(name, str, timeout, fault) \
-    watchdog_create(str, WD_IDX_##name, timeout, fault)
-#define WATCHDOG_INIT_ALL_FSM_SIGNALS()  \
-    do {                                 \
-        WATCHDOG_LIST(X);                \
+#define WATCHDOG_INIT_ALL_FSM_SIGNALS()                 \
+    do {                                                \
+        WATCHDOG_LIST(WATCHDOG_CREATE_ONE_);            \
     } while (0);
+
+#define WATCHDOG_CREATE_ONE_(name, str, timeout, fault) \
+    watchdog_create(str, WD_IDX_##name, timeout, fault);
+    

@@ -79,9 +79,10 @@ void     fsm_set_precharge_complete(bool val);
 uint16_t fsm_get_car_status(void);
 bool     fsm_is_over_rollover_speed(void);
 
-void     Task_UpdateControlStatus(void);
-void     Task_FSM(void);
+void     Task_UpdateControlStatus(void *args);
+void     Task_FSM(void *args);
+void     Task_BroadcastVCUStatus(void *args);
 
-float    map_to_percent(uint8_t input,
-                         uint8_t in_min, uint8_t in_max,
-                         uint8_t out_min, uint8_t out_max);
+
+float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, 
+                     uint8_t out_min, uint8_t out_max);

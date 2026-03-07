@@ -72,10 +72,10 @@ void loop() {
   // strlen(message) + 1 includes the null terminator '\0' if you want the receiver to treat it as a string
   esp_err_t result = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
 
-  digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
-  digitalWrite(FLASH_LED, !digitalRead(FLASH_LED));
-  digitalWrite(ERR_LED, !digitalRead(ERR_LED));
-  digitalWrite(BLE_LED, !digitalRead(BLE_LED));
+  // digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
+  // digitalWrite(FLASH_LED, !digitalRead(FLASH_LED));
+  // digitalWrite(ERR_LED, !digitalRead(ERR_LED));
+  // digitalWrite(BLE_LED, !digitalRead(BLE_LED));
 
 
   // delay 500 m

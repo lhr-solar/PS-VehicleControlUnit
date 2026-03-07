@@ -14,7 +14,6 @@ void Task_Init()
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    MX_UART_INIT(husart3);
     Init_UART_Printf();
 
     xTaskCreateStatic(

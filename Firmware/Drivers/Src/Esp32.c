@@ -24,23 +24,6 @@ uart_status_t ESP32_UART_Init(void){
     return UART_OK;
 }
 
-void ESP32_mspUartInit(UART_HandleTypeDef* huart){
-    GPIO_InitTypeDef GPIO_InitStruct = {0}; 
-    if(huart->Instance == LPUART1){
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        /**LPUART1 GPIO Configuration
-        PB10     ------> LPUART1_RX
-        PB11     ------> LPUART1_TX
-        */
-        GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
-        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull = GPIO_NOPULL;
-        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-        GPIO_InitStruct.Alternate = GPIO_AF8_LPUART1;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-    }
-}
-
 uart_status_t ESP32_Send(const uint8_t* data, uint8_t length, TickType_t delay_ticks){
     return uart_send(esp32Uart, data, length, delay_ticks);
 }

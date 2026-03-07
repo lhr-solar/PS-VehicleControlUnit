@@ -8,11 +8,6 @@
 
 #define PRINTF_DEBUG
 
-StaticTask_t motorTelemetry_buffer;
-StackType_t motorTelemetry_stack[512];
-
-StaticTask_t motorControllerTask_buffer;
-StackType_t motorControllerTask_stack[512];
 
 void can_error_handler(){
     

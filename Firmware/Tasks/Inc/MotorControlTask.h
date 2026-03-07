@@ -5,6 +5,7 @@
 #include <string.h>
 #include "CANbus.h"
 #include "inits.h"
+#include "MotorSafeBits.h"
 #include "InitTask.h"
 
 

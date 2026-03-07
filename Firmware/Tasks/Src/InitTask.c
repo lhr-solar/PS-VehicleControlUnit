@@ -9,6 +9,13 @@ StackType_t Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[configMINIMAL_STACK_SIZE];
 
+
+StaticTask_t Motor_Control_Task_Buffer;
+StackType_t Motor_Control_Task_Stack[configMINIMAL_STACK_SIZE];
+
+StaticTask_t Motor_Telemetry_Task_Buffer;
+StackType_t Motor_Telemetry_Task_Stack[configMINIMAL_STACK_SIZE];
+
 void Task_Init()
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
@@ -16,6 +23,8 @@ void Task_Init()
 
     MX_UART_INIT(husart3);
     Init_UART_Printf();
+
+    MotorSafeBits_Init();
 
     xTaskCreateStatic(
         Task_FaultHandler,        // Task function

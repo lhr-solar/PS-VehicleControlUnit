@@ -26,7 +26,23 @@ void set_MotorSafeBit(motor_status_bit_t bit){
     xEventGroupSetBits(motorSafeBits, MOTOR_STATUS_BIT(bit));
 }
 
-EventBits_t MotorSafeBits_Wait(uint32_t bitsToWaitFor, TickType_t delay_ticks){
+void clear_MotorSafeBit(motor_status_bit_t bit){
+    
+    // not a valid fault
+    if(bit >= NUM_MOTOR_STATUS_BITS){ 
+        return;
+    }
+    
+    // set the bit
+    xEventGroupClearBits(motorSafeBits, MOTOR_STATUS_BIT(bit));
+}
+
+EventBits_t MotorSafeBits_Wait(EventBits_t bitsToWaitFor, TickType_t delay_ticks){
+
+    if(bitsToWaitFor != motorSafeToRunBits){
+        bitsToWaitFor = MOTOR_STATUS_BIT(bitsToWaitFor);
+    }
+    
     
     EventBits_t pending = xEventGroupWaitBits(
         motorSafeBits,

@@ -35,6 +35,8 @@ BaseType_t MotorSafeBits_Init();
 
 void set_MotorSafeBit(motor_status_bit_t bit);
 
+EventBits_t MotoSafeBits_WaitForSafe(TickType_t delay_ticks);
+
 void clear_MotorSafeBit(motor_status_bit_t bit);
 
-EventBits_t MotorSafeBits_Wait(EventBits_t bitsToWaitFor, TickType_t delay_ticks);
+EventBits_t MotorSafeBits_Wait(motor_status_bit_t bitsToWaitFor, TickType_t delay_ticks);

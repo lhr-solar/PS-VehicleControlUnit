@@ -31,20 +31,41 @@ void Task_Init()
         "FaultHandler",           // Name of the task (for debugging)
         configMINIMAL_STACK_SIZE, // Stack size in words
         NULL,                     // Task input parameter
-        tskIDLE_PRIORITY + 3,     // Task priority
+        FAULTER_HANDLER_THREAD_PRIO,     // Task priority
         FaultHandlerTask_Stack,   // Task handle
         &FaultHandlerTask_Buffer  // Static task buffer (optional)
     );
 
     hprecharge_task = xTaskCreateStatic(
-        Task_Precharge,           // Task function
-        "Precharge",              // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE, // Stack size in words
-        NULL,                     // Task input parameter
-        tskIDLE_PRIORITY + 2,     // Task priority
-        Precharge_Task_Stack,     // Task handle
-        &Precharge_Task_Buffer    // Static task buffer (optional)
+        Task_Precharge,                 // Task function
+        "Precharge",                    // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,       // Stack size in words
+        NULL,                           // Task input parameter
+        PRECHARGE_THREAD_PRIO,          // Task priority
+        Precharge_Task_Stack,           // Task handle
+        &Precharge_Task_Buffer          // Static task buffer (optional)
     );
+
+    xTaskCreateStatic(
+        Task_MotorControl,              // Task function
+        "Motor Control Thread",         // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,       // Stack size in words
+        NULL,                           // Task input parameter
+        MOTOR_CONTROL_THREAD_PRIO,      // Task priority
+        Motor_Control_Task_Stack,       // Task handle
+        &Motor_Control_Task_Buffer      // Static task buffer (optional)
+    );
+
+    xTaskCreateStatic(
+        Task_MotorTelemetry,            // Task function
+        "Motor Control Thread",         // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,       // Stack size in words
+        NULL,                           // Task input parameter
+        MOTOR_TELEMETRY_THREAD_PRIO,    // Task priority
+        Motor_Telemetry_Task_Stack,     // Task handle
+        &Motor_Telemetry_Task_Buffer    // Static task buffer (optional)
+    );
+
 
     vTaskDelete(NULL);
 }

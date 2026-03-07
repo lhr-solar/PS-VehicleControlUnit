@@ -45,6 +45,3 @@ void LEDs_init(void);
 
 /** @brief Toggle the LED */
 void Toggle_LED(Status_Mapping_t LED);
-
-/** @brief sets all LEDs based on LEDbitmap */
-void update_status(void);

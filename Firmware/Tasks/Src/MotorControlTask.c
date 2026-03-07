@@ -86,7 +86,7 @@ void Task_MotorControl(void){
     while(1){
 
         // check if any bits are set
-        motorSafeBits = MotorSafeBits_Wait(motorSafeToRunBits, pdMS_TO_TICKS(0));
+        motorSafeBits = MotoSafeBits_WaitForSafe(pdMS_TO_TICKS(0));
 
         // no bits are set, so the motor should not be run
         if(motorSafeBits == 0){

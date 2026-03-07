@@ -50,7 +50,7 @@ void HAL_UART_MspGPIOInit(UART_HandleTypeDef* huart){
       GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
       GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
       HAL_GPIO_Init(USART3_PORT, &GPIO_InitStruct);
-
+      
     }
 
 }

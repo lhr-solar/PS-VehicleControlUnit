@@ -3,6 +3,8 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
+#define SEND_PERIOD 500
+
 #define HEARTBEAT_LED 19
 #define FLASH_LED 20
 #define ERR_LED 21
@@ -31,6 +33,9 @@ void setup() {
   digitalWrite(ERR_LED, LOW);
   digitalWrite(FLASH_LED, LOW);
 
+  Serial.write("ESP32 starting up");
+  Serial.print("ESP Board MAC Address:  ");
+  Serial.println(WiFi.macAddress());
 
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
@@ -53,26 +58,29 @@ void loop() {
   static uint8_t buffer[MAX_PACKET_SIZE];
   static int bufIdx = 0;
 
-  // 1. Read UART into local buffer
+  // Read UART into local buffer
   while (Serial0.available() && bufIdx < MAX_PACKET_SIZE) {
     uint8_t c = Serial0.read();
-    buffer[bufIdx++] = c;
+    buffer[bufIdx] = c;
+    bufIdx = (bufIdx + 1) % MAX_PACKET_SIZE;
     Serial.write(c);  // Mirror to USB
   }
 
-  // 2. Send via ESP-NOW if we have data
+  // Send via ESP-NOW if we have data
   if (bufIdx > 0) {
     esp_err_t result = esp_now_send(receiverAddress, buffer, bufIdx);
     bufIdx = 0;  // Reset buffer after attempt
   }
 
   const char* message = "Hello World\n";
+  Serial.write("balls");
+  Serial0.write("fuck you Ravi");
   // Send the message
   // (uint8_t*) casts the string to a byte pointer
   // strlen(message) + 1 includes the null terminator '\0' if you want the receiver to treat it as a string
   esp_err_t result = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
 
-  // digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
+  digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
   // digitalWrite(FLASH_LED, !digitalRead(FLASH_LED));
   // digitalWrite(ERR_LED, !digitalRead(ERR_LED));
   // digitalWrite(BLE_LED, !digitalRead(BLE_LED));

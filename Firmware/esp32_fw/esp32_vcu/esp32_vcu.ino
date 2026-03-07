@@ -39,6 +39,7 @@ void setup() {
 
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
+    digitalWrite(ERR_LED, HIGH);
     return;
   }
 
@@ -50,6 +51,7 @@ void setup() {
 
   if (esp_now_add_peer(&peerInfo) != ESP_OK) {
     Serial.println("Failed to add peer");
+    digitalWrite(ERR_LED, HIGH);
     return;
   }
 }
@@ -64,26 +66,26 @@ void loop() {
     buffer[bufIdx] = c;
     bufIdx = (bufIdx + 1) % MAX_PACKET_SIZE;
     Serial.write(c);  // Mirror to USB
+    digitalWrite(ERR_LED, HIGH);
   }
 
+  esp_err_t espNowResult = ESP_FAIL;
   // Send via ESP-NOW if we have data
   if (bufIdx > 0) {
-    esp_err_t result = esp_now_send(receiverAddress, buffer, bufIdx);
+    espNowResult = esp_now_send(receiverAddress, buffer, bufIdx);
     bufIdx = 0;  // Reset buffer after attempt
   }
 
   const char* message = "Hello World\n";
-  Serial.write("balls");
-  Serial0.write("fuck you Ravi");
   // Send the message
   // (uint8_t*) casts the string to a byte pointer
   // strlen(message) + 1 includes the null terminator '\0' if you want the receiver to treat it as a string
-  esp_err_t result = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
+  espNowResult = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
+
+  // turn on the bluetooth LED if we sucesfully transmitted data.
+  digitalWrite(BLE_LED, espNowResult == ESP_OK ? HIGH : LOW);
 
   digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
-  // digitalWrite(FLASH_LED, !digitalRead(FLASH_LED));
-  // digitalWrite(ERR_LED, !digitalRead(ERR_LED));
-  // digitalWrite(BLE_LED, !digitalRead(BLE_LED));
 
 
   // delay 500 m

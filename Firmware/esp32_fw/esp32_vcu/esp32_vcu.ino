@@ -11,7 +11,9 @@
 #define BLE_LED 22
 
 // REPLACE WITH YOUR RECEIVER'S MAC ADDRESS
-uint8_t receiverAddress[] = { 0x7C, 0x2C, 0x67, 0x5D, 0x3B, 0xDC };
+// uint8_t receiverAddress[] = { 0x7C, 0x2C, 0x67, 0x5D, 0x3B, 0xDC }; // Ravi's esp32
+uint8_t receiverAddress[] = { 0x20, 0x6E, 0xF1, 0x11, 0x55, 0x9C }; //ESP32-C6 dev board
+
 
 #define BAUDRATE 115200
 #define MAX_PACKET_SIZE 250  // ESP-NOW limit is 250 bytes

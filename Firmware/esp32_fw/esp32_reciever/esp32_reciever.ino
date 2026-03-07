@@ -14,7 +14,7 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int 
 void setup() {
   pinMode(LED, OUTPUT);
 
-  Serial.begin(115200);
+  Serial.begin(115200); 
   delay(500);
   WiFi.mode(WIFI_STA);
 

@@ -16,3 +16,7 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle);
  * @retval None
  */
 void Init_UART_Printf();
+
+
+//Redirects syscall write to a blocking write so UART prints fully
+// int _write(int file, char *ptr, int len);

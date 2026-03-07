@@ -129,7 +129,7 @@ int main(void) {
     HAL_Init();
     SystemClock_Config();
     // HAL_FDCAN_DeInit(hfdcan3);
-    MX_UART_INIT(husart3);
+    // MX_UART_INIT(husart3);
     Init_UART_Printf();
 
     Task_Init_Handle = xTaskCreateStatic(

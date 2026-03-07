@@ -33,18 +33,6 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
     HAL_GPIO_Init(USART3_PORT, &GPIO_InitStruct);
 
-    husart3->Instance = USART3;
-    husart3->Init.BaudRate = 115200;
-    husart3->Init.WordLength = UART_WORDLENGTH_8B;
-    husart3->Init.StopBits = UART_STOPBITS_1;
-    husart3->Init.Parity = UART_PARITY_NONE;
-    husart3->Init.Mode = UART_MODE_TX_RX;
-    husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    husart3->Init.OverSampling = UART_OVERSAMPLING_16;
-    husart3->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-    husart3->Init.ClockPrescaler = UART_PRESCALER_DIV1;
-    husart3->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-
     if (HAL_UART_Init(husart3) != HAL_OK)
     {
       Error_Handler();
@@ -76,3 +64,12 @@ void Init_UART_Printf()
 
   printf_init(husart3);
 }
+
+// int _write(int file, char *ptr, int len) {
+//     (void)file;
+//     if (husart3 == NULL) return -1;
+//     if (HAL_UART_Transmit(husart3, (uint8_t*)ptr, (uint16_t)len, HAL_MAX_DELAY) != HAL_OK) {
+//         return -1;
+//     }
+//     return len;
+// }

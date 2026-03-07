@@ -333,6 +333,9 @@ static void handle_state_cruise(void) {
 void Task_UpdateControlStatus(void *args  __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
     while (1) {
+        printf("2\r\n");
+        // vTaskDelay(pdMS_TO_TICKS(10));
+        
         update_from_can();
         rebuild_bitfield();
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
@@ -340,8 +343,13 @@ void Task_UpdateControlStatus(void *args  __attribute__((unused))) {
 }
 
 void Task_FSM(void *args  __attribute__((unused))) {
+    //initializing the FSM handlers and actual Init
+    fsm_init();
+
     TickType_t last = xTaskGetTickCount();
     while (1) {
+        printf("Seeing if full printing is working now...\r\n");
+
         fsm_step();
         vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }
@@ -349,10 +357,13 @@ void Task_FSM(void *args  __attribute__((unused))) {
 
 // VCU_Status  0x10  3 bytes  100ms
 void Task_BroadcastVCUStatus(void *args  __attribute__((unused))) {
-    printf("VCU Printing on Broadcast Task!\r\n");
     uint8_t buf[3];
 
     while (1) {
+        printf("3\r\n");
+
+        // vTaskDelay(pdMS_TO_TICKS(10)); 
+
         // Byte 0: VCU_Fault — map internal faults to DBC enum
         uint8_t vcu_fault = VCU_STATUS_VCU_FAULT_NO_FAULT;
         if (faults_is_active(FAULT_ID_PRECHARGE_TIMEOUT))

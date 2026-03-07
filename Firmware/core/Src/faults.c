@@ -7,7 +7,7 @@
 #include "faults.h"
 #include "fsm.h"
 #include "watchdogs.h"
-#include <stdio.h>
+#include "printf.h"
 
 static const char *fault_names[FAULT_ID_COUNT] = {
 #define X(name) [FAULT_ID_##name] = #name,
@@ -64,7 +64,10 @@ EventBits_t faults_get_current_faults(void) {
  */
 void Task_FaultHandler(void *args  __attribute__((unused))) {
 
+    faults_init();
+
     while (true) {
+        printf("[FAULT HANDLER] Waiting for faults...\r\n");
         // Block until any fault bit is set (do not clear on exit
         // faults are sticky until explicitly cleared)
         EventBits_t active = xEventGroupWaitBits(

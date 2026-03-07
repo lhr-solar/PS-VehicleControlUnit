@@ -139,7 +139,7 @@ flash-uart:
 #-------------------------------
 # OpenOCD debug
 debug: 	
-	$(MAKE) -C $(BUILD_MAKEFILE_DIR) debug
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) debugvscode-remote://wsl%2Bubuntu-24.04/home/adiv/LHR-Linux/PS-VehicleControlUnit/Firmware/Drivers/Src/UART_Init.c
 
 #-------------- 
 # Documentation

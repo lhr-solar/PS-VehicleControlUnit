@@ -9,6 +9,8 @@
 #include "tasks.h"
 #include "CAN_FD.h"
 #include "watchdogs.h"
+#include "UART_Init.h"
+#include "UART.h"
 
 // Init
 static StaticTask_t  Task_Init_Buffer;
@@ -122,10 +124,13 @@ void Task_Init(void *args  __attribute__((unused))) {
 }
 
 
+
 int main(void) {
     HAL_Init();
     SystemClock_Config();
     // HAL_FDCAN_DeInit(hfdcan3);
+    MX_UART_INIT(husart3);
+    Init_UART_Printf();
 
     Task_Init_Handle = xTaskCreateStatic(
         Task_Init,
@@ -137,8 +142,6 @@ int main(void) {
         &Task_Init_Buffer
     );
     configASSERT(Task_Init_Handle != NULL);
-    
-
     
 
     vTaskStartScheduler();

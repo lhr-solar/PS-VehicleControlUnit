@@ -17,6 +17,7 @@
 #include "BPSCAN_can_msgs.h"
 #include <string.h>
 #include <stdlib.h>
+#include "printf.h"
 
 #define MAX_VELOCITY        100.0f // meters per second
 #define BRAKE_THRESH        42.0f  // percent
@@ -348,6 +349,7 @@ void Task_FSM(void *args  __attribute__((unused))) {
 
 // VCU_Status  0x10  3 bytes  100ms
 void Task_BroadcastVCUStatus(void *args  __attribute__((unused))) {
+    printf("VCU Printing on Broadcast Task!\r\n");
     uint8_t buf[3];
 
     while (1) {

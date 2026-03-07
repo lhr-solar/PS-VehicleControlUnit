@@ -7,12 +7,15 @@ echo "Installing Arduino CLI and ESP32 support..."
 OS="$(uname)"
 
 install_arduino_cli_mac() {
+    if command -v arduino-cli >/dev/null 2>&1; then
+        echo "arduino-cli already installed"
+        return
+    fi
     if ! command -v brew >/dev/null 2>&1; then
         echo "Homebrew not found. Please install Homebrew first:"
         echo "https://brew.sh"
         exit 1
     fi
-
     echo "Installing arduino-cli via Homebrew..."
     brew install arduino-cli
 }
@@ -27,6 +30,7 @@ install_arduino_cli_linux() {
     curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 
     sudo mv bin/arduino-cli /usr/local/bin/
+    rm -rf bin
 }
 
 setup_esp32() {

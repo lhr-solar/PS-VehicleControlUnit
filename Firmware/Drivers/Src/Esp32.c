@@ -1,7 +1,7 @@
 #include "ESP32.h"
 
 
-UART_HandleTypeDef* esp32Uart;
+static UART_HandleTypeDef* esp32Uart;
 
 uart_status_t ESP32_UART_Init(void){
     esp32Uart = hlpuart1;
@@ -17,7 +17,7 @@ uart_status_t ESP32_UART_Init(void){
     esp32Uart->Init.ClockPrescaler = UART_PRESCALER_DIV1;
     esp32Uart->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
-    uart_status_t status = uart_init(hlpuart1);
+    uart_status_t status = uart_init(esp32Uart);
     if (status != UART_OK) {
         return UART_ERR;
     }

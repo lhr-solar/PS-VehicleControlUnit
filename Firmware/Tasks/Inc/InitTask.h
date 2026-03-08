@@ -5,6 +5,7 @@
 #include "MotorSafeBits.h"
 #include "MotorControlTask.h"
 #include "MotorTelemetryTask.h"
+#include "CANbus.h"
 
 
 extern StaticTask_t FaultHandlerTask_Buffer;

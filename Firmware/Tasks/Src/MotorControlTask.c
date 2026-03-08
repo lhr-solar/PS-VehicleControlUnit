@@ -62,13 +62,14 @@ static float busCurrentSetPoint = 1.0f;
 
 void Task_MotorControl(void){
 
-    // motor canbus should be initalized by now
-    // the motor safe bits should be initalized by now
+    // motor canbus MUST be initalized by now
+    // the motor safe bits MUST be initalized by now
+    MotorControlTask_Init();
 
     // current and velocity setpoint control speed of motor
     mc_drivecommand_t motorDriveCommand = {0};
-    motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
-    motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
+    motorDriveCommand.MC_MotorCurrentSetpoint = 0.0f;
+    motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
     uint8_t motor_drive_tx_data[8];
 
     uint8_t can_send_errors = 0;
@@ -85,7 +86,10 @@ void Task_MotorControl(void){
     EventBits_t motorSafeBits;
     while(1){
 
-        // check if any bits are set
+        // Send power command
+        Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
+
+        // check if the correct motor safe bits are set
         motorSafeBits = MotoSafeBits_WaitForSafe(pdMS_TO_TICKS(0));
 
         // no bits are set, so the motor should not be run
@@ -99,8 +103,6 @@ void Task_MotorControl(void){
         }
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
-
-         Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
         if (Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY) == CAN_ERR){
             can_send_errors++;

@@ -5,6 +5,7 @@
 #include "StatusLEDs.h"
 #include "ADC_Sense.h"
 #include "InitTask.h"
+#include "MotorSafeBits.h"
 
 
 // Precharge thresholds

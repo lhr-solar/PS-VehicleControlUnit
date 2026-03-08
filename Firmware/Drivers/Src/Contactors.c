@@ -56,7 +56,7 @@ ErrorStatus contactor_set(contactor_num_t contactor_num, contactor_state_t state
     // check that contactor exists
     if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS))
     {
-        Error_Handler();
+        return ERROR;
     }
 
     contactor_t *contactor = &contactors[contactor_num];

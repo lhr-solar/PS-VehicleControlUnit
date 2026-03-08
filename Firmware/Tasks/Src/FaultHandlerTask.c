@@ -110,7 +110,6 @@ void Task_FaultHandler()
 
     while (1)
     {
-        {
             LED_set(HB, ON);
             vTaskDelay(500);
             LED_set(HB, OFF);
@@ -128,8 +127,7 @@ void Task_FaultHandler()
                 Set_Fault_LED();
                 Fault_Loop();
             }
-        }
-
+            
         vTaskDelay(1000);
     }
 }

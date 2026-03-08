@@ -131,10 +131,28 @@ void Task_Precharge()
             printf("Precharge State: Run\r\n");
             if (Motor_Voltage * RATIO_SCALE < Battery_Voltage * PRECHARGE_THRESHOLD_80)
             {
+                
             }
             break;
         default:
             break;
+        }
+
+        // update the motor safe bits with Contactor state
+
+        
+        if(contactor_get_sense(MOTOR_PRE_CONTACTOR) == CLOSED){
+            set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        }
+        else{
+            clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        }
+
+        if(contactor_get_sense(MOTOR_CONTACTOR) == CLOSED){
+            set_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+        }
+        else{
+            clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
         }
 
         vTaskDelay(PRECHARGE_TASK_DELAY_MS);

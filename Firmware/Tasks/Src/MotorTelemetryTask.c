@@ -66,8 +66,8 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
 
 void Task_MotorTelemetry(){
 
-    // motor canbus should be initialized here
-
+    // motor canbus MUST be initialized by now
+    MotorTelemetryTask_Init();
 
     can_rx_payload_t payload;
 

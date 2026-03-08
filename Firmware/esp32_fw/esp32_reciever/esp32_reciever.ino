@@ -23,6 +23,8 @@ void setup() {
     return;
   }
 
+  Serial.println("MAC Address: "+ WiFi.macAddress());
+ 
   // Register callback to handle incoming packets
   esp_now_register_recv_cb(OnDataRecv);
 

@@ -10,11 +10,8 @@
 #include "fsm.h"
 #include "rollover_speed_table.h"
 #include "watchdogs.h"
-#include "CAN_FD.h"
 #include "faults.h"
-#include "CarCAN_can_msgs.h"
-#include "MotorCAN_can_msgs.h"
-#include "BPSCAN_can_msgs.h"
+#include "can_utils.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -25,21 +22,20 @@
 
 MocoState_t currentState;
 
-static driver_input_status_t  driver_input    = {0};
-static accel_brake_position_t accel_brake     = {0};
-static lws_standard_t         lws             = {0};
-static controls_status_t      controls_status = {0};
-
-// Only the BPS fields consumed by the FSM
-static struct { uint8_t BPS_Fault; uint8_t BPS_Regen_OK; } bps_status = {0};
-// Only the MC field consumed by the FSM, this is in meters per second
-static struct { float MC_VehicleVelocity; } motor_velocity = {0};
+static driver_input_status_t    driver_input    = {0};
+static accel_brake_position_t   accel_brake     = {0};
+static lws_standard_t           lws             = {0};
+static controls_status_t        controls_status = {0};
+static mc_status_t              motor_status    = {0};
+static bps_status_t             bps_status      = {0};
+static mc_velocitymeasurement_t motor_velocity  = {0};
 
 static float  accel_pedal_pct     = 0.0f;
 static float  brake_pedal_pct     = 0.0f;
 static float  brake_threshold     = BRAKE_THRESH;
 static bool   precharge_complete  = false;
 static bool   rollover_limit_active = false;
+static bool   ready_to_roll       = false;
 static volatile uint16_t car_status = 0;
 
 // method stubs so linker doesnt shit itself
@@ -52,108 +48,9 @@ static void handle_state_regen(void);
 static void handle_state_cruise(void);
 static void handle_state_disabled(void);
 
-static void  send_motor_drive_cmd(float velocity, float current);
 static void  update_from_can(void);
 static void  rebuild_bitfield(void);
-static bool  ready_to_roll(void);
 static float apply_rollover_limit(float requested_current);
-
-
-///// can msg unpackers
-
-
-// Driver_Input_Status  0x60  2 bytes  Intel bit-order
-static void unpack_driver_input(const uint8_t *b, driver_input_status_t *o) {
-    o->Ignition_Array      = (b[0] >> 0) & 1;
-    o->Ignition_Motor      = (b[0] >> 1) & 1;
-    o->Ignition_Off        = (b[0] >> 2) & 1;
-    o->Cruise_Enable       = (b[0] >> 3) & 1;
-    o->Cruise_Set          = (b[0] >> 4) & 1;
-    o->Gear_Forward        = (b[0] >> 5) & 1;
-    o->Gear_Neutral        = (b[0] >> 6) & 1;
-    o->Gear_Reverse        = (b[0] >> 7) & 1;
-    o->Hazard_Pressed      = (b[1] >> 0) & 1;
-    o->Horn_Pressed        = (b[1] >> 1) & 1;
-    o->Blinker_Left        = (b[1] >> 2) & 1;
-    o->Blinker_Right       = (b[1] >> 3) & 1;
-    o->PushToTalk_Pressed  = (b[1] >> 4) & 1;
-    o->Regen_Activate      = (b[1] >> 5) & 1;
-    o->Regen_Enable        = (b[1] >> 6) & 1;
-}
-
-// Accel_Brake_Position  0x50  5 bytes
-static void unpack_accel_brake(const uint8_t *b, accel_brake_position_t *o) {
-    o->Accel_Pos_Main            = b[0];
-    o->Accel_Pos_Redundant       = b[1];
-    o->Brake_Pos_Main            = b[2];
-    o->Brake_Pos_Redundant       = b[3];
-    o->Accel_Pos_Main_Fault      = (b[4] >> 0) & 1;
-    o->Accel_Pos_Redundant_Fault = (b[4] >> 1) & 1;
-    o->Brake_Pos_Main_Fault      = (b[4] >> 2) & 1;
-    o->Brake_Pos_Redundant_Fault = (b[4] >> 3) & 1;
-    o->Brake_Pressure_1_Fault    = (b[4] >> 4) & 1;
-    o->Brake_Pressure_2_Fault    = (b[4] >> 5) & 1;
-}
-
-// LWS_Standard  0x2B0  5 bytes  LWS_Angle is signed 16-bit Intel
-static void unpack_lws(const uint8_t *b, lws_standard_t *o) {
-    o->LWS_Angle = (int16_t)((uint16_t)b[0] | ((uint16_t)b[1] << 8));
-    o->LWS_Speed = b[2];
-    o->LWS_OK    = (b[3] >> 0) & 1;
-    o->LWS_CAL   = (b[3] >> 1) & 1;
-    o->LWS_TRIM  = (b[3] >> 2) & 1;
-}
-
-// Controls_Status  0x15  4 bytes
-static void unpack_controls_status(const uint8_t *b, controls_status_t *o) {
-    o->Controls_Leader_Fault   = b[0];
-    o->Controls_Lighting_Fault = (uint16_t)(b[2] | ((uint16_t)b[3] << 8));
-}
-
-// BPS_Status  0x01  7 bytes  — only fields the FSM needs
-static void unpack_bps_status(const uint8_t *b) {
-    bps_status.BPS_Fault    = b[0];          // bits  0-7
-    bps_status.BPS_Regen_OK = (b[1] >> 1) & 1;  // bit 9
-}
-
-// MC_VelocityMeasurement — Tritium WS22: vehicle velocity float at bytes 4-7
-static void unpack_motor_velocity(const uint8_t *b) {
-    memcpy(&motor_velocity.MC_VehicleVelocity, &b[4], sizeof(float));
-}
-
-
-///// can helpers
-
-
-static void carcan_send(uint16_t id, uint8_t *data, uint8_t len) {
-    FDCAN_TxHeaderTypeDef hdr = {
-        .Identifier = id, 
-        .IdType = FDCAN_STANDARD_ID, 
-        .TxFrameType = FDCAN_DATA_FRAME, 
-        .DataLength = len << 16,
-        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-        .BitRateSwitch = FDCAN_BRS_OFF,
-        .FDFormat = FDCAN_CLASSIC_CAN,
-        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-        .MessageMarker = 0
-    };
-    can_fd_send(hfdcan2, &hdr, data, 0);
-}
-
-static void motorcan_send(uint16_t id, uint8_t *data, uint8_t len) {
-    FDCAN_TxHeaderTypeDef hdr = {
-        .Identifier = id, 
-        .IdType = FDCAN_STANDARD_ID, 
-        .TxFrameType = FDCAN_DATA_FRAME, 
-        .DataLength = len << 16,
-        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-        .BitRateSwitch = FDCAN_BRS_OFF,
-        .FDFormat = FDCAN_CLASSIC_CAN,
-        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
-        .MessageMarker = 0
-    };
-    can_fd_send(hfdcan1, &hdr, data, 0);
-}
 
 
 
@@ -182,48 +79,16 @@ void     fsm_set_precharge_complete(bool val) { precharge_complete = val;       
 uint16_t fsm_get_car_status(void)             { return (uint16_t)car_status;        }
 bool     fsm_is_over_rollover_speed(void)     { return rollover_limit_active;       }
 
-/* =========================================================
- * CAN receive  (hcan2 = CarCAN, hcan1 = MotorCAN)
- *
- * ISR already routed each frame into its per-ID queue.
- * delay_ticks=0 → non-blocking peek; CAN_RECV means got data.
- * ========================================================= */
+
 
 static void update_from_can(void) {
-    FDCAN_RxHeaderTypeDef hdr;
-    uint8_t buf[8] = {0};
-
-    if (can_fd_recv(hfdcan2, CAN_ID_DRIVER_INPUT_STATUS, &hdr, buf, 0) == CAN_OK) {
-        unpack_driver_input(buf, &driver_input);
-        watchdog_received_can_message(WD_IDX_DRIVER_INPUT);
-    }
-
-    if (can_fd_recv(hfdcan2, CAN_ID_ACCEL_BRAKE_POSITION, &hdr, buf, 0) == CAN_OK) {
-        unpack_accel_brake(buf, &accel_brake);
-        watchdog_received_can_message(WD_IDX_ACCEL_BRAKE);
-    }
-
-    if (can_fd_recv(hfdcan2, CAN_ID_LWS_STANDARD, &hdr, buf, 0) == CAN_OK) {
-        unpack_lws(buf, &lws);
-        watchdog_received_can_message(WD_IDX_STEERING_ANGLE);
-        if (!lws.LWS_OK) faults_throw_fault(FAULT_ID_STEERING_SENSOR_BAD_DATA);
-    }
-
-    if (can_fd_recv(hfdcan2, CAN_ID_CONTROLS_STATUS, &hdr, buf, 0) == CAN_OK) {
-        unpack_controls_status(buf, &controls_status);
-        watchdog_received_can_message(WD_IDX_CONTROLS_STATUS);
-        if (controls_status.Controls_Leader_Fault) faults_throw_fault(FAULT_ID_CONTROLS_FAULT);
-    }
-
-    if (can_fd_recv(hfdcan2, CAN_ID_BPS_STATUS, &hdr, buf, 0) == CAN_OK) {
-        unpack_bps_status(buf);
-        watchdog_received_can_message(WD_IDX_BPS_STATUS);
-        if (bps_status.BPS_Fault) faults_throw_fault(FAULT_ID_BPS_FAULT);
-    }
-
-    if (can_fd_recv(hfdcan1, CAN_ID_MC_VELOCITYMEASUREMENT, &hdr, buf, 0) == CAN_OK) {
-        unpack_motor_velocity(buf);
-    }
+    carcan_try_recv(CAN_ID_DRIVER_INPUT_STATUS, handle_driver_input, &driver_input);
+    carcan_try_recv(CAN_ID_ACCEL_BRAKE_POSITION, handle_accel_brake, &accel_brake);
+    carcan_try_recv(CAN_ID_LWS_STANDARD, handle_lws, &lws);
+    carcan_try_recv(CAN_ID_CONTROLS_STATUS, handle_controls_status, &controls_status);
+    carcan_try_recv(CAN_ID_BPS_STATUS, handle_bps, &bps_status);
+    vcucan_try_recv(CAN_ID_MC_VELOCITYMEASUREMENT, handle_motor_velocity, &motor_velocity);
+    vcucan_try_recv(CAN_ID_MC_STATUS, handle_motor_status, &motor_status);
 }
 
 
@@ -270,21 +135,6 @@ static float apply_rollover_limit(float requested_current) {
     return requested_current;
 }
 
-
- // bytes 0-3: velocity (float, m/s), bytes 4-7: current (float, 0-1)
-static void send_motor_drive_cmd(float velocity, float current) {
-    uint8_t data[8] = {0};
-    memcpy(&data[0], &velocity, sizeof(float));
-    memcpy(&data[4], &current,  sizeof(float));
-    motorcan_send(CAN_ID_MC_DRIVECOMMAND, data, 8);
-}
-
-static bool ready_to_roll(void) {
-    return  driver_input.Ignition_Motor
-        && !driver_input.Ignition_Off
-        &&  motor_velocity.MC_VehicleVelocity < 1.0f;
-}
-
 float map_to_percent(uint8_t input,
                      uint8_t in_min, uint8_t in_max,
                      uint8_t out_min, uint8_t out_max) {
@@ -305,7 +155,11 @@ static void handle_state_regen(void)    { send_motor_drive_cmd(0.0f,  1.0f); }
 
 static void handle_state_not_ready(void) {
     send_motor_drive_cmd(0.0f, 0.0f);
-    if (ready_to_roll()) currentState = FSM[NEUTRAL_DRIVE];
+    if (driver_input.Ignition_Motor
+        && !driver_input.Ignition_Off
+        &&  motor_velocity.MC_VehicleVelocity < 1.0f) {
+        ready_to_roll = true;
+    }
 }
 
 static void handle_state_forward(void) {
@@ -318,7 +172,12 @@ static void handle_state_forward(void) {
 }
 
 static void handle_state_reverse(void) {
-    send_motor_drive_cmd(-MAX_VELOCITY, apply_rollover_limit(accel_pedal_pct));
+    if (motor_velocity.MC_VehicleVelocity > 0.5f) {
+        // if we're actually going forwards, let off the pedal until we slow down
+        send_motor_drive_cmd(0.0f, 0.0f);
+    } else {
+        send_motor_drive_cmd(-MAX_VELOCITY, apply_rollover_limit(accel_pedal_pct));
+    }
 }
 
 static void handle_state_cruise(void) {

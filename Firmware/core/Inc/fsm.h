@@ -11,10 +11,9 @@
 
 #pragma once
 
+#include "FreeRTOS.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "FreeRTOS.h"
-#include "rollover_speed_table.h"
 
 // make sure if you change this to also change it in scripts/fsm_generator.py
 #define BITFIELD_INPUT_LIST(X) \

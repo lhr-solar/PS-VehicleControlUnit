@@ -12,7 +12,6 @@
 
 #include "FreeRTOS.h"
 #include "event_groups.h"
-#include <stdint.h>
 #include <stdbool.h>
 
 #define FAULT_ID_LIST(X) \
@@ -26,6 +25,8 @@
     X(MOTOR_15V_UNDERVOLTAGE) \
     X(MOTOR_DESATURATION) \
     X(MOTOR_OVERSPEED) \
+    X(MOCO_STATUS_WATCHDOG) \
+    X(MOCO_VELOCITY_WATCHDOG) \
     /* precharge faults (prolly need to add more) */ \
     X(PRECHARGE_TIMEOUT) \
     /* other boards*/ \

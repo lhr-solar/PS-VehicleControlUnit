@@ -78,27 +78,13 @@ void Task_FaultHandler(void *args  __attribute__((unused))) {
         
         for (int i = 0; i < FAULT_ID_COUNT; i++) {
             if (active & (1U << i)) {
-                printf("[FAULT] %s (bit %d) \n",
-                       fault_names[i], i);
+                printf("[FAULT] %s (bit %d) \n", fault_names[i], i);
             }
         }
 
-        // eventually maybe respond based on worst active severity
-        bool has_critical = true;
-        // for (int i = 0; i < FAULT_ID_COUNT; i++) {
-        //     if ((active & (1U << i)) &&
-        //         fault_severity[i] == FAULT_SEV_CRITICAL) {
-        //         has_critical = true;
-        //         break;
-        //     }
-        // }
+        fsm_disable();
+        watchdog_stop_all();
 
-        if (has_critical) {
-            fsm_disable();
-            watchdog_stop_all();
-        } else {
-            fsm_recover();
-        }
 
         // yield briefly so lower-priority tasks can run before we
         // loop back and re-check the event group

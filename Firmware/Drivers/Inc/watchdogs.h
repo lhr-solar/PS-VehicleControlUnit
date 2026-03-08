@@ -19,7 +19,9 @@
     X(ACCEL_BRAKE,      "wd_accel_brake",      150U, FAULT_ID_PEDAL_BOARD_WATCHDOG) \
     X(STEERING_ANGLE,   "wd_steering_angle",   300U, FAULT_ID_STEERING_SENSOR_WATCHDOG) \
     X(CONTROLS_STATUS,  "wd_controls_status",  300U, FAULT_ID_CONTROLS_STATUS_WATCHDOG) \
-    X(BPS_STATUS,       "wd_bps_status",       300U, FAULT_ID_BPS_STATUS_WATCHDOG)
+    X(BPS_STATUS,       "wd_bps_status",       300U, FAULT_ID_BPS_STATUS_WATCHDOG) \
+    X(MOCO_STATUS,      "wd_moco_status",      500U, FAULT_ID_MOCO_STATUS_WATCHDOG) \
+    X(MOCO_VELOCITY,    "wd_moco_velocity",    500U, FAULT_ID_MOCO_VELOCITY_WATCHDOG)
 
 typedef enum {
 #define X(name, str, timeout, fault) WD_IDX_##name,

@@ -57,7 +57,7 @@ void MX_GPIO_Init(void)
   __HAL_RCC_FDCAN_CLK_ENABLE();
   __HAL_RCC_TIM1_CLK_ENABLE();
   __HAL_RCC_TIM17_CLK_ENABLE();
-  __HAL_RCC_LPUART1_CLK_ENABLE();
+  // __HAL_RCC_LPUART1_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIO_INIT_PORT, GPIO_ONE_PIN | GPIO_TWO_PIN, GPIO_PIN_RESET);
@@ -75,9 +75,5 @@ void Error_Handler()
 {
   while (1) {
     printf("Initialization Error!\r\n");
-    LED_set(HB, ON);
-    vTaskDelay(pdMS_TO_TICKS(500));
-    LED_set(HB, OFF);
-    vTaskDelay(pdMS_TO_TICKS(500));
   }
 }

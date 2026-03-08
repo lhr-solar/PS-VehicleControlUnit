@@ -35,7 +35,6 @@ static float  brake_pedal_pct     = 0.0f;
 static float  brake_threshold     = BRAKE_THRESH;
 static bool   precharge_complete  = false;
 static bool   rollover_limit_active = false;
-static bool   ready_to_roll       = false;
 static volatile uint16_t car_status = 0;
 
 // method stubs so linker doesnt shit itself

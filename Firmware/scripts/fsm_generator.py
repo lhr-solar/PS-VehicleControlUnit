@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
-"""
-generate_fsm.py  --full | --dnr | --all
-Hardcoded FSM bits and states — must match fsm.h exactly.
-Output: Firmware/apps/inc/fsm_table[_dnr].h
-"""
-
 import argparse
 from pathlib import Path
 
 OUT_DIR = Path(__file__).resolve().parent.parent / "core/Inc"
 
-# Must match BitfieldBitIndex in fsm.h (in order)
 BITS = {
     "NEUTRAL_BIT":               1 << 0,
     "FORWARD_BIT":               1 << 1,
@@ -23,7 +16,6 @@ BITS = {
     "PRECHARGE_BIT":             1 << 8,
 }
 
-# Must match FSMStates in fsm.h (in order)
 STATES = [
     "STATE_INIT",
     "FORWARD_DRIVE",
@@ -35,78 +27,124 @@ STATES = [
     "CAR_NOT_READY",
 ]
 
-STATE_IDX = {name: i for i, name in enumerate(STATES)}
-NSL       = 1 << len(BITS)   # 512
+STATE_IDX = {s: i for i, s in enumerate(STATES)}
+NSL = 1 << len(BITS)
 
+# preresolve some constants so its easier to write
+NEU = BITS["NEUTRAL_BIT"]
+FWD = BITS["FORWARD_BIT"]
+REV = BITS["REVERSE_BIT"]
+CC  = BITS["CRUISE_CONTROL_BUTTON_BIT"]
+RB  = BITS["REGEN_BUTTON_BIT"]
+RTR = BITS["READY_TO_REGEN_BIT"]
+REN = BITS["REGEN_ENABLED_BIT"]
+BRK = BITS["BRAKE_BIT"]
+PC  = BITS["PRECHARGE_BIT"]
+
+INIT      = STATE_IDX["STATE_INIT"]
+FWD_DRIVE = STATE_IDX["FORWARD_DRIVE"]
+NEUTRAL   = STATE_IDX["NEUTRAL_DRIVE"]
+REV_DRIVE = STATE_IDX["REVERSE_DRIVE"]
+REGEN     = STATE_IDX["REGEN"]
+CRUISE    = STATE_IDX["CRUISE_CONTROL"]
+DISABLED  = STATE_IDX["DISABLED"]
+NOT_READY = STATE_IDX["CAR_NOT_READY"]
 
 
 def transition_full(cur, bits):
-    m = BITS
-    s = STATE_IDX
-    FWD,REV,NEU,CC,RB,RTR,REN,BRK,PC = (m[k] for k in (
-        "FORWARD_BIT","REVERSE_BIT","NEUTRAL_BIT","CRUISE_CONTROL_BUTTON_BIT",
-        "REGEN_BUTTON_BIT","READY_TO_REGEN_BIT","REGEN_ENABLED_BIT","BRAKE_BIT","PRECHARGE_BIT"))
+    if cur == INIT:
+        return NOT_READY
 
-    if cur == s["STATE_INIT"]:
-        return s["CAR_NOT_READY"]
-    if cur == s["CAR_NOT_READY"]:
-        return s["NEUTRAL_DRIVE"] if (bits & PC) else s["CAR_NOT_READY"]
-    if cur == s["DISABLED"]:                    return s["DISABLED"]
-    if cur == s["NEUTRAL_DRIVE"]:
-        if (bits & FWD) and not (bits & REV) and not (bits & BRK): return s["FORWARD_DRIVE"]
-        if (bits & REV) and not (bits & FWD) and not (bits & BRK): return s["REVERSE_DRIVE"]
-        return s["NEUTRAL_DRIVE"]
-    if cur == s["FORWARD_DRIVE"]:
-        if (bits & REV) or (bits & NEU) or (bits & BRK):           return s["NEUTRAL_DRIVE"]
-        if (bits & REN) and (bits & RTR) and (bits & RB):          return s["REGEN"]
-        if (bits & CC)  and (bits & REN):                          return s["CRUISE_CONTROL"]
-        return s["FORWARD_DRIVE"]
-    if cur == s["REVERSE_DRIVE"]:
-        return s["REVERSE_DRIVE"] if (bits & REV) and not (bits & FWD) and not (bits & BRK) else s["NEUTRAL_DRIVE"]
-    if cur == s["REGEN"]:
-        return s["REGEN"] if (bits & RB) and (bits & RTR) and (bits & REN) and (bits & FWD) else s["FORWARD_DRIVE"]
-    if cur == s["CRUISE_CONTROL"]:
-        return s["CRUISE_CONTROL"] if (bits & CC) else s["FORWARD_DRIVE"]
-    return s["NEUTRAL_DRIVE"]
+    if cur == NOT_READY:
+        return NEUTRAL if (bits & PC) else NOT_READY
+
+    if cur == DISABLED:
+        return DISABLED
+
+    if cur == NEUTRAL:
+        if (bits & FWD) and not (bits & REV) and not (bits & BRK):
+            return FWD_DRIVE
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+            return REV_DRIVE
+        return NEUTRAL
+
+    if cur == FWD_DRIVE:
+        if (bits & REV) or (bits & NEU) or (bits & BRK):
+            return NEUTRAL
+        if (bits & REN) and (bits & RTR) and (bits & RB):
+            return REGEN
+        if (bits & CC) and (bits & REN):
+            return CRUISE
+        return FWD_DRIVE
+
+    if cur == REV_DRIVE:
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+            return REV_DRIVE
+        return NEUTRAL
+
+    if cur == REGEN:
+        if (bits & RB) and (bits & RTR) and (bits & REN) and (bits & FWD):
+            return REGEN
+        return FWD_DRIVE
+
+    if cur == CRUISE:
+        return CRUISE if (bits & CC) else FWD_DRIVE
+
+    return NEUTRAL
 
 
 def transition_dnr(cur, bits):
-    m = BITS
-    s = STATE_IDX
-    FWD,REV,NEU,BRK,PC = (m[k] for k in (
-        "FORWARD_BIT","REVERSE_BIT","NEUTRAL_BIT","BRAKE_BIT","PRECHARGE_BIT"))
+    if cur == INIT:
+        return NOT_READY
+ 
+    if cur == NOT_READY:
+        return NEUTRAL if (bits & PC) else NOT_READY
 
-    if cur in (s["STATE_INIT"], s["CAR_NOT_READY"]):
-        return s["NEUTRAL_DRIVE"] if (bits & PC) else s["CAR_NOT_READY"]
-    if cur == s["DISABLED"]:
-        return s["DISABLED"]
-    
-    if cur == s["NEUTRAL_DRIVE"]:
-        if (bits & FWD) and not (bits & REV) and not (bits & BRK): 
-            return s["FORWARD_DRIVE"]
-        if (bits & REV) and not (bits & FWD) and not (bits & BRK): 
-            return s["REVERSE_DRIVE"]
-        return s["NEUTRAL_DRIVE"]
-    if cur in (s["FORWARD_DRIVE"], s["REGEN"], s["CRUISE_CONTROL"]):
-        return s["NEUTRAL_DRIVE"] if (bits & REV) or (bits & NEU) or (bits & BRK) else s["FORWARD_DRIVE"]
-    if cur == s["REVERSE_DRIVE"]:
-        return s["REVERSE_DRIVE"] if (bits & REV) and not (bits & FWD) and not (bits & BRK) else s["NEUTRAL_DRIVE"]
-    return s["NEUTRAL_DRIVE"]
+    if cur == DISABLED:
+        return DISABLED
 
+    if cur == NEUTRAL:
+        if (bits & FWD) and not (bits & REV) and not (bits & BRK):
+            return FWD_DRIVE
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+            return REV_DRIVE
+        return NEUTRAL
+
+    if cur in (FWD_DRIVE, REGEN, CRUISE):
+        if (bits & REV) or (bits & NEU) or (bits & BRK):
+            return NEUTRAL
+        return FWD_DRIVE
+
+    if cur == REV_DRIVE:
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+            return REV_DRIVE
+        return NEUTRAL
+
+    return NEUTRAL
 
 
 def write_table(path, fn, label):
     rows = []
-    for i, name in enumerate(STATES):
-        ns     = [STATES[fn(i, j)] for j in range(NSL)]
-        chunks = [", ".join(ns[x:x+8]) for x in range(0, NSL, 8)]
-        body   = ",\n".join(f"            {c}" for c in chunks)
-        rows.append(f"    [{name}] = {{ {name}, NULL, {{\n{body}\n    }}}},\n")
+    states = STATES
+    nsl = NSL
+
+    for i, name in enumerate(states):
+        ns = [states[fn(i, j)] for j in range(nsl)]
+        chunks = [
+            ", ".join(ns[x:x+8])
+            for x in range(0, nsl, 8)
+        ]
+
+        body = ",\n".join(f"            {c}" for c in chunks)
+
+        rows.append(
+            f"    [{name}] = {{ {name}, NULL, {{\n{body}\n    }}}},\n"
+        )
 
     path.write_text(
         f"/**\n"
         f" * @file {path.name}\n"
-        f" * @brief Auto-generated FSM table ({label});  do not directly edit\n"
+        f" * @brief Auto-generated FSM table ({label}); do not edit\n"
         f" *        Regenerate: python3 generate_fsm.py --{label.lower()}\n"
         f" */\n\n"
         f"#pragma once\n"
@@ -114,14 +152,12 @@ def write_table(path, fn, label):
         f"extern MocoState_t FSM[NUM_STATES];\n\n"
         f"#ifdef DEFINE_FSM_TABLE\n"
         f"MocoState_t FSM[NUM_STATES] = {{\n\n"
-        + "".join(f"{r}\n" for r in rows)
-        + f"}};\n"
+        + "".join(rows)
+        + "};\n"
         f"#endif\n"
     )
-    print(f"[{label:4}] {path.name}  ({len(STATES)} states × {NSL} inputs, ~{len(STATES)*NSL*4//1024} KB)")
 
-
-
+    print(f"[{label:4}] {path.name} ({len(states)} states x {nsl} inputs)")
 
 
 

@@ -155,11 +155,6 @@ static void handle_state_regen(void)    { send_motor_drive_cmd(0.0f,  1.0f); }
 
 static void handle_state_not_ready(void) {
     send_motor_drive_cmd(0.0f, 0.0f);
-    if (driver_input.Ignition_Motor
-        && !driver_input.Ignition_Off
-        &&  motor_velocity.MC_VehicleVelocity < 1.0f) {
-        ready_to_roll = true;
-    }
 }
 
 static void handle_state_forward(void) {

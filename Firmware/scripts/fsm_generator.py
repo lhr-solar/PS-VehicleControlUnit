@@ -47,7 +47,9 @@ def transition_full(cur, bits):
         "FORWARD_BIT","REVERSE_BIT","NEUTRAL_BIT","CRUISE_CONTROL_BUTTON_BIT",
         "REGEN_BUTTON_BIT","READY_TO_REGEN_BIT","REGEN_ENABLED_BIT","BRAKE_BIT","PRECHARGE_BIT"))
 
-    if cur in (s["STATE_INIT"], s["CAR_NOT_READY"]):
+    if cur == s["STATE_INIT"]:
+        return s["CAR_NOT_READY"]
+    if cur == s["CAR_NOT_READY"]:
         return s["NEUTRAL_DRIVE"] if (bits & PC) else s["CAR_NOT_READY"]
     if cur == s["DISABLED"]:                    return s["DISABLED"]
     if cur == s["NEUTRAL_DRIVE"]:

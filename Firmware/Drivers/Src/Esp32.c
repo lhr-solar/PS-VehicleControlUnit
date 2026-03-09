@@ -27,6 +27,7 @@ uart_status_t ESP32_UART_Init(void){
 uart_status_t ESP32_Send(const uint8_t* data, uint8_t length, TickType_t delay_ticks){
     return uart_send(esp32Uart, data, length, delay_ticks);
 }
+// uart_send(hlpuart1, testData, msgLen, portMAX_DELAY);
 
 uart_status_t ESP32_Recv(uint8_t* data, uint8_t length, TickType_t delay_ticks){
     return uart_recv(esp32Uart, data, length, delay_ticks);

@@ -18,11 +18,12 @@ uint8_t messageNum = 0;
 
 void TxTask(void *argument){
 
-    
-    while(1){
     uint8_t testData[] = "\r\nTest Message 123\r\n";
     const uint8_t msgLen = sizeof(testData) - 1;
-    ESP32_Send( testData, msgLen, portMAX_DELAY);
+    uart_status_t lpuartStatus = UART_ERR;
+
+    while(1){
+    lpuartStatus = ESP32_Send(testData, msgLen, portMAX_DELAY);
     // printf("%s", testData);
     vTaskDelay(pdMS_TO_TICKS(1000));
         // vTaskDelay(pdMS_TO_TICKS(500));

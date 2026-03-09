@@ -6,11 +6,6 @@ static StaticQueue_t motorTelemetryQueueBuffer;
 static uint8_t motorTelemetryQueueStorage[MOTOR_TELEMETRY_QUEUE_SIZE * sizeof(can_rx_payload_t)];
 static QueueHandle_t motorTelemetryQueue;
 
-// enables the fdcan3 recieve hook, calls can_fd_rx_callback_hook everytime a can rx interrupt happens
-#define FDCAN3_RECV_HOOK_EN
-
-// bus current for power
-// static float busCurrentSetPoint = 1.0f;
 
 void print_slcan(const can_rx_payload_t payload)
 {
@@ -65,6 +60,7 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
             &recv_payload,
             &higherPriorityTaskWoken
         );
+        // don't yield at the end of this since the rest of the ISR needs to run
     }
 }
 

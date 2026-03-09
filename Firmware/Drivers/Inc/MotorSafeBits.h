@@ -15,12 +15,12 @@
 
 typedef enum
 {
-    BPS_SAFE,                           // BPS is clear and high voltage is on
-    PEDALS_READING_ACCELERATOR,
-    PEDALS_READING_BRAKE,
-    MOTOR_CONTACTOR_ENABLED,            // The Motor Contactor is enabled
-    MOTOR_PRECHARGE_CONTACTOR_ENABLED,   // The Motor precharge Contactor is enabled
-    NUM_MOTOR_STATUS_BITS
+    BPS_SAFE = 0,                           // BPS is clear and high voltage is on
+    PEDALS_READING_ACCELERATOR = 1,
+    PEDALS_READING_BRAKE = 2,
+    MOTOR_CONTACTOR_ENABLED = 3,            // The Motor Contactor is enabled
+    MOTOR_PRECHARGE_CONTACTOR_ENABLED = 4,   // The Motor precharge Contactor is enabled
+    NUM_MOTOR_STATUS_BITS = 5
 } motor_status_bit_t;
 
 _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");

@@ -8,6 +8,7 @@
 #include "StatusLEDs.h"
 #include "pinDefs.h"
 #include "InitTask.h"
+#include "slcanFormat.h"
 
 
 void MotorTelemetryTask_Init(void);

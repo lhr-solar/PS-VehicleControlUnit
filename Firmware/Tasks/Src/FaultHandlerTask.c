@@ -26,45 +26,39 @@ void Fault_Loop()
     {
         switch (fault_bits) // compare against individual bitmasks
         {
-        case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
-            printf("Fault: Motor Voltage Greater Than Battery Voltage\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(BATTERY_OVERVOLTAGE_FAULT):
-            printf("Fault: Overvoltage\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(BATTERY_UNDERVOLTAGE_FAULT):
-            printf("Fault: Undervoltage\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(MOTOR_SENSE_TIMEOUT_FAULT):
-            printf("Fault: Motor Sense Timeout\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(PRECHARGE_SENSE_TIMEOUT_FAULT):
-            printf("Fault: Precharge Sense Timeout\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(PRECHARGE_TIMEOUT_FAULT):
-            printf("Fault: Precharge Sequence Timeout\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(CALLBACK_FAULT):
-            printf("Fault: Contactor Sense Fault\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(MOTOR_SENSE_MISMATCH_FAULT):
-            printf("Fault: Motor Sense Mismatch\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
-            printf("Fault: Precharge Sense Mismatch\r\n");
-            vTaskDelay(PRINTF_DELAY_MS);
-            break;
-        default:
-            break;
+            case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
+                printf("Fault: Motor Voltage Greater Than Battery Voltage\r\n");
+                break;
+            case FAULT_BIT(BATTERY_OVERVOLTAGE_FAULT):
+                printf("Fault: Battery Overvoltage\r\n");
+                break;
+            case FAULT_BIT(BATTERY_UNDERVOLTAGE_FAULT):
+                printf("Fault: Battery Undervoltage\r\n");
+                break;
+            case FAULT_BIT(MOTOR_SENSE_TIMEOUT_FAULT):
+                printf("Fault: Motor Sense Timeout\r\n");
+                break;
+            case FAULT_BIT(PRECHARGE_SENSE_TIMEOUT_FAULT):
+                printf("Fault: Precharge Sense Timeout\r\n");
+                break;
+            case FAULT_BIT(PRECHARGE_TIMEOUT_FAULT):
+                printf("Fault: Precharge Sequence Timeout\r\n");
+                break;
+            case FAULT_BIT(CALLBACK_FAULT):
+                printf("Fault: Contactor Sense Fault\r\n");
+                break;
+            case FAULT_BIT(MOTOR_SENSE_MISMATCH_FAULT):
+                printf("Fault: Motor Sense Mismatch\r\n");
+                break;
+            case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
+                printf("Fault: Precharge Sense Mismatch\r\n");
+                break;
+            default:
+                printf("Fault: Unknwon\r\n");
+                break;
         }
+        vTaskDelay(PRINTF_DELAY_MS);
+
     }
 }
 
@@ -121,6 +115,10 @@ void Task_FaultHandler()
             {
                 Kill_Precharge_Task();
                 contactor_emergency_open_all();
+
+                clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+                clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+
 
                 printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
 

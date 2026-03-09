@@ -5,6 +5,7 @@
 #include "Contactors.h"
 #include "task.h"
 #include "InitTask.h"
+#include "MotorSafeBits.h"
 
 #define PRINTF_DELAY_MS 250
 

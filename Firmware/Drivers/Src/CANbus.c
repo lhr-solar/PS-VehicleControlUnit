@@ -29,13 +29,14 @@ can_status_t Motor_CANBus_Init(void){
     motorfdcan->Init.ExtFiltersNbr = 0;
     motorfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
-    // accepts all CAN IDs from 
-    // FDCAN1 Filter Config
+    // accepts all CAN IDs 
     FDCAN_FilterTypeDef sFilterConfig1;
     sFilterConfig1.IdType = FDCAN_STANDARD_ID;
     sFilterConfig1.FilterIndex = 0;
     sFilterConfig1.FilterType = FDCAN_FILTER_MASK;
     sFilterConfig1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
+
+    // TODO: make a proper CAN filter
     sFilterConfig1.FilterID1 = 0x000;
     sFilterConfig1.FilterID2 = 0x000;
 

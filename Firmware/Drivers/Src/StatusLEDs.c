@@ -27,7 +27,7 @@ void Toggle_LED(Status_Mapping_t LED)
 
 void LED_set(Status_Mapping_t LED, LED_state_t state)
 {
-    if(LED > num_LEDs){
+    if(LED < num_LEDs && LED > 0){
         return;
     }
     HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);

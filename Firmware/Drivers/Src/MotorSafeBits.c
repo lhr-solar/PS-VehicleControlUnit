@@ -56,7 +56,7 @@ EventBits_t MotorSafeBits_Wait(motor_status_bit_t motor_status_bit, TickType_t d
     
     EventBits_t pending = xEventGroupWaitBits(
         motorSafeBits,
-        bitsToWaitFor,      // wait for any defined fault
+        bitsToWaitFor,      // wait for the given bits to be set
         pdFALSE,            // fault bits are not reset
         pdTRUE,             // wait for all bits to be set
         delay_ticks 

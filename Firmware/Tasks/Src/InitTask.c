@@ -61,7 +61,7 @@ void Task_Init()
 
     xTaskCreateStatic(
         Task_MotorTelemetry,            // Task function
-        "Motor Control Thread",         // Name of the task (for debugging)
+        "Motor Telemetry Thread",       // Name of the task (for debugging)
         configMINIMAL_STACK_SIZE,       // Stack size in words
         NULL,                           // Task input parameter
         MOTOR_TELEMETRY_THREAD_PRIO,    // Task priority

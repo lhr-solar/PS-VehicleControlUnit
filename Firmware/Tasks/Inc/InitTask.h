@@ -8,24 +8,31 @@
 #include "CanTxTelemetryTask.h"
 #include "CANbus.h"
 
+#define INIT_TASK_STACK_SIZE                configMINIMAL_STACK_SIZE
+#define FAULT_HANDLER_TASK_STACK_SIZE       configMINIMAL_STACK_SIZE
+#define PRECHARGE_TASK_STACK_SIZE           configMINIMAL_STACK_SIZE
+#define MOTOR_CONTROL_TASK_STACK_SIZE       configMINIMAL_STACK_SIZE
+#define MOTOR_TELEMETRY_TASK_STACK_SIZE     configMINIMAL_STACK_SIZE
+#define CAN_TX_TELEMETRY_STACK_SIZE         configMINIMAL_STACK_SIZE
+
 
 extern StaticTask_t FaultHandlerTask_Buffer;
-extern StackType_t FaultHandlerTask_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
 extern StaticTask_t Precharge_Task_Buffer;
-extern StackType_t Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
 
 extern StaticTask_t Init_Task_Buffer;
-extern StackType_t Init_Task_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
 
 extern StaticTask_t Motor_Control_Task_Buffer;
-extern StackType_t Motor_Control_Task_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t Motor_Control_Task_Stack[MOTOR_CONTROL_TASK_STACK_SIZE];
 
 extern StaticTask_t Motor_Telemetry_Task_Buffer;
-extern StackType_t Motor_Telemetry_Task_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t Motor_Telemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
 
 extern StaticTask_t Can_Tx_Telemetry_Task_Buffer;
-extern StackType_t Can_Tx_Telemetry_Task_Stack[configMINIMAL_STACK_SIZE];
+extern StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 
 #define FAULTER_HANDLER_THREAD_PRIO     (tskIDLE_PRIORITY + 4)
 #define PRECHARGE_THREAD_PRIO           (tskIDLE_PRIORITY + 3)

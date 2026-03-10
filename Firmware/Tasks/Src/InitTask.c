@@ -1,20 +1,23 @@
 #include "InitTask.h"
 
 StaticTask_t FaultHandlerTask_Buffer;
-StackType_t FaultHandlerTask_Stack[configMINIMAL_STACK_SIZE];
+StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
 StaticTask_t Precharge_Task_Buffer;
-StackType_t Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
+StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
 
 StaticTask_t Init_Task_Buffer;
-StackType_t Init_Task_Stack[configMINIMAL_STACK_SIZE];
+StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
 
 
 StaticTask_t Motor_Control_Task_Buffer;
-StackType_t Motor_Control_Task_Stack[configMINIMAL_STACK_SIZE];
+StackType_t Motor_Control_Task_Stack[MOTOR_CONTROL_TASK_STACK_SIZE];
 
 StaticTask_t Motor_Telemetry_Task_Buffer;
-StackType_t Motor_Telemetry_Task_Stack[configMINIMAL_STACK_SIZE];
+StackType_t Motor_Telemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
+
+StaticTask_t Can_Tx_Telemetry_Task_Buffer;
+StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 
 void Task_Init()
 {

@@ -35,6 +35,9 @@ int main(){
     MotorTelemetryTask_Init();
     MotorControlTask_Init();
 
+    MotorSafeBits_Init();
+
+
     Init_UART_Printf();
 
     xTaskCreateStatic(

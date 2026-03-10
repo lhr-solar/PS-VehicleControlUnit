@@ -2,7 +2,7 @@
 #include "CAN_FD.h"
 
 // how often we want print outs from this thread
-#define MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD 1000
+#define MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD 5000
 
 // number of times the thread will run before we print out debug info
 #define MOTOR_CONTROLLER_PRINT_DEBUG_COUNT (MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD/MOTOR_CONTROL_TASK_PERIOD_MS)
@@ -81,26 +81,26 @@ void Task_MotorControl(void){
     initMotorPowerCommandHeader(&mocoPowerCommandHeader); // initializes the can tx header
     packPowerCommand(motorPowerCommand, motor_power_tx_data); // packs the motorPower struct into an array of bytes
 
-    // EventBits_t motorSafeBits;
+    EventBits_t motorSafeBits;
     while(1){
 
         // Send power command
         Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
-        // check if the correct motor safe bits are set
-        // motorSafeBits = MotoSafeBits_WaitForSafe(pdMS_TO_TICKS(0));
+        // check if the car is in a drivable state
+        motorSafeBits = MotorSafeBits_WaitMask(motorDrivableBits, pdMS_TO_TICKS(0));
 
-        // // no bits are set, so the motor should not be run
-        // if(motorSafeBits == 0){
-        //     motorDriveCommand.MC_MotorCurrentSetpoint = 0.0f;
-        //     motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
-        //     LED_set(CAR_DRIVABLE, LED_OFF);
-        // }
-        // else{
-        //     motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
-        //     motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
-        //     LED_set(CAR_DRIVABLE, LED_ON);
-        // }
+        // no bits are set, so the motor should not be run
+        if(motorSafeBits == 0){
+            motorDriveCommand.MC_MotorCurrentSetpoint = 0.0f;
+            motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
+            LED_set(CAR_DRIVABLE, LED_OFF);
+        }
+        else{
+            motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
+            motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
+            LED_set(CAR_DRIVABLE, LED_ON);
+        }
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
 
@@ -112,8 +112,8 @@ void Task_MotorControl(void){
         }
         print_debug_counter++;
         if(print_debug_counter > MOTOR_CONTROLLER_PRINT_DEBUG_COUNT){
-            printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
-            printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
+            // printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
+            // printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
             printf("Drive command can send errors: %d\r\n", can_send_errors);
             print_debug_counter = 0;
         }

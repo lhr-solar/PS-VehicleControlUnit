@@ -119,28 +119,24 @@ void Task_FaultHandler()
 
     while (1)
     {
-            LED_set(HB, LED_ON);
-            vTaskDelay(500);
-            LED_set(HB, LED_OFF);
-            vTaskDelay(500);
+        fault_bits = faultBit_wait(NUM_FAULTS, portMAX_DELAY);
 
-            fault_bits = faultBit_wait(NUM_FAULTS, portMAX_DELAY);
+        if (fault_bits != 0)
+        {
+            Kill_Precharge_Task();
+            contactor_emergency_open_all();
 
-            if (fault_bits != 0)
-            {
-                Kill_Precharge_Task();
-                contactor_emergency_open_all();
-
-                clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
-                clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+            // prevents the motor from running
+            clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+            clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
 
 
-                printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
+            printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
 
-                Set_Fault_LED();
-                Fault_Loop();
-            }
-            
+            Set_Fault_LED();
+            Fault_Loop();
+        }
+        
         vTaskDelay(1000);
     }
 }

@@ -68,10 +68,6 @@ void Task_Precharge()
 
     while (1)
     {
-        LED_set(HB, LED_ON);
-        vTaskDelay(500);
-        LED_set(HB, LED_OFF);
-        vTaskDelay(500);
 
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
@@ -138,9 +134,10 @@ void Task_Precharge()
             break;
         }
 
-        // update the motor safe bits with Contactor state
+        // set the Precharge Complete LED 
+        LED_set(PRECHARGE_COMPLETE, State == PRECHARGE_STATE_RUN ? LED_ON : LED_OFF);
 
-        
+        // update the motor safe bits with Contactor state        
         if(contactor_get_sense(MOTOR_PRE_CONTACTOR) == CLOSED){
             set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
         }
@@ -155,6 +152,7 @@ void Task_Precharge()
             clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
         }
 
+        Toggle_LED(HB);
         vTaskDelay(PRECHARGE_TASK_DELAY_MS);
     }
 }

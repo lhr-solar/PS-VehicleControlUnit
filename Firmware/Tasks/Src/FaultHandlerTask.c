@@ -72,6 +72,7 @@ void Fault_Loop()
             fault_printf_debug_counter = 0;
         }
 
+        Toggle_LED(HB);
         vTaskDelay(FAULT_LOOP_PERIOD_MS);
 
     }

@@ -31,7 +31,13 @@ void LED_set(Status_Mapping_t LED, LED_state_t state)
     if(LED > num_LEDs && LED < 0){
         return;
     }
-    HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
+    if(LED == HB){
+        // the heartbeat LED is the only positive logic LED
+        HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, !state);
+    }
+    else{
+        HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
+    }
 }
 
 void LEDs_clear()
@@ -39,7 +45,7 @@ void LEDs_clear()
     LEDbitmap = 0;
     for (int i = 0; i < num_LEDs; i++)
     {
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, LED_OFF);
+        LED_set(i, LED_OFF);
     }
 }
 
@@ -59,7 +65,7 @@ void LEDs_init()
             .Pull = GPIO_NOPULL,
             .Pin = DebugLEDs[i].pin};
 
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, LED_OFF);
         HAL_GPIO_Init(DebugLEDs[i].port, &led_config);
+        LED_set(i, LED_OFF);
     }
 }

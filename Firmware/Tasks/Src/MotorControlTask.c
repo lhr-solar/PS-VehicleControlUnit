@@ -70,7 +70,6 @@ void Task_MotorControl(void){
     motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
     uint8_t motor_drive_tx_data[8];
 
-    uint8_t can_send_errors = 0;
     uint8_t print_debug_counter = 0;
 
     // sets the max power of the motor
@@ -104,17 +103,12 @@ void Task_MotorControl(void){
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
 
-        if (Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY) == CAN_ERR){
-            can_send_errors++;
-        }
-        else{
-            can_send_errors = 0;
-        }
+        Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY);
+
         print_debug_counter++;
         if(print_debug_counter > MOTOR_CONTROLLER_PRINT_DEBUG_COUNT){
             printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
             printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
-            printf("Drive command can send errors: %d\r\n", can_send_errors);
             print_debug_counter = 0;
         }
 

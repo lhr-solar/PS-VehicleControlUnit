@@ -72,15 +72,15 @@ void Task_Init()
         &Motor_Telemetry_Task_Buffer    // Static task buffer (optional)
     );
 
-    // xTaskCreateStatic(
-    //     Task_CanTxTelemetry,            // Task function
-    //     "Can TX Telemetry Thread",      // Name of the task (for debugging)
-    //     configMINIMAL_STACK_SIZE,       // Stack size in words
-    //     NULL,                           // Task input parameter
-    //     CAN_TX_TELEMETRY_THREAD_PRIO,   // Task priority
-    //     Motor_Telemetry_Task_Stack,     // Task handle
-    //     &Motor_Telemetry_Task_Buffer    // Static task buffer (optional)
-    // );
+    xTaskCreateStatic(
+        Task_CanTxTelemetry,            // Task function
+        "Can TX Telemetry Thread",      // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,       // Stack size in words
+        NULL,                           // Task input parameter
+        CAN_TX_TELEMETRY_THREAD_PRIO,   // Task priority
+        Can_Tx_Telemetry_Task_Stack,     // Task handle
+        &Can_Tx_Telemetry_Task_Buffer    // Static task buffer (optional)
+    );
 
 
     vTaskDelete(NULL);

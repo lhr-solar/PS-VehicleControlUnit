@@ -20,8 +20,8 @@ typedef enum
     PEDALS_READING_BRAKE = 2,                   // We're getting correct accelerator pedal messages
     MOTOR_CONTACTOR_ENABLED = 3,                // The Motor contactor is enabled
     MOTOR_PRECHARGE_CONTACTOR_ENABLED = 4,      // The Motor precharge Contactor is enabled
-    DASHBOARD_IGNITION_MOTOR = 6,               // Ignition switch is set to motor
-    NUM_MOTOR_STATUS_BITS = 7
+    DASHBOARD_IGNITION_MOTOR = 5,               // Ignition switch is set to motor
+    NUM_MOTOR_STATUS_BITS = 6
 } motor_status_bit_t;
 
 _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");

@@ -1,9 +1,7 @@
-#include "CANbus.h"
 #include "stm32xx_hal.h"
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "MotorTelemetryTask.h"
 #include "MotorControlTask.h"
 #include "MotorSafeBits.h"
 
@@ -16,8 +14,8 @@ StackType_t producer_stack[512];
 void waitTask(void *pvParameters){
 
     while(1){
-        MotorSafeBits_Wait((MOTOR_CONTACTOR_ENABLED), portMAX_DELAY);
-        Toggle_LED(HB);
+        MotorSafeBits_WaitMask((motorDrivableBits), portMAX_DELAY);
+        Toggle_LED(CAR_DRIVABLE);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
@@ -26,12 +24,19 @@ void producerTask(void *pvParameters){
 
 
     while(1){
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(5000));
+
         set_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+        LED_set(HB, LED_ON);
 
-        // vTaskDelay(pdMS_TO_TICKS(1000));
-        // set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        vTaskDelay(pdMS_TO_TICKS(5000));
+        set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        LED_set(CAR_HB, LED_ON);
 
+        vTaskDelay(pdMS_TO_TICKS(10000));
+        clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        LED_set(HB, LED_OFF);
+        LED_set(CAR_HB, LED_OFF);
     }
 }
 

@@ -84,54 +84,54 @@ void Task_Precharge()
 
         switch (State)
         {
-        case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
-            printf("Precharge State: Initial\r\n");
-            if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
-            {
-                set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
-            }
-            State = PRECHARGE_STATE_PRECHARGING;
-
-            // Start a timer for precharging
-            Start_Tick = xTaskGetTickCount();
-            break;
-        case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
-
-            Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
-
-            const TickType_t Current_Tick = xTaskGetTickCount(); // Check how long we've been precharging for, fault if not precharged after PRECHARGE_TIMEOUT_MS
-            printf("Precharge State: Precharging\r\n");
-            if ((Current_Tick - Start_Tick) > pdMS_TO_TICKS(PRECHARGE_TIMEOUT_MS)) // Faults if precharging takes too long
-            {
-                // Check if motor voltage is within 90% of battery voltage (precharge complete)
-                if (Motor_Voltage * RATIO_SCALE >= Battery_Voltage * PRECHARGE_THRESHOLD_90)
+            case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
+                printf("Precharge State: Initial\r\n");
+                if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
                 {
-                    if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
+                    set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
+                }
+                State = PRECHARGE_STATE_PRECHARGING;
+
+                // Start a timer for precharging
+                Start_Tick = xTaskGetTickCount();
+                break;
+            case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
+
+                Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+
+                const TickType_t Current_Tick = xTaskGetTickCount(); // Check how long we've been precharging for, fault if not precharged after PRECHARGE_TIMEOUT_MS
+                printf("Precharge State: Precharging\r\n");
+                if ((Current_Tick - Start_Tick) > pdMS_TO_TICKS(PRECHARGE_TIMEOUT_MS)) // Faults if precharging takes too long
+                {
+                    // Check if motor voltage is within 90% of battery voltage (precharge complete)
+                    if (Motor_Voltage * RATIO_SCALE >= Battery_Voltage * PRECHARGE_THRESHOLD_90)
                     {
-                        set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+                        if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
+                        {
+                            set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+                        }
+                        State = PRECHARGE_STATE_RUN;
                     }
-                    State = PRECHARGE_STATE_RUN;
+                    else
+                    {
+                        // Precharging took too long
+                        set_faultBit(PRECHARGE_TIMEOUT_FAULT);
+                    }
                 }
-                else
+                break;
+            case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
+
+                Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+
+                // Use 80% threshold for hysteresis
+                printf("Precharge State: Run\r\n");
+                if (Motor_Voltage * RATIO_SCALE < Battery_Voltage * PRECHARGE_THRESHOLD_80)
                 {
-                    // Precharging took too long
-                    set_faultBit(PRECHARGE_TIMEOUT_FAULT);
+                    
                 }
-            }
-            break;
-        case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
-
-            Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
-
-            // Use 80% threshold for hysteresis
-            printf("Precharge State: Run\r\n");
-            if (Motor_Voltage * RATIO_SCALE < Battery_Voltage * PRECHARGE_THRESHOLD_80)
-            {
-                
-            }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
 
         // set the Precharge Complete LED 

@@ -16,20 +16,20 @@ void vContactorTestTask(void *pvParameters) {
     {
         // Cycle through each contactor: Close then Open with 2s delay
         // Close Contactors (GPIO_PIN_SET assumes high = closed)
-        LED_set(CAR_HB, ON);
+        LED_set(CAR_HB, LED_ON);
         contactor_set(MOTOR_CONTACTOR, CLOSED, 100, NORMAL);
         vTaskDelay(DELAY_2S);
 
-        LED_set(CAR_HB, OFF);
+        LED_set(CAR_HB, LED_OFF);
         contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, 100, NORMAL);
         vTaskDelay(DELAY_2S);
 
         // Open Contactors
-        LED_set(CAR_HB, OFF);
+        LED_set(CAR_HB, LED_OFF);
         contactor_set(MOTOR_CONTACTOR, OPEN, 100, NORMAL);
         vTaskDelay(DELAY_2S);
 
-        LED_set(CAR_HB, OFF);
+        LED_set(CAR_HB, LED_OFF);
         contactor_set(MOTOR_PRE_CONTACTOR, OPEN, 100, NORMAL);
         vTaskDelay(DELAY_2S);
     }

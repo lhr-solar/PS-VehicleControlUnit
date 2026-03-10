@@ -1,13 +1,11 @@
 #include "MotorControlTask.h"
 #include "CAN_FD.h"
 
-// Period the motor control thread runs at
-#define MOTOR_CONTROL_TASK_PERIOD_MS 100
-
-#define PRINT_DEBUG_PERIOD 1000
+// how often we want print outs from this thread
+#define MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD 1000
 
 // number of times the thread will run before we print out debug info
-#define PRINT_DEBUG_COUNT (PRINT_DEBUG_PERIOD/MOTOR_CONTROL_TASK_PERIOD_MS)
+#define MOTOR_CONTROLLER_PRINT_DEBUG_COUNT (MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD/MOTOR_CONTROL_TASK_PERIOD_MS)
 
 
 static FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
@@ -83,24 +81,26 @@ void Task_MotorControl(void){
     initMotorPowerCommandHeader(&mocoPowerCommandHeader); // initializes the can tx header
     packPowerCommand(motorPowerCommand, motor_power_tx_data); // packs the motorPower struct into an array of bytes
 
-    EventBits_t motorSafeBits;
+    // EventBits_t motorSafeBits;
     while(1){
 
         // Send power command
         Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
         // check if the correct motor safe bits are set
-        motorSafeBits = MotoSafeBits_WaitForSafe(pdMS_TO_TICKS(0));
+        // motorSafeBits = MotoSafeBits_WaitForSafe(pdMS_TO_TICKS(0));
 
-        // no bits are set, so the motor should not be run
-        if(motorSafeBits == 0){
-            motorDriveCommand.MC_MotorCurrentSetpoint = 0.0f;
-            motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
-        }
-        else{
-            motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
-            motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
-        }
+        // // no bits are set, so the motor should not be run
+        // if(motorSafeBits == 0){
+        //     motorDriveCommand.MC_MotorCurrentSetpoint = 0.0f;
+        //     motorDriveCommand.MC_MotorVelocitySetpoint = 0.0f;
+        //     LED_set(CAR_DRIVABLE, LED_OFF);
+        // }
+        // else{
+        //     motorDriveCommand.MC_MotorCurrentSetpoint = 0.2f;
+        //     motorDriveCommand.MC_MotorVelocitySetpoint = 12000.0f;
+        //     LED_set(CAR_DRIVABLE, LED_ON);
+        // }
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
 
@@ -110,16 +110,15 @@ void Task_MotorControl(void){
         else{
             can_send_errors = 0;
         }
-
         print_debug_counter++;
-        if(print_debug_counter > PRINT_DEBUG_COUNT){
+        if(print_debug_counter > MOTOR_CONTROLLER_PRINT_DEBUG_COUNT){
             printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
             printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
             printf("Drive command can send errors: %d\r\n", can_send_errors);
             print_debug_counter = 0;
         }
 
-
+        Toggle_LED(HB);
         // minimum delay for drive command is 250ms, or else the wavesculptor will reset to neutral
         vTaskDelay(pdMS_TO_TICKS(MOTOR_CONTROL_TASK_PERIOD_MS));
 

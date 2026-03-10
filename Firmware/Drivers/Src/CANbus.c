@@ -14,7 +14,7 @@ can_status_t Motor_CANBus_Init(void){
     motorfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     motorfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
     motorfdcan->Init.Mode = FDCAN_MODE_NORMAL;
-    motorfdcan->Init.AutoRetransmission = ENABLE;
+    motorfdcan->Init.AutoRetransmission = DISABLE;
     motorfdcan->Init.TransmitPause = DISABLE;
     motorfdcan->Init.ProtocolException = DISABLE;
     motorfdcan->Init.NominalPrescaler = 20;
@@ -73,7 +73,7 @@ can_status_t Car_CANBus_Init(void){
     carfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     carfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
     carfdcan->Init.Mode = FDCAN_MODE_NORMAL;
-    carfdcan->Init.AutoRetransmission = ENABLE;
+    carfdcan->Init.AutoRetransmission = DISABLE;
     carfdcan->Init.TransmitPause = DISABLE;
     carfdcan->Init.ProtocolException = DISABLE;
     carfdcan->Init.NominalPrescaler = 20;

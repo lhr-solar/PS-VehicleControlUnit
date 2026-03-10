@@ -33,4 +33,10 @@ extern StackType_t Can_Tx_Telemetry_Task_Stack[configMINIMAL_STACK_SIZE];
 #define MOTOR_TELEMETRY_THREAD_PRIO     (tskIDLE_PRIORITY + 1)
 #define CAN_TX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
 
+// Period the fault thread runs at (once a fault is active)
+#define FAULT_LOOP_PERIOD_MS 500
+
+// Period the motor control thread runs at
+#define MOTOR_CONTROL_TASK_PERIOD_MS 100
+
 void Task_Init();

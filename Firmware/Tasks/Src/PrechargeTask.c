@@ -68,9 +68,9 @@ void Task_Precharge()
 
     while (1)
     {
-        LED_set(HB, ON);
+        LED_set(HB, LED_ON);
         vTaskDelay(500);
-        LED_set(HB, OFF);
+        LED_set(HB, LED_OFF);
         vTaskDelay(500);
 
         ADC_Sense_Result ADC_Result = {0};

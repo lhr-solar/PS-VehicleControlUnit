@@ -53,11 +53,14 @@ void can_fd_tx_callback_hook(FDCAN_HandleTypeDef* hfdcan, const can_tx_payload_t
 
     BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-    xQueueSendFromISR(
+    if(canTxTelemetryQueue != NULL){
+        xQueueSendFromISR(
             canTxTelemetryQueue,
             payload,
             &higherPriorityTaskWoken
-    );
+        );
+
+    }
     // don't yield at the end of this since the rest of the ISR needs to run
 }
 

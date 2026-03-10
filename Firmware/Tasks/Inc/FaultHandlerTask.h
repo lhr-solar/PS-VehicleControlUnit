@@ -7,7 +7,6 @@
 #include "InitTask.h"
 #include "MotorSafeBits.h"
 
-#define PRINTF_DELAY_MS 250
 
 /** @brief Initialize the fault handler task. */
 void Init_FaultHandlerTask();

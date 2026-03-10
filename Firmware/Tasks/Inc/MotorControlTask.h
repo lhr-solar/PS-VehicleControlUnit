@@ -7,6 +7,7 @@
 #include "inits.h"
 #include "MotorSafeBits.h"
 #include "InitTask.h"
+#include "StatusLEDs.h"
 
 
 void MotorControlTask_Init(void);

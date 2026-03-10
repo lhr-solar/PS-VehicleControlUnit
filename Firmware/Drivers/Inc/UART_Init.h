@@ -3,6 +3,9 @@
 #include "pinDefs.h"
 #include "printf.h"
 
+// Overiding the USART tx queue size to be bigger than the defaukt
+#define USART3_TX_QUEUE_SIZE 100
+
 /**
  * @brief USART Initialization Function
  * @param uartHandle Pointer to UART handle struct

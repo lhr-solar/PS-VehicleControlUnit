@@ -7,6 +7,13 @@
 #include "InitTask.h"
 #include "MotorSafeBits.h"
 
+#define MAX_FAULT_STRING_CHARS 20
+
+typedef struct{
+    const char fault_string[MAX_FAULT_STRING_CHARS];
+    uint8_t faultStringSize;
+}fault_string_t;
+
 
 /** @brief Initialize the fault handler task. */
 void Init_FaultHandlerTask();

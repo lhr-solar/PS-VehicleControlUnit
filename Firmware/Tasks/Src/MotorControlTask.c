@@ -107,8 +107,10 @@ void Task_MotorControl(void){
 
         print_debug_counter++;
         if(print_debug_counter > MOTOR_CONTROLLER_PRINT_DEBUG_COUNT){
-            printf("Motor Current Setpoint: %f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
-            printf("Motor Velocity Setpoint: %f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
+            printf("Motor Current Setpoint: ");
+            printf("%f\r\n", motorDriveCommand.MC_MotorCurrentSetpoint);
+            printf("Motor Velocity Setpoint: ");
+            printf("%f\r\n", motorDriveCommand.MC_MotorVelocitySetpoint);
             print_debug_counter = 0;
         }
 

@@ -16,7 +16,7 @@ int main()
     // Initialize all LED GPIOs
     LEDs_init();
 
-    MX_UART_INIT(husart3);
+    Init_UART_Printf();
 
     // Task
     xTaskCreateStatic(

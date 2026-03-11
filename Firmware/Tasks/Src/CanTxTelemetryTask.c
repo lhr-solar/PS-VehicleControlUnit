@@ -78,6 +78,8 @@ void Task_CanTxTelemetry(){
             // TODO: use the embedded-sharepoint slcan formatter
             can_tx_print_slcan(payload);
             // TODO: should also forward data to ESP32
+
+            taskYIELD();
         }
     }
 }

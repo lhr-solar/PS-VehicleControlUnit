@@ -93,6 +93,7 @@ void Task_MotorTelemetry(){
 
             // print the incoming message over 
             print_slcan(payload);
+            taskYIELD();
         }
     }
 }

@@ -49,11 +49,15 @@ endif
 PROJECT_C_INCLUDES := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_C_INCLUDES))
 PROJECT_BUILD_DIR := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_BUILD_DIR))
 
+# Additional defines
+PROJECT_MACROS = USART3_RX_QUEUE_SIZE=100
+
 # export variables 
 export PROJECT_TARGET
 export PROJECT_C_SOURCES
 export PROJECT_C_INCLUDES
 export PROJECT_BUILD_DIR
+export PROJECT_MACROS
 
 
 #-------------------------------

@@ -20,53 +20,38 @@ static const GpioPin_t DebugLEDs[num_LEDs] = {{PRECHARGE_COMPLETE_LED_PORT, PREC
                                               {FAULT_LED_PORT, FAULT_LED_PIN},
                                               {HB_LED_PORT, HB_LED_PIN}};
 
-void Toggle_LED(Status_Mapping_t LED, LED_state_t state)
+void Toggle_LED(Status_Mapping_t LED)
 {
-    HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
-}
-
-int Get_LED_Bitmap()
-{
-    return LEDbitmap;
+    if (LED < 0 || LED >= num_LEDs) {
+        return;
+    }
+    HAL_GPIO_TogglePin(DebugLEDs[LED].port, DebugLEDs[LED].pin);
 }
 
 void LED_set(Status_Mapping_t LED, LED_state_t state)
 {
-
-    // make sure LED is in range
-    if (LED < 0 || LED >= num_LEDs)
-    {
-        Error_Handler();
+    // make sure LED is within bound
+    if(LED > num_LEDs || LED < 0){
+        return;
     }
-
-    uint16_t mask = (1u << (uint16_t)LED);
-
-    // clears specified bit
-    LEDbitmap &= ~mask;
-    // sets bit if state = 1, otherwise stays cleared if state = 0
-    if (state)
-    {
-        LEDbitmap |= mask;
+    if(LED == HB){
+        // the heartbeat LED is the only positive logic LED
+        HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, !state);
     }
-
-    update_status();
+    else{
+        HAL_GPIO_WritePin(DebugLEDs[LED].port, DebugLEDs[LED].pin, state);
+    }
 }
 
 void LEDs_clear()
 {
     LEDbitmap = 0;
-    update_status();
-}
-
-void update_status()
-{
     for (int i = 0; i < num_LEDs; i++)
     {
-        uint16_t mask = (1u << i);
-        uint8_t led_on = (LEDbitmap & mask) ? 1u : 0u;
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, led_on ? GPIO_PIN_RESET : GPIO_PIN_SET);
+        LED_set(i, LED_OFF);
     }
 }
+
 
 void LEDs_init()
 {
@@ -83,8 +68,7 @@ void LEDs_init()
             .Pull = GPIO_NOPULL,
             .Pin = DebugLEDs[i].pin};
 
-        HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, OFF);
         HAL_GPIO_Init(DebugLEDs[i].port, &led_config);
-        // HAL_GPIO_WritePin(DebugLEDs[i].port, DebugLEDs[i].pin, OFF);
+        LED_set(i, LED_OFF);
     }
 }

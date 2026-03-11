@@ -6,11 +6,6 @@ static StaticQueue_t motorTelemetryQueueBuffer;
 static uint8_t motorTelemetryQueueStorage[MOTOR_TELEMETRY_QUEUE_SIZE * sizeof(can_rx_payload_t)];
 static QueueHandle_t motorTelemetryQueue;
 
-// enables the fdcan3 recieve hook, calls can_fd_rx_callback_hook everytime a can rx interrupt happens
-#define FDCAN3_RECV_HOOK_EN
-
-// bus current for power
-// static float busCurrentSetPoint = 1.0f;
 
 void print_slcan(const can_rx_payload_t payload)
 {
@@ -55,25 +50,50 @@ void MotorTelemetryTask_Init(void){
 }
 void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
     
-    BaseType_t higherPriorityTaskWoken = pdFALSE;
+    // only forward motorCAN messages to CarCAN
+    if(motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
 
-    xQueueSendFromISR(
-        motorTelemetryQueue,
-        &recv_payload,
-        &higherPriorityTaskWoken
-    );
+        BaseType_t higherPriorityTaskWoken = pdFALSE;
+
+        xQueueSendFromISR(
+            motorTelemetryQueue,
+            &recv_payload,
+            &higherPriorityTaskWoken
+        );
+        // don't yield at the end of this since the rest of the ISR needs to run
+    }
 }
 
 void Task_MotorTelemetry(){
 
-    // motor canbus should be initialized here
-
+    // motor canbus MUST be initialized by now
+    MotorTelemetryTask_Init();
 
     can_rx_payload_t payload;
 
+    // This is the header for data we're forwarding from motor to carCAN
+    // need to set DataLength and ID
+    FDCAN_TxHeaderTypeDef carCanTransmitHeader;
+    carCanTransmitHeader.IdType = FDCAN_STANDARD_ID;
+    carCanTransmitHeader.TxFrameType = FDCAN_DATA_FRAME;
+    carCanTransmitHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    carCanTransmitHeader.BitRateSwitch = FDCAN_BRS_OFF;
+    carCanTransmitHeader.FDFormat = FDCAN_CLASSIC_CAN;
+    carCanTransmitHeader.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
+    carCanTransmitHeader.MessageMarker = 0;
+
     while(1){
         if (xQueueReceive(motorTelemetryQueue, &payload, portMAX_DELAY) == pdTRUE){
+
+            // copy the incoming message's ID and data length
+            carCanTransmitHeader.Identifier = payload.header.Identifier;
+            carCanTransmitHeader.DataLength = payload.header.DataLength;
+            // forward the motorCAN message to CarCAN
+            Car_CANBus_Send(&carCanTransmitHeader, payload.data, portMAX_DELAY);
+
+            // print the incoming message over 
             print_slcan(payload);
+            taskYIELD();
         }
     }
 }

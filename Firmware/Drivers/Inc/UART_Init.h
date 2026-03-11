@@ -3,6 +3,7 @@
 #include "pinDefs.h"
 #include "printf.h"
 
+
 /**
  * @brief USART Initialization Function
  * @param uartHandle Pointer to UART handle struct

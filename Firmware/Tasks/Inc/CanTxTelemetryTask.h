@@ -11,7 +11,6 @@
 #include "slcanFormat.h"
 
 
-void MotorTelemetryTask_Init(void);
+void CanTxTelemetryTask_Init(void);
 
-void Task_MotorTelemetry();
-
+void Task_CanTxTelemetry();

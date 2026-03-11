@@ -3,6 +3,7 @@
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
 FDCAN_HandleTypeDef* motorfdcan;
+FDCAN_HandleTypeDef* carfdcan;
 
 can_status_t Motor_CANBus_Init(void){
   
@@ -13,7 +14,7 @@ can_status_t Motor_CANBus_Init(void){
     motorfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     motorfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
     motorfdcan->Init.Mode = FDCAN_MODE_NORMAL;
-    motorfdcan->Init.AutoRetransmission = ENABLE;
+    motorfdcan->Init.AutoRetransmission = DISABLE;
     motorfdcan->Init.TransmitPause = DISABLE;
     motorfdcan->Init.ProtocolException = DISABLE;
     motorfdcan->Init.NominalPrescaler = 20;
@@ -28,13 +29,14 @@ can_status_t Motor_CANBus_Init(void){
     motorfdcan->Init.ExtFiltersNbr = 0;
     motorfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
-    // accepts all CAN IDs from 
-    // FDCAN1 Filter Config
+    // accepts all CAN IDs 
     FDCAN_FilterTypeDef sFilterConfig1;
     sFilterConfig1.IdType = FDCAN_STANDARD_ID;
     sFilterConfig1.FilterIndex = 0;
     sFilterConfig1.FilterType = FDCAN_FILTER_MASK;
     sFilterConfig1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
+
+    // TODO: make a proper CAN filter
     sFilterConfig1.FilterID1 = 0x000;
     sFilterConfig1.FilterID2 = 0x000;
 
@@ -59,6 +61,64 @@ can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], Ti
 can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
   
   return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
+
+}
+
+can_status_t Car_CANBus_Init(void){
+
+    carfdcan = hfdcan3;
+    carfdcan->Instance = FDCAN3;
+
+
+    carfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
+    carfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+    carfdcan->Init.Mode = FDCAN_MODE_NORMAL;
+    carfdcan->Init.AutoRetransmission = DISABLE;
+    carfdcan->Init.TransmitPause = DISABLE;
+    carfdcan->Init.ProtocolException = DISABLE;
+    carfdcan->Init.NominalPrescaler = 20;
+    carfdcan->Init.NominalSyncJumpWidth = 1;
+    carfdcan->Init.NominalTimeSeg1 = 13;
+    carfdcan->Init.NominalTimeSeg2 = 2;
+    carfdcan->Init.DataPrescaler = 1;
+    carfdcan->Init.DataSyncJumpWidth = 1;
+    carfdcan->Init.DataTimeSeg1 = 1;
+    carfdcan->Init.DataTimeSeg2 = 1;
+    carfdcan->Init.StdFiltersNbr = 1;
+    carfdcan->Init.ExtFiltersNbr = 0;
+    carfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+
+    // accepts all CAN IDs from 
+    // FDCAN1 Filter Config
+    FDCAN_FilterTypeDef CarCANFilterConfig;
+    CarCANFilterConfig.IdType = FDCAN_STANDARD_ID;
+    CarCANFilterConfig.FilterIndex = 0;
+    CarCANFilterConfig.FilterType = FDCAN_FILTER_MASK;
+    CarCANFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
+    CarCANFilterConfig.FilterID1 = 0x000;
+    CarCANFilterConfig.FilterID2 = 0x000;
+
+    if(can_fd_init(carfdcan, &CarCANFilterConfig) != CAN_OK){
+       return CAN_ERR;
+    }
+
+    if(can_fd_start(carfdcan) != CAN_OK){
+       return CAN_ERR;
+    }
+
+    return CAN_OK;
+
+}
+
+can_status_t Car_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+
+  return can_fd_send(carfdcan, header, data, delay_ticks);
+
+}
+
+can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+
+    return can_fd_recv(carfdcan, id, header, data, delay_ticks);
 
 }
 

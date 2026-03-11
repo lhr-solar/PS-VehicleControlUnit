@@ -5,6 +5,7 @@
 #include "StatusLEDs.h"
 #include "ADC_Sense.h"
 #include "InitTask.h"
+#include "MotorSafeBits.h"
 
 
 // Precharge thresholds
@@ -25,7 +26,6 @@
 
 #define PRECHARGE_TIMEOUT_MS 400 // Precharge time to 90% -> 0.9 = 1 - e^(-t/RC), so t = -RC * ln(1-0.9) = 2.3*RC. For our case, R = 110 Ohms and C = 1 mF -> t = 253 ms.
 #define ADC_TIMEOUT_MS 20
-#define PRECHARGE_TASK_DELAY_MS 100
 
 typedef enum
 {

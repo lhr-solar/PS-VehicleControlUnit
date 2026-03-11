@@ -13,7 +13,7 @@ StackType_t task_stack[512];
 void can_error_handler(){
     
     while(1){
-        LED_set(MOTOR_FAULT, GPIO_PIN_SET);
+        LED_set(MOTOR_FAULT, LED_ON);
     }
 }
 

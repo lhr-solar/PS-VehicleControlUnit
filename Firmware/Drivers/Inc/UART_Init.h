@@ -3,6 +3,7 @@
 #include "pinDefs.h"
 #include "printf.h"
 
+
 /**
  * @brief Printf Initialization Function
  * @param None

@@ -1,5 +1,8 @@
 #include "PrechargeTask.h"
 
+#define PRECHARGE_PRINTF_DEBUG_PERIOD_MS 10000
+#define PRECHARGE_PRINTF_DEBUG_COUNTER (PRECHARGE_PRINTF_DEBUG_PERIOD_MS/PRECHARGE_TASK_DELAY_MS)
+
 /* handle for the Precharge task, defined here */
 TaskHandle_t hprecharge_task = NULL;
 
@@ -52,11 +55,24 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
         // Fault handler
         set_faultBit(PRECHARGE_SENSE_MISMATCH_FAULT);
     }
+}
 
-    printf("Motor Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_CONTACTOR));
-    printf("Precharge Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_PRE_CONTACTOR));
-    printf("Motor Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_CONTACTOR));
-    printf("Precharge Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_PRE_CONTACTOR));
+static void print_Precharge_State(Precharge_State_t State){
+    switch (State)
+    {
+        case PRECHARGE_STATE_INITIAL:
+            printf("Precharge State: Initial\r\n");
+            break;
+        case PRECHARGE_STATE_PRECHARGING:
+            printf("Precharge State: Precharging\r\n");
+            break;
+        case PRECHARGE_STATE_RUN:
+            printf("Precharge State: Run\r\n");
+            break;
+        default:
+            printf("Unknown\r\n");
+            break;
+    }
 }
 
 void Task_Precharge()
@@ -66,12 +82,10 @@ void Task_Precharge()
     static Precharge_State_t State = PRECHARGE_STATE_INITIAL;
     static TickType_t Start_Tick = 0;
 
+    uint8_t printDebugCounter = 0;
+
     while (1)
     {
-        LED_set(HB, ON);
-        vTaskDelay(500);
-        LED_set(HB, OFF);
-        vTaskDelay(500);
 
         ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
@@ -82,61 +96,88 @@ void Task_Precharge()
         uint32_t Battery_Voltage = ADC_Result.Battery_Voltage;
         uint32_t Motor_Voltage = ADC_Result.Motor_Voltage;
 
-        printf("Motor: %ld mV | Battery: %ld mV\r\n",
-               Motor_Voltage,
-               Battery_Voltage);
+        printDebugCounter++;
 
         switch (State)
         {
-        case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
-            printf("Precharge State: Initial\r\n");
-            if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
-            {
-                set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
-            }
-            State = PRECHARGE_STATE_PRECHARGING;
-
-            // Start a timer for precharging
-            Start_Tick = xTaskGetTickCount();
-            break;
-        case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
-
-            Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
-
-            const TickType_t Current_Tick = xTaskGetTickCount(); // Check how long we've been precharging for, fault if not precharged after PRECHARGE_TIMEOUT_MS
-            printf("Precharge State: Precharging\r\n");
-            if ((Current_Tick - Start_Tick) > pdMS_TO_TICKS(PRECHARGE_TIMEOUT_MS)) // Faults if precharging takes too long
-            {
-                // Check if motor voltage is within 90% of battery voltage (precharge complete)
-                if (Motor_Voltage * RATIO_SCALE >= Battery_Voltage * PRECHARGE_THRESHOLD_90)
+            case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
+                if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
                 {
-                    if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
+                    set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
+                }
+                State = PRECHARGE_STATE_PRECHARGING;
+
+                // Start a timer for precharging
+                Start_Tick = xTaskGetTickCount();
+                break;
+            case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
+
+                Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+
+                const TickType_t Current_Tick = xTaskGetTickCount(); // Check how long we've been precharging for, fault if not precharged after PRECHARGE_TIMEOUT_MS
+                if ((Current_Tick - Start_Tick) > pdMS_TO_TICKS(PRECHARGE_TIMEOUT_MS)) // Faults if precharging takes too long
+                {
+                    // Check if motor voltage is within 90% of battery voltage (precharge complete)
+                    if (Motor_Voltage * RATIO_SCALE >= Battery_Voltage * PRECHARGE_THRESHOLD_90)
                     {
-                        set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+                        if (contactor_set(MOTOR_PRE_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, false) != SUCCESS)
+                        {
+                            set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+                        }
+                        State = PRECHARGE_STATE_RUN;
                     }
-                    State = PRECHARGE_STATE_RUN;
+                    else
+                    {
+                        // Precharging took too long
+                        set_faultBit(PRECHARGE_TIMEOUT_FAULT);
+                    }
                 }
-                else
+                break;
+            case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
+
+                Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
+
+                // Use 80% threshold for hysteresis
+                if (Motor_Voltage * RATIO_SCALE < Battery_Voltage * PRECHARGE_THRESHOLD_80)
                 {
-                    // Precharging took too long
-                    set_faultBit(PRECHARGE_TIMEOUT_FAULT);
+                    
                 }
-            }
-            break;
-        case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
-
-            Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
-
-            // Use 80% threshold for hysteresis
-            printf("Precharge State: Run\r\n");
-            if (Motor_Voltage * RATIO_SCALE < Battery_Voltage * PRECHARGE_THRESHOLD_80)
-            {
-            }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
 
+        if(printDebugCounter >= PRECHARGE_PRINTF_DEBUG_COUNTER){
+
+            // prints battery and motor voltage
+            printf("Motor: %ld mV | Battery: %ld mV\r\n",
+               Motor_Voltage,
+               Battery_Voltage);
+
+            // prints current precharge state
+            print_Precharge_State(State);
+            printDebugCounter = 0;
+        }
+
+        // set the Precharge Complete LED 
+        LED_set(PRECHARGE_COMPLETE, State == PRECHARGE_STATE_RUN ? LED_ON : LED_OFF);
+
+        // update the motor safe bits with Contactor state        
+        if(contactor_get_sense(MOTOR_PRE_CONTACTOR) == CLOSED){
+            set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        }
+        else{
+            clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+        }
+
+        if(contactor_get_sense(MOTOR_CONTACTOR) == CLOSED){
+            set_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+        }
+        else{
+            clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+        }
+
+        Toggle_LED(HB);
         vTaskDelay(PRECHARGE_TASK_DELAY_MS);
     }
 }

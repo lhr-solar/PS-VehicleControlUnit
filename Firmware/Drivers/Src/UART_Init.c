@@ -66,6 +66,9 @@ void MX_UART_INIT(UART_HandleTypeDef *uartHandle)
 
 void Init_UART_Printf()
 {
+
+  // the USART3 TX queue is overriden to be much larger in the Makefile
+  // if the USART peripheral is changed for printf, update the VCU Makefile accordingly
   husart3->Init.BaudRate = 115200;
   husart3->Init.WordLength = UART_WORDLENGTH_8B;
   husart3->Init.StopBits = UART_STOPBITS_1;

@@ -16,8 +16,8 @@
 typedef enum
 {
     BPS_SAFE = 0,                               // BPS is clear and high voltage is on
-    PEDALS_READING_ACCELERATOR = 1,             // We're getting correct brake pedal messages
-    PEDALS_READING_BRAKE = 2,                   // We're getting correct accelerator pedal messages
+    PEDALS_READING_ACCELERATOR = 1,             // We're getting correct accelerator pedal messages
+    PEDALS_READING_BRAKE = 2,                   // We're getting correct brake pedal messages
     MOTOR_CONTACTOR_ENABLED = 3,                // The Motor contactor is enabled
     MOTOR_PRECHARGE_CONTACTOR_ENABLED = 4,      // The Motor precharge Contactor is enabled
     DASHBOARD_IGNITION_MOTOR = 5,               // Ignition switch is set to motor

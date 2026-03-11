@@ -22,13 +22,16 @@ static const GpioPin_t DebugLEDs[num_LEDs] = {{PRECHARGE_COMPLETE_LED_PORT, PREC
 
 void Toggle_LED(Status_Mapping_t LED)
 {
+    if (LED < 0 || LED >= num_LEDs) {
+        return;
+    }
     HAL_GPIO_TogglePin(DebugLEDs[LED].port, DebugLEDs[LED].pin);
 }
 
 void LED_set(Status_Mapping_t LED, LED_state_t state)
 {
     // make sure LED is within bound
-    if(LED > num_LEDs && LED < 0){
+    if(LED > num_LEDs || LED < 0){
         return;
     }
     if(LED == HB){

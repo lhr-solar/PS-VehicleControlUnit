@@ -33,13 +33,13 @@ void Task_Init()
     Car_CANBus_Init();
 
     xTaskCreateStatic(
-        Task_FaultHandler,        // Task function
-        "FaultHandler",           // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE, // Stack size in words
-        NULL,                     // Task input parameter
-        FAULTER_HANDLER_THREAD_PRIO,     // Task priority
-        FaultHandlerTask_Stack,   // Task handle
-        &FaultHandlerTask_Buffer  // Static task buffer (optional)
+        Task_FaultHandler,          // Task function
+        "FaultHandler",             // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,   // Stack size in words
+        NULL,                       // Task input parameter
+        FAULT_HANDLER_THREAD_PRIO,  // Task priority
+        FaultHandlerTask_Stack,     // Task handle
+        &FaultHandlerTask_Buffer    // Static task buffer (optional)
     );
 
     hprecharge_task = xTaskCreateStatic(

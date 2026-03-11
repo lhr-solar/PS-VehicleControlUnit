@@ -46,4 +46,8 @@ extern StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 // Period the motor control thread runs at
 #define MOTOR_CONTROL_TASK_PERIOD_MS 100
 
+// Period the precharge thread runs at 
+#define PRECHARGE_TASK_DELAY_MS 100
+
+
 void Task_Init();

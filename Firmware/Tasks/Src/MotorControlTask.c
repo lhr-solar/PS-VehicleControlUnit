@@ -114,6 +114,8 @@ void Task_MotorControl(void){
             print_debug_counter = 0;
         }
 
+        Toggle_LED(CAR_HB);
+
         // minimum delay for drive command is 250ms, or else the wavesculptor will reset to neutral
         vTaskDelay(pdMS_TO_TICKS(MOTOR_CONTROL_TASK_PERIOD_MS));
 

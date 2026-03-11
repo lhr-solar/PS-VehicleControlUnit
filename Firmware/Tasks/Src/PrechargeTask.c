@@ -65,10 +65,13 @@ static void print_Precharge_State(Precharge_State_t State){
             break;
         case PRECHARGE_STATE_PRECHARGING:
             printf("Precharge State: Precharging\r\n");
+            break;
         case PRECHARGE_STATE_RUN:
             printf("Precharge State: Run\r\n");
+            break;
         default:
             printf("Unknown\r\n");
+            break;
     }
 }
 

@@ -4,7 +4,9 @@
 #include "printf.h"
 #include "ADC_Sense.h"
 #include <stdlib.h>
+#include <string.h>
 
+#define intstrlength 10
 uint8_t printf_enabled = 0;
 
 void TxTask(void *argument);
@@ -26,21 +28,76 @@ void TxTask(void *argument){
 
     uint16_t txCount = 0;
     uart_status_t status = UART_ERR;
-    // static char buffer[50];  // storage for the message
-    // uint8_t testmessage[50];
+    
+    // storage for the message
+    uint8_t buffer[250];
+    uint8_t bufferindex = 0;
+
+    //ADC reading
     ADC_Sense_Result ADC_Result = {0};
     while(1) {
+        bufferindex = 0;
         // Send test message
         uint8_t startMsg1[] = "Message: #";
         msgLen = sizeof(startMsg1) - 1;
-        status = ESP32_Send(startMsg1, msgLen, portMAX_DELAY);
+        // status = ESP32_Send(startMsg1, msgLen, portMAX_DELAY);
+        memcpy(buffer+bufferindex, startMsg1, msgLen);
+        bufferindex += msgLen;
 
         uint8_t startMsg2[6];
         utoa(txCount, (char*) startMsg2, 10);
         msgLen = sizeof(startMsg2) - 1;
-        status = ESP32_Send(startMsg2, msgLen, portMAX_DELAY);
+        memcpy(buffer+bufferindex, startMsg2, msgLen);
+        bufferindex += msgLen;
 
-        status = ESP32_Send(newLine, newLineLen, portMAX_DELAY);
+        memcpy(buffer+bufferindex, newLine, newLineLen);
+        bufferindex += newLineLen;
+
+        // read ADC
+        if (Read_ADC(20, &ADC_Result) != ADC_SENSE_OK)
+        {
+            uint8_t errorData[] = "ADC Error\r\n";
+            const uint8_t errorMsgLen = sizeof(errorData) - 1;
+            // ESP32_Send( errorData, errorMsgLen, portMAX_DELAY);
+            memcpy(buffer+bufferindex, errorData, errorMsgLen);
+            bufferindex+=errorMsgLen;
+            Error_Handler();
+        }else{
+            uint8_t adctestData[] = "ADC read\r\n";
+            const uint8_t adcmsgLen = sizeof(adctestData) - 1;
+            // ESP32_Send( adctestData, adcmsgLen, portMAX_DELAY);
+            memcpy(buffer+bufferindex, adctestData, adcmsgLen);
+            bufferindex+=adcmsgLen;
+        }
+
+        // adc message construction
+        uint8_t adcMsg1[] = "Motor: ";
+        msgLen = sizeof(adcMsg1) - 1;
+        memcpy(buffer+bufferindex, adcMsg1, msgLen);
+        bufferindex+=msgLen;
+
+        uint8_t adcMsg2[intstrlength];
+        itoa(ADC_Result.Motor_Voltage, (char*) adcMsg2, 10);
+        msgLen = sizeof(adcMsg2) - 1;
+        memcpy(buffer+bufferindex, adcMsg2, msgLen);
+        bufferindex+=msgLen;
+
+        uint8_t adcMsg3[] = " | Battery: ";
+        msgLen = sizeof(adcMsg3) - 1;
+        memcpy(buffer+bufferindex, adcMsg3, msgLen);
+        bufferindex+=msgLen;
+
+        uint8_t adcMsg4[intstrlength];
+        itoa(ADC_Result.Battery_Voltage, (char*) adcMsg4, 10);
+        msgLen = sizeof(adcMsg4) - 1;
+        memcpy(buffer+bufferindex, adcMsg4, msgLen);
+        bufferindex+=msgLen;
+
+        // status = ESP32_Send(newLine, newLineLen, portMAX_DELAY);
+        memcpy(buffer+bufferindex, newLine, newLineLen);
+        bufferindex+=newLineLen;
+        
+        status = ESP32_Send(buffer, bufferindex, portMAX_DELAY);
         if (status == UART_SENT) {
             txCount++;
             // Toggle LED to indicate successful transmission
@@ -49,40 +106,6 @@ void TxTask(void *argument){
         }else{
             HAL_GPIO_TogglePin(FAULT_LED_PORT, FAULT_LED_PIN);
         }
-
-        if (Read_ADC(20, &ADC_Result) != ADC_SENSE_OK)
-        {
-            uint8_t errorData[] = "ADC Error\r\n";
-            const uint8_t errorMsgLen = sizeof(errorData) - 1;
-            ESP32_Send( errorData, errorMsgLen, portMAX_DELAY);
-            Error_Handler();
-        }else{
-            uint8_t adctestData[] = "ADC read\r\n";
-            const uint8_t adcmsgLen = sizeof(adctestData) - 1;
-            ESP32_Send( adctestData, adcmsgLen, portMAX_DELAY);
-        }
-
-        // adc message construction
-        uint8_t adcMsg1[] = "Motor: ";
-        msgLen = sizeof(adcMsg1) - 1;
-        status = ESP32_Send(adcMsg1, msgLen, portMAX_DELAY);
-
-        uint8_t adcMsg2[6];
-        utoa((uint16_t) ADC_Result.Motor_Voltage, (char*) adcMsg2, 10);
-        msgLen = sizeof(adcMsg2) - 1;
-        status = ESP32_Send(adcMsg2, msgLen, portMAX_DELAY);
-
-        uint8_t adcMsg3[] = " | Battery: ";
-        msgLen = sizeof(adcMsg3) - 1;
-        status = ESP32_Send(adcMsg3, msgLen, portMAX_DELAY);
-
-        uint8_t adcMsg4[6];
-        utoa((uint16_t) ADC_Result.Battery_Voltage, (char*) adcMsg4, 10);
-        msgLen = sizeof(adcMsg4) - 1;
-        status = ESP32_Send(adcMsg4, msgLen, portMAX_DELAY);
-
-        status = ESP32_Send(newLine, newLineLen, portMAX_DELAY);
-
         
         vTaskDelay(xDelay);
     }

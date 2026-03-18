@@ -15,7 +15,7 @@ static void task(void *pvParameters){
     char *msg = "balls\r\n";
 
     while(1){
-        if(SDCard_Write("LOG1.TXT", msg, pdMS_TO_TICKS(portMAX_DELAY)) != SD_OK){
+        if(SDCard_Write("MOTOR.TXT", msg, pdMS_TO_TICKS(portMAX_DELAY)) != SD_OK){
             LED_set(CAR_BPSFAULT, LED_ON);
         }
         Toggle_LED(HB);

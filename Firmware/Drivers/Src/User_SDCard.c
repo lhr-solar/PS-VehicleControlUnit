@@ -111,11 +111,3 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {
 void SPI1_IRQHandler(void) { 
     HAL_SPI_IRQHandler(&hspi_user); 
 }
-
-void SPI2_IRQHandler(void) { 
-    HAL_SPI_IRQHandler(&hspi_user); 
-}
-
-void SPI3_IRQHandler(void) { 
-    HAL_SPI_IRQHandler(&hspi_user); 
-}

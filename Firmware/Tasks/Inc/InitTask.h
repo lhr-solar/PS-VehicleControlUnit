@@ -39,6 +39,7 @@ extern StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 #define MOTOR_CONTROL_THREAD_PRIO       (tskIDLE_PRIORITY + 2)
 #define MOTOR_TELEMETRY_THREAD_PRIO     (tskIDLE_PRIORITY + 1)
 #define CAN_TX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
+#define SDCARD_WORKER_THREAD_PRIO       (tskIDLE_PRIORITY + 1)
 
 // Period the fault thread runs at (once a fault is active)
 #define FAULT_LOOP_PERIOD_MS 500

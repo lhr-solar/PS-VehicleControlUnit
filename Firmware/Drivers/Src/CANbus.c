@@ -2,14 +2,12 @@
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
-FDCAN_HandleTypeDef* motorfdcan;
-FDCAN_HandleTypeDef* carfdcan;
+FDCAN_HandleTypeDef *motorfdcan;
+FDCAN_HandleTypeDef *carfdcan;
 
-can_status_t Motor_CANBus_Init(void){
-  
+can_status_t Motor_CANBus_Init(void) {
     motorfdcan = hfdcan1;
     motorfdcan->Instance = FDCAN1;
-
 
     motorfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     motorfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
@@ -29,7 +27,7 @@ can_status_t Motor_CANBus_Init(void){
     motorfdcan->Init.ExtFiltersNbr = 0;
     motorfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
-    // accepts all CAN IDs 
+    // accepts all CAN IDs
     FDCAN_FilterTypeDef sFilterConfig1;
     sFilterConfig1.IdType = FDCAN_STANDARD_ID;
     sFilterConfig1.FilterIndex = 0;
@@ -40,35 +38,32 @@ can_status_t Motor_CANBus_Init(void){
     sFilterConfig1.FilterID1 = 0x000;
     sFilterConfig1.FilterID2 = 0x000;
 
-    if(can_fd_init(motorfdcan, &sFilterConfig1) != CAN_OK){
-       return CAN_ERR;
+    if (can_fd_init(motorfdcan, &sFilterConfig1) != CAN_OK) {
+        return CAN_ERR;
     }
 
-    if(can_fd_start(motorfdcan) != CAN_OK){
-       return CAN_ERR;
+    if (can_fd_start(motorfdcan) != CAN_OK) {
+        return CAN_ERR;
     }
 
     return CAN_OK;
-
 }
 
-can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
-  
-  return can_fd_send(motorfdcan, header, data, delay_ticks);
+can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[],
+                               TickType_t delay_ticks) {
 
+    return can_fd_send(motorfdcan, header, data, delay_ticks);
 }
 
-can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
-  
-  return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
+can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef *header, 
+                                  uint8_t data[], TickType_t delay_ticks) {
 
+    return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
 }
 
-can_status_t Car_CANBus_Init(void){
-
+can_status_t Car_CANBus_Init(void) {
     carfdcan = hfdcan3;
     carfdcan->Instance = FDCAN3;
-
 
     carfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     carfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
@@ -88,7 +83,7 @@ can_status_t Car_CANBus_Init(void){
     carfdcan->Init.ExtFiltersNbr = 0;
     carfdcan->Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 
-    // accepts all CAN IDs from 
+    // accepts all CAN IDs from
     // FDCAN1 Filter Config
     FDCAN_FilterTypeDef CarCANFilterConfig;
     CarCANFilterConfig.IdType = FDCAN_STANDARD_ID;
@@ -98,145 +93,132 @@ can_status_t Car_CANBus_Init(void){
     CarCANFilterConfig.FilterID1 = 0x000;
     CarCANFilterConfig.FilterID2 = 0x000;
 
-    if(can_fd_init(carfdcan, &CarCANFilterConfig) != CAN_OK){
-       return CAN_ERR;
+    if (can_fd_init(carfdcan, &CarCANFilterConfig) != CAN_OK) {
+        return CAN_ERR;
     }
 
-    if(can_fd_start(carfdcan) != CAN_OK){
-       return CAN_ERR;
+    if (can_fd_start(carfdcan) != CAN_OK) {
+        return CAN_ERR;
     }
 
     return CAN_OK;
-
 }
 
-can_status_t Car_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+can_status_t Car_CANBus_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[],
+                             TickType_t delay_ticks) {
 
-  return can_fd_send(carfdcan, header, data, delay_ticks);
-
+    return can_fd_send(carfdcan, header, data, delay_ticks);
 }
 
-can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks){
+can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef *header, 
+                                uint8_t data[], TickType_t delay_ticks) {
 
     return can_fd_recv(carfdcan, id, header, data, delay_ticks);
-
 }
 
+static uint32_t HAL_RCC_FDCAN_CLK_ENABLED = 0;
 
-static uint32_t HAL_RCC_FDCAN_CLK_ENABLED=0;
+void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle) {
 
-void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef* fdcanHandle)
-{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+    if (fdcanHandle->Instance == FDCAN1) {
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+        PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
+            Error_Handler();
+        }
 
-  if(fdcanHandle->Instance==FDCAN1)
-  {
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
-    PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-    {
-      Error_Handler();
+        /* FDCAN1 clock enable */
+        HAL_RCC_FDCAN_CLK_ENABLED++;
+        if (HAL_RCC_FDCAN_CLK_ENABLED == 1) {
+            __HAL_RCC_FDCAN_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOA_CLK_ENABLE();
+        /**FDCAN1 GPIO Configuration
+        PA11     ------> FDCAN1_RX
+        PA12     ------> FDCAN1_TX
+        */
+        GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+        GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN1;
+        HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+        /* FDCAN1 interrupt Init */
+        HAL_NVIC_SetPriority(FDCAN1_IT0_IRQn, FDCAN_NVIC_PRIO, 0);
+        HAL_NVIC_EnableIRQ(FDCAN1_IT0_IRQn);
+        HAL_NVIC_SetPriority(FDCAN1_IT1_IRQn, FDCAN_NVIC_PRIO, 0);
+        HAL_NVIC_EnableIRQ(FDCAN1_IT1_IRQn);
     }
+    else if (fdcanHandle->Instance == FDCAN3) {
+        /** Initializes the peripherals clocks
+         */
+        PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
+        PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
+        if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
+            Error_Handler();
+        }
 
-    /* FDCAN1 clock enable */
-    HAL_RCC_FDCAN_CLK_ENABLED++;
-    if(HAL_RCC_FDCAN_CLK_ENABLED==1){
-      __HAL_RCC_FDCAN_CLK_ENABLE();
+        /* FDCAN3 clock enable */
+        HAL_RCC_FDCAN_CLK_ENABLED++;
+        if (HAL_RCC_FDCAN_CLK_ENABLED == 1) {
+            __HAL_RCC_FDCAN_CLK_ENABLE();
+        }
+
+        __HAL_RCC_GPIOA_CLK_ENABLE();
+        /**FDCAN3 GPIO Configuration
+        PA8     ------> FDCAN3_RX
+        PA15     ------> FDCAN3_TX
+        */
+        GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_15;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+        GPIO_InitStruct.Alternate = GPIO_AF11_FDCAN3;
+        HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+        /* FDCAN3 interrupt Init */
+        HAL_NVIC_SetPriority(FDCAN3_IT0_IRQn, FDCAN_NVIC_PRIO, 0);
+        HAL_NVIC_EnableIRQ(FDCAN3_IT0_IRQn);
+        HAL_NVIC_SetPriority(FDCAN3_IT1_IRQn, FDCAN_NVIC_PRIO, 0);
+        HAL_NVIC_EnableIRQ(FDCAN3_IT1_IRQn);
     }
-
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**FDCAN1 GPIO Configuration
-    PA11     ------> FDCAN1_RX
-    PA12     ------> FDCAN1_TX
-    */ 
-    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN1;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    /* FDCAN1 interrupt Init */
-    HAL_NVIC_SetPriority(FDCAN1_IT0_IRQn, FDCAN_NVIC_PRIO, 0);
-    HAL_NVIC_EnableIRQ(FDCAN1_IT0_IRQn);
-    HAL_NVIC_SetPriority(FDCAN1_IT1_IRQn, FDCAN_NVIC_PRIO, 0);
-    HAL_NVIC_EnableIRQ(FDCAN1_IT1_IRQn);
-  }
-
-  else if(fdcanHandle->Instance==FDCAN3)
-  {
-  /** Initializes the peripherals clocks
-  */
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
-    PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    /* FDCAN3 clock enable */
-    HAL_RCC_FDCAN_CLK_ENABLED++;
-    if(HAL_RCC_FDCAN_CLK_ENABLED==1){
-      __HAL_RCC_FDCAN_CLK_ENABLE();
-    }
-
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**FDCAN3 GPIO Configuration
-    PA8     ------> FDCAN3_RX
-    PA15     ------> FDCAN3_TX
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF11_FDCAN3;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    /* FDCAN3 interrupt Init */
-    HAL_NVIC_SetPriority(FDCAN3_IT0_IRQn, FDCAN_NVIC_PRIO, 0);
-    HAL_NVIC_EnableIRQ(FDCAN3_IT0_IRQn);
-    HAL_NVIC_SetPriority(FDCAN3_IT1_IRQn, FDCAN_NVIC_PRIO, 0);
-    HAL_NVIC_EnableIRQ(FDCAN3_IT1_IRQn);
-
-  }
 }
 
-void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef* fdcanHandle)
-{
-    if(fdcanHandle->Instance==FDCAN1)
-    {
+void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle) {
+    if (fdcanHandle->Instance == FDCAN1) {
         /* Peripheral clock disable */
         HAL_RCC_FDCAN_CLK_ENABLED--;
-        if(HAL_RCC_FDCAN_CLK_ENABLED==0){
-        __HAL_RCC_FDCAN_CLK_DISABLE();
+        if (HAL_RCC_FDCAN_CLK_ENABLED == 0) {
+            __HAL_RCC_FDCAN_CLK_DISABLE();
         }
 
         /**FDCAN1 GPIO Configuration
         PA11     ------> FDCAN1_RX
         PA12     ------> FDCAN1_TX
         */
-        HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
+        HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11 | GPIO_PIN_12);
 
         /* FDCAN1 interrupt Deinit */
         HAL_NVIC_DisableIRQ(FDCAN1_IT0_IRQn);
         HAL_NVIC_DisableIRQ(FDCAN1_IT1_IRQn);
     }
-
-    else if(fdcanHandle->Instance==FDCAN3)
-    {
+    else if (fdcanHandle->Instance == FDCAN3) {
         /* Peripheral clock disable */
         HAL_RCC_FDCAN_CLK_ENABLED--;
-        if(HAL_RCC_FDCAN_CLK_ENABLED==0){
-        __HAL_RCC_FDCAN_CLK_DISABLE();
+        if (HAL_RCC_FDCAN_CLK_ENABLED == 0) {
+            __HAL_RCC_FDCAN_CLK_DISABLE();
         }
 
         /**FDCAN3 GPIO Configuration
         PA8     ------> FDCAN3_RX
         PA15     ------> FDCAN3_TX
         */
-        HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8|GPIO_PIN_15);
+        HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8 | GPIO_PIN_15);
 
         /* FDCAN3 interrupt Deinit */
         HAL_NVIC_DisableIRQ(FDCAN3_IT0_IRQn);

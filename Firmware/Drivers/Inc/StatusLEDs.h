@@ -1,22 +1,21 @@
 #pragma once
 
-#include <stdint.h>
 #include "inits.h"
+#include <stdint.h>
 
 #define num_LEDs 15
 
-/** * @brief LED States  */
-typedef enum
-{
+/** @brief LED States */
+typedef enum {
     LED_OFF = GPIO_PIN_SET, // Negative logic
-    LED_ON = GPIO_PIN_RESET 
+    LED_ON = GPIO_PIN_RESET
 } LED_state_t;
 
-/** * @brief Logic-to-Hardware mapping for diagnostic LEDs.
+/** 
+ * @brief Logic-to-Hardware mapping for diagnostic LEDs.
  * @note Values correspond to specific shift register positions.
  */
-typedef enum
-{
+typedef enum {
     PRECHARGE_COMPLETE,      // precharge voltage threshold reached
     PRECHARGE_TIMEOUT,       // precharge voltage did not meet threshold in time
     PRECHARGE_SENSE_TIMEOUT, // precharge contactor sense did not return in time

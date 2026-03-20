@@ -9,7 +9,6 @@ StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
 
-
 StaticTask_t Motor_Control_Task_Buffer;
 StackType_t Motor_Control_Task_Stack[MOTOR_CONTROL_TASK_STACK_SIZE];
 
@@ -19,8 +18,7 @@ StackType_t Motor_Telemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
 StaticTask_t Can_Tx_Telemetry_Task_Buffer;
 StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 
-void Task_Init()
-{
+void Task_Init() {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
@@ -80,7 +78,6 @@ void Task_Init()
         Can_Tx_Telemetry_Task_Stack,     // Task handle
         &Can_Tx_Telemetry_Task_Buffer    // Static task buffer (optional)
     );
-
 
     vTaskDelete(NULL);
 }

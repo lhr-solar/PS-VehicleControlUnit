@@ -9,9 +9,12 @@
 #define FLASH_LED 20
 #define ERR_LED 21
 #define BLE_LED 22
+#define ADDRESS_LENGTH 6
+#define ADDRESS_BUFFER_SIZE 10
+#define START_MESSAGE_SIZE sizeof(startMessage)
 
 // REPLACE WITH YOUR RECEIVER'S MAC ADDRESS
-uint8_t receiverAddresses[10][12] = 
+uint8_t receiverAddresses[ADDRESS_BUFFER_SIZE][ADDRESS_LENGTH] = 
 { 0x7C, 0x2C, 0x67, 0x5D, 0x3B, 0xDC }, // Ravi's esp32
 { 0x20, 0x6E, 0xF1, 0x11, 0x55, 0x9C }, //ESP32-C6 dev board
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
@@ -22,7 +25,9 @@ uint8_t receiverAddresses[10][12] =
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t numAddresses = 0;
+uint8_t numAddresses = 2;
+
+uint8_t startMessage[] = "NEW ADDRESS:";
 
 
 #define BAUDRATE 115200
@@ -63,16 +68,17 @@ void setup() {
   for(int i =0;i<numAddresses; i++){
     memcpy(peerInfo.peer_addr, receiverAddresses[i], 6);
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
+      digitalWrite(ERR_LED, HIGH);
       Serial.println("Failed to add peer");
       return;
     }
   }
 
-  if (esp_now_add_peer(&peerInfo) != ESP_OK) {
-    Serial.println("Failed to add peer");
-    digitalWrite(ERR_LED, HIGH);
-    return;
-  }
+  // if (esp_now_add_peer(&peerInfo) != ESP_OK) {
+  //   Serial.println("Failed to add peer");
+  //   digitalWrite(ERR_LED, HIGH);
+  //   return;
+  // }
 }
 
 void loop() {
@@ -86,6 +92,50 @@ void loop() {
     bufIdx = (bufIdx + 1) % MAX_PACKET_SIZE;
     Serial.write(c);  // Mirror to USB
     digitalWrite(ERR_LED, HIGH);
+  }
+
+  //check message for adding esp addresses
+  if(bufIdx == START_MESSAGE_SIZE+ADDRESS_LENGTH){ // exact length of new address message
+    uint8_t checkmessage = 1;
+    for(int i =0;i<START_MESSAGE_SIZE; i++){
+      if(startMessage[i]!=buffer[i]){
+        checkmessage = 0;
+        break;
+      }
+    }
+    if(checkmessage){
+      uint8_t newAddress[6];
+      for(int i = START_MESSAGE_SIZE; i<START_MESSAGE_SIZE+ADDRESS_LENGTH; i++){
+        newAddress[i-START_MESSAGE_SIZE] = buffer[i];
+      }
+
+      //check if it is already registered
+      for(int i =0;i<numAddresses; i++){
+        checkmessage = 0;
+        for(int j =0;j<ADDRESS_LENGTH;j++){
+          if(newAddress[j]!=receiverAddresses[i][j]){
+            checkmessage = 1 // it is different, therefore add it to receiver addresses;
+            break;
+          }
+        }
+        if(checkmessage){ // add new address
+          for(int j = 0;i <ADDRESS_LENGTH; j++){
+            receiverAddresses[numAddresses][j] = newAddress[j];
+          }
+          esp_now_peer_info_t peerInfo = {};
+          peerInfo.channel = 0;
+          peerInfo.encrypt = false;
+          memcpy(peerInfo.peer_addr, receiverAddresses[numAddresses], 6);
+          if (esp_now_add_peer(&peerInfo) != ESP_OK){
+            digitalWrite(ERR_LED, HIGH);
+            Serial.println("Failed to add peer");
+            // return;
+          }
+          numAddresses++;
+          break;
+        }
+      }
+    }
   }
 
   esp_err_t espNowResult = ESP_FAIL;

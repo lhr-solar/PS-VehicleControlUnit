@@ -150,7 +150,7 @@ void loop() {
   // espNowResult = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
 
   if (bufIdx > 0) {
-    espNowResult = esp_now_send(receiverAddress, buffer, bufIdx);
+    espNowResult = esp_now_send(0, buffer, bufIdx);
     bufIdx = 0;  // Reset buffer after attempt
   }
 

@@ -6,6 +6,7 @@
 #include "MotorControlTask.h"
 #include "MotorTelemetryTask.h"
 #include "CanTxTelemetryTask.h"
+#include "ESPTelemetryTask.h"
 #include "CANbus.h"
 
 #define INIT_TASK_STACK_SIZE                configMINIMAL_STACK_SIZE
@@ -14,6 +15,8 @@
 #define MOTOR_CONTROL_TASK_STACK_SIZE       configMINIMAL_STACK_SIZE
 #define MOTOR_TELEMETRY_TASK_STACK_SIZE     configMINIMAL_STACK_SIZE
 #define CAN_TX_TELEMETRY_STACK_SIZE         configMINIMAL_STACK_SIZE
+#define ESP_TX_TELEMETRY_STACK_SIZE         configMINIMAL_STACK_SIZE
+#define ESP_RX_TELEMETRY_STACK_SIZE         configMINIMAL_STACK_SIZE
 
 
 extern StaticTask_t FaultHandlerTask_Buffer;
@@ -39,6 +42,8 @@ extern StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 #define MOTOR_CONTROL_THREAD_PRIO       (tskIDLE_PRIORITY + 2)
 #define MOTOR_TELEMETRY_THREAD_PRIO     (tskIDLE_PRIORITY + 1)
 #define CAN_TX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
+#define ESP_TX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
+#define ESP_RX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
 
 // Period the fault thread runs at (once a fault is active)
 #define FAULT_LOOP_PERIOD_MS 500

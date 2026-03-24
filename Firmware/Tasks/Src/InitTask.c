@@ -19,12 +19,19 @@ StackType_t Motor_Telemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
 StaticTask_t Can_Tx_Telemetry_Task_Buffer;
 StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 
+
+StaticTask_t ESP_tx_Task_Buffer;
+StaticTask_t ESP_rx_Task_Buffer;
+StackType_t ESP_tx_Task_Stack[configMINIMAL_STACK_SIZE];
+StackType_t ESP_rx_Task_Stack[configMINIMAL_STACK_SIZE];
+
 void Task_Init()
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
     Init_UART_Printf();
+    ESP32_UART_Init();
 
     MotorSafeBits_Init();
 
@@ -34,7 +41,7 @@ void Task_Init()
     xTaskCreateStatic(
         Task_FaultHandler,          // Task function
         "FaultHandler",             // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,   // Stack size in words
+        FAULT_HANDLER_TASK_STACK_SIZE,   // Stack size in words
         NULL,                       // Task input parameter
         FAULT_HANDLER_THREAD_PRIO,  // Task priority
         FaultHandlerTask_Stack,     // Task handle
@@ -44,7 +51,7 @@ void Task_Init()
     hprecharge_task = xTaskCreateStatic(
         Task_Precharge,                 // Task function
         "Precharge",                    // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
+        PRECHARGE_TASK_STACK_SIZE,       // Stack size in words
         NULL,                           // Task input parameter
         PRECHARGE_THREAD_PRIO,          // Task priority
         Precharge_Task_Stack,           // Task handle
@@ -54,7 +61,7 @@ void Task_Init()
     xTaskCreateStatic(
         Task_MotorControl,              // Task function
         "Motor Control Thread",         // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
+        MOTOR_CONTROL_TASK_STACK_SIZE,       // Stack size in words
         NULL,                           // Task input parameter
         MOTOR_CONTROL_THREAD_PRIO,      // Task priority
         Motor_Control_Task_Stack,       // Task handle
@@ -64,7 +71,7 @@ void Task_Init()
     xTaskCreateStatic(
         Task_MotorTelemetry,            // Task function
         "Motor Telemetry Thread",       // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
+        MOTOR_TELEMETRY_TASK_STACK_SIZE,       // Stack size in words
         NULL,                           // Task input parameter
         MOTOR_TELEMETRY_THREAD_PRIO,    // Task priority
         Motor_Telemetry_Task_Stack,     // Task handle
@@ -74,13 +81,32 @@ void Task_Init()
     xTaskCreateStatic(
         Task_CanTxTelemetry,            // Task function
         "Can TX Telemetry Thread",      // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
+        CAN_TX_TELEMETRY_STACK_SIZE,       // Stack size in words
         NULL,                           // Task input parameter
         CAN_TX_TELEMETRY_THREAD_PRIO,   // Task priority
-        Can_Tx_Telemetry_Task_Stack,     // Task handle
-        &Can_Tx_Telemetry_Task_Buffer    // Static task buffer (optional)
+        Can_Tx_Telemetry_Task_Stack,    // Task handle
+        &Can_Tx_Telemetry_Task_Buffer   // Static task buffer (optional)
     );
 
+    xTaskCreateStatic(
+        Task_ESP_Tx,                    // Task function
+        "ESP TX Telemetry Thread",      // Name of the task (for debugging)
+        ESP_TX_TELEMETRY_STACK_SIZE,    // Stack size in words
+        NULL,                           // Task input parameter
+        ESP_TX_TELEMETRY_THREAD_PRIO,   // Task priority
+        ESP_tx_Task_Stack,              // Task handle
+        &ESP_rx_Task_Buffer             // Static task buffer (optional)
+    );
+
+    xTaskCreateStatic(
+        Task_ESP_Rx,                    // Task function
+        "ESP RX Telemetry Thread",      // Name of the task (for debugging)
+        ESP_RX_TELEMETRY_STACK_SIZE,    // Stack size in words
+        NULL,                           // Task input parameter
+        ESP_RX_TELEMETRY_THREAD_PRIO,   // Task priority
+        ESP_rx_Task_Stack,              // Task handle
+        &ESP_rx_Task_Buffer             // Static task buffer (optional)
+    );
 
     vTaskDelete(NULL);
 }

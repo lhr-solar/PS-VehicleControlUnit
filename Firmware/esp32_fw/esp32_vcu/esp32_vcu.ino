@@ -72,6 +72,7 @@ void setup() {
       Serial.println("Failed to add peer");
       return;
     }
+    Serial.println("Successfully added receiver: "+receiverAddresses[i]);
   }
 
   // if (esp_now_add_peer(&peerInfo) != ESP_OK) {
@@ -130,6 +131,8 @@ void loop() {
             digitalWrite(ERR_LED, HIGH);
             Serial.println("Failed to add peer");
             // return;
+          }else{
+            Serial.println("Successfully added receiver: "+receiverAddresses[numAddresses]);
           }
           numAddresses++;
           break;

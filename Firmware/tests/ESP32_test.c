@@ -35,6 +35,24 @@ void TxTask(void *argument){
 
     //ADC reading
     ADC_Sense_Result ADC_Result = {0};
+
+    //Dummy new address test
+    uint8_t duplicateAddress[6] = { 0x7C, 0x2C, 0x67, 0x5D, 0x3B, 0xDC };
+    uint8_t newAddress[6] = { 0x20, 0x6E, 0xF1, 0x67, 0xDD, 0x08 };
+    uint8_t startMessage[] = "NEW ADDRESS:";
+    memcpy(buffer+bufferindex, startMessage, 12);
+    bufferindex+=12;
+    memcpy(buffer+bufferindex, duplicateAddress, 6);
+    bufferindex+=6;
+    ESP32_Send(buffer, bufferindex, portMAX_DELAY);
+    bufferindex = 0;
+    memcpy(buffer+bufferindex, startMessage, 12);
+    bufferindex+=12;
+    memcpy(buffer+bufferindex, newAddress, 6);
+    bufferindex+=6;
+    ESP32_Send(buffer, bufferindex, portMAX_DELAY);
+
+
     while(1) {
         bufferindex = 0;
         // Send test message

@@ -14,7 +14,7 @@
 #define START_MESSAGE_SIZE sizeof(startMessage)
 
 // REPLACE WITH YOUR RECEIVER'S MAC ADDRESS
-uint8_t receiverAddresses[ADDRESS_BUFFER_SIZE][ADDRESS_LENGTH] = 
+uint8_t receiverAddresses[ADDRESS_BUFFER_SIZE][ADDRESS_LENGTH] = {
 { 0x7C, 0x2C, 0x67, 0x5D, 0x3B, 0xDC }, // Ravi's esp32
 { 0x20, 0x6E, 0xF1, 0x11, 0x55, 0x9C }, //ESP32-C6 dev board
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
@@ -24,7 +24,7 @@ uint8_t receiverAddresses[ADDRESS_BUFFER_SIZE][ADDRESS_LENGTH] =
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }};
 uint8_t numAddresses = 2;
 
 uint8_t startMessage[] = "NEW ADDRESS:";
@@ -72,7 +72,13 @@ void setup() {
       Serial.println("Failed to add peer");
       return;
     }
-    Serial.println("Successfully added receiver: "+receiverAddresses[i]);
+    Serial.print("Successfully added receiver: ");
+    for (int j = 0; j < ADDRESS_LENGTH; j++) {
+      if (receiverAddresses[i][j] < 0x10) Serial.print("0"); // Manual padding for leading zero
+      Serial.print(receiverAddresses[i][j], HEX);
+      Serial.print(":");
+    }
+    Serial.println();
   }
 
   // if (esp_now_add_peer(&peerInfo) != ESP_OK) {
@@ -115,7 +121,7 @@ void loop() {
         checkmessage = 0;
         for(int j =0;j<ADDRESS_LENGTH;j++){
           if(newAddress[j]!=receiverAddresses[i][j]){
-            checkmessage = 1 // it is different, therefore add it to receiver addresses;
+            checkmessage = 1; // it is different, therefore add it to receiver addresses;
             break;
           }
         }
@@ -132,7 +138,13 @@ void loop() {
             Serial.println("Failed to add peer");
             // return;
           }else{
-            Serial.println("Successfully added receiver: "+receiverAddresses[numAddresses]);
+            Serial.print("Successfully added receiver: ");
+            for (int j = 0; j < ADDRESS_LENGTH; j++) {
+              if (receiverAddresses[numAddresses][j] < 0x10) Serial.print("0"); // Manual padding for leading zero
+              Serial.print(receiverAddresses[numAddresses][j], HEX);
+              Serial.print(":");
+            }
+            Serial.println();
           }
           numAddresses++;
           break;

@@ -17,6 +17,7 @@ void Init_PrechargeTask()
     // Inits ADC & contactors
     ADC_Sense_Init();
     contactor_init();
+    MotorSafeBits_Init();
 }
 
 void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
@@ -66,6 +67,8 @@ void Task_Precharge()
     static Precharge_State_t State = PRECHARGE_STATE_INITIAL;
     static TickType_t Start_Tick = 0;
 
+    set_faultBit(PRECHARGE_INITIAL_STATE);
+
     while (1)
     {
         LED_set(HB, ON);
@@ -96,6 +99,9 @@ void Task_Precharge()
             }
             State = PRECHARGE_STATE_PRECHARGING;
 
+            set_stateBit(PRECHARGE_PRECHARGING_STATE);
+            set_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
+
             // Start a timer for precharging
             Start_Tick = xTaskGetTickCount();
             break;
@@ -115,6 +121,9 @@ void Task_Precharge()
                         set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
                     }
                     State = PRECHARGE_STATE_RUN;
+
+                    set_stateBit(PRECHARGE_RUN_STATE);
+                    set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
                 }
                 else
                 {

@@ -20,3 +20,6 @@ void Kill_Precharge_Task();
 void Fault_Loop();
 
 void Set_Fault_LED();
+
+extern EventBits_t fault_bits;
+extern EventBits_t state_bits;

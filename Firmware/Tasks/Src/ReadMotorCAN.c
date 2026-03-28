@@ -1,10 +1,11 @@
 #include "ReadMotorCAN.h"
 
-void Init_ReadMotorCAN(){
-
+void Init_ReadMotorCAN()
+{
 }
 
-void Task_ReadMotorCAN(){
+void Task_ReadMotorCAN()
+{
 
     // Motor CANbus must be initialized by now
 
@@ -15,15 +16,16 @@ void Task_ReadMotorCAN(){
 
     uint8_t can_recv_errors = 0;
 
-    while(1){
-        
+    while (1)
+    {
 
-        if(Motor_CANBus_Recieve(CAN_ID_MC_STATUS, &motorstatus_rx_header, motorstatus_rx_data, portMAX_DELAY) == CAN_OK){
+        if (Motor_CANBus_Recieve(CAN_ID_MC_STATUS, &motorstatus_rx_header, motorstatus_rx_data, portMAX_DELAY) == CAN_OK)
+        {
             can_recv_errors = 0;
-        }else{
+        }
+        else
+        {
             can_recv_errors++;
         }
-
-
     }
 }

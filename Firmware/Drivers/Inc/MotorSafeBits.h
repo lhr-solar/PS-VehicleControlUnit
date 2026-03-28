@@ -23,10 +23,17 @@ typedef enum
     NUM_MOTOR_STATUS_BITS
 } motor_status_bit_t;
 
-_Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");
+_Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");    
 
 /* Convert enum to bitmask */
 #define MOTOR_STATUS_BIT(motorBit)   (1UL << (motorBit))
 
-const EventBits_t motorSafeToRunBits = MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED) 
-                                    || MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
+#define motorSafeToRunBits \
+    (MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED) | \
+    MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED))
+
+BaseType_t MotorSafeBits_Init();
+
+void set_MotorSafeBit(motor_status_bit_t bit);
+
+EventBits_t MotorSafeBits_Wait(uint32_t bitsToWaitFor, TickType_t delay_ticks);

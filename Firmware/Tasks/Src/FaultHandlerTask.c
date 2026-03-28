@@ -2,6 +2,7 @@
 #include "PrechargeTask.h" // for hprecharge_task handle
 
 EventBits_t fault_bits = 0;
+EventBits_t state_bits = 0;
 
 void Init_FaultHandlerTask()
 {

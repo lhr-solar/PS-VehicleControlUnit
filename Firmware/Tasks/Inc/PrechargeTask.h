@@ -5,7 +5,7 @@
 #include "StatusLEDs.h"
 #include "ADC_Sense.h"
 #include "InitTask.h"
-
+#include "MotorSafeBits.h"
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V
@@ -58,3 +58,6 @@ void Task_Precharge();
 
 /* handle for the Precharge task, defined in PrechargeTask.c */
 extern TaskHandle_t hprecharge_task;
+
+extern uint32_t Battery_Voltage;
+extern uint32_t Motor_Voltage;

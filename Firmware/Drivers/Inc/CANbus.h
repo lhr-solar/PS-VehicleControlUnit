@@ -1,19 +1,21 @@
 #pragma once
 
-#include "stm32xx_hal.h"
 #include "CAN_FD.h"
+#include "stm32xx_hal.h"
 
-extern FDCAN_HandleTypeDef* motorfdcan;
-extern FDCAN_HandleTypeDef* carfdcan;
+extern FDCAN_HandleTypeDef *motorfdcan;
+extern FDCAN_HandleTypeDef *carfdcan;
 
-can_status_t Motor_CANBus_Init(void);
+can_status_t MotorCAN_Init(void);
 
-can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks);
+can_status_t MotorCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks);
 
-can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks);
+can_status_t MotorCAN_Recv(uint16_t id, FDCAN_RxHeaderTypeDef *header, uint8_t data[],
+                           TickType_t delay_ticks);
 
-can_status_t Car_CANBus_Init(void);
+can_status_t CarCAN_Init(void);
 
-can_status_t Car_CANBus_Send(FDCAN_TxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks);
+can_status_t CarCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks);
 
-can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef* header, uint8_t data[], TickType_t delay_ticks);
+can_status_t CarCAN_Recv(uint16_t id, FDCAN_RxHeaderTypeDef *header, uint8_t data[],
+                                TickType_t delay_ticks);

@@ -15,7 +15,7 @@ void waitTask(void *pvParameters){
 
     while(1){
         MotorSafeBits_WaitMask((motorDrivableBits), portMAX_DELAY);
-        Toggle_LED(CAR_DRIVABLE);
+        LED_toggle(CAR_DRIVABLE);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
@@ -48,7 +48,7 @@ int main(){
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
     
     Init_UART_Printf();
 

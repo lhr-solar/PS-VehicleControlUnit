@@ -1,17 +1,17 @@
 #include "CANbus.h"
-#include "stm32xx_hal.h"
-#include "inits.h"
-#include "StatusLEDs.h"
-#include "pinDefs.h"
 #include "CanTxTelemetryTask.h"
+#include "StatusLEDs.h"
+#include "inits.h"
+#include "pinDefs.h"
+#include "stm32xx_hal.h"
 
 StaticTask_t task_buffer;
 StackType_t task_stack[512];
 
-static void task(void *pvParameters){
+static void task(void *pvParameters) {
 
     int test_id = 0x321;
-    FDCAN_TxHeaderTypeDef tx_header = {0};   
+    FDCAN_TxHeaderTypeDef tx_header = {0};
     tx_header.Identifier = test_id;
     tx_header.IdType = FDCAN_STANDARD_ID;
     tx_header.TxFrameType = FDCAN_DATA_FRAME;
@@ -32,17 +32,18 @@ static void task(void *pvParameters){
     tx_data[5] = 0xBC;
     tx_data[6] = 0xDE;
     tx_data[7] = 0xFF;
-    
-    while(1){
 
-        if (Motor_CANBus_Send( &tx_header, tx_data, portMAX_DELAY) == CAN_ERR){}
+    while (1) {
 
-        Toggle_LED(HB);
+        if (MotorCAN_Send(&tx_header, tx_data, portMAX_DELAY) == CAN_ERR) {
+        }
+
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 
-int main(){
+int main() {
 
     HAL_Init();
 
@@ -50,40 +51,26 @@ int main(){
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
 
-
-    Motor_CANBus_Init();
+    MotorCAN_Init();
 
     Init_UART_Printf();
 
-
-    xTaskCreateStatic(
-        Task_CanTxTelemetry,            // Task function
-        "Can TX Telemetry Thread",      // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
-        NULL,                           // Task input parameter
-        CAN_TX_TELEMETRY_THREAD_PRIO,   // Task priority
-        Can_Tx_Telemetry_Task_Stack,     // Task handle
-        &Can_Tx_Telemetry_Task_Buffer    // Static task buffer (optional)
+    xTaskCreateStatic(Task_CanTxTelemetry,          // Task function
+                      "Can TX Telemetry Thread",    // Name of the task (for debugging)
+                      configMINIMAL_STACK_SIZE,     // Stack size in words
+                      NULL,                         // Task input parameter
+                      CAN_TX_TELEMETRY_THREAD_PRIO, // Task priority
+                      Can_Tx_Telemetry_Task_Stack,  // Task handle
+                      &Can_Tx_Telemetry_Task_Buffer // Static task buffer (optional)
     );
 
-    xTaskCreateStatic(
-                task,
-                "task",
-                512,
-                NULL,
-                tskIDLE_PRIORITY + 2,
-                task_stack,
-                &task_buffer);
-
-
+    xTaskCreateStatic(task, "task", 512, NULL, tskIDLE_PRIORITY + 2, task_stack, &task_buffer);
 
     vTaskStartScheduler();
 
-
-    while(1){
-        
+    while (1) {
     }
     return 0;
 }

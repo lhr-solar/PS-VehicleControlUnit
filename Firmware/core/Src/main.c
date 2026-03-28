@@ -7,7 +7,7 @@ int main(void)
 {
   HAL_Init();
   SystemClock_Config();
-  LEDs_init();
+  LED_init();
 
   xTaskCreateStatic(
       Task_Init,                // Task function

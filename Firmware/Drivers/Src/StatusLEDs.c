@@ -3,9 +3,7 @@
 
 #include "StatusLEDs.h"
 
-static uint16_t LEDbitmap;
-
-static const GpioPin_t DebugLEDs[num_LEDs] = {
+static const GpioPin_t DebugLEDs[NUM_LEDS] = {
     {PRECHARGE_COMPLETE_LED_PORT, PRECHARGE_COMPLETE_LED_PIN},
     {PRECHARGE_TO_LED_PORT, PRECHARGE_TO_LED_PIN},
     {PRECHARGE_SENSE_TO_LED_PORT, PRECHARGE_SENSE_TO_LED_PIN},
@@ -23,16 +21,15 @@ static const GpioPin_t DebugLEDs[num_LEDs] = {
     {HB_LED_PORT, HB_LED_PIN}
 };
 
-void Toggle_LED(Status_Mapping_t LED) {
-    if (LED < 0 || LED >= num_LEDs) {
+void LED_toggle(Status_Mapping_t LED) {
+    if (LED < 0 || LED >= NUM_LEDS) {
         return;
     }
     HAL_GPIO_TogglePin(DebugLEDs[LED].port, DebugLEDs[LED].pin);
 }
 
 void LED_set(Status_Mapping_t LED, LED_state_t state) {
-    // make sure LED is within bound
-    if (LED > num_LEDs || LED < 0) {
+    if (LED < 0 || LED >= NUM_LEDS) {
         return;
     }
     if (LED == HB) {
@@ -43,22 +40,23 @@ void LED_set(Status_Mapping_t LED, LED_state_t state) {
     }
 }
 
-void LEDs_clear() {
-    LEDbitmap = 0;
-    for (int i = 0; i < num_LEDs; i++) {
+void LED_clear() {
+    for (uint8_t i = 0; i < NUM_LEDS; i++) {
         LED_set(i, LED_OFF);
     }
 }
 
-void LEDs_init() {
+void LED_init() {
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
 
-    for (size_t i = 0; i < num_LEDs; ++i) {
-
+    for (uint8_t i = 0; i < NUM_LEDS; ++i) {
         GPIO_InitTypeDef led_config = {
-            .Mode = GPIO_MODE_OUTPUT_PP, .Pull = GPIO_NOPULL, .Pin = DebugLEDs[i].pin};
+            .Mode = GPIO_MODE_OUTPUT_PP, 
+            .Pull = GPIO_NOPULL, 
+            .Pin = DebugLEDs[i].pin
+        };
 
         HAL_GPIO_Init(DebugLEDs[i].port, &led_config);
         LED_set(i, LED_OFF);

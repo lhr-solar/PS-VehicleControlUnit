@@ -66,7 +66,7 @@
 //             fault_printf_debug_counter = 0;
 //         }
 
-//         Toggle_LED(HB);
+//         LED_toggle(HB);
 //         vTaskDelay(FAULT_LOOP_PERIOD_MS);
 //     }
 // }
@@ -239,7 +239,7 @@ void Task_FaultHandler(void *args __attribute__((unused))) {
                 }
 
                 FHT_set_fault_leds(bits);
-                Toggle_LED(HB);
+                LED_toggle(HB);
                 vTaskDelay(pdMS_TO_TICKS(FAULT_LOOP_PERIOD_MS));
             }
         }

@@ -164,7 +164,7 @@ void Task_Precharge() {
             clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
         }
 
-        Toggle_LED(HB);
+        LED_toggle(HB);
         vTaskDelay(PRECHARGE_TASK_DELAY_MS);
     }
 }

@@ -1,11 +1,14 @@
 #include "CANbus.h"
+#include "BPSCAN_can_msgs.h"
+#include "CarCAN_can_msgs.h"
+#include "MotorCAN_can_msgs.h"
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
 FDCAN_HandleTypeDef *motorfdcan;
 FDCAN_HandleTypeDef *carfdcan;
 
-can_status_t Motor_CANBus_Init(void) {
+can_status_t MotorCAN_Init(void) {
     motorfdcan = hfdcan1;
     motorfdcan->Instance = FDCAN1;
 
@@ -49,19 +52,86 @@ can_status_t Motor_CANBus_Init(void) {
     return CAN_OK;
 }
 
-can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[],
-                               TickType_t delay_ticks) {
-
+can_status_t MotorCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks) {
     return can_fd_send(motorfdcan, header, data, delay_ticks);
 }
 
-can_status_t Motor_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef *header, 
-                                  uint8_t data[], TickType_t delay_ticks) {
-
+can_status_t MotorCAN_Recv(uint16_t id, FDCAN_RxHeaderTypeDef *header, uint8_t data[],
+                           TickType_t delay_ticks) {
     return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
 }
 
-can_status_t Car_CANBus_Init(void) {
+can_status_t MotorCAN_Recv_Velocity(mc_velocitymeasurement_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    uint8_t motor_vel_rx_data[CAN_DLC_MC_VELOCITYMEASUREMENT] = {0};
+
+    can_status_t result =
+        can_fd_recv(motorfdcan, CAN_ID_MC_VELOCITYMEASUREMENT, &header, motor_vel_rx_data, delay);
+
+    if (result == CAN_OK) {
+        out->MC_MotorVelocity = *((float *)&motor_vel_rx_data[0]);
+        out->MC_VehicleVelocity = *((float *)&motor_vel_rx_data[4]);
+    }
+    return result;
+}
+
+can_status_t MotorCAN_Recv_Status(mc_status_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    header.
+    uint8_t moco_status_rx_data[CAN_DLC_MC_VELOCITYMEASUREMENT] = {0};
+
+    can_status_t result =
+        can_fd_recv(motorfdcan, CAN_ID_MC_VELOCITYMEASUREMENT, &header, motor_vel_rx_data, delay);
+
+    if (result == CAN_OK) {
+        out->MC_LIMIT_OutputVoltagePWM = (moco_status_rx_data[0] >> 0) & 0x1;
+        out->MC_LIMIT_MotorCurrent = (moco_status_rx_data[0] >> 1) & 0x1;
+        out->MC_LIMIT_Velocity = (moco_status_rx_data[0] >> 2) & 0x1;
+        out->MC_LIMIT_BusCurrent = (moco_status_rx_data[0] >> 3) & 0x1;
+        out->MC_LIMIT_BusVoltageUpper = (moco_status_rx_data[0] >> 4) & 0x1;
+        out->MC_LIMIT_BusVoltageLower = (moco_status_rx_data[0] >> 5) & 0x1;
+        out->MC_LIMIT_MotorTemp = (moco_status_rx_data[0] >> 6) & 0x1;
+        out->MC_LIMIT_Reserved = ((uint16_t)(moco_status_rx_data[0] >> 7) & 0x1) |
+                                 ((uint16_t)moco_status_rx_data[1] << 1);
+
+        out->MC_FAULT_HardwareOverCurrent = (moco_status_rx_data[2] >> 0) & 0x1;
+        out->MC_FAULT_SoftwareOverCurrent = (moco_status_rx_data[2] >> 1) & 0x1;
+        out->MC_FAULT_DcBusOverVoltage = (moco_status_rx_data[2] >> 2) & 0x1;
+        out->MC_FAULT_BadMotorPositionHallSeq = (moco_status_rx_data[2] >> 3) & 0x1;
+        out->MC_FAULT_WatchdogCausedLastReset = (moco_status_rx_data[2] >> 4) & 0x1;
+        out->MC_FAULT_ConfigRead = (moco_status_rx_data[2] >> 5) & 0x1;
+        out->MC_FAULT_15vRailUnderVoltage = (moco_status_rx_data[2] >> 6) & 0x1;
+        out->MC_FAULT_DesaturationFault = (moco_status_rx_data[2] >> 7) & 0x1;
+        out->MC_FAULT_MotorOverSpeed = (moco_status_rx_data[3] >> 0) & 0x1;
+        out->MC_FAULT_Reserved = (moco_status_rx_data[3] >> 1) & 0x7F;
+
+        out->MC_ActiveMotor =
+            (uint16_t)moco_status_rx_data[4] | ((uint16_t)moco_status_rx_data[5] << 8);
+        out->MC_TxErrorCount = moco_status_rx_data[6];
+        out->MC_RxErrorCount = moco_status_rx_data[7];
+    }
+    return result;
+}
+
+can_status_t MotorCAN_Send_Drive_Cmd(mc_drivecommand_t *out, TickType_t delay) {
+
+}
+void send_motor_drive_cmd(float velocity, float current) {
+    uint8_t data[8] = {0};
+
+    memcpy(&data[0], &velocity, sizeof(float));
+    memcpy(&data[4], &current, sizeof(float));
+
+    vcucan_send(CAN_ID_MC_DRIVECOMMAND, data, 8);
+}
+
+///////// Carcan
+
+can_status_t CarCAN_Init(void) {
     carfdcan = hfdcan3;
     carfdcan->Instance = FDCAN3;
 
@@ -104,17 +174,44 @@ can_status_t Car_CANBus_Init(void) {
     return CAN_OK;
 }
 
-can_status_t Car_CANBus_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[],
-                             TickType_t delay_ticks) {
-
+can_status_t CarCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks) {
     return can_fd_send(carfdcan, header, data, delay_ticks);
 }
 
-can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef *header, 
-                                uint8_t data[], TickType_t delay_ticks) {
-
+can_status_t CarCAN_Recv(uint16_t id, FDCAN_RxHeaderTypeDef *header, uint8_t data[],
+                         TickType_t delay_ticks) {
     return can_fd_recv(carfdcan, id, header, data, delay_ticks);
 }
+
+can_status_t CarCAN_Recv_BPS_Status(bps_status_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    uint8_t bps_status_rx_data[CAN_DLC_BPS_STATUS] = {0};
+
+    can_status_t result =
+        can_fd_recv(carfdcan, CAN_ID_BPS_STATUS, &header, bps_status_rx_data, delay);
+
+    if (result == CAN_OK) {
+        out->BPS_Fault = bps_status_rx_data[0];
+        out->BPS_Regen_OK = (bps_status_rx_data[1] >> 0) & 1;
+        out->BPS_Charge_OK = (bps_status_rx_data[1] >> 1) & 1;
+        out->HV_Plus_Contactor_State = (bps_status_rx_data[1] >> 2) & 1;
+        out->HV_Minus_Contactor_State = (bps_status_rx_data[1] >> 3) & 1;
+        out->Array_Contactor_State = (bps_status_rx_data[1] >> 4) & 1;
+        out->Array_Precharge_Contactor_State = (bps_status_rx_data[1] >> 5) & 1;
+        out->Main_Battery_Voltage = (uint32_t)(bps_status_rx_data[4] | 
+                                    ((uint32_t)bps_status_rx_data[5] << 8) |
+                                    ((uint32_t)bps_status_rx_data[6] << 16) |
+                                    ((uint32_t)bps_status_rx_data[7] << 24));
+        out->Main_Battery_Avg_Temperature = (int16_t)((uint16_t)bps_status_rx_data[2] | ((uint16_t)bps_status_rx_data[3] << 8));
+    }
+    return result;
+}
+
+can_status_t CarCAN_Recv_LWS(lws_standard_t)
+
+//////// HAL bs
 
 static uint32_t HAL_RCC_FDCAN_CLK_ENABLED = 0;
 
@@ -153,8 +250,7 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle) {
         HAL_NVIC_EnableIRQ(FDCAN1_IT0_IRQn);
         HAL_NVIC_SetPriority(FDCAN1_IT1_IRQn, FDCAN_NVIC_PRIO, 0);
         HAL_NVIC_EnableIRQ(FDCAN1_IT1_IRQn);
-    }
-    else if (fdcanHandle->Instance == FDCAN3) {
+    } else if (fdcanHandle->Instance == FDCAN3) {
         /** Initializes the peripherals clocks
          */
         PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
@@ -206,8 +302,7 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle) {
         /* FDCAN1 interrupt Deinit */
         HAL_NVIC_DisableIRQ(FDCAN1_IT0_IRQn);
         HAL_NVIC_DisableIRQ(FDCAN1_IT1_IRQn);
-    }
-    else if (fdcanHandle->Instance == FDCAN3) {
+    } else if (fdcanHandle->Instance == FDCAN3) {
         /* Peripheral clock disable */
         HAL_RCC_FDCAN_CLK_ENABLED--;
         if (HAL_RCC_FDCAN_CLK_ENABLED == 0) {

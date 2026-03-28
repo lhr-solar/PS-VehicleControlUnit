@@ -26,8 +26,8 @@ void Task_Init() {
 
     MotorSafeBits_Init();
 
-    Motor_CANBus_Init();
-    Car_CANBus_Init();
+    MotorCAN_Init();
+    CarCAN_Init();
 
     xTaskCreateStatic(
         Task_FaultHandler,          // Task function

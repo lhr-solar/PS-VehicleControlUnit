@@ -18,7 +18,7 @@ void Task_ReadMotorCAN(){
     while(1){
         
 
-        if(Motor_CANBus_Recieve(CAN_ID_MC_STATUS, &motorstatus_rx_header, motorstatus_rx_data, portMAX_DELAY) == CAN_OK){
+        if(MotorCAN_Recv(CAN_ID_MC_STATUS, &motorstatus_rx_header, motorstatus_rx_data, portMAX_DELAY) == CAN_OK){
             can_recv_errors = 0;
         }else{
             can_recv_errors++;

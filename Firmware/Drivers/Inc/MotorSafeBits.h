@@ -5,6 +5,7 @@
 #include "stm32xx_hal.h"
 #include <event_groups.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 // The max number of fault bits is dependent on the configUSE_16_BIT_TICKS defined in FreeRTOS.h
 #if (configUSE_16_BIT_TICKS == 0)

@@ -12,7 +12,7 @@ int main()
     __HAL_RCC_PWR_CLK_ENABLE();
 
     Init_UART_Printf();
-    LEDs_init();
+    LED_init();
 
     // Task
     xTaskCreateStatic(
@@ -27,7 +27,7 @@ int main()
 
     hprecharge_task = xTaskCreateStatic(
         Task_Precharge,             // Task function
-        "Precharge",               // Name of the task (for debugging)
+        "Precharge",                // Name of the task (for debugging)
         configMINIMAL_STACK_SIZE,   // Stack size in words
         NULL,                       // Task input parameter
         tskIDLE_PRIORITY + 1,       // Task priority

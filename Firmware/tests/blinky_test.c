@@ -41,13 +41,13 @@ int main(){
     */
 
     // Initialize all LED GPIOs
-    LEDs_init();
+    LED_init();
     while (1) 
     {
         // Turn LEDs on one-by-one
-        for (size_t i = 0; i < num_LEDs; ++i) 
+        for (size_t i = 0; i < NUM_LEDS; ++i) 
         {
-            Toggle_LED(i);
+            LED_toggle(i);
             HAL_Delay(200);
         }
 
@@ -55,9 +55,9 @@ int main(){
         HAL_Delay(500);
 
         // Turn LEDs off one-by-one
-        for (size_t i = 0; i < num_LEDs; ++i) 
+        for (size_t i = 0; i < NUM_LEDS; ++i) 
         {
-            Toggle_LED(i);
+            LED_toggle(i);
             HAL_Delay(200);
         }
 

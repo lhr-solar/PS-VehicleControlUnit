@@ -84,7 +84,7 @@ void Task_MotorControl(void){
     while(1){
 
         // Send power command
-        Motor_CANBus_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
+        MotorCAN_Send(&mocoPowerCommandHeader, motor_power_tx_data, portMAX_DELAY);
 
         // check if the car is in a drivable state
         motorSafeBits = MotorSafeBits_WaitMask(motorDrivableBits, pdMS_TO_TICKS(0));
@@ -103,7 +103,7 @@ void Task_MotorControl(void){
 
         packDriveCommand(motorDriveCommand, motor_drive_tx_data);
 
-        Motor_CANBus_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY);
+        MotorCAN_Send(&mocoDriveCommandHeader, motor_drive_tx_data, portMAX_DELAY);
 
         print_debug_counter++;
         if(print_debug_counter > MOTOR_CONTROLLER_PRINT_DEBUG_COUNT){
@@ -114,7 +114,7 @@ void Task_MotorControl(void){
             print_debug_counter = 0;
         }
 
-        Toggle_LED(CAR_HB);
+        LED_toggle(CAR_HB);
 
         // minimum delay for drive command is 250ms, or else the wavesculptor will reset to neutral
         vTaskDelay(pdMS_TO_TICKS(MOTOR_CONTROL_TASK_PERIOD_MS));

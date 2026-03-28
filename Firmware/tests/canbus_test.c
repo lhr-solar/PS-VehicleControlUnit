@@ -25,7 +25,7 @@ static void task(void *pvParameters) {
 
     uint8_t tx_data[TEST_CAN_DATA_LENGTH] = TEST_CAN_DATA;
     while (1) {
-        if (Motor_CANBus_Send(&tx_header, tx_data, portMAX_DELAY) != CAN_OK) {
+        if (MotorCAN_Send(&tx_header, tx_data, portMAX_DELAY) != CAN_OK) {
             Error_Handler();
         }
         
@@ -47,9 +47,9 @@ int main() {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
 
-    if (Motor_CANBus_Init() != CAN_OK) {
+    if (MotorCAN_Init() != CAN_OK) {
         can_error_handler();
     }
 

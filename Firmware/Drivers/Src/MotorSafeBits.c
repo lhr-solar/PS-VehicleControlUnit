@@ -1,9 +1,6 @@
 #include "MotorSafeBits.h"
 
-// Event group handle to store fault state bits
 EventGroupHandle_t motorSafeBits;
-
-// Static buffer to store the event handle
 StaticEventGroup_t motorSafeBitsBuffer;
 
 BaseType_t MotorSafeBits_Init() {
@@ -25,7 +22,6 @@ void set_MotorSafeBit(motor_status_bit_t bit) {
 }
 
 void clear_MotorSafeBit(motor_status_bit_t bit) {
-
     // not a valid fault
     if (bit >= NUM_MOTOR_STATUS_BITS || motorSafeBits == NULL) {
         return;

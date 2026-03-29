@@ -11,6 +11,12 @@ void Init_FaultHandlerTask()
         // Fault bit initialization failed
         Error_Handler();
     }
+
+    if (stateBits_init() != 1)
+    {
+        // Fault bit initialization failed
+        Error_Handler();
+    }
 }
 
 void Kill_Precharge_Task()

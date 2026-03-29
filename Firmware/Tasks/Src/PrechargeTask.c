@@ -67,7 +67,7 @@ void Task_Precharge()
     static Precharge_State_t State = PRECHARGE_STATE_INITIAL;
     static TickType_t Start_Tick = 0;
 
-    set_faultBit(PRECHARGE_INITIAL_STATE);
+    set_stateBit(PRECHARGE_INITIAL_STATE);
 
     while (1)
     {

@@ -31,7 +31,7 @@ int main()
         can_error_handler();
     }
 
-    VCUSendStatusTask_Init();
+    VCUSendVoltageTask_Init();
 
     Init_UART_Printf();
 

@@ -6,6 +6,9 @@ TaskHandle_t hprecharge_task = NULL;
 StaticEventGroup_t xPrechargeEventGroup;
 EventGroupHandle_t xPrechargeEventGroup_handle;
 
+uint32_t Battery_Voltage;
+uint32_t Motor_Voltage;
+
 void Init_PrechargeTask()
 {
     // Event Group init
@@ -82,8 +85,8 @@ void Task_Precharge()
             Error_Handler();
         }
 
-        uint32_t Battery_Voltage = ADC_Result.Battery_Voltage;
-        uint32_t Motor_Voltage = ADC_Result.Motor_Voltage;
+        Battery_Voltage = ADC_Result.Battery_Voltage;
+        Motor_Voltage = ADC_Result.Motor_Voltage;
 
         printf("Motor: %ld mV | Battery: %ld mV\r\n",
                Motor_Voltage,

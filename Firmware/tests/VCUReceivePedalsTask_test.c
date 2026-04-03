@@ -1,9 +1,8 @@
-#include "CANbus.h"
 #include "stm32xx_hal.h"
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "MotorTelemetryTask.h"
+#include "VCUReceivePedalsTask.h"
 
 #define PRINTF_DEBUG
 
@@ -28,21 +27,19 @@ int main()
 
     LEDs_init();
 
-    if (Motor_CANBus_Init() != CAN_OK)
+    if (Car_CANBus_Init() != CAN_OK)
     {
         can_error_handler();
     }
 
-    MotorTelemetryTask_Init();
-
     Init_UART_Printf();
 
     xTaskCreateStatic(
-        Task_MotorTelemetry,
-        "Motor Telemetry Task",
+        Task_ReceivePedals,
+        "VCU Receive Pedals Task",
         512,
         NULL,
-        tskIDLE_PRIORITY + 2,
+        tskIDLE_PRIORITY + 2, // TODO: set appropriate priority
         task_stack,
         &task_buffer);
 

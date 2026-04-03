@@ -9,7 +9,6 @@ void VCUSendStatusTask_Init()
     initVCUSendStatusHeader(&VCUSendStatusHeader);
 }
 
-// helper function to inialize motor drive command headers
 static void initVCUSendStatusHeader(FDCAN_TxHeaderTypeDef *tx_header)
 {
     tx_header->Identifier = CAN_ID_VCU_STATUS;
@@ -76,5 +75,7 @@ void Task_VCUSendStatus()
         {
             can_send_errors = 0;
         }
+
+        vTaskDelay(100);
     }
 }

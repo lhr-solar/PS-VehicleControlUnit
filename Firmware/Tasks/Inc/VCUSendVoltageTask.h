@@ -5,3 +5,7 @@
 #include "CAN_FD.h"
 #include <string.h>
 #include "PrechargeTask.h"
+
+void VCUSendVoltageTask_Init(void);
+
+void Task_VCUSendVoltage();

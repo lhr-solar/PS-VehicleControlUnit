@@ -12,34 +12,34 @@ static QueueHandle_t motorTelemetryQueue;
 // bus current for power
 // static float busCurrentSetPoint = 1.0f;
 
-void print_slcan(const can_rx_payload_t payload)
-{
+// void print_slcan(const can_rx_payload_t payload)
+// {
 
-    uint32_t id  = payload.header.Identifier;
-    uint8_t  len = (payload.header.DataLength);
+//     uint32_t id  = payload.header.Identifier;
+//     uint8_t  len = (payload.header.DataLength);
 
-    /* SLCAN supports max 8 bytes */
-    if (len > 8)
-        len = 8;
+//     /* SLCAN supports max 8 bytes */
+//     if (len > 8)
+//         len = 8;
 
-    if (payload.header.IdType == FDCAN_STANDARD_ID)
-    {
-        /* tIII DLC DATA... */
-        printf("t%03lX%1X", id & 0x7FF, len);
-    }
-    else
-    {
-        /* TIIIIIIII DLC DATA... */
-        printf("T%08lX%1X", id & 0x1FFFFFFF, len);
-    }
+//     if (payload.header.IdType == FDCAN_STANDARD_ID)
+//     {
+//         /* tIII DLC DATA... */
+//         printf("t%03lX%1X", id & 0x7FF, len);
+//     }
+//     else
+//     {
+//         /* TIIIIIIII DLC DATA... */
+//         printf("T%08lX%1X", id & 0x1FFFFFFF, len);
+//     }
 
-    for (uint8_t i = 0; i < len; i++)
-    {
-        printf("%02X", payload.data[i]);
-    }
+//     for (uint8_t i = 0; i < len; i++)
+//     {
+//         printf("%02X", payload.data[i]);
+//     }
 
-    printf("\r\n");
-}
+//     printf("\r\n");
+// }
 
 void MotorTelemetryTask_Init(void){
     motorTelemetryQueue = xQueueCreateStatic(
@@ -53,16 +53,16 @@ void MotorTelemetryTask_Init(void){
         return;
     }
 }
-void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
+// void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
     
-    BaseType_t higherPriorityTaskWoken = pdFALSE;
+//     BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-    xQueueSendFromISR(
-        motorTelemetryQueue,
-        &recv_payload,
-        &higherPriorityTaskWoken
-    );
-}
+//     xQueueSendFromISR(
+//         motorTelemetryQueue,
+//         &recv_payload,
+//         &higherPriorityTaskWoken
+//     );
+// }
 
 void Task_MotorTelemetry(){
 
@@ -73,7 +73,7 @@ void Task_MotorTelemetry(){
 
     while(1){
         if (xQueueReceive(motorTelemetryQueue, &payload, portMAX_DELAY) == pdTRUE){
-            print_slcan(payload);
+            // print_slcan(payload);
         }
     }
 }

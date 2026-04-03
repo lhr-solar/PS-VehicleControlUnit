@@ -1,20 +1,18 @@
-#include "CANbus.h"
 #include "stm32xx_hal.h"
-#include "inits.h"
 #include "StatusLEDs.h"
-#include "pinDefs.h"
-#include "MotorTelemetryTask.h"
+#include "VCUSendStatusTask.h"
 
 #define PRINTF_DEBUG
 
-StaticTask_t task_buffer;
-StackType_t task_stack[512];
+StaticTask_t VCUStatus_buffer;
+StackType_t VCUStatus_stack[512];
 
 void can_error_handler()
 {
     while (1)
     {
-        LED_set(MOTOR_FAULT, GPIO_PIN_SET);
+        HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
+        HAL_Delay(500);
     }
 }
 
@@ -28,23 +26,23 @@ int main()
 
     LEDs_init();
 
-    if (Motor_CANBus_Init() != CAN_OK)
+    if (Car_CANBus_Init() != CAN_OK)
     {
         can_error_handler();
     }
 
-    MotorTelemetryTask_Init();
+    VCUSendStatusTask_Init();
 
     Init_UART_Printf();
 
     xTaskCreateStatic(
-        Task_MotorTelemetry,
-        "Motor Telemetry Task",
+        Task_VCUSendStatus,
+        "Send VCU Status Task",
         512,
         NULL,
-        tskIDLE_PRIORITY + 2,
-        task_stack,
-        &task_buffer);
+        tskIDLE_PRIORITY + 2, // TODO: set appropriate priority
+        VCUStatus_stack,
+        &VCUStatus_buffer);
 
     vTaskStartScheduler();
 

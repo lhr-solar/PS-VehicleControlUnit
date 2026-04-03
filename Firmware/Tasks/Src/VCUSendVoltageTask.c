@@ -9,7 +9,6 @@ void VCUSendVoltageTask_Init()
     initVCUSendVoltageHeader(&VCUSendVoltageHeader);
 }
 
-// helper function to inialize motor drive command headers
 static void initVCUSendVoltageHeader(FDCAN_TxHeaderTypeDef *tx_header)
 {
     tx_header->Identifier = CAN_ID_VCU_PRECHARGE_VOLTAGES;
@@ -53,6 +52,6 @@ void Task_VCUSendVoltage()
             can_send_errors = 0;
         }
 
-        vTaskDelay(1000);
+        vTaskDelay(100);
     }
 }

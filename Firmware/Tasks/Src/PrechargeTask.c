@@ -6,8 +6,8 @@ TaskHandle_t hprecharge_task = NULL;
 StaticEventGroup_t xPrechargeEventGroup;
 EventGroupHandle_t xPrechargeEventGroup_handle;
 
-uint32_t Battery_Voltage;
-uint32_t Motor_Voltage;
+uint32_t Battery_Voltage = 0;
+uint32_t Motor_Voltage = 0;
 
 void Init_PrechargeTask()
 {

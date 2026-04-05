@@ -2,10 +2,8 @@
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
-FDCAN_HandleTypeDef *motorfdcan;
-
-FDCAN_HandleTypeDef* carfd_can = NULL;
-FDCAN_HandleTypeDef* motorfd_can = NULL;
+FDCAN_HandleTypeDef *carfdcan = NULL;
+FDCAN_HandleTypeDef *motorfdcan = NULL;
 
 static can_status_t Motor_CANBus_Init(void)
 {
@@ -105,18 +103,18 @@ static can_status_t Car_CANBus_Init(void)
 
 static bool is_initialized = false;
 
-static void FDCAN_Init_TXHeader(FDCAN_TxHeaderTypeDef* tx_header, uint32_t ID, uint32_t dataLength) {
+static void FDCAN_Init_TXHeader(FDCAN_TxHeaderTypeDef *tx_header, uint32_t ID, uint32_t dataLength)
+{
 
-    tx_header->Identifier = ID;
-    tx_header->IdType = FDCAN_STANDARD_ID;
-    tx_header->TxFrameType = FDCAN_DATA_FRAME;
-    tx_header->DataLength = dataLength;
-    tx_header->ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-    tx_header->BitRateSwitch = FDCAN_BRS_OFF;
-    tx_header->FDFormat = FDCAN_CLASSIC_CAN;
-    tx_header->TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-    tx_header->MessageMarker = 0;
-    
+  tx_header->Identifier = ID;
+  tx_header->IdType = FDCAN_STANDARD_ID;
+  tx_header->TxFrameType = FDCAN_DATA_FRAME;
+  tx_header->DataLength = dataLength;
+  tx_header->ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+  tx_header->BitRateSwitch = FDCAN_BRS_OFF;
+  tx_header->FDFormat = FDCAN_CLASSIC_CAN;
+  tx_header->TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
+  tx_header->MessageMarker = 0;
 }
 
 can_status_t Motor_CANBus_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks)
@@ -139,49 +137,64 @@ can_status_t Car_CANBus_Recieve(uint16_t id, FDCAN_RxHeaderTypeDef *header, uint
   return can_fd_recv(carfdcan, id, header, data, delay_ticks);
 }
 
-can_status_t car_can_send(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms) {
+can_status_t car_can_send(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms)
+{
 
-    if ((carfd_can == NULL) || (!is_initialized)) return CAN_ERR;
+  if ((carfdcan == NULL) || (!is_initialized))
+    return CAN_ERR;
 
-    FDCAN_TxHeaderTypeDef tx_header;
-    FDCAN_Init_TXHeader(&tx_header, ID, data_length);
+  FDCAN_TxHeaderTypeDef tx_header;
+  FDCAN_Init_TXHeader(&tx_header, ID, data_length);
 
-    return can_fd_send(carfd_can, &tx_header, data, pdMS_TO_TICKS(delay_ms));
+  return can_fd_send(carfdcan, &tx_header, data, pdMS_TO_TICKS(delay_ms));
 }
 
-can_status_t bps_can_send(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms) {
+can_status_t bps_can_send(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms)
+{
 
-    if ((motorfd_can == NULL) || (!is_initialized)) return CAN_ERR;
+  if ((motorfdcan == NULL) || (!is_initialized))
+    return CAN_ERR;
 
-    FDCAN_TxHeaderTypeDef tx_header;
-    FDCAN_Init_TXHeader(&tx_header, ID, data_length);
+  FDCAN_TxHeaderTypeDef tx_header;
+  FDCAN_Init_TXHeader(&tx_header, ID, data_length);
 
-    return can_fd_send(motorfd_can, &tx_header, data, pdMS_TO_TICKS(delay_ms));
+  return can_fd_send(motorfdcan, &tx_header, data, pdMS_TO_TICKS(delay_ms));
 }
 
-can_status_t car_can_recv(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms) {
+can_status_t car_can_recv(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms)
+{
 
-    if ((carfd_can == NULL) || (!is_initialized)) return CAN_ERR;
+  if ((carfdcan == NULL) || (!is_initialized))
+    return CAN_ERR;
 
-    FDCAN_RxHeaderTypeDef rx_header = { 0 };
+  FDCAN_RxHeaderTypeDef rx_header = {0};
 
-    return can_fd_recv(carfd_can, ID, &rx_header, data, pdMS_TO_TICKS(delay_ms));
+  return can_fd_recv(carfdcan, ID, &rx_header, data, pdMS_TO_TICKS(delay_ms));
 }
 
-can_status_t bps_can_recv(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms) {
+can_status_t bps_can_recv(uint32_t ID, uint8_t data[], uint32_t data_length, TickType_t delay_ms)
+{
 
-    if ((motorfd_can == NULL) || (!is_initialized)) return CAN_ERR;
+  if ((motorfdcan == NULL) || (!is_initialized))
+    return CAN_ERR;
 
-    FDCAN_RxHeaderTypeDef rx_header = { 0 };
+  FDCAN_RxHeaderTypeDef rx_header = {0};
 
-    return can_fd_recv(motorfd_can, ID, &rx_header, data, pdMS_TO_TICKS(delay_ms));
+  return can_fd_recv(motorfdcan, ID, &rx_header, data, pdMS_TO_TICKS(delay_ms));
 }
 
-can_status_t CAN_Init() {
-    if (Motor_CANBus_Init() != CAN_OK) return CAN_ERR;
-    if (Car_CANBus_Init() != CAN_OK) return CAN_ERR;
-    is_initialized = true;
-    return CAN_OK;
+can_status_t CAN_Init()
+{
+  if (Motor_CANBus_Init() != CAN_OK)
+  {
+    return CAN_ERR;
+  }
+  if (Car_CANBus_Init() != CAN_OK)
+  {
+    return CAN_ERR;
+  }
+  is_initialized = true;
+  return CAN_OK;
 }
 
 static uint32_t HAL_RCC_FDCAN_CLK_ENABLED = 0;

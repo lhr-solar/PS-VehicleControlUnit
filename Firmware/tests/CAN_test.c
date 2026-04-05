@@ -122,8 +122,6 @@ static void task(void *pvParameters) {
 
     int test_id = 0x321;
 
-    bool first_iteration = true;
-
     // send x1234 to 0x11
     uint8_t tx_data[8] = {0};
     tx_data[0] = 0x12;
@@ -136,8 +134,6 @@ static void task(void *pvParameters) {
     tx_data[7] = 0xFF;
 
     uint8_t fdcan1_rx_data[8] = {0};
-
-    uint8_t fdcan1_rx_bounceback_data[8] = {0};
 
     uint8_t fdcan3_rx_data[8] = {0};
 
@@ -172,15 +168,6 @@ static void task(void *pvParameters) {
     printf("BPS CAN Receieve successfully!\r\n");
 
     vTaskDelay(pdMS_TO_TICKS(20));
-
-    if (first_iteration) {
-        if((bps_can_recv(test_id, fdcan1_rx_bounceback_data, FDCAN_DLC_BYTES_8, can_delay_ms) != CAN_OK) && verifyData(fdcan1_rx_data, tx_data)){
-            printf("Bounce Back (CAN forwarding) failed!\r\n");
-            Error_Handler();
-        }
-        printf("Bounce Back (CAN forwarding) successfull!\r\n");
-        first_iteration = false;
-    }
 
     LED_set(HB, ON);
     vTaskDelay(500);

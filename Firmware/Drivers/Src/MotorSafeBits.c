@@ -3,12 +3,12 @@
 EventGroupHandle_t motorSafeBits;
 StaticEventGroup_t motorSafeBitsBuffer;
 
-BaseType_t MotorSafeBits_Init() {
+bool MotorSafeBits_Init() {
     motorSafeBits = xEventGroupCreateStatic(&motorSafeBitsBuffer);
     if (motorSafeBits == NULL) {
-        return pdFALSE;
+        return false;
     }
-    return pdTRUE;
+    return true;
 }
 
 void set_MotorSafeBit(motor_status_bit_t bit) {

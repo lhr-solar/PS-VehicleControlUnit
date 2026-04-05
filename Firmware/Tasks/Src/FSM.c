@@ -21,24 +21,31 @@
 #define BRAKE_THRESH      42.0f  // percent
 #define BRAKE_THRESH_HYST 30.0f  // percent
 
-EventBits_t fsm_inputsbits;
+StaticEventGroup_t fsmInputBuffer = {0};
+EventGroupHandle_t fsmInputGroup = {0};
 
-MocoState_t currentState;
+MocoState_t current_state = {0};
 
-static driver_input_status_t driver_input = {0};
-static accel_brake_position_t accel_brake = {0};
-static lws_standard_t lws = {0};
-static controls_status_t controls_status = {0};
-static mc_status_t motor_status = {0};
-static bps_status_t bps_status = {0};
-static mc_velocitymeasurement_t motor_velocity = {0};
+static FSMDataIn_t fsm_input_read = {0};
+static FSMDataIn_t fsm_input_write = {0};
 
-static float accel_pedal_pct = 0.0f;
-static float brake_pedal_pct = 0.0f;
+FSMDataIn_t *g_data_read = &fsm_input_read;
+FSMDataIn_t *g_data_write = &fsm_input_write;
+
+// static driver_input_status_t driver_input = {0};
+// static accel_brake_position_t accel_brake = {0};
+// static lws_standard_t lws = {0};
+// static controls_status_t controls_status = {0};
+// static mc_status_t motor_status = {0};
+// static bps_status_t bps_status = {0};
+// static mc_velocitymeasurement_t motor_velocity = {0};
+
+// static float accel_pedal_pct = 0.0f;
+// static float brake_pedal_pct = 0.0f;
 static float brake_threshold = BRAKE_THRESH;
-static bool precharge_complete = false;
+// static bool precharge_complete = false;
 static bool rollover_limit_active = false;
-static volatile uint16_t car_status = 0;
+static volatile uint16_t fsm_inputs = 0;
 
 // method stubs so linker doesnt shit itself
 static void handle_state_init(void);
@@ -64,61 +71,58 @@ void fsm_init(void) {
     FSM[DISABLED].stateHandler = handle_state_disabled;
     FSM[CAR_NOT_READY].stateHandler = handle_state_not_ready;
 
-    currentState = FSM[STATE_INIT];
-    currentState.stateHandler();
+    current_state = FSM[STATE_INIT];
+    current_state.stateHandler();
 }
 
 void fsm_step(void) {
-
-    currentState = FSM[currentState.NextStates[car_status]];
-    if (currentState.stateHandler) currentState.stateHandler();
+    fsm_inputs = xEventGroupGetBits(fsmInputGroup);
+    current_state = FSM[current_state.NextStates[fsm_inputs]];
+    if (current_state.stateHandler) current_state.stateHandler();
 }
 
-void fsm_disable(void) { currentState = FSM[DISABLED]; }
-void fsm_recover(void) { currentState = FSM[CAR_NOT_READY]; }
-void fsm_set_precharge_complete(bool val) { precharge_complete = val; }
-uint16_t fsm_get_car_status(void) { return (uint16_t)car_status; }
+void fsm_disable(void) { current_state = FSM[DISABLED]; }
+void fsm_recover(void) { current_state = FSM[CAR_NOT_READY]; }
+uint16_t fsm_get_fsm_inputs(void) { return (uint16_t)fsm_inputs; }
 bool fsm_is_over_rollover_speed(void) { return rollover_limit_active; }
 
-static void update_from_can(void) {
-    
-    carcan_try_recv(CAN_ID_DRIVER_INPUT_STATUS, handle_driver_input, &driver_input);
-    carcan_try_recv(CAN_ID_ACCEL_BRAKE_POSITION, handle_accel_brake, &accel_brake);
-    carcan_try_recv(CAN_ID_LWS_STANDARD, handle_lws, &lws);
-    carcan_try_recv(CAN_ID_CONTROLS_STATUS, handle_controls_status, &controls_status);
-    carcan_try_recv(CAN_ID_BPS_STATUS, handle_bps, &bps_status);
-    vcucan_try_recv(CAN_ID_MC_VELOCITYMEASUREMENT, handle_motor_velocity, &motor_velocity);
-    vcucan_try_recv(CAN_ID_MC_STATUS, handle_motor_status, &motor_status);
+void fsm_set_all_inputs(EventBits_t mask) {
+    xEventGroupClearBits(fsmInputGroup, FSM_INPUTS_MASK_ALL);
+    xEventGroupSetBits(fsmInputGroup, mask & FSM_INPUTS_MASK_ALL);
 }
 
-static void rebuild_bitfield(void) {
-    uint16_t s = 0;
-
-    if (driver_input.Gear_Forward)
-        s |= FORWARD_BIT;
-    else if (driver_input.Gear_Reverse)
-        s |= REVERSE_BIT;
-    else
-        s |= NEUTRAL_BIT;
-
-    if (driver_input.Regen_Activate) s |= REGEN_BUTTON_BIT;
-    if (driver_input.Regen_Enable) s |= REGEN_ENABLED_BIT;
-    if (driver_input.Cruise_Enable) s |= CRUISE_CONTROL_BUTTON_BIT;
-    if (bps_status.BPS_Regen_OK) s |= READY_TO_REGEN_BIT;
-    if (precharge_complete) s |= PRECHARGE_COMPLETE_BIT;
-
-    accel_pedal_pct = accel_brake.Accel_Pos_Main;
-    brake_pedal_pct = accel_brake.Brake_Pos_Main;
-
-    if (brake_pedal_pct >= brake_threshold) {
-        s |= BRAKE_BIT;
-        brake_threshold = BRAKE_THRESH_HYST;
-    } else {
-        brake_threshold = BRAKE_THRESH;
-    }
-
-    car_status = s;
+void fsm_set_input(EventBits_t mask) {
+    xEventGroupSetBits(fsmInputGroup, mask & FSM_INPUTS_MASK_ALL);
 }
+
+// static void rebuild_bitfield(void) {
+//     uint16_t s = 0;
+
+//     if (driver_input.Gear_Forward)
+//         s |= FORWARD_BIT;
+//     else if (driver_input.Gear_Reverse)
+//         s |= REVERSE_BIT;
+//     else
+//         s |= NEUTRAL_BIT;
+
+//     if (driver_input.Regen_Activate) s |= REGEN_BUTTON_BIT;
+//     if (driver_input.Regen_Enable) s |= REGEN_ENABLED_BIT;
+//     if (driver_input.Cruise_Enable) s |= CRUISE_CONTROL_BUTTON_BIT;
+//     if (bps_status.BPS_Regen_OK) s |= READY_TO_REGEN_BIT;
+//     if (precharge_complete) s |= PRECHARGE_COMPLETE_BIT;
+
+//     accel_pedal_pct = accel_brake.Accel_Pos_Main;
+//     brake_pedal_pct = accel_brake.Brake_Pos_Main;
+
+//     if (brake_pedal_pct >= brake_threshold) {
+//         s |= BRAKE_BIT;
+//         brake_threshold = BRAKE_THRESH_HYST;
+//     } else {
+//         brake_threshold = BRAKE_THRESH;
+//     }
+
+//     car_status = s;
+// }
 
 // goofy ahh logic, uses lut
 static float apply_rollover_limit(float requested_current) {
@@ -148,7 +152,7 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
 
 //// state handlers
 
-static void handle_state_init(void) { currentState = FSM[CAR_NOT_READY]; }
+static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
 static void handle_state_neutral(void) { send_motor_drive_cmd(0.0f, 0.0f); }
 static void handle_state_disabled(void) { send_motor_drive_cmd(0.0f, 0.0f); }
 static void handle_state_regen(void) { send_motor_drive_cmd(0.0f, 1.0f); }
@@ -235,10 +239,10 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
                  ((uint8_t)driver_input_ok << 3) |    // VCU_Driver_Input_OK
                  ((uint8_t)pedals_ok << 4) |          // VCU_Pedals_OK
                  ((uint8_t)!!(car_status & READY_TO_REGEN_BIT) << 5) | // VCU_Regen_OK
-                 ((uint8_t)(currentState.stateName == REGEN) << 6);    // VCU_Regen_Active
+                 ((uint8_t)(current_state.stateName == REGEN) << 6);    // VCU_Regen_Active
 
         // Byte 2: VCU_FSM_State bits [3:0]
-        buf[2] = (uint8_t)(currentState.stateName & 0x0FU);
+        buf[2] = (uint8_t)(current_state.stateName & 0x0FU);
 
         carcan_send(CAN_ID_VCU_STATUS, buf, sizeof(buf));
         vTaskDelay(pdMS_TO_TICKS(100));

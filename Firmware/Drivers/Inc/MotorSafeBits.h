@@ -21,7 +21,7 @@ typedef enum {
     MOTOR_CONTACTOR_ENABLED = 3,           // The Motor contactor is enabled
     MOTOR_PRECHARGE_CONTACTOR_ENABLED = 4, // The Motor precharge Contactor is enabled
     DASHBOARD_IGNITION_MOTOR = 5,          // Ignition switch is set to motor
-    NUM_MOTOR_STATUS_BITS = 6
+    NUM_MOTOR_STATUS_BITS
 } motor_status_bit_t;
 
 _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS,
@@ -30,7 +30,7 @@ _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS,
 /* Convert enum to bitmask */
 #define MOTOR_STATUS_BIT(motorBit) (1UL << (motorBit))
 
-BaseType_t MotorSafeBits_Init();
+bool MotorSafeBits_Init();
 
 EventBits_t MotorSafeBits_WaitMask(EventBits_t bitsToWait, TickType_t delay_ticks);
 

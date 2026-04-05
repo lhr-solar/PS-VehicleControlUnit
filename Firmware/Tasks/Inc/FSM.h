@@ -12,6 +12,8 @@
 #pragma once
 
 #include "inits.h"
+#include "CANbus.h"
+#include "event_groups.h"
 
 // make sure if you change this to also change it in scripts/fsm_generator.py
 #define BITFIELD_INPUT_LIST(X)                                                                     \
@@ -43,8 +45,8 @@ typedef enum {
 #undef X
 } InputBits_t;
 
-#define NEXT_STATES_LENGTH (1U << BITFIELD_INPUT_COUNT)
-#define ALL_INPUT_BITS     ((1U << BITFIELD_INPUT_COUNT) - 1U)
+#define NEXT_STATES_LENGTH      (1U << BITFIELD_INPUT_COUNT)
+#define FSM_INPUTS_MASK_ALL     ((1U << BITFIELD_INPUT_COUNT) - 1U)
 
 // must match in the generator script
 typedef enum {
@@ -68,11 +70,28 @@ typedef struct {
 extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t currentState;
 
+typedef struct {
+    driver_input_status_t driver_input;
+    accel_brake_position_t accel_brake;
+    lws_standard_t lws;
+    controls_status_t controls_status;
+    mc_status_t motor_status;
+    bps_status_t bps_status;
+    mc_velocitymeasurement_t motor_velocity;
+} FSMDataIn_t;
+
+extern FSMDataIn_t *g_data_read;
+extern FSMDataIn_t *g_data_write;
+
+
+
 void fsm_init(void);
 void fsm_step(void);
 void fsm_disable(void);
 void fsm_recover(void);
-void fsm_set_precharge_complete(bool val);
+
+void fsm_set_all_inputs(EventBits_t mask);
+void fsm_set_input(EventBits_t mask);
 
 uint16_t fsm_get_car_status(void);
 bool fsm_is_over_rollover_speed(void);

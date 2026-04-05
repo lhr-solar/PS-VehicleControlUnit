@@ -56,8 +56,8 @@ FDCAN_HandleTypeDef *carfdcan;
 can_status_t Car_CANBus_Init(void)
 {
 
-  carfdcan = hfdcan1;
-  carfdcan->Instance = FDCAN1;
+  carfdcan = hfdcan3;
+  carfdcan->Instance = FDCAN3;
 
   carfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
   carfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;

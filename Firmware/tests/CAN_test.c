@@ -12,7 +12,7 @@
 StaticTask_t task_buffer;
 StackType_t task_stack[TEST_TASK_STACK_SIZE];
 
-#define can_delay_ms 10
+#define can_delay_ms (pdMS_TO_TICKS(10))
 
 static bool verifyData(uint8_t tx[], uint8_t rx[])
 {
@@ -42,9 +42,10 @@ static void task(void *pvParameters)
 
     Init_UART_Printf();
     printf("printf initialized\r\n");
-    Car_CANBus_Init();
     Motor_CANBus_Init();
-    printf("CAN initialized successfully\r\n");
+    printf("Motor CAN initialized successfully\r\n");
+    Car_CANBus_Init();
+    printf("Car CAN initialized successfully\r\n");
 
     int test_id = 0x321;
 
@@ -73,14 +74,14 @@ static void task(void *pvParameters)
 
         if (Motor_CANBus_Send(&tx_header, tx_data, can_delay_ms) == CAN_ERR)
         {
-            printf("BPS CAN failed to send!\r\n");
+            printf("Motor CAN failed to send!\r\n");
             Error_Handler();
         }
-        printf("BPS CAN Sent successfully!\r\n");
+        printf("Motor CAN Sent successfully!\r\n");
 
         vTaskDelay(pdMS_TO_TICKS(20));
 
-        if ((Car_CANBus_Recieve(test_id, &rx_header, fdcan3_rx_data, can_delay_ms) != CAN_OK) && verifyData(fdcan1_rx_data, tx_data))
+        if ((Car_CANBus_Recieve(test_id, &rx_header, tx_data, can_delay_ms) != CAN_OK) || !verifyData(fdcan3_rx_data, tx_data))
         {
             printf("CAR CAN failed to receive!\r\n");
             Error_Handler();
@@ -96,12 +97,12 @@ static void task(void *pvParameters)
 
         vTaskDelay(pdMS_TO_TICKS(20));
 
-        if ((Motor_CANBus_Recieve(test_id, &rx_header, fdcan1_rx_data, can_delay_ms) != CAN_OK) && verifyData(fdcan1_rx_data, tx_data))
+        if ((Motor_CANBus_Recieve(test_id, &rx_header, fdcan1_rx_data, can_delay_ms) != CAN_OK) || !verifyData(fdcan1_rx_data, tx_data))
         {
-            printf("BPS CAN failed to receive!\r\n");
+            printf("Motor CAN failed to receive!\r\n");
             Error_Handler();
         }
-        printf("BPS CAN Receieve successfully!\r\n");
+        printf("Motor CAN Receieve successfully!\r\n");
 
         vTaskDelay(pdMS_TO_TICKS(20));
 

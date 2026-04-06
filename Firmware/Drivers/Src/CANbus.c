@@ -128,7 +128,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
         .Identifier = CAN_ID_MC_DRIVECOMMAND,
         .IdType = FDCAN_STANDARD_ID,
         .TxFrameType = FDCAN_DATA_FRAME,
-        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_MC_DRIVECOMMAND),
+        .DataLength = CAN_DLC_MC_DRIVECOMMAND,
         .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
         .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN,
@@ -142,7 +142,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
     memcpy(&moco_drive_tx_data[4], &current, sizeof(float));
 
     can_status_t result =
-        can_fd_recv(motorfdcan, CAN_ID_MC_DRIVECOMMAND, &header, moco_drive_tx_data, delay);
+        can_fd_send(motorfdcan, &header, moco_drive_tx_data, delay);
 
     return result; 
 }
@@ -240,7 +240,7 @@ can_status_t CarCAN_Recv_Controls_Status(controls_status_t *out, TickType_t dela
 
     if (result == CAN_OK) {
         out->Controls_Leader_Fault = controls_status_rx_data[0];
-        out->Controls_Lighting_Fault = (uint16_t) (controls_status_rx_data[1]);
+        // out->Controls_Lighting_Fault = (uint16_t) (controls_status_rx_data[1]);
     }
 
     return result;
@@ -265,9 +265,9 @@ can_status_t CarCAN_Recv_LWS(lws_standard_t *out, TickType_t delay) {
         out->LWS_Speed = steering_angle_rx_data[2];
 
         // Status bits: Byte3
-        out->LWS_OK   = (steering_angle_rx_data[3] >> 0) & 0x01;
-        out->LWS_CAL  = (steering_angle_rx_data[3] >> 1) & 0x01;
-        out->LWS_TRIM = (steering_angle_rx_data[3] >> 2) & 0x01;
+        out->LWS_Fault     = (steering_angle_rx_data[3] >> 0) & 0x01;
+        out->LWS_CalibrationStaus = (steering_angle_rx_data[3] >> 1) & 0x01;
+        out->LWS_Trimming_Status = (steering_angle_rx_data[3] >> 2) & 0x01;
     }
 
     return result;
@@ -304,38 +304,38 @@ can_status_t CarCAN_Recv_Driver_Input(driver_input_status_t *out, TickType_t del
     return result;
 }
 
-can_status_t CarCAN_Recv_Pedals_Position(accel_brake_position_t *out, TickType_t delay) {
+can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) {
     if (out == NULL) return CAN_EMPTY;
 
     FDCAN_RxHeaderTypeDef header = {0};
-    uint8_t pedals_pos_rx_data[CAN_ID_ACCEL_BRAKE_POSITION] = {0};
+    uint8_t pedals_pos_rx_data[CAN_DLC_PEDAL_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_ACCEL_BRAKE_POSITION, &header, driver_input_rx_data, delay);
+        can_fd_recv(carfdcan, CAN_ID_PEDAL_STATUS, &header, pedals_pos_rx_data, delay);
 
     if (result == CAN_OK) {
-        out->Accel_Pos_Main = driver_input_rx_data[0];
-        out->Accel_Pos_Redundant = driver_input_rx_data[1];
-        out->Brake_Pos_Main = driver_input_rx_data[2];
-        out->Brake_Pos_Redundant = driver_input_rx_data[3];
-        out->Accel_Pos_Main_Fault = driver_input_rx_data[4] & (0x01);
-        out->Accel_Pos_Redundant_Fault = driver_input_rx_data[4] & (0x01 << 1);
-        out->Brake_Pos_Main_Fault = driver_input_rx_data[4] & (0x01 << 2);
-        out->Brake_Pos_Redundant_Fault = driver_input_rx_data[4] & (0x01 << 3);        
+        out->AccelPedal_Main_Pos = pedals_pos_rx_data[0];
+        out->AccelPedal_Redundant_Pos = pedals_pos_rx_data[1];
+        out->BrakePedal_Main_Pos = pedals_pos_rx_data[2];
+        out->BrakePedal_Redundant_Pos = pedals_pos_rx_data[3];
+        out->AccelPedal_Main_Fault = pedals_pos_rx_data[4] & (0x01);
+        out->AccelPedal_Redundant_Fault = pedals_pos_rx_data[4] & (0x01 << 1);
+        out->BrakePedal_Main_Fault = pedals_pos_rx_data[4] & (0x01 << 2);
+        out->BrakePedal_Redundant_Fault = pedals_pos_rx_data[4] & (0x01 << 3);        
     }
 
     return result;
 }
 
 
-CarCAN_Send_VCU_Status(vcu_status_t *out, TickType_t delay) {
-    if (!isfinite(velocity) || !isfinite(current)) return CAN_EMPTY;
+can_status_t CarCAN_Send_VCU_Status(vcu_status_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
 
     FDCAN_TxHeaderTypeDef header = {
-        .Identifier = CAN_ID_MC_VELOCITYMEASUREMENT,
+        .Identifier = CAN_ID_VCU_STATUS,
         .IdType = FDCAN_STANDARD_ID,
         .TxFrameType = FDCAN_DATA_FRAME,
-        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_MC_DRIVECOMMAND),
+        .DataLength = CAN_DLC_VCU_STATUS,
         .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
         .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN,
@@ -343,13 +343,12 @@ CarCAN_Send_VCU_Status(vcu_status_t *out, TickType_t delay) {
         .MessageMarker = 0,
     };
 
-    uint8_t moco_drive_tx_data[CAN_DLC_MC_VELOCITYMEASUREMENT] = {0};
+    uint8_t vcu_status_tx_data[CAN_DLC_VCU_STATUS] = {0};
 
-    memcpy(&moco_drive_tx_data[0], &velocity, sizeof(float));
-    memcpy(&moco_drive_tx_data[4], &current, sizeof(float));
+    // TODO: actually pack ts
 
     can_status_t result =
-        can_fd_recv(motorfdcan, CAN_ID_MC_VELOCITYMEASUREMENT, &header, motor_vel_rx_data, delay);
+        can_fd_send(carfdcan, &header, vcu_status_tx_data, delay);
 
     return result;
 }

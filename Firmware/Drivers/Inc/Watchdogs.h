@@ -50,7 +50,7 @@ WATCHDOG_LIST(X)
 
 
 /**
- * @brief Initialize the watchdog system. This must be called before creating 
+ * @brief Initialize all watchdogs. This must be called before using 
  * any watchdog timers.
  */
 void watchdog_init(void);
@@ -103,14 +103,3 @@ bool watchdog_is_alive(int idx);
  * iterating over all timers or for debugging.
  */
 uint8_t watchdog_count(void);
-
-/**
- * @brief Helper macro to initialize all watchdogs defined in WATCHDOG_LIST with one call
- */
-#define WATCHDOG_INIT_ALL_FSM_SIGNALS()                                                            \
-    do {                                                                                           \
-        WATCHDOG_LIST(WATCHDOG_CREATE_ONE_);                                                       \
-    } while (0);
-
-#define WATCHDOG_CREATE_ONE_(name, str, timeout, fault)                                            \
-    watchdog_create(str, WD_IDX_##name, timeout, fault);

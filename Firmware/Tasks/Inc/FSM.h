@@ -72,7 +72,7 @@ extern MocoState_t currentState;
 
 typedef struct {
     driver_input_status_t driver_input;
-    accel_brake_position_t accel_brake;
+    pedal_status_t accel_brake;
     lws_standard_t lws;
     controls_status_t controls_status;
     mc_status_t motor_status;
@@ -92,8 +92,8 @@ void fsm_recover(void);
 
 void fsm_set_all_inputs(EventBits_t mask);
 void fsm_set_input(EventBits_t mask);
+void fsm_get_inputs(void);
 
-uint16_t fsm_get_car_status(void);
 bool fsm_is_over_rollover_speed(void);
 
 void Task_UpdateControlStatus(void *args);

@@ -9,10 +9,10 @@
 #include <stdio.h>
 #include <string.h>
 
-static StaticTimer_t  wd_buffers[MAX_WD_TIMERS];
-static TimerHandle_t  wd_timers[MAX_WD_TIMERS];
-static bool           wd_alive[MAX_WD_TIMERS];
-static FaultID_e      wd_fault_ids[MAX_WD_TIMERS];
+static StaticTimer_t  wd_buffers[MAX_WD_TIMERS] = {0};
+static TimerHandle_t  wd_timers[MAX_WD_TIMERS] = {0};
+static bool           wd_alive[MAX_WD_TIMERS] = {0};
+static FaultID_e      wd_fault_ids[MAX_WD_TIMERS] = {0};
 static uint8_t        wd_count = 0;
 
 // Callback function for when a watchdog timer expires 
@@ -24,9 +24,10 @@ static void wd_callback(TimerHandle_t xTimer) {
 }
 
 void watchdog_init(void) {
-    memset(wd_timers, 0, sizeof(wd_timers));
-    memset(wd_alive,  0, sizeof(wd_alive));
-    wd_count = 0;
+#define X(name, str, timeout, fault) \
+    watchdog_create(str, WD_IDX_##name, timeout, fault);
+    WATCHDOG_LIST(X)
+#undef X
 }
 
 void watchdog_create(const char *name, uint8_t idx, uint32_t timeout_ms, FaultID_e fault_id) {

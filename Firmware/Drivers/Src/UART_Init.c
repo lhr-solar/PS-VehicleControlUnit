@@ -74,5 +74,7 @@ void Init_UART_Printf()
   husart3->Init.HwFlowCtl = UART_HWCONTROL_NONE;
   husart3->Init.OverSampling = UART_OVERSAMPLING_16;
 
+  setvbuf(stdout, NULL, _IONBF, 0);
+
   printf_init(husart3);
 }

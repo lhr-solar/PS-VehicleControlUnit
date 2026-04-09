@@ -57,6 +57,7 @@ static void packVCUStatus(vcu_status_t status, uint8_t tx_data[8])
 
 void Task_VCUSendStatus()
 {
+    
     uint8_t VCU_tx_data[8];
     vcu_status_t VCUStatus = {0};
 

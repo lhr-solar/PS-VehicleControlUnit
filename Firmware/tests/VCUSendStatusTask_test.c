@@ -31,6 +31,12 @@ int main()
         can_error_handler();
     }
 
+    if (Motor_CANBus_Init() != CAN_OK)
+    {
+        can_error_handler();
+    }
+
+
     VCUSendStatusTask_Init();
 
     Init_UART_Printf();

@@ -5,10 +5,12 @@
 #include "Contactors.h"
 #include "FSM.h"
 #include "Watchdogs.h"
+#include "StatusLEDs.h"
 
 // VCU_Status  0x10  3 bytes  100ms
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[3];
+
 
     while (1) {
         // Byte 0: VCU_Fault — map internal faults to DBC enum
@@ -34,6 +36,8 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         buf[0] = vcu_fault;
 
         
+
+        
         // Byte 1: status bits per DBC positions 8-14
         bool pedals_ok = !g_data_read->accel_brake.AccelPedal_Main_Fault &&
                          !g_data_read->accel_brake.AccelPedal_Redundant_Fault &&
@@ -45,20 +49,26 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
 
         bool steering_angle_ok = g_data_read->lws.LWS_Fault == 0;
 
+    //          while(1){
+    //             LED_toggle(HB);
+    //     vTaskDelay(pdMS_TO_TICKS(100));
+
+    // }
         buf[1] = ((uint8_t)contactor_get_sense(MOTOR_CONTACTOR) << 0) | // Motor_Contactor_State
                  ((uint8_t)contactor_get_sense(MOTOR_PRE_CONTACTOR) << 1) | // Motor_Precharge_Contactor_State
                  ((uint8_t) (contactor_get_sense(MOTOR_PRE_CONTACTOR) && vcu_fault == 0) << 2) | // Motor_Ready_To_Drive
                  ((uint8_t)driver_input_ok << 3) |    // VCU_Driver_Input_OK
                  ((uint8_t)pedals_ok << 4) |          // VCU_Pedals_OK
-                 ((uint8_t)!!(fsm_get_car_status() & READY_TO_REGEN_BIT) << 5) | // VCU_Regen_OK
-                 ((uint8_t)(currentState.stateName == REGEN) << 6) |     // VCU_Regen_Active
+                 ((uint8_t)!!(fsm_get_inputs() & READY_TO_REGEN_BIT) << 5) | // VCU_Regen_OK
+                 ((uint8_t)(current_state.stateName == REGEN) << 6) |     // VCU_Regen_Active
                  ((uint8_t)steering_angle_ok << 7); // VCU_Steering_Angle_OK (not implemented, set to OK)
 
         // Byte 2: VCU_FSM_State bits [3:0]
-        buf[2] = (uint8_t)(currentState.stateName & 0x0FU);
+        buf[2] = (uint8_t)(current_state.stateName & 0x0FU);
 
-        buf[3] = fsm_get_car_status; //this supposed to have fsm states as well but stateName covers it for now
-
+        buf[3] = fsm_get_inputs() ; //this supposed to have fsm states as well but stateName covers it for now
+   
+    
         FDCAN_TxHeaderTypeDef tx_header = {0};   
         tx_header.Identifier = CAN_ID_VCU_STATUS;
         tx_header.IdType = FDCAN_STANDARD_ID;
@@ -70,7 +80,9 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         tx_header.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
         tx_header.MessageMarker = 0;
 
-        CarCAN_Send(&tx_header, buf, sizeof(buf));
+        MotorCAN_Send(&tx_header, buf, sizeof(buf));
+
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

@@ -68,7 +68,7 @@ typedef struct {
 } MocoState_t;
 
 extern MocoState_t FSM[NUM_STATES];
-extern MocoState_t currentState;
+extern MocoState_t current_state;
 
 typedef struct {
     driver_input_status_t driver_input;
@@ -92,13 +92,15 @@ void fsm_recover(void);
 
 void fsm_set_all_inputs(EventBits_t mask);
 void fsm_set_input(EventBits_t mask);
-void fsm_get_inputs(void);
+uint16_t fsm_get_inputs(void);
 
 bool fsm_is_over_rollover_speed(void);
 
 void Task_UpdateControlStatus(void *args);
+void FSM_TaskInit();
 void Task_FSM(void *args);
 void Task_BroadcastVCUStatus(void *args);
+void Task_UpdateControlStatus(void *args __attribute__((unused)));
 
 float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_min,
                      uint8_t out_max);

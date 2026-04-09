@@ -15,6 +15,9 @@
 #define MOTOR_TELEMETRY_TASK_STACK_SIZE     configMINIMAL_STACK_SIZE
 #define CAN_TX_TELEMETRY_STACK_SIZE         configMINIMAL_STACK_SIZE
 
+#define FSM_TASK_STACK_SIZE                configMINIMAL_STACK_SIZE
+#define VCU_STATUS_TASK_STACK_SIZE         configMINIMAL_STACK_SIZE
+
 
 extern StaticTask_t FaultHandlerTask_Buffer;
 extern StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];

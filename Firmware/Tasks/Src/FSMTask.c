@@ -47,6 +47,11 @@ static void handle_state_disabled(void);
 // static void rebuild_bitfield(void);
 static float apply_rollover_limit(float requested_current);
 
+//must be called Before the FSM task gets called
+void FSM_TaskInit(){
+    fsmInputGroup = xEventGroupCreateStatic(&fsmInputBuffer);
+}
+
 void fsm_init(void) {
     FSM[STATE_INIT].stateHandler = handle_state_init;
     FSM[FORWARD_DRIVE].stateHandler = handle_state_forward;
@@ -81,9 +86,11 @@ void fsm_set_input(EventBits_t mask) {
     xEventGroupSetBits(fsmInputGroup, mask & FSM_INPUTS_MASK_ALL);
 }
 
-void fsm_get_inputs(void) {
-    xEventGroupGetBits(fsmInputGroup);
+uint16_t fsm_get_inputs(void) {
+    return (uint16_t)xEventGroupGetBits(fsmInputGroup);
 }
+
+
 
 // goofy ahh logic, uses lut
 static float apply_rollover_limit(float requested_current) {

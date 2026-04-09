@@ -38,17 +38,17 @@ void MotorTelemetryTask_Init(void) {
     }
 }
 
-void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs,
-                             can_rx_payload_t recv_payload) {
-    // only forward motorCAN messages to CarCAN
-    if (motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance) {
+// void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs,
+//                              can_rx_payload_t recv_payload) {
+//     // only forward motorCAN messages to CarCAN
+//     if (motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance) {
 
-        BaseType_t higherPriorityTaskWoken = pdFALSE;
+//         BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-        xQueueSendFromISR(motorTelemetryQueue, &recv_payload, &higherPriorityTaskWoken);
-        // don't yield at the end of this since the rest of the ISR needs to run
-    }
-}
+//         xQueueSendFromISR(motorTelemetryQueue, &recv_payload, &higherPriorityTaskWoken);
+//         // don't yield at the end of this since the rest of the ISR needs to run
+//     }
+// }
 
 void Task_MotorTelemetry() {
 

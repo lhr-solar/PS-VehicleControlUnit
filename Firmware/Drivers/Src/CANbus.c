@@ -195,12 +195,12 @@ can_status_t CarCAN_Init(void) {
 }
 
 can_status_t CarCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks) {
-    return can_fd_send(carfdcan, header, data, delay_ticks);
+    return can_fd_send(motorfdcan, header, data, delay_ticks);
 }
 
 can_status_t CarCAN_Recv(uint32_t id, FDCAN_RxHeaderTypeDef *header, uint8_t data[],
                          TickType_t delay_ticks) {
-    return can_fd_recv(carfdcan, id, header, data, delay_ticks);
+    return can_fd_recv(motorfdcan, id, header, data, delay_ticks);
 }
 
 can_status_t CarCAN_Recv_BPS_Status(bps_status_t *out, TickType_t delay) {
@@ -210,7 +210,7 @@ can_status_t CarCAN_Recv_BPS_Status(bps_status_t *out, TickType_t delay) {
     uint8_t bps_status_rx_data[CAN_DLC_BPS_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_BPS_STATUS, &header, bps_status_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_BPS_STATUS, &header, bps_status_rx_data, delay);
 
     if (result == CAN_OK) {
         out->BPS_Fault = bps_status_rx_data[0];
@@ -236,7 +236,7 @@ can_status_t CarCAN_Recv_Controls_Status(controls_status_t *out, TickType_t dela
     uint8_t controls_status_rx_data[CAN_DLC_CONTROLS_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_CONTROLS_STATUS, &header, controls_status_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_CONTROLS_STATUS, &header, controls_status_rx_data, delay);
 
     if (result == CAN_OK) {
         out->Controls_Leader_Fault = controls_status_rx_data[0];
@@ -253,7 +253,7 @@ can_status_t CarCAN_Recv_LWS(lws_standard_t *out, TickType_t delay) {
     uint8_t steering_angle_rx_data[CAN_DLC_LWS_STANDARD] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_LWS_STANDARD, &header, steering_angle_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_LWS_STANDARD, &header, steering_angle_rx_data, delay);
 
     if (result == CAN_OK) {
         // Angle: Byte0 (LSB), Byte1 (MSB)
@@ -280,7 +280,7 @@ can_status_t CarCAN_Recv_Driver_Input(driver_input_status_t *out, TickType_t del
     uint8_t driver_input_rx_data[CAN_DLC_DRIVER_INPUT_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_DRIVER_INPUT_STATUS, &header, driver_input_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_DRIVER_INPUT_STATUS, &header, driver_input_rx_data, delay);
 
     if (result == CAN_OK) {
         out->Ignition_Array = driver_input_rx_data[0] & (0x01);
@@ -311,7 +311,7 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
     uint8_t pedals_pos_rx_data[CAN_DLC_PEDAL_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(carfdcan, CAN_ID_PEDAL_STATUS, &header, pedals_pos_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_PEDAL_STATUS, &header, pedals_pos_rx_data, delay);
 
     if (result == CAN_OK) {
         out->AccelPedal_Main_Pos = pedals_pos_rx_data[0];
@@ -348,7 +348,7 @@ can_status_t CarCAN_Send_VCU_Status(vcu_status_t *out, TickType_t delay) {
     // TODO: actually pack ts
 
     can_status_t result =
-        can_fd_send(carfdcan, &header, vcu_status_tx_data, delay);
+        can_fd_send(motorfdcan, &header, vcu_status_tx_data, delay);
 
     return result;
 }

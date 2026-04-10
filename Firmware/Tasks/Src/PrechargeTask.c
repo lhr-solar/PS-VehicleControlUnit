@@ -8,6 +8,7 @@ EventGroupHandle_t xPrechargeEventGroup_handle;
 
 uint32_t Battery_Voltage = 0;
 uint32_t Motor_Voltage = 0;
+static Precharge_State_t State;
 uint8_t Ignition_State = 0;
 
 static StaticQueue_t driverInputQueueBuffer;
@@ -65,7 +66,24 @@ void Check_Ignition_State()
 
 void Ignition_Off() // TODO: Open contactors one by one
 {
+    printf("Ignition OFF, opening motor precharge contactor\r\n");
 
+    if (contactor_set(MOTOR_PRE_CONTACTOR, OPEN, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
+    {
+        set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
+    }
+
+    printf("Ignition OFF, opening motor contactor\r\n");
+
+    if (contactor_set(MOTOR_CONTACTOR, OPEN, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
+    {
+        set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
+    }
+
+    // Return task to idle/waiting state
+    State = PRECHARGE_STATE_WAITING;
+
+    printf("Ignition OFF, shutdown complete\r\n");
 }
 
 void Init_PrechargeTask()
@@ -146,7 +164,7 @@ void Task_Precharge()
 {
     Init_PrechargeTask();
 
-    static Precharge_State_t State = PRECHARGE_STATE_WAITING;
+    State = PRECHARGE_STATE_WAITING;
     static TickType_t Start_Tick = 0;
 
     ADC_Sense_Result ADC_Result = {0};

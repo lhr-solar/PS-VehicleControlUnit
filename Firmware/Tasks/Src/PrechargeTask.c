@@ -15,6 +15,8 @@ static StaticQueue_t driverInputQueueBuffer;
 static uint8_t driverInputQueueStorage[DRIVER_INPUT_QUEUE_SIZE * sizeof(can_rx_payload_t)];
 static QueueHandle_t driverInputQueue;
 
+can_rx_payload_t payload;
+
 static FDCAN_TxHeaderTypeDef VCUSendVoltageHeader;
 
 static void initVCUSendVoltageHeader(FDCAN_TxHeaderTypeDef *tx_header)
@@ -44,26 +46,6 @@ static void initDriverInputQueue()
     }
 }
 
-void Check_Ignition_State()
-{
-    if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
-    {
-        if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1 && Ignition_State == 0) // index of ignition_motor = 1
-        {
-            Ignition_State = 1;
-            State = PRECHARGE_STATE_INITIAL;
-            printf("Ignition ON, starting precharge sequence\r\n");
-        }
-        else if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 0 && Ignition_State == 1) // index of ignition_motor = 1
-        {
-            Ignition_State = 0;
-            State = PRECHARGE_STATE_WAITING; // Reset to initial state?
-            printf("Ignition OFF, stopping precharge sequence\r\n");
-            Ignition_Off();
-        }
-    }
-}
-
 void Ignition_Off() // TODO: Open contactors one by one
 {
     printf("Ignition OFF, opening motor precharge contactor\r\n");
@@ -84,6 +66,26 @@ void Ignition_Off() // TODO: Open contactors one by one
     State = PRECHARGE_STATE_WAITING;
 
     printf("Ignition OFF, shutdown complete\r\n");
+}
+
+void Check_Ignition_State()
+{
+    if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
+    {
+        if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1 && Ignition_State == 0) // index of ignition_motor = 1
+        {
+            Ignition_State = 1;
+            State = PRECHARGE_STATE_INITIAL;
+            printf("Ignition ON, starting precharge sequence\r\n");
+        }
+        else if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 0 && Ignition_State == 1) // index of ignition_motor = 1
+        {
+            Ignition_State = 0;
+            State = PRECHARGE_STATE_WAITING; // Reset to initial state?
+            printf("Ignition OFF, stopping precharge sequence\r\n");
+            Ignition_Off();
+        }
+    }
 }
 
 void Init_PrechargeTask()
@@ -168,8 +170,6 @@ void Task_Precharge()
     static TickType_t Start_Tick = 0;
 
     ADC_Sense_Result ADC_Result = {0};
-
-    can_rx_payload_t payload;
 
     uint8_t VCU_tx_data[8];
     vcu_precharge_voltages_t precharge_voltages = {0};

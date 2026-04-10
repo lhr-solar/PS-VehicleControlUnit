@@ -8,6 +8,8 @@ static StaticQueue_t BPSQueueBuffer;
 static uint8_t BPSQueueStorage[BPS_QUEUE_SIZE * sizeof(can_rx_payload_t)];
 static QueueHandle_t BPSQueue;
 
+can_rx_payload_t payload;
+
 static FDCAN_TxHeaderTypeDef VCUSendStatusHeader;
 
 static void initVCUSendStatusHeader(FDCAN_TxHeaderTypeDef *tx_header)

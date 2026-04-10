@@ -9,6 +9,9 @@ StackType_t Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[configMINIMAL_STACK_SIZE];
 
+StaticTask_t Driver_Input_Task_Buffer;
+StackType_t Driver_Input_Task_Stack[configMINIMAL_STACK_SIZE];
+
 void Task_Init()
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
@@ -36,6 +39,16 @@ void Task_Init()
         tskIDLE_PRIORITY + 2,     // Task priority
         Precharge_Task_Stack,     // Task handle
         &Precharge_Task_Buffer    // Static task buffer (optional)
+    );
+
+    xTaskCreateStatic(
+        Task_DriverInputTest,
+        "DriverInputTest",
+        configMINIMAL_STACK_SIZE,
+        NULL,
+        tskIDLE_PRIORITY + 2,
+        Driver_Input_Task_Stack,
+        &Driver_Input_Task_Buffer
     );
 
     vTaskDelete(NULL);

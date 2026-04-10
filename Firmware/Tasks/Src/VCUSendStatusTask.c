@@ -76,7 +76,9 @@ void Task_VCUSendStatus()
         {
             can_send_errors = 0;
         }
-
+        Toggle_LED(HB, 0);
+        vTaskDelay(100);
+        Toggle_LED(HB, 1);
         vTaskDelay(100);
     }
 }

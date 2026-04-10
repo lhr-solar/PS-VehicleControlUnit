@@ -26,12 +26,7 @@ int main()
 
     LEDs_init();
 
-    if (Car_CANBus_Init() != CAN_OK)
-    {
-        can_error_handler();
-    }
-
-    if (Motor_CANBus_Init() != CAN_OK)
+    if (CAN_Init() != CAN_OK)
     {
         can_error_handler();
     }

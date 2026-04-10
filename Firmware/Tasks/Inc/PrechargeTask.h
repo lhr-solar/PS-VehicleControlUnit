@@ -6,6 +6,9 @@
 #include "ADC_Sense.h"
 #include "InitTask.h"
 #include "MotorSafeBits.h"
+#include "CANbus.h"
+#include "CarCAN_can_msgs.h"
+#include <string.h>
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V
@@ -27,9 +30,14 @@
 #define ADC_TIMEOUT_MS 20
 #define PRECHARGE_TASK_DELAY_MS 100
 
+// enables the fdcan3 recieve hook, calls can_fd_rx_callback_hook everytime a can rx interrupt happens
+#define FDCAN3_RECV_HOOK_EN
+#define DRIVER_INPUT_QUEUE_SIZE 32
+#define IGNITION_MOTOR_INDEX 1 // index of motor ignition in driver input status message
+
 typedef enum
 {
-    PRECHARGE_STATE_WAITING
+    PRECHARGE_STATE_WAITING, // Waiting for ignition state
     PRECHARGE_STATE_INITIAL, // Precharge sequence hasn't started, start by closing main contactor and starting a timer to check for precharge timeout
     PRECHARGE_STATE_PRECHARGING, // Precharge sequence started successfully, close contactor and check hysterisis
     PRECHARGE_STATE_RUN,          // Precharge got through hysterisis, now continuously polling ADC

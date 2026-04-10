@@ -29,6 +29,7 @@ typedef enum
 
 typedef enum
 {
+    PRECHARGE_WAITING_STATE,
     PRECHARGE_INITIAL_STATE,     // Indiciates we are in the inital state when set
     PRECHARGE_PRECHARGING_STATE, // Indicates we are in the precharging state when set
     PRECHARGE_RUN_STATE,         // Indicates we are in the run state when set

@@ -9,6 +9,39 @@ EventGroupHandle_t xPrechargeEventGroup_handle;
 uint32_t Battery_Voltage = 0;
 uint32_t Motor_Voltage = 0;
 
+static StaticQueue_t driverInputQueueBuffer;
+static uint8_t driverInputQueueStorage[DRIVER_INPUT_QUEUE_SIZE * sizeof(can_rx_payload_t)];
+static QueueHandle_t driverInputQueue;
+
+static FDCAN_TxHeaderTypeDef VCUSendVoltageHeader;
+
+static void initVCUSendVoltageHeader(FDCAN_TxHeaderTypeDef *tx_header)
+{
+    tx_header->Identifier = CAN_ID_VCU_PRECHARGE_VOLTAGES;
+    tx_header->IdType = FDCAN_STANDARD_ID;
+    tx_header->TxFrameType = FDCAN_DATA_FRAME;
+    tx_header->DataLength = FDCAN_DLC_BYTES_8;
+    tx_header->ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    tx_header->BitRateSwitch = FDCAN_BRS_OFF;
+    tx_header->FDFormat = FDCAN_CLASSIC_CAN;
+    tx_header->TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
+    tx_header->MessageMarker = 0;
+}
+
+static void initDriverInputQueue()
+{
+    driverInputQueue = xQueueCreateStatic(
+        DRIVER_INPUT_QUEUE_SIZE,
+        sizeof(can_rx_payload_t),
+        driverInputQueueStorage,
+        &driverInputQueueBuffer);
+
+    if (driverInputQueue == NULL)
+    {
+        return;
+    }
+}
+
 void Init_PrechargeTask()
 {
     // Event Group init
@@ -21,6 +54,26 @@ void Init_PrechargeTask()
     ADC_Sense_Init();
     contactor_init();
     MotorSafeBits_Init();
+    initVCUSendVoltageHeader(&VCUSendVoltageHeader);
+    initDriverInputQueue();
+}
+
+void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload)
+{
+
+    BaseType_t higherPriorityTaskWoken = pdFALSE;
+
+    xQueueSendFromISR(
+        driverInputQueue,
+        &recv_payload,
+        &higherPriorityTaskWoken);
+}
+
+// encodes battery and motor voltage into an array of bytes for can_send
+static void packMotorVoltage(vcu_precharge_voltages_t voltages, uint8_t tx_data[8])
+{
+    memcpy(&tx_data[0], &(voltages.Precharge_Battery_Voltage), sizeof(uint32_t)); // TODO: Have Precharge task push adc readings into the can messages struct
+    memcpy(&tx_data[4], &(voltages.Precharge_Motor_Voltage), sizeof(uint32_t));
 }
 
 void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
@@ -67,10 +120,16 @@ void Task_Precharge()
 {
     Init_PrechargeTask();
 
-    static Precharge_State_t State = PRECHARGE_STATE_INITIAL;
+    static Precharge_State_t State = PRECHARGE_STATE_WAITING;
     static TickType_t Start_Tick = 0;
 
-    set_stateBit(PRECHARGE_INITIAL_STATE);
+    ADC_Sense_Result ADC_Result = {0};
+
+    can_rx_payload_t payload;
+
+    uint8_t VCU_tx_data[8];
+    vcu_precharge_voltages_t precharge_voltages = {0};
+    uint8_t can_send_errors = 0;
 
     while (1)
     {
@@ -79,36 +138,67 @@ void Task_Precharge()
         LED_set(HB, OFF);
         vTaskDelay(500);
 
-        ADC_Sense_Result ADC_Result = {0};
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK)
         {
             Error_Handler();
         }
 
+        // TODO: Send voltages through car can
         Battery_Voltage = ADC_Result.Battery_Voltage;
         Motor_Voltage = ADC_Result.Motor_Voltage;
+        precharge_voltages.Precharge_Battery_Voltage = Battery_Voltage;
+        precharge_voltages.Precharge_Motor_Voltage = Motor_Voltage;
 
-        printf("Motor: %ld mV | Battery: %ld mV\r\n",
-               Motor_Voltage,
-               Battery_Voltage);
+        packMotorVoltage(precharge_voltages, VCU_tx_data);
+
+        if (Car_CANBus_Send(&VCUSendVoltageHeader, VCU_tx_data, portMAX_DELAY) == CAN_ERR)
+        {
+            can_send_errors++;
+        }
+        else
+        {
+            can_send_errors = 0;
+        }
+
+        printf("Motor: %ld mV | Battery: %ld mV\r\n", Motor_Voltage, Battery_Voltage);
 
         switch (State)
         {
+        case PRECHARGE_STATE_WAITING:
+
+            set_stateBit(PRECHARGE_WAITING_STATE);
+
+            if (xQueueReceive(driverInputQueue, &payload, portMAX_DELAY /* TODO: Set appropriate timeout */) == pdTRUE)
+            {
+                if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1) // index of ignition_motor = 1
+                {
+                    State = PRECHARGE_STATE_INITIAL;
+                    printf("Ignition ON, starting precharge sequence\r\n");
+                }
+            }
+            break;
         case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
+
+            set_stateBit(PRECHARGE_INITIAL_STATE);
+
             printf("Precharge State: Initial\r\n");
+
             if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
             {
                 set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
             }
+
             State = PRECHARGE_STATE_PRECHARGING;
 
-            set_stateBit(PRECHARGE_PRECHARGING_STATE);
             set_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
 
             // Start a timer for precharging
             Start_Tick = xTaskGetTickCount();
+
             break;
         case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
+
+            set_stateBit(PRECHARGE_PRECHARGING_STATE);
 
             Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
 
@@ -125,7 +215,6 @@ void Task_Precharge()
                     }
                     State = PRECHARGE_STATE_RUN;
 
-                    set_stateBit(PRECHARGE_RUN_STATE);
                     set_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
                 }
                 else
@@ -136,6 +225,8 @@ void Task_Precharge()
             }
             break;
         case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
+
+            set_stateBit(PRECHARGE_RUN_STATE);
 
             Fault_Checker(Motor_Voltage, Battery_Voltage); // Check for faults while precharging, if any fault conditions are met, will call fault handler and not proceed with precharge sequence
 

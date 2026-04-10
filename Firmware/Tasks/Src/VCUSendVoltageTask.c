@@ -1,4 +1,5 @@
 #include "VCUSendVoltageTask.h"
+#include "StatusLEDs.h"
 
 static FDCAN_TxHeaderTypeDef VCUSendVoltageHeader;
 
@@ -43,6 +44,15 @@ void Task_VCUSendVoltage()
         precharge_voltages.Precharge_Motor_Voltage = Motor_Voltage;
         packBatteryVoltage(precharge_voltages, VCU_tx_data);
 
+        if (Motor_CANBus_Send(&VCUSendVoltageHeader, VCU_tx_data, portMAX_DELAY) == CAN_ERR)
+        {
+            can_send_errors++;
+        }
+        else
+        {
+            can_send_errors = 0;
+        }
+
         if (Car_CANBus_Send(&VCUSendVoltageHeader, VCU_tx_data, portMAX_DELAY) == CAN_ERR)
         {
             can_send_errors++;
@@ -52,6 +62,10 @@ void Task_VCUSendVoltage()
             can_send_errors = 0;
         }
 
+
+        Toggle_LED(HB, 0);
+        vTaskDelay(100);
+        Toggle_LED(HB, 1);
         vTaskDelay(100);
     }
 }

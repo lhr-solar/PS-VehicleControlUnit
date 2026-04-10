@@ -173,10 +173,10 @@ void Task_FaultHandler()
     while (1)
     {
         {
-            LED_set(HB, ON);
-            vTaskDelay(500);
-            LED_set(HB, OFF);
-            vTaskDelay(500);
+            // LED_set(HB, ON);
+            // vTaskDelay(500);
+            // LED_set(HB, OFF);
+            // vTaskDelay(500);
 
             packVCUStatus(VCUStatus, VCU_tx_data);
 

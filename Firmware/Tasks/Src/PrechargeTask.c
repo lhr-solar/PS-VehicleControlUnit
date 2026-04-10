@@ -168,7 +168,7 @@ void Task_Precharge()
 
             set_stateBit(PRECHARGE_WAITING_STATE);
 
-            if (xQueueReceive(driverInputQueue, &payload, portMAX_DELAY /* TODO: Set appropriate timeout */) == pdTRUE)
+            if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
             {
                 if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1) // index of ignition_motor = 1
                 {

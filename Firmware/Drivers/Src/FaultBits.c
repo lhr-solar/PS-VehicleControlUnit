@@ -53,14 +53,17 @@ uint8_t stateBits_init(void){
 }
 
 void set_stateBit(state_bit_t bit){
-    // not a valid fault
+    // not a valid state    
     if(bit >= NUM_STATES){ 
         return;
     }
 
-    // chat we're cooked
+    // Clear all state bits first
+    xEventGroupClearBits(stateBits, STATE_BITMASK);
+
+    // Set only the requested bit
     xEventGroupSetBits(stateBits, STATE_BIT(bit));
-    // should never return from here
+
     taskYIELD();
 }
 

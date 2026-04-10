@@ -40,10 +40,10 @@ typedef enum
 
 /* Convert enum to bitmask */
 #define FAULT_BIT(fault) (1UL << (fault))
+#define FAULT_BITMASK ((EventBits_t)((1UL << NUM_FAULTS) - 1UL))
 
 #define STATE_BIT(state) (1UL << (state))
-
-#define FAULT_BITMASK ((EventBits_t)((1UL << NUM_FAULTS) - 1UL))
+#define STATE_BITMASK ((EventBits_t)((1UL << NUM_STATES) - 1UL))
 
 _Static_assert(NUM_FAULTS <= MAX_FAULT_BITS, "Too many fault bits for EventGroup");
 

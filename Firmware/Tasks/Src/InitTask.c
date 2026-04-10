@@ -2,9 +2,14 @@
 #include "FSM.h"
 #include "VCUStatusTask.h"
 #include "PrechargeTask.h"
+#include "UpdateFSMInputsTask.h"
 #include "StatusLEDs.h"
 
+/* ===================== Stack Size Definitions ===================== */
 
+
+
+/* ===================== Static Task Buffers ===================== */
 StaticTask_t FaultHandlerTask_Buffer;
 StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
@@ -13,6 +18,15 @@ StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
 
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
+
+StaticTask_t FSM_Task_Buffer;
+StackType_t FSM_Task_Stack[FSM_TASK_STACK_SIZE];
+
+StaticTask_t VCUStatus_Task_Buffer;
+StackType_t VCUStatus_Task_Stack[VCU_STATUS_TASK_STACK_SIZE];
+
+StaticTask_t UpdateFSMInputs_Task_Buffer;
+StackType_t UpdateFSMInputs_Task_Stack[UPDATE_FSM_INPUTS_STACK_SIZE];
 
 // StaticTask_t Motor_Control_Task_Buffer;
 // StackType_t Motor_Control_Task_Stack[MOTOR_CONTROL_TASK_STACK_SIZE];
@@ -23,22 +37,8 @@ StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
 // StaticTask_t Can_Tx_Telemetry_Task_Buffer;
 // StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 
-StaticTask_t FSM_Task_Buffer;
-StackType_t FSM_Task_Stack[FSM_TASK_STACK_SIZE];
 
-StaticTask_t VCUStatus_Task_Buffer;
-StackType_t VCUStatus_Task_Stack[VCU_STATUS_TASK_STACK_SIZE];
-
-StaticTask_t UpdateControlStatus_Task_Buffer;
-StackType_t UpdateControlStatus_Task_Stack[FSM_TASK_STACK_SIZE];
-
-#define FSM_THREAD_PRIO      (tskIDLE_PRIORITY + 2)
-#define VCU_STATUS_THREAD_PRIO (tskIDLE_PRIORITY + 1)
-#define FAULT_HANDLER_THREAD_PRIO       (tskIDLE_PRIORITY + 4)
-#define PRECHARGE_THREAD_PRIO           (tskIDLE_PRIORITY + 3)
-#define UPDATE_CONTROL_STATUS_THREAD_PRIO (tskIDLE_PRIORITY + 2)
-
-void Task_Init() {
+void Task_Init(void) {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
@@ -51,63 +51,61 @@ void Task_Init() {
 
     FSM_TaskInit();
 
-    //These two need to be here when we are only testing vcu status
+    // Required for VCU status testing
     faults_init();
     Init_PrechargeTask();
 
-    // xTaskCreateStatic(
-    //     Task_FaultHandler,          // Task function
-    //     "FaultHandler",             // Name of the task (for debugging)
-    //     configMINIMAL_STACK_SIZE,   // Stack size in words
-    //     NULL,                       // Task input parameter
-    //     FAULT_HANDLER_THREAD_PRIO,  // Task priority
-    //     FaultHandlerTask_Stack,     // Task handle
-    //     &FaultHandlerTask_Buffer    // Static task buffer (optional)
-    // );
-
-    // xTaskCreateStatic(
-    //     Task_Precharge,                 // Task function
-    //     "Precharge",                    // Name of the task (for debugging)
-    //     configMINIMAL_STACK_SIZE,       // Stack size in words
-    //     NULL,                           // Task input parameter
-    //     PRECHARGE_THREAD_PRIO,          // Task priority
-    //     Precharge_Task_Stack,           // Task handle
-    //     &Precharge_Task_Buffer          // Static task buffer (optional)
-    // );
-
     xTaskCreateStatic(
-        Task_FSM,              // Task function
-        "FSM Thread",         // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,       // Stack size in words
-        NULL,                           // Task input parameter
-        FSM_THREAD_PRIO,      // Task priority
-        FSM_Task_Stack,       // Task handle
-        &FSM_Task_Buffer      // Static task buffer (optional)
-    );
-
-   
-
-    xTaskCreateStatic(
-        Task_BroadcastVCUStatus,              // Task function
-        "VCU Status Thread",                  // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,             // Stack size in words
-        NULL,                                 // Task input parameter
-        VCU_STATUS_THREAD_PRIO,               // Task priority
-        VCUStatus_Task_Stack,                 // Task handle
-        &VCUStatus_Task_Buffer                // Static task buffer (optional)
+        Task_FaultHandler,
+        "FaultHandler",
+        FAULT_HANDLER_TASK_STACK_SIZE,
+        NULL,
+        FAULT_HANDLER_THREAD_PRIO,
+        FaultHandlerTask_Stack,
+        &FaultHandlerTask_Buffer
     );
 
     xTaskCreateStatic(
-        Task_UpdateControlStatus,              // Task function
-        "Update Control Status Thread",        // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,             // Stack size in words
-        NULL,                                 // Task input parameter
-        UPDATE_CONTROL_STATUS_THREAD_PRIO,      // Task priority
-        UpdateControlStatus_Task_Stack,                       // Task handle
-        &UpdateControlStatus_Task_Buffer                      // Static task buffer (optional)
+        Task_Precharge,
+        "Precharge",
+        PRECHARGE_TASK_STACK_SIZE,
+        NULL,
+        PRECHARGE_THREAD_PRIO,
+        Precharge_Task_Stack,
+        &Precharge_Task_Buffer
     );
 
-    // while(1){
+    xTaskCreateStatic(
+        Task_FSM,
+        "FSM Thread",
+        FSM_TASK_STACK_SIZE,
+        NULL,
+        FSM_THREAD_PRIO,
+        FSM_Task_Stack,
+        &FSM_Task_Buffer
+    );
+
+    xTaskCreateStatic(
+        Task_BroadcastVCUStatus,
+        "VCU Status Thread",
+        VCU_STATUS_TASK_STACK_SIZE,
+        NULL,
+        VCU_STATUS_THREAD_PRIO,
+        VCUStatus_Task_Stack,
+        &VCUStatus_Task_Buffer
+    );
+
+    xTaskCreateStatic(
+        Task_UpdateFSMInputs,
+        "Update FSM Inputs Thread",
+        UPDATE_FSM_INPUTS_STACK_SIZE,
+        NULL,
+        UPDATE_FSM_INPUTS_THREAD_PRIO,
+        UpdateFSMInputs_Task_Stack,
+        &UpdateFSMInputs_Task_Buffer
+    );
+
+    // while (1) {
     //     LED_toggle(HB);
     //     HAL_Delay(100);
     // }

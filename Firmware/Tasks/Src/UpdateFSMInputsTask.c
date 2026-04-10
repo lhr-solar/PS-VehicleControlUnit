@@ -31,20 +31,19 @@ static void rebuild_inputs(void) {
     fsm_set_all_inputs(s);
 }
 
-void Task_UpdateControlStatus(void *args __attribute__((unused))) {
+void Task_UpdateFSMInputs(void *args __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
-    FDCAN_TxHeaderTypeDef tx_header = {0};   
-        tx_header.Identifier = 0x123;
-        tx_header.IdType = FDCAN_STANDARD_ID;
-        tx_header.TxFrameType = FDCAN_DATA_FRAME;
-        tx_header.DataLength = FDCAN_DLC_BYTES_8;
-        tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-        tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-        tx_header.FDFormat = FDCAN_CLASSIC_CAN;
-        tx_header.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-        tx_header.MessageMarker = 0;
+    FDCAN_TxHeaderTypeDef tx_header = {0};
+    tx_header.Identifier = 0x123;
+    tx_header.IdType = FDCAN_STANDARD_ID;
+    tx_header.TxFrameType = FDCAN_DATA_FRAME;
+    tx_header.DataLength = FDCAN_DLC_BYTES_8;
+    tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+    tx_header.FDFormat = FDCAN_CLASSIC_CAN;
+    tx_header.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
+    tx_header.MessageMarker = 0;
     uint8_t buf[8] = {0};
-
 
     while (1) {
         // update from can
@@ -52,8 +51,8 @@ void Task_UpdateControlStatus(void *args __attribute__((unused))) {
         MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
 
-        //making these motor can should be CARCAN
-        
+        // making these motor can should be CARCAN
+
         CarCAN_Recv_BPS_Status(&update->bps_status, 0);
         CarCAN_Recv_Pedals_Position(&update->accel_brake, 0);
         CarCAN_Recv_Controls_Status(&update->controls_status, 0);
@@ -65,7 +64,6 @@ void Task_UpdateControlStatus(void *args __attribute__((unused))) {
         }
         CarCAN_Recv_LWS(&update->lws, 0);
 
-
         FSMDataIn_t *tmp;
         taskENTER_CRITICAL();
         tmp = g_data_read;
@@ -73,11 +71,10 @@ void Task_UpdateControlStatus(void *args __attribute__((unused))) {
         g_data_write = tmp;
         taskEXIT_CRITICAL();
 
-
         buf[0] = g_data_read->driver_input.Gear_Forward;
         tx_header.Identifier = 0x321;
         CarCAN_Send(&tx_header, buf, sizeof(buf));
-        
+
         rebuild_inputs();
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
     }

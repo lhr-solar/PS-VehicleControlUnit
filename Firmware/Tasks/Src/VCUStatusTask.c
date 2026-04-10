@@ -9,8 +9,7 @@
 
 // VCU_Status  0x10  3 bytes  100ms
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
-    uint8_t buf[3];
-
+    uint8_t buf[CAN_DLC_VCU_STATUS];
 
     while (1) {
         // Byte 0: VCU_Fault — map internal faults to DBC enum
@@ -77,10 +76,10 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
         tx_header.BitRateSwitch = FDCAN_BRS_OFF;
         tx_header.FDFormat = FDCAN_CLASSIC_CAN;
-        tx_header.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
+        tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
         tx_header.MessageMarker = 0;
 
-        MotorCAN_Send(&tx_header, buf, sizeof(buf));
+        CarCAN_Send(&tx_header, buf, sizeof(buf));
 
         LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(100));

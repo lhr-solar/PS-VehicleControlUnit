@@ -8,6 +8,7 @@ EventGroupHandle_t xPrechargeEventGroup_handle;
 
 uint32_t Battery_Voltage = 0;
 uint32_t Motor_Voltage = 0;
+uint8_t Ignition_State = 0;
 
 static StaticQueue_t driverInputQueueBuffer;
 static uint8_t driverInputQueueStorage[DRIVER_INPUT_QUEUE_SIZE * sizeof(can_rx_payload_t)];
@@ -40,6 +41,31 @@ static void initDriverInputQueue()
     {
         return;
     }
+}
+
+void Check_Ignition_State()
+{
+    if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
+    {
+        if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1 && Ignition_State == 0) // index of ignition_motor = 1
+        {
+            Ignition_State = 1;
+            State = PRECHARGE_STATE_INITIAL;
+            printf("Ignition ON, starting precharge sequence\r\n");
+        }
+        else if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 0 && Ignition_State == 1) // index of ignition_motor = 1
+        {
+            Ignition_State = 0;
+            State = PRECHARGE_STATE_WAITING; // Reset to initial state?
+            printf("Ignition OFF, stopping precharge sequence\r\n");
+            Ignition_Off();
+        }
+    }
+}
+
+void Ignition_Off() // TODO: Open contactors one by one
+{
+
 }
 
 void Init_PrechargeTask()
@@ -167,17 +193,13 @@ void Task_Precharge()
         case PRECHARGE_STATE_WAITING:
 
             set_stateBit(PRECHARGE_WAITING_STATE);
-
-            if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
-            {
-                if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1) // index of ignition_motor = 1
-                {
-                    State = PRECHARGE_STATE_INITIAL;
-                    printf("Ignition ON, starting precharge sequence\r\n");
-                }
-            }
+            Check_Ignition_State(); // Wait for ignition on message from driver input task, then move to initial precharge state
+            printf("Precharge State: Waiting for Ignition\r\n");
+            
             break;
         case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
+
+            Check_Ignition_State();
 
             set_stateBit(PRECHARGE_INITIAL_STATE);
 
@@ -197,6 +219,8 @@ void Task_Precharge()
 
             break;
         case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
+            
+            Check_Ignition_State();
 
             set_stateBit(PRECHARGE_PRECHARGING_STATE);
 
@@ -225,6 +249,8 @@ void Task_Precharge()
             }
             break;
         case PRECHARGE_STATE_RUN: // Run state: Continuously checks that motor voltage stays within 80% of battery voltage
+
+            Check_Ignition_State();
 
             set_stateBit(PRECHARGE_RUN_STATE);
 

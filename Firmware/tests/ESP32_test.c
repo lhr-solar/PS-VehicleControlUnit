@@ -41,7 +41,7 @@ void TxTask(void *argument){
         status = ESP32_Send(startMsg2, msgLen, portMAX_DELAY);
 
         status = ESP32_Send(newLine, newLineLen, portMAX_DELAY);
-        if (status == UART_SENT) {
+        if (status == UART_OK) {
             txCount++;
             // Toggle LED to indicate successful transmission
             HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);

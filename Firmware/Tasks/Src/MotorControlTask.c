@@ -5,12 +5,8 @@
 #define MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD 5000
 
 // number of times the thread will run before we print out debug info
-<<<<<<< HEAD
-#define PRINT_DEBUG_COUNT (PRINT_DEBUG_PERIOD / MOTOR_CONTROL_TASK_PERIOD_MS)
-=======
 #define MOTOR_CONTROLLER_PRINT_DEBUG_COUNT (MOTOR_CONTROLLER_PRINT_DEBUG_PERIOD/MOTOR_CONTROL_TASK_PERIOD_MS)
 
->>>>>>> ac9d35a6bed8ff4a0420e345ab5c841ead8bc7b7
 
 static FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
 

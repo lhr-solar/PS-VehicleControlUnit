@@ -178,7 +178,7 @@ void Set_Fault_LED()
         LED_set(CAR_BPSFAULT, LED_ON);
         break;
     case FAULT_BIT(BPS_FAULT):
-        LED_set(CAR_BPSFAULT, ON);
+        LED_set(CAR_BPSFAULT, LED_ON);
         break;
     default:
         break;

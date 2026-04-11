@@ -10,6 +10,7 @@
 #include "MotorSafeBits.h"
 
 #define MAX_FAULT_STRING_CHARS 20
+#define PRINTF_DELAY_MS 250
 
 typedef struct{
     const char fault_string[MAX_FAULT_STRING_CHARS];

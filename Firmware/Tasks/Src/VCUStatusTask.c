@@ -7,7 +7,6 @@
 #include "Watchdogs.h"
 #include "StatusLEDs.h"
 
-// VCU_Status  0x10  3 bytes  100ms
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[CAN_DLC_VCU_STATUS];
 
@@ -72,7 +71,7 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         tx_header.Identifier = CAN_ID_VCU_STATUS;
         tx_header.IdType = FDCAN_STANDARD_ID;
         tx_header.TxFrameType = FDCAN_DATA_FRAME;
-        tx_header.DataLength = FDCAN_DLC_BYTES_8;
+        tx_header.DataLength = FDCAN_DLC_BYTES(CAN_DLC_VCU_STATUS);
         tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
         tx_header.BitRateSwitch = FDCAN_BRS_OFF;
         tx_header.FDFormat = FDCAN_CLASSIC_CAN;

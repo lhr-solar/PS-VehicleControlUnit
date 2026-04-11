@@ -24,11 +24,11 @@ EventGroupHandle_t fsmInputGroup = {0};
 
 MocoState_t current_state = {0};
 
-static FSMDataIn_t fsm_input_read = {0};
-static FSMDataIn_t fsm_input_write = {0};
+static FSMDataIn_t fsm_input_a = {0};
+static FSMDataIn_t fsm_input_b = {0};
 
-FSMDataIn_t *g_data_read = &fsm_input_read;
-FSMDataIn_t *g_data_write = &fsm_input_write;
+FSMDataIn_t * volatile g_data_read = &fsm_input_a;
+FSMDataIn_t * volatile g_data_write = &fsm_input_b;
 
 static bool rollover_limit_active = false;
 static volatile uint16_t fsm_inputs = 0;
@@ -78,8 +78,10 @@ uint16_t fsm_get_fsm_inputs(void) { return (uint16_t)fsm_inputs; }
 bool fsm_is_over_rollover_speed(void) { return rollover_limit_active; }
 
 void fsm_set_all_inputs(EventBits_t mask) {
+    taskENTER_CRITICAL();
     xEventGroupClearBits(fsmInputGroup, FSM_INPUTS_MASK_ALL);
     xEventGroupSetBits(fsmInputGroup, mask & FSM_INPUTS_MASK_ALL);
+    taskEXIT_CRITICAL();
 }
 
 void fsm_set_input(EventBits_t mask) {

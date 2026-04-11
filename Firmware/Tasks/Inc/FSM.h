@@ -80,8 +80,8 @@ typedef struct {
     mc_velocitymeasurement_t motor_velocity;
 } FSMDataIn_t;
 
-extern FSMDataIn_t *g_data_read;
-extern FSMDataIn_t *g_data_write;
+extern FSMDataIn_t * volatile g_data_read;
+extern FSMDataIn_t * volatile g_data_write;
 
 
 

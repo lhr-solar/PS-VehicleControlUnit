@@ -1,6 +1,9 @@
 #include "UpdateFSMInputsTask.h"
 #include "Contactors.h"
+#include "FaultBits.h"
 #include "event_groups.h"
+#include <string.h>
+#include <math.h>
 
 static float brake_threshold = BRAKE_THRESH;
 
@@ -18,8 +21,8 @@ static void rebuild_inputs(void) {
     if (g_data_read->driver_input.Regen_Enable) s |= REGEN_ENABLED_BIT;
     if (g_data_read->driver_input.Cruise_Enable) s |= CRUISE_CONTROL_BUTTON_BIT;
     if (g_data_read->bps_status.BPS_Regen_OK) s |= READY_TO_REGEN_BIT;
-    if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
-        s |= PRECHARGE_COMPLETE_BIT;
+    // if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
+    s |= PRECHARGE_COMPLETE_BIT;
 
     if (g_data_read->accel_brake.BrakePedal_Main_Pos >= brake_threshold) {
         s |= BRAKE_BIT;
@@ -31,23 +34,55 @@ static void rebuild_inputs(void) {
     fsm_set_all_inputs(s);
 }
 
+void UFI_throw_faults() {
+    EventBits_t mask = 0;
+    if (g_data_read->bps_status.BPS_Fault) 
+        mask |= FAULT_BIT(FAULT_ID_BPS_FAULT);
+    if (g_data_read->controls_status.Controls_Leader_Fault) 
+        mask |= FAULT_BIT(FAULT_ID_CONTROLS_FAULT);
+    
+    // Moco faults
+    if (g_data_read->motor_status.MC_FAULT_HardwareOverCurrent)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT);
+    if (g_data_read->motor_status.MC_FAULT_SoftwareOverCurrent)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_SOFTWARE_OVERCURRENT);
+    if (g_data_read->motor_status.MC_FAULT_DcBusOverVoltage)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_DC_BUS_OVERVOLTAGE);
+    if (g_data_read->motor_status.MC_FAULT_BadMotorPositionHallSeq)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_BAD_HALL_SEQUENCE);
+    if (g_data_read->motor_status.MC_FAULT_WatchdogCausedLastReset)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_WD_RESET);
+    if (g_data_read->motor_status.MC_FAULT_ConfigRead)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_CONFIG_READ);
+    if (g_data_read->motor_status.MC_FAULT_15vRailUnderVoltage)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_15V_UNDERVOLTAGE);
+    if (g_data_read->motor_status.MC_FAULT_DesaturationFault)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_DESATURATION);
+    if (g_data_read->motor_status.MC_FAULT_MotorOverSpeed)
+        mask |= FAULT_BIT(FAULT_ID_MOTOR_OVERSPEED);
+
+    // Pedals faults
+    if (g_data_read->accel_brake.AccelPedal_Main_Fault ||
+        g_data_read->accel_brake.AccelPedal_Redundant_Fault ||
+        g_data_read->accel_brake.BrakePedal_Main_Fault ||
+        g_data_read->accel_brake.BrakePedal_Redundant_Fault ||
+        fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
+            g_data_read->accel_brake.AccelPedal_Redundant_Pos) < ACCEPTABLE_PEDAL_DEVIATION) {
+        mask |= FAULT_BIT(FAULT_ID_PEDAL_BOARD_FAULT);
+    }
+
+    if (g_data_read->lws.LWS_Fault) 
+        mask |= FAULT_BIT(FAULT_ID_STEERING_SENSOR_FAULT);
+
+    faults_set_mask(mask);
+}
+
 void Task_UpdateFSMInputs(void *args __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
-    FDCAN_TxHeaderTypeDef tx_header = {0};
-    tx_header.Identifier = 0x123;
-    tx_header.IdType = FDCAN_STANDARD_ID;
-    tx_header.TxFrameType = FDCAN_DATA_FRAME;
-    tx_header.DataLength = FDCAN_DLC_BYTES_8;
-    tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-    tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-    tx_header.FDFormat = FDCAN_CLASSIC_CAN;
-    tx_header.TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-    tx_header.MessageMarker = 0;
-    uint8_t buf[8] = {0};
 
     while (1) {
         // update from can
-        FSMDataIn_t *update = g_data_write;
+        FSMDataIn_t *volatile update = g_data_write;
         MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
 
@@ -56,24 +91,19 @@ void Task_UpdateFSMInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_BPS_Status(&update->bps_status, 0);
         CarCAN_Recv_Pedals_Position(&update->accel_brake, 0);
         CarCAN_Recv_Controls_Status(&update->controls_status, 0);
-        if (CarCAN_Recv_Driver_Input(&update->driver_input, 0) == CAN_OK) {
-            // Handle driver input
-            buf[0] = update->driver_input.Gear_Forward;
-            tx_header.Identifier = 0x123;
-            CarCAN_Send(&tx_header, buf, sizeof(buf));
-        }
+        CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
 
-        FSMDataIn_t *tmp;
+        FSMDataIn_t *volatile tmp;
         taskENTER_CRITICAL();
         tmp = g_data_read;
         g_data_read = g_data_write;
         g_data_write = tmp;
         taskEXIT_CRITICAL();
+        memcpy(g_data_write, g_data_read, sizeof(FSMDataIn_t));
 
-        buf[0] = g_data_read->driver_input.Gear_Forward;
-        tx_header.Identifier = 0x321;
-        CarCAN_Send(&tx_header, buf, sizeof(buf));
+        // Throw relevant faults
+        UFI_throw_faults();
 
         rebuild_inputs();
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));

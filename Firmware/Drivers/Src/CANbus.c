@@ -128,7 +128,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
         .Identifier = CAN_ID_MC_DRIVECOMMAND,
         .IdType = FDCAN_STANDARD_ID,
         .TxFrameType = FDCAN_DATA_FRAME,
-        .DataLength = CAN_DLC_MC_DRIVECOMMAND,
+        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_MC_DRIVECOMMAND),
         .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
         .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN,
@@ -142,7 +142,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
     memcpy(&moco_drive_tx_data[4], &current, sizeof(float));
 
     can_status_t result =
-        can_fd_send(motorfdcan, &header, moco_drive_tx_data, delay);
+        can_fd_send(carfdcan, &header, moco_drive_tx_data, delay);
 
     return result; 
 }
@@ -283,22 +283,22 @@ can_status_t CarCAN_Recv_Driver_Input(driver_input_status_t *out, TickType_t del
         can_fd_recv(carfdcan, CAN_ID_DRIVER_INPUT_STATUS, &header, driver_input_rx_data, delay);
 
     if (result == CAN_OK) {
-        out->Ignition_Array = driver_input_rx_data[0] & (0x01);
-        out->Ignition_Motor = driver_input_rx_data[0] & (0x01 << 1);
-        out->Ignition_Off = driver_input_rx_data[0] & (0x01 << 2);
-        out->Cruise_Enable = driver_input_rx_data[0] & (0x01 << 3);
-        out->Cruise_Set = driver_input_rx_data[0] & (0x01 << 4);
-        out->Gear_Forward = driver_input_rx_data[0] & (0x01 << 5);
-        out->Gear_Neutral = driver_input_rx_data[0] & (0x01 << 6);
-        out->Gear_Reverse = driver_input_rx_data[0] & (0x01 << 7);
-        
-        out->Hazard_Pressed = driver_input_rx_data[1] & (0x01);
-        out->Horn_Pressed = driver_input_rx_data[1] & (0x01 << 1);
-        out->Blinker_Left = driver_input_rx_data[1] & (0x01 << 2);
-        out->Blinker_Right = driver_input_rx_data[1] & (0x01 << 3);
-        out->PushToTalk_Pressed = driver_input_rx_data[1] & (0x01 << 4);
-        out->Regen_Activate = driver_input_rx_data[1] & (0x01 << 5);
-        out->Regen_Enable = driver_input_rx_data[1] & (0x01 << 6);
+        out->Ignition_Array   = !!(driver_input_rx_data[0] & (1U << 0));
+        out->Ignition_Motor   = !!(driver_input_rx_data[0] & (1U << 1));
+        out->Ignition_Off     = !!(driver_input_rx_data[0] & (1U << 2));
+        out->Cruise_Enable    = !!(driver_input_rx_data[0] & (1U << 3));
+        out->Cruise_Set       = !!(driver_input_rx_data[0] & (1U << 4));
+        out->Gear_Forward     = !!(driver_input_rx_data[0] & (1U << 5));
+        out->Gear_Neutral     = !!(driver_input_rx_data[0] & (1U << 6));
+        out->Gear_Reverse     = !!(driver_input_rx_data[0] & (1U << 7));
+
+        out->Hazard_Pressed      = !!(driver_input_rx_data[1] & (1U << 0));
+        out->Horn_Pressed        = !!(driver_input_rx_data[1] & (1U << 1));
+        out->Blinker_Left        = !!(driver_input_rx_data[1] & (1U << 2));
+        out->Blinker_Right       = !!(driver_input_rx_data[1] & (1U << 3));
+        out->PushToTalk_Pressed  = !!(driver_input_rx_data[1] & (1U << 4));
+        out->Regen_Activate      = !!(driver_input_rx_data[1] & (1U << 5));
+        out->Regen_Enable        = !!(driver_input_rx_data[1] & (1U << 6));
     }
 
     return result;
@@ -314,41 +314,16 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
         can_fd_recv(carfdcan, CAN_ID_PEDAL_STATUS, &header, pedals_pos_rx_data, delay);
 
     if (result == CAN_OK) {
-        out->AccelPedal_Main_Pos = pedals_pos_rx_data[0];
-        out->AccelPedal_Redundant_Pos = pedals_pos_rx_data[1];
-        out->BrakePedal_Main_Pos = pedals_pos_rx_data[2];
-        out->BrakePedal_Redundant_Pos = pedals_pos_rx_data[3];
-        out->AccelPedal_Main_Fault = pedals_pos_rx_data[4] & (0x01);
-        out->AccelPedal_Redundant_Fault = pedals_pos_rx_data[4] & (0x01 << 1);
-        out->BrakePedal_Main_Fault = pedals_pos_rx_data[4] & (0x01 << 2);
-        out->BrakePedal_Redundant_Fault = pedals_pos_rx_data[4] & (0x01 << 3);        
+        out->AccelPedal_Main_Pos        = pedals_pos_rx_data[0];
+        out->AccelPedal_Redundant_Pos   = pedals_pos_rx_data[1];
+        out->BrakePedal_Main_Pos        = pedals_pos_rx_data[2];
+        out->BrakePedal_Redundant_Pos   = pedals_pos_rx_data[3];
+
+        out->AccelPedal_Main_Fault        = !!(pedals_pos_rx_data[4] & (1U << 0));
+        out->AccelPedal_Redundant_Fault   = !!(pedals_pos_rx_data[4] & (1U << 1));
+        out->BrakePedal_Main_Fault        = !!(pedals_pos_rx_data[4] & (1U << 2));
+        out->BrakePedal_Redundant_Fault   = !!(pedals_pos_rx_data[4] & (1U << 3));
     }
-
-    return result;
-}
-
-
-can_status_t CarCAN_Send_VCU_Status(vcu_status_t *out, TickType_t delay) {
-    if (out == NULL) return CAN_EMPTY;
-
-    FDCAN_TxHeaderTypeDef header = {
-        .Identifier = CAN_ID_VCU_STATUS,
-        .IdType = FDCAN_STANDARD_ID,
-        .TxFrameType = FDCAN_DATA_FRAME,
-        .DataLength = CAN_DLC_VCU_STATUS,
-        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-        .BitRateSwitch = FDCAN_BRS_OFF,
-        .FDFormat = FDCAN_CLASSIC_CAN,
-        .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
-        .MessageMarker = 0,
-    };
-
-    uint8_t vcu_status_tx_data[CAN_DLC_VCU_STATUS] = {0};
-
-    // TODO: actually pack ts
-
-    can_status_t result =
-        can_fd_send(carfdcan, &header, vcu_status_tx_data, delay);
 
     return result;
 }

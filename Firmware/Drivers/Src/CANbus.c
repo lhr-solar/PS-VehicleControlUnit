@@ -142,7 +142,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
     memcpy(&moco_drive_tx_data[4], &current, sizeof(float));
 
     can_status_t result =
-        can_fd_send(carfdcan, &header, moco_drive_tx_data, delay);
+        can_fd_send(motorfdcan, &header, moco_drive_tx_data, delay);
 
     return result; 
 }

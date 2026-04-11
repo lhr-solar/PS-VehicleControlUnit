@@ -10,12 +10,8 @@ uint32_t Battery_Voltage = 0;
 uint32_t Motor_Voltage = 0;
 static Precharge_State_t State;
 uint8_t Ignition_State = 0;
-
-static StaticQueue_t driverInputQueueBuffer;
-static uint8_t driverInputQueueStorage[DRIVER_INPUT_QUEUE_SIZE * sizeof(can_rx_payload_t)];
-static QueueHandle_t driverInputQueue;
-
-can_rx_payload_t payload;
+// uint8_t Ignition_Off_Initiated = 0;
+TickType_t offTick = 0;
 
 static FDCAN_TxHeaderTypeDef VCUSendVoltageHeader;
 
@@ -32,21 +28,7 @@ static void initVCUSendVoltageHeader(FDCAN_TxHeaderTypeDef *tx_header)
     tx_header->MessageMarker = 0;
 }
 
-static void initDriverInputQueue()
-{
-    driverInputQueue = xQueueCreateStatic(
-        DRIVER_INPUT_QUEUE_SIZE,
-        sizeof(can_rx_payload_t),
-        driverInputQueueStorage,
-        &driverInputQueueBuffer);
-
-    if (driverInputQueue == NULL)
-    {
-        return;
-    }
-}
-
-void Ignition_Off() // TODO: Open contactors one by one
+void Ignition_Off()
 {
     printf("Ignition OFF, opening motor precharge contactor\r\n");
 
@@ -62,29 +44,28 @@ void Ignition_Off() // TODO: Open contactors one by one
         set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
     }
 
-    // Return task to idle/waiting state
-    State = PRECHARGE_STATE_WAITING;
+    State = PRECHARGE_STATE_WAITING; // Return task to idle/waiting state
 
     printf("Ignition OFF, shutdown complete\r\n");
 }
 
 void Check_Ignition_State()
 {
-    if (xQueueReceive(driverInputQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE)
+    // if (Ignition_Off_Initiated && (xTaskGetTickCount() - offTick) > pdMS_TO_TICKS(IGNITION_OFF_DELAY_MS))
+
+    if (Start_Precharge)
     {
-        if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 1 && Ignition_State == 0) // index of ignition_motor = 1
-        {
-            Ignition_State = 1;
-            State = PRECHARGE_STATE_INITIAL;
-            printf("Ignition ON, starting precharge sequence\r\n");
-        }
-        else if (payload.header.Identifier == CAN_ID_DRIVER_INPUT_STATUS && payload.data[IGNITION_MOTOR_INDEX] == 0 && Ignition_State == 1) // index of ignition_motor = 1
-        {
-            Ignition_State = 0;
-            State = PRECHARGE_STATE_WAITING; // Reset to initial state?
-            printf("Ignition OFF, stopping precharge sequence\r\n");
-            Ignition_Off();
-        }
+        Start_Precharge = 0;
+        Ignition_State = 1;
+        State = PRECHARGE_STATE_INITIAL;
+        printf("Ignition ON, starting precharge sequence\r\n");
+    }
+    else if (End_Precharge)
+    {
+        End_Precharge = 0;
+        Ignition_State = 0;
+        printf("Ignition OFF, stopping precharge sequence\r\n");
+        Ignition_Off();
     }
 }
 
@@ -101,25 +82,13 @@ void Init_PrechargeTask()
     contactor_init();
     MotorSafeBits_Init();
     initVCUSendVoltageHeader(&VCUSendVoltageHeader);
-    initDriverInputQueue();
-}
-
-void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload)
-{
-
-    BaseType_t higherPriorityTaskWoken = pdFALSE;
-
-    xQueueSendFromISR(
-        driverInputQueue,
-        &recv_payload,
-        &higherPriorityTaskWoken);
 }
 
 // encodes battery and motor voltage into an array of bytes for can_send
 static void packMotorVoltage(vcu_precharge_voltages_t voltages, uint8_t tx_data[8])
 {
-    memcpy(&tx_data[0], &(voltages.Precharge_Battery_Voltage), sizeof(uint32_t)); // TODO: Have Precharge task push adc readings into the can messages struct
-    memcpy(&tx_data[4], &(voltages.Precharge_Motor_Voltage), sizeof(uint32_t));
+    memcpy(&tx_data[0], &(voltages.VCU_Precharge_Battery_Voltage), sizeof(uint32_t)); // TODO: Have Precharge task push adc readings into the can messages struct
+    memcpy(&tx_data[4], &(voltages.VCU_Precharge_Motor_Voltage), sizeof(uint32_t));
 }
 
 void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
@@ -156,10 +125,10 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage)
         set_faultBit(PRECHARGE_SENSE_MISMATCH_FAULT);
     }
 
-    printf("Motor Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_CONTACTOR));
-    printf("Precharge Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_PRE_CONTACTOR));
-    printf("Motor Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_CONTACTOR));
-    printf("Precharge Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_PRE_CONTACTOR));
+    // printf("Motor Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_CONTACTOR));
+    // printf("Precharge Sense Pin Reading: %d\r\n", contactor_get_sense(MOTOR_PRE_CONTACTOR));
+    // printf("Motor Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_CONTACTOR));
+    // printf("Precharge Contactor State: %d\r\n", contactor_get_commanded_state(MOTOR_PRE_CONTACTOR));
 }
 
 void Task_Precharge()
@@ -187,11 +156,10 @@ void Task_Precharge()
             Error_Handler();
         }
 
-        // TODO: Send voltages through car can
         Battery_Voltage = ADC_Result.Battery_Voltage;
         Motor_Voltage = ADC_Result.Motor_Voltage;
-        precharge_voltages.Precharge_Battery_Voltage = Battery_Voltage;
-        precharge_voltages.Precharge_Motor_Voltage = Motor_Voltage;
+        precharge_voltages.VCU_Precharge_Battery_Voltage = Battery_Voltage;
+        precharge_voltages.VCU_Precharge_Motor_Voltage = Motor_Voltage;
 
         packMotorVoltage(precharge_voltages, VCU_tx_data);
 
@@ -213,7 +181,7 @@ void Task_Precharge()
             set_stateBit(PRECHARGE_WAITING_STATE);
             Check_Ignition_State(); // Wait for ignition on message from driver input task, then move to initial precharge state
             printf("Precharge State: Waiting for Ignition\r\n");
-            
+
             break;
         case PRECHARGE_STATE_INITIAL: // Startup state: Closes main contactor and moves to precharging state
 
@@ -237,7 +205,7 @@ void Task_Precharge()
 
             break;
         case PRECHARGE_STATE_PRECHARGING: // Precharging state: Waits for battery voltage to reach 90% of motor voltage, then closes precharge contactor and moves to run state
-            
+
             Check_Ignition_State();
 
             set_stateBit(PRECHARGE_PRECHARGING_STATE);

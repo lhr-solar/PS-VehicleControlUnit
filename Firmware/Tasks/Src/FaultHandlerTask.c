@@ -4,12 +4,6 @@
 EventBits_t fault_bits = 0;
 EventBits_t state_bits = 0;
 
-static StaticQueue_t BPSQueueBuffer;
-static uint8_t BPSQueueStorage[BPS_QUEUE_SIZE * sizeof(can_rx_payload_t)];
-static QueueHandle_t BPSQueue;
-
-can_rx_payload_t payload;
-
 static FDCAN_TxHeaderTypeDef VCUSendStatusHeader;
 
 static void initVCUSendStatusHeader(FDCAN_TxHeaderTypeDef *tx_header)
@@ -23,20 +17,6 @@ static void initVCUSendStatusHeader(FDCAN_TxHeaderTypeDef *tx_header)
     tx_header->FDFormat = FDCAN_CLASSIC_CAN;
     tx_header->TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
     tx_header->MessageMarker = 0;
-}
-
-static void initBPSQueue()
-{
-    BPSQueue = xQueueCreateStatic(
-        BPS_QUEUE_SIZE,
-        sizeof(can_rx_payload_t),
-        BPSQueueStorage,
-        &BPSQueueBuffer);
-
-    if (BPSQueue == NULL)
-    {
-        return;
-    }
 }
 
 void Init_FaultHandlerTask()
@@ -54,7 +34,6 @@ void Init_FaultHandlerTask()
     }
 
     initVCUSendStatusHeader(&VCUSendStatusHeader);
-    initBPSQueue();
 }
 
 void Kill_Precharge_Task()
@@ -69,31 +48,6 @@ void Fault_Loop()
 {
     while (1)
     {
-        if (xQueueReceive(BPSQueue, &payload, pdMS_TO_TICKS(1000)) == pdTRUE) // TODO: Is BPS on Car CAN? Can i use FDCAN3 receive hook?
-        {
-            if(payload.header.Identifier == /*CAN_ID_BPS*/ && payload.data[/* Fault Index */] == 1) // TODO: All fault cases need to do this, will create function later
-            {
-                printf("Ignition OFF, opening motor precharge contactor\r\n");
-
-                if (contactor_set(MOTOR_PRE_CONTACTOR, OPEN, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
-                {
-                    set_faultBit(PRECHARGE_SENSE_TIMEOUT_FAULT);
-                }
-
-                printf("Ignition OFF, opening motor contactor\r\n");
-
-                if (contactor_set(MOTOR_CONTACTOR, OPEN, CALLBACK_BLOCKING_TIME, NORMAL) != SUCCESS)
-                {
-                    set_faultBit(MOTOR_SENSE_TIMEOUT_FAULT);
-                }
-
-                // Return task to idle/waiting state
-                State = PRECHARGE_STATE_WAITING;
-
-                printf("Ignition OFF, shutdown complete\r\n");
-            }
-        }
-
         switch (fault_bits) // compare against individual bitmasks
         {
         case FAULT_BIT(MOTOR_GREATER_THAN_BATTERY_FAULT):
@@ -132,6 +86,10 @@ void Fault_Loop()
             printf("Fault: Precharge Sense Mismatch\r\n");
             vTaskDelay(PRINTF_DELAY_MS);
             break;
+        case FAULT_BIT(BPS_FAULT):
+            printf("Fault: BPS Fault\r\n");
+            vTaskDelay(PRINTF_DELAY_MS);
+            break;
         default:
             break;
         }
@@ -167,6 +125,9 @@ void Set_Fault_LED()
         LED_set(CAR_BPSFAULT, ON);
         break;
     case FAULT_BIT(PRECHARGE_SENSE_MISMATCH_FAULT):
+        LED_set(CAR_BPSFAULT, ON);
+        break;
+    case FAULT_BIT(BPS_FAULT):
         LED_set(CAR_BPSFAULT, ON);
         break;
     default:
@@ -218,37 +179,30 @@ void Task_FaultHandler()
 
     while (1)
     {
+        packVCUStatus(VCUStatus, VCU_tx_data);
+
+        if (Car_CANBus_Send(&VCUSendStatusHeader, VCU_tx_data, portMAX_DELAY) == CAN_ERR)
         {
-            // LED_set(HB, ON);
-            // vTaskDelay(500);
-            // LED_set(HB, OFF);
-            // vTaskDelay(500);
-
-            packVCUStatus(VCUStatus, VCU_tx_data);
-
-            if (Car_CANBus_Send(&VCUSendStatusHeader, VCU_tx_data, portMAX_DELAY) == CAN_ERR)
-            {
-                can_send_errors++;
-            }
-            else
-            {
-                can_send_errors = 0;
-            }
-
-            fault_bits = faultBit_wait(NUM_FAULTS, portMAX_DELAY);
-
-            if (fault_bits != 0)
-            {
-                Kill_Precharge_Task();
-                contactor_emergency_open_all();
-
-                printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
-
-                Set_Fault_LED();
-                Fault_Loop();
-            }
+            can_send_errors++;
+        }
+        else
+        {
+            can_send_errors = 0;
         }
 
-        vTaskDelay(1000);
+        fault_bits = faultBit_wait(NUM_FAULTS, portMAX_DELAY);
+
+        if (fault_bits != 0)
+        {
+            Kill_Precharge_Task();
+            contactor_emergency_open_all();
+
+            printf("Fault Handler triggered with bitmask: 0x%02lX\r\n", fault_bits);
+
+            Set_Fault_LED();
+            Fault_Loop();
+        }
     }
+
+    vTaskDelay(1000);
 }

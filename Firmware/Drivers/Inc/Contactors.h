@@ -22,8 +22,8 @@ typedef enum
  */
 typedef enum
 {
-    MOTOR_CONTACTOR,     /**< Battery to Motor Contactor */
-    MOTOR_PRE_CONTACTOR, /**< Post-Precharge Bypass Contactor */
+    MOTOR_PRE_CONTACTOR, /**< Battery to Motor Contactor */
+    MOTOR_CONTACTOR,     /**< Post-Precharge Bypass Contactor */
     NUM_CONTACTORS       /**< Total count helper */
 } contactor_num_t;
 

@@ -9,6 +9,7 @@
 #include "CANbus.h"
 #include "CarCAN_can_msgs.h"
 #include <string.h>
+#include "VCUReceiveCANTask.h"
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V
@@ -29,11 +30,6 @@
 #define PRECHARGE_TIMEOUT_MS 400 // Precharge time to 90% -> 0.9 = 1 - e^(-t/RC), so t = -RC * ln(1-0.9) = 2.3*RC. For our case, R = 110 Ohms and C = 1 mF -> t = 253 ms.
 #define ADC_TIMEOUT_MS 20
 #define PRECHARGE_TASK_DELAY_MS 100
-
-// enables the fdcan3 recieve hook, calls can_fd_rx_callback_hook everytime a can rx interrupt happens
-#define FDCAN3_RECV_HOOK_EN
-#define DRIVER_INPUT_QUEUE_SIZE 32
-#define IGNITION_MOTOR_INDEX 1 // index of motor ignition in driver input status message
 
 typedef enum
 {
@@ -66,8 +62,11 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
  */
 void Task_Precharge();
 
+void Ignition_Off();
+
 /* handle for the Precharge task, defined in PrechargeTask.c */
 extern TaskHandle_t hprecharge_task;
 
 extern uint32_t Battery_Voltage;
 extern uint32_t Motor_Voltage;
+extern uint8_t Ignition_State;

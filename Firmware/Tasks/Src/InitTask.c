@@ -9,6 +9,9 @@ StackType_t Precharge_Task_Stack[configMINIMAL_STACK_SIZE];
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[configMINIMAL_STACK_SIZE];
 
+StaticTask_t VCUReceiveCAN_Task_Buffer;
+StackType_t VCUReceiveCAN_Task_Stack[configMINIMAL_STACK_SIZE];
+
 StaticTask_t Driver_Input_Task_Buffer;
 StackType_t Driver_Input_Task_Stack[configMINIMAL_STACK_SIZE];
 
@@ -42,14 +45,23 @@ void Task_Init()
     );
 
     xTaskCreateStatic(
+        Task_VCUReceiveCAN,        // Task function
+        "VCUReceiveCAN",           // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,  // Stack size in words
+        NULL,                      // Task input parameter
+        tskIDLE_PRIORITY + 2,      // Task priority
+        VCUReceiveCAN_Task_Stack,  // Task handle
+        &VCUReceiveCAN_Task_Buffer // Static task buffer (optional)
+    );
+
+    xTaskCreateStatic(
         Task_DriverInputTest,
         "DriverInputTest",
         configMINIMAL_STACK_SIZE,
         NULL,
         tskIDLE_PRIORITY + 2,
         Driver_Input_Task_Stack,
-        &Driver_Input_Task_Buffer
-    );
+        &Driver_Input_Task_Buffer);
 
     vTaskDelete(NULL);
 }

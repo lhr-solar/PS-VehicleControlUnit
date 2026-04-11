@@ -24,6 +24,7 @@ typedef enum
     CALLBACK_FAULT,                   // Contactor state did not match expected state after being set
     MOTOR_SENSE_MISMATCH_FAULT,       // Motor contactor sense pin reading does not match contactor state
     PRECHARGE_SENSE_MISMATCH_FAULT,   // Precharge contactor sense pin reading does not match contactor state
+    BPS_FAULT,                        // Fault bit for any fault reported by BPS
     NUM_FAULTS
 } fault_bit_t;
 
@@ -36,7 +37,7 @@ typedef enum
     NUM_STATES
 } state_bit_t;
 
-#define FAULT_NUM 9
+#define FAULT_NUM 10
 
 /* Convert enum to bitmask */
 #define FAULT_BIT(fault) (1UL << (fault))
@@ -95,3 +96,6 @@ void set_stateBit(state_bit_t bit);
  * @return none
  */
 void set_faultBitFromISR(fault_bit_t bit);
+
+extern EventGroupHandle_t faultStateBits;
+extern EventGroupHandle_t stateBits;

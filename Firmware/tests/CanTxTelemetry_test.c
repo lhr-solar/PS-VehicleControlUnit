@@ -53,7 +53,7 @@ int main(){
     LEDs_init();
 
 
-    Motor_CANBus_Init();
+    CAN_Init();
 
     Init_UART_Printf();
 

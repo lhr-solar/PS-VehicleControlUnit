@@ -24,7 +24,7 @@ typedef enum
     NUM_MOTOR_STATUS_BITS = 6
 } motor_status_bit_t;
 
-_Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");
+_Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");    
 
 /* Convert enum to bitmask */
 #define MOTOR_STATUS_BIT(motorBit)   (1UL << (motorBit))

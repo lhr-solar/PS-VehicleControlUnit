@@ -5,9 +5,12 @@
 #include "Contactors.h"
 #include "task.h"
 #include "InitTask.h"
+#include "CANbus.h"
+#include "CarCAN_can_msgs.h"
 #include "MotorSafeBits.h"
 
 #define MAX_FAULT_STRING_CHARS 20
+#define PRINTF_DELAY_MS 250
 
 typedef struct{
     const char fault_string[MAX_FAULT_STRING_CHARS];
@@ -27,3 +30,6 @@ void Kill_Precharge_Task();
 void Fault_Loop();
 
 void Set_Fault_LED();
+
+extern EventBits_t fault_bits;
+extern EventBits_t state_bits;

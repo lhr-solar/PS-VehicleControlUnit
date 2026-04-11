@@ -2,6 +2,8 @@
 
 #include "FaultHandlerTask.h"
 #include "PrechargeTask.h"
+#include "VCUReceiveCANTask.h"
+#include "DriverInputTask.h"
 #include "MotorSafeBits.h"
 #include "MotorControlTask.h"
 #include "MotorTelemetryTask.h"
@@ -50,5 +52,8 @@ extern StackType_t Can_Tx_Telemetry_Task_Stack[CAN_TX_TELEMETRY_STACK_SIZE];
 // Period the precharge thread runs at 
 #define PRECHARGE_TASK_DELAY_MS 100
 
+
+extern StaticTask_t VCUReceiveCAN_Task_Buffer;
+extern StackType_t VCUReceiveCAN_Task_Stack[configMINIMAL_STACK_SIZE];
 
 void Task_Init();

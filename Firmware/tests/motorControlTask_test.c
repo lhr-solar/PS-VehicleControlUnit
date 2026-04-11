@@ -28,7 +28,7 @@ int main(){
     LEDs_init();
 
 
-    if(Motor_CANBus_Init() != CAN_OK){
+    if(CAN_Init() != CAN_OK){
         can_error_handler();
     }
 

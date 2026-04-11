@@ -13,13 +13,14 @@ static FDCAN_TxHeaderTypeDef mocoDriveCommandHeader;
 static void initDriveCommandHeader(FDCAN_TxHeaderTypeDef *tx_header);
 static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header);
 
-
-void MotorControlTask_Init(void){
+void MotorControlTask_Init(void)
+{
     // set necessary motor drive command parameters
     initDriveCommandHeader(&mocoDriveCommandHeader);
 }
 
-static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header){
+static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header)
+{
 
     tx_header->Identifier = CAN_ID_MC_POWERCOMMAND;
     tx_header->IdType = FDCAN_STANDARD_ID;
@@ -33,7 +34,8 @@ static void initMotorPowerCommandHeader(FDCAN_TxHeaderTypeDef *tx_header){
 }
 
 // helper function to inialize motor drive command headers
-static void initDriveCommandHeader(FDCAN_TxHeaderTypeDef *tx_header){
+static void initDriveCommandHeader(FDCAN_TxHeaderTypeDef *tx_header)
+{
 
     tx_header->Identifier = CAN_ID_MC_DRIVECOMMAND;
     tx_header->IdType = FDCAN_STANDARD_ID;
@@ -47,18 +49,21 @@ static void initDriveCommandHeader(FDCAN_TxHeaderTypeDef *tx_header){
 }
 
 // encodes a drive command struct into an array of bytes for can_send
-static void packDriveCommand(mc_drivecommand_t motorDriveCommand, uint8_t tx_data[8]){
+static void packDriveCommand(mc_drivecommand_t motorDriveCommand, uint8_t tx_data[8])
+{
     memcpy(&tx_data[4], &(motorDriveCommand.MC_MotorCurrentSetpoint), sizeof(float));
     memcpy(&tx_data[0], &(motorDriveCommand.MC_MotorVelocitySetpoint), sizeof(float));
 }
 
-static void packPowerCommand(mc_powercommand_t motorPowerCommand, uint8_t tx_data[8]){
-     memcpy(&tx_data[4], &(motorPowerCommand.MC_MotorPowerSetpoint), sizeof(float));
+static void packPowerCommand(mc_powercommand_t motorPowerCommand, uint8_t tx_data[8])
+{
+    memcpy(&tx_data[4], &(motorPowerCommand.MC_MotorPowerSetpoint), sizeof(float));
 }
 
 static float busCurrentSetPoint = 1.0f;
 
-void Task_MotorControl(void){
+void Task_MotorControl(void)
+{
 
     // motor canbus MUST be initalized by now
     // the motor safe bits MUST be initalized by now
@@ -76,8 +81,8 @@ void Task_MotorControl(void){
     mc_powercommand_t motorPowerCommand = {0};
     motorPowerCommand.MC_MotorPowerSetpoint = busCurrentSetPoint;
     FDCAN_TxHeaderTypeDef mocoPowerCommandHeader;
-    uint8_t motor_power_tx_data[8]; // the message being sent on the CANbus
-    initMotorPowerCommandHeader(&mocoPowerCommandHeader); // initializes the can tx header
+    uint8_t motor_power_tx_data[8];                           // the message being sent on the CANbus
+    initMotorPowerCommandHeader(&mocoPowerCommandHeader);     // initializes the can tx header
     packPowerCommand(motorPowerCommand, motor_power_tx_data); // packs the motorPower struct into an array of bytes
 
     EventBits_t motorSafeBits;
@@ -118,6 +123,5 @@ void Task_MotorControl(void){
 
         // minimum delay for drive command is 250ms, or else the wavesculptor will reset to neutral
         vTaskDelay(pdMS_TO_TICKS(MOTOR_CONTROL_TASK_PERIOD_MS));
-
     }
 }

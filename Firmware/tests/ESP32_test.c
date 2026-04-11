@@ -97,7 +97,7 @@ void RxTask(void *argument){
         uart_status_t status = UART_ERR;
         status = uart_recv(hlpuart1, &rxBuffer, 1, portMAX_DELAY);
 
-        if (status == UART_RECV) {
+        if (status == UART_OK) {
             rxCount++;
 
             // Print received character

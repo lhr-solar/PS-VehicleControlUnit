@@ -8,8 +8,8 @@
 /** * @brief LED States  */
 typedef enum
 {
-    OFF = 0, // Negative logic
-    ON = 1
+    LED_OFF = GPIO_PIN_SET, // Negative logic
+    LED_ON = GPIO_PIN_RESET 
 } LED_state_t;
 
 /** * @brief Logic-to-Hardware mapping for diagnostic LEDs.
@@ -44,9 +44,4 @@ void LEDs_clear(void);
 void LEDs_init(void);
 
 /** @brief Toggle the LED */
-void Toggle_LED(Status_Mapping_t LED, LED_state_t state);
-
-/** @brief sets all LEDs based on LEDbitmap */
-void update_status(void);
-
-int Get_LED_Bitmap();
+void Toggle_LED(Status_Mapping_t LED);

@@ -10,11 +10,18 @@
 StaticTask_t task_buffer;
 StackType_t task_stack[512];
 
+<<<<<<< HEAD
 void can_error_handler()
 {
     while (1)
     {
         LED_set(MOTOR_FAULT, GPIO_PIN_SET);
+=======
+void can_error_handler(){
+    
+    while(1){
+        LED_set(MOTOR_FAULT, LED_ON);
+>>>>>>> ac9d35a6bed8ff4a0420e345ab5c841ead8bc7b7
     }
 }
 

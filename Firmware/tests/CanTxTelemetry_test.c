@@ -3,6 +3,7 @@
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
+#include "CanTxTelemetryTask.h"
 
 StaticTask_t task_buffer;
 StackType_t task_stack[512];
@@ -34,23 +35,15 @@ static void task(void *pvParameters){
     
     while(1){
 
-        if (can_fd_send(hfdcan3, &tx_header, tx_data, portMAX_DELAY) == CAN_ERR){
-            Error_Handler();
-        }
+        if (Motor_CANBus_Send( &tx_header, tx_data, portMAX_DELAY) == CAN_ERR){}
 
-        // TODO: add status LED
-        HAL_GPIO_TogglePin(HB_LED_PORT, HB_LED_PIN);
+        Toggle_LED(HB);
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 
-void can_error_handler(){
-    while(1){
-        LED_set(MOTOR_FAULT, LED_ON);
-    }
-}
-
 int main(){
+
     HAL_Init();
 
     SystemClock_Config();
@@ -60,9 +53,20 @@ int main(){
     LEDs_init();
 
 
-    if(CAN_Init() != CAN_OK){
-        can_error_handler();
-    }
+    Motor_CANBus_Init();
+
+    Init_UART_Printf();
+
+
+    xTaskCreateStatic(
+        Task_CanTxTelemetry,            // Task function
+        "Can TX Telemetry Thread",      // Name of the task (for debugging)
+        configMINIMAL_STACK_SIZE,       // Stack size in words
+        NULL,                           // Task input parameter
+        CAN_TX_TELEMETRY_THREAD_PRIO,   // Task priority
+        Can_Tx_Telemetry_Task_Stack,     // Task handle
+        &Can_Tx_Telemetry_Task_Buffer    // Static task buffer (optional)
+    );
 
     xTaskCreateStatic(
                 task,
@@ -73,10 +77,13 @@ int main(){
                 task_stack,
                 &task_buffer);
 
-    
+
+
     vTaskStartScheduler();
 
-    while(1){
 
+    while(1){
+        
     }
+    return 0;
 }

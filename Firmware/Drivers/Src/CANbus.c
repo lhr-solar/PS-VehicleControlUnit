@@ -2,8 +2,8 @@
 
 #define FDCAN_NVIC_PRIO configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 5
 
-FDCAN_HandleTypeDef *carfdcan = NULL;
-FDCAN_HandleTypeDef *motorfdcan = NULL;
+FDCAN_HandleTypeDef* motorfdcan;
+FDCAN_HandleTypeDef* carfdcan;
 
 static can_status_t Motor_CANBus_Init(void)
 {

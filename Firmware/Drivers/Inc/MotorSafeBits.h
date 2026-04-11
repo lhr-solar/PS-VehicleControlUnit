@@ -15,12 +15,13 @@
 
 typedef enum
 {
-    BPS_SAFE,                           // BPS is clear and high voltage is on
-    PEDALS_READING_ACCELERATOR,
-    PEDALS_READING_BRAKE,
-    MOTOR_CONTACTOR_ENABLED,            // The Motor Contactor is enabled
-    MOTOR_PRECHARGE_CONTACTOR_ENABLED,   // The Motor precharge Contactor is enabled
-    NUM_MOTOR_STATUS_BITS
+    BPS_SAFE = 0,                               // BPS is clear and high voltage is on
+    PEDALS_READING_ACCELERATOR = 1,             // We're getting correct accelerator pedal messages
+    PEDALS_READING_BRAKE = 2,                   // We're getting correct brake pedal messages
+    MOTOR_CONTACTOR_ENABLED = 3,                // The Motor contactor is enabled
+    MOTOR_PRECHARGE_CONTACTOR_ENABLED = 4,      // The Motor precharge Contactor is enabled
+    DASHBOARD_IGNITION_MOTOR = 5,               // Ignition switch is set to motor
+    NUM_MOTOR_STATUS_BITS = 6
 } motor_status_bit_t;
 
 _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor safe bits for EventGroup");    
@@ -28,12 +29,12 @@ _Static_assert(NUM_MOTOR_STATUS_BITS <= MAX_MOTOR_SAFE_BITS, "Too many motor saf
 /* Convert enum to bitmask */
 #define MOTOR_STATUS_BIT(motorBit)   (1UL << (motorBit))
 
-#define motorSafeToRunBits \
-    (MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED) | \
-    MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED))
-
 BaseType_t MotorSafeBits_Init();
+
+EventBits_t MotorSafeBits_WaitMask(EventBits_t bitsToWait, TickType_t delay_ticks);
 
 void set_MotorSafeBit(motor_status_bit_t bit);
 
-EventBits_t MotorSafeBits_Wait(uint32_t bitsToWaitFor, TickType_t delay_ticks);
+void clear_MotorSafeBit(motor_status_bit_t bit);
+
+EventBits_t MotorSafeBits_Wait(motor_status_bit_t bitsToWaitFor, TickType_t delay_ticks);

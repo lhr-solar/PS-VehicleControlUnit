@@ -21,16 +21,54 @@ void set_MotorSafeBit(motor_status_bit_t bit){
     if(bit >= NUM_MOTOR_STATUS_BITS){ 
         return;
     }
+    if(motorSafeBits == NULL){
+        return;
+    }
     
     // set the bit
     xEventGroupSetBits(motorSafeBits, MOTOR_STATUS_BIT(bit));
 }
 
-EventBits_t MotorSafeBits_Wait(uint32_t bitsToWaitFor, TickType_t delay_ticks){
+void clear_MotorSafeBit(motor_status_bit_t bit){
     
+    // not a valid fault
+    if(bit >= NUM_MOTOR_STATUS_BITS){ 
+        return;
+    }
+    if(motorSafeBits == NULL){
+        return;
+    }
+    
+    // set the bit
+    xEventGroupClearBits(motorSafeBits, MOTOR_STATUS_BIT(bit));
+}
+
+EventBits_t MotorSafeBits_WaitMask(EventBits_t bitsToWait, TickType_t delay_ticks){
+
+    if(motorSafeBits == NULL){
+        return 0;
+    }
     EventBits_t pending = xEventGroupWaitBits(
         motorSafeBits,
-        bitsToWaitFor,      // wait for any defined fault
+        bitsToWait,      // wait for the given bits to be set
+        pdFALSE,            // fault bits are not reset
+        pdTRUE,             // wait for all bits to be set
+        delay_ticks 
+    );
+    
+    return pending;
+}
+
+EventBits_t MotorSafeBits_Wait(motor_status_bit_t motor_status_bit, TickType_t delay_ticks){
+    
+    EventBits_t bitsToWaitFor = MOTOR_STATUS_BIT(motor_status_bit);
+
+    if(motorSafeBits == NULL){
+        return 0;
+    }
+    EventBits_t pending = xEventGroupWaitBits(
+        motorSafeBits,
+        bitsToWaitFor,      // wait for the given bits to be set
         pdFALSE,            // fault bits are not reset
         pdTRUE,             // wait for all bits to be set
         delay_ticks 

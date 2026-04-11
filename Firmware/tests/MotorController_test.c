@@ -8,11 +8,6 @@
 
 #define PRINTF_DEBUG
 
-StaticTask_t motorTelemetry_buffer;
-StackType_t motorTelemetry_stack[512];
-
-StaticTask_t motorControllerTask_buffer;
-StackType_t motorControllerTask_stack[512];
 
 void can_error_handler(){
     
@@ -40,6 +35,9 @@ int main(){
     MotorTelemetryTask_Init();
     MotorControlTask_Init();
 
+    MotorSafeBits_Init();
+
+
     Init_UART_Printf();
 
     xTaskCreateStatic(
@@ -48,8 +46,8 @@ int main(){
                 512,
                 NULL,
                 tskIDLE_PRIORITY + 2,
-                motorTelemetry_stack,
-                &motorTelemetry_buffer);
+                Motor_Telemetry_Task_Stack,
+                &Motor_Telemetry_Task_Buffer);
 
     xTaskCreateStatic(
                 Task_MotorControl,
@@ -57,8 +55,8 @@ int main(){
                 512,
                 NULL,
                 tskIDLE_PRIORITY + 4,
-                motorControllerTask_stack,
-                &motorControllerTask_buffer);
+                Motor_Control_Task_Stack,
+                &Motor_Control_Task_Buffer);
 
     
     vTaskStartScheduler();

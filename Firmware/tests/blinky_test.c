@@ -47,7 +47,7 @@ int main(){
         // Turn LEDs on one-by-one
         for (size_t i = 0; i < num_LEDs; ++i) 
         {
-            Toggle_LED(i, ON);
+            Toggle_LED(i);
             HAL_Delay(200);
         }
 
@@ -57,7 +57,7 @@ int main(){
         // Turn LEDs off one-by-one
         for (size_t i = 0; i < num_LEDs; ++i) 
         {
-            Toggle_LED(i, OFF);
+            Toggle_LED(i);
             HAL_Delay(200);
         }
 

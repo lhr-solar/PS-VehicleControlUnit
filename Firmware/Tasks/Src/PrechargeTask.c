@@ -4,9 +4,6 @@
 #define PRECHARGE_PRINTF_DEBUG_PERIOD_MS 10000
 #define PRECHARGE_PRINTF_DEBUG_COUNTER (PRECHARGE_PRINTF_DEBUG_PERIOD_MS / PRECHARGE_TASK_DELAY_MS)
 
-// Handle for precharge task, can be deleted
-TaskHandle_t hprecharge_task = NULL;
-
 uint32_t battery_voltage = 0;
 uint32_t motor_voltage = 0;
 PrechargeState_e g_precharge_state = PRECHARGE_STATE_WAITING;
@@ -90,6 +87,7 @@ void Task_Precharge() {
     ADC_Sense_Result ADC_Result = {0};
     uint8_t can_send_errors = 0;
     uint8_t printDebugCounter = 0;
+    LED_set(HALL_EFFECT, LED_ON);
 
     while (1) {
         if (Read_ADC(ADC_TIMEOUT_MS, &ADC_Result) != ADC_SENSE_OK) {
@@ -223,6 +221,6 @@ void Task_Precharge() {
         }
 
         LED_toggle(HB);
-        vTaskDelay(PRECHARGE_TASK_DELAY_MS);
+        vTaskDelay(pdMS_TO_TICKS(PRECHARGE_TASK_DELAY_MS));
     }
 }

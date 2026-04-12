@@ -23,12 +23,16 @@ static void rebuild_inputs(void) {
     else
         s |= NEUTRAL_BIT;
 
-    if (g_data_read->driver_input.Regen_Activate) s |= REGEN_BUTTON_BIT;
-    if (g_data_read->driver_input.Regen_Enable) s |= REGEN_ENABLED_BIT;
-    if (g_data_read->driver_input.Cruise_Enable) s |= CRUISE_CONTROL_BUTTON_BIT;
-    if (g_data_read->bps_status.BPS_Regen_OK) s |= READY_TO_REGEN_BIT;
-    // if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
-    s |= PRECHARGE_COMPLETE_BIT;
+    if (g_data_read->driver_input.Regen_Activate) 
+        s |= REGEN_BUTTON_BIT;
+    if (g_data_read->driver_input.Regen_Enable) 
+        s |= REGEN_ENABLED_BIT;
+    if (g_data_read->driver_input.Cruise_Enable) 
+        s |= CRUISE_CONTROL_BUTTON_BIT;
+    if (g_data_read->bps_status.BPS_Regen_OK) 
+        s |= READY_TO_REGEN_BIT;
+    if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
+        s |= PRECHARGE_COMPLETE_BIT;
 
     if (g_data_read->accel_brake.BrakePedal_Main_Pos >= brake_threshold) {
         s |= BRAKE_BIT;
@@ -73,7 +77,7 @@ void UFI_throw_faults() {
         g_data_read->accel_brake.BrakePedal_Main_Fault ||
         g_data_read->accel_brake.BrakePedal_Redundant_Fault ||
         fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
-            g_data_read->accel_brake.AccelPedal_Redundant_Pos) < ACCEPTABLE_PEDAL_DEVIATION) {
+            g_data_read->accel_brake.AccelPedal_Redundant_Pos) > ACCEPTABLE_PEDAL_DEVIATION) {
         mask |= FAULT_BIT(FAULT_ID_PEDAL_BOARD_FAULT);
     }
 

@@ -9,7 +9,7 @@ int main(void)
   SystemClock_Config();
   LED_init();
 
-  xTaskCreateStatic(
+   xTaskCreateStatic(
       Task_Init,                // Task function
       "Init",                   // Name of the task (for debugging)
       configMINIMAL_STACK_SIZE, // Stack size in words
@@ -19,9 +19,9 @@ int main(void)
       &Init_Task_Buffer         // Static task buffer (optional)
   );
 
+
   vTaskStartScheduler();
 
-  Error_Handler();
 
   /* Infinite loop */
   while (1)

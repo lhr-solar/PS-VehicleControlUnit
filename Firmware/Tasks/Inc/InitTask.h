@@ -53,6 +53,7 @@ extern StackType_t UpdateVCUInputs_Task_Stack[FSM_TASK_STACK_SIZE];
 // Period the precharge thread runs at 
 #define PRECHARGE_TASK_DELAY_MS 100
 
+extern TaskHandle_t precharge_task_handle;
 
 
 

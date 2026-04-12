@@ -90,6 +90,8 @@ uint16_t fsm_get_inputs(void) {
 
 // goofy ahh logic, uses lut
 static float apply_rollover_limit(float requested_current) {
+    printf("Applying rollover limit, requested current: %.2f, vehicle velocity: %.2f, steering angle: %.1f\r\n",
+           requested_current, g_data_read->motor_velocity.MC_VehicleVelocity, (float)g_data_read->lws.LWS_Angle / 10.0f);
     int deg = abs((int)g_data_read->lws.LWS_Angle) / 10;
     if (deg > (int)ROLLOVER_TABLE_MAX_DEG) deg = (int)ROLLOVER_TABLE_MAX_DEG;
 

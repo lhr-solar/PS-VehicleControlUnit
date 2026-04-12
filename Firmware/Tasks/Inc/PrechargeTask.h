@@ -52,12 +52,6 @@ extern const char *precharge_state_names[];
 #define PRECHARGE_STATE_BIT(state) (1UL << (state))
 #define PRECHARGE_STATE_MASK    ((EventBits_t)((1UL << NUM_PRECHARGE_STATES) - 1UL))
 
-/**
- * @brief Precharge task initialization function, initializes ADC, printf, and contactors
- * @param None
- * @retval None
- */
-void Init_PrechargeTask();
 
 /**
  * @brief Checks the repeated fault conditions for precharge sequence, if any fault condition is
@@ -76,10 +70,5 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
  */
 void Task_Precharge();
 
-
-/* handle for the Precharge task, defined in PrechargeTask.c */
-extern TaskHandle_t hprecharge_task;
-
-extern uint32_t Battery_Voltage;
-extern uint32_t Motor_Voltage;
-extern uint8_t Ignition_State;
+extern uint32_t battery_voltage;
+extern uint32_t motor_voltage;

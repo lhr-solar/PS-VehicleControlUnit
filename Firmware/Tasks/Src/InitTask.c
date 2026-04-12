@@ -24,11 +24,13 @@ StackType_t VCUStatus_Task_Stack[VCU_STATUS_TASK_STACK_SIZE];
 StaticTask_t UpdateVCUInputs_Task_Buffer;
 StackType_t UpdateVCUInputs_Task_Stack[UPDATE_VCU_INPUTS_STACK_SIZE];
 
-void Task_Init()
-{
+TaskHandle_t precharge_task_handle = NULL;
+
+void Task_Init() {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
+    
     Init_UART_Printf();
 
     // prech
@@ -54,7 +56,7 @@ void Task_Init()
         &FaultHandler_Task_Buffer
     );
 
-    xTaskCreateStatic(
+    precharge_task_handle =  xTaskCreateStatic(
         Task_Precharge,
         "Precharge",
         PRECHARGE_TASK_STACK_SIZE,

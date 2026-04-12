@@ -80,10 +80,10 @@ can_status_t MotorCAN_Recv_Status(mc_status_t *out, TickType_t delay) {
     if (out == NULL) return CAN_EMPTY;
 
     FDCAN_RxHeaderTypeDef header = {0};
-    uint8_t moco_status_rx_data[CAN_DLC_MC_VELOCITYMEASUREMENT] = {0};
+    uint8_t moco_status_rx_data[CAN_DLC_MC_STATUS] = {0};
 
     can_status_t result =
-        can_fd_recv(motorfdcan, CAN_ID_MC_VELOCITYMEASUREMENT, &header, moco_status_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_MC_STATUS, &header, moco_status_rx_data, delay);
 
     if (result == CAN_OK) {
         out->MC_LIMIT_OutputVoltagePWM = (moco_status_rx_data[0] >> 0) & 0x1;

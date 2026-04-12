@@ -2,6 +2,8 @@
 
 #include "FaultHandlerTask.h"
 #include "PrechargeTask.h"
+#include "VCUReceiveCANTask.h"
+#include "DriverInputTask.h"
 #include "MotorSafeBits.h"
 #include "MotorControlTask.h"
 #include "MotorTelemetryTask.h"
@@ -54,11 +56,7 @@ extern StackType_t UpdateFSMInputs_Task_Stack[FSM_TASK_STACK_SIZE];
 #define FSM_THREAD_PRIO                     (tskIDLE_PRIORITY + 2)
 #define UPDATE_CONTROL_STATUS_THREAD_PRIO   (tskIDLE_PRIORITY + 2)
 #define VCU_STATUS_THREAD_PRIO              (tskIDLE_PRIORITY + 1)
-
-
-// #define MOTOR_CONTROL_THREAD_PRIO       (tskIDLE_PRIORITY + 2)
-// #define MOTOR_TELEMETRY_THREAD_PRIO     (tskIDLE_PRIORITY + 1)
-// #define CAN_TX_TELEMETRY_THREAD_PRIO    (tskIDLE_PRIORITY + 1)
+#define SDCARD_WORKER_THREAD_PRIO       (tskIDLE_PRIORITY + 1)
 
 
 // Period the fault thread runs at (once a fault is active)
@@ -70,5 +68,8 @@ extern StackType_t UpdateFSMInputs_Task_Stack[FSM_TASK_STACK_SIZE];
 // Period the precharge thread runs at 
 #define PRECHARGE_TASK_DELAY_MS 100
 
+
+extern StaticTask_t VCUReceiveCAN_Task_Buffer;
+extern StackType_t VCUReceiveCAN_Task_Stack[configMINIMAL_STACK_SIZE];
 
 void Task_Init();

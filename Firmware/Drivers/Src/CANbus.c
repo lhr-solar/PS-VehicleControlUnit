@@ -40,10 +40,6 @@ can_status_t MotorCAN_Init(void) {
     sFilterConfig1.FilterType = FDCAN_FILTER_MASK;
     sFilterConfig1.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // directs frames to FIFO0
 
-    // TODO: make a proper CAN filter
-    sFilterConfig1.FilterID1 = 0x000;
-    sFilterConfig1.FilterID2 = 0x000;
-
     if (can_fd_init(motorfdcan, &sFilterConfig1) != CAN_OK) {
         return CAN_ERR;
     }
@@ -328,6 +324,16 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
     return result;
 }
 
+can_status_t CAN_Init()
+{
+  if (Motor_CANBus_Init() != CAN_OK)
+  {
+    return CAN_ERR;
+  }
+  if (Car_CANBus_Init() != CAN_OK)
+  {
+    return CAN_ERR;
+  }
 
 //////// HAL bs
 
@@ -437,4 +443,15 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle) {
         HAL_NVIC_DisableIRQ(FDCAN3_IT0_IRQn);
         HAL_NVIC_DisableIRQ(FDCAN3_IT1_IRQn);
     }
+
+    /**FDCAN3 GPIO Configuration
+    PA8     ------> FDCAN3_RX
+    PA15     ------> FDCAN3_TX
+    */
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8 | GPIO_PIN_15);
+
+    /* FDCAN3 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(FDCAN3_IT0_IRQn);
+    HAL_NVIC_DisableIRQ(FDCAN3_IT1_IRQn);
+  }
 }

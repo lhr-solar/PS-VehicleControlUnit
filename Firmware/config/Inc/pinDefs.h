@@ -63,6 +63,19 @@
 #define FAULT_LED_PORT              GPIOB
 #define FAULT_LED_PIN               GPIO_PIN_4
 
+// SDCard Pins
+#define SDCARD_CS_PORT      GPIOA
+#define SDCARD_CS_PIN       GPIO_PIN_4
+
+#define SDCARD_SCK_PORT      GPIOA
+#define SDCARD_SCK_PIN       GPIO_PIN_5
+
+#define SDCARD_MISO_PORT     GPIOA
+#define SDCARD_MISO_PIN      GPIO_PIN_6
+
+#define SDCARD_MOSI_PORT     GPIOA
+#define SDCARD_MOSI_PIN      GPIO_PIN_7
+
 // Other pins
 #define USART3_PORT                 GPIOC
 #define USART3_TX_PIN               GPIO_PIN_10
@@ -75,6 +88,7 @@
 #define ADC_PORT                    GPIOB
 #define ADC1_PIN                    GPIO_PIN_12
 #define ADC2_PIN                    GPIO_PIN_2
+
 
 /**
  * @brief object that holds pin num and port of a GPIO pin

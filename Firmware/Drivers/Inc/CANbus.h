@@ -30,3 +30,7 @@ can_status_t CarCAN_Recv_LWS(lws_standard_t *out, TickType_t delay);
 can_status_t CarCAN_Recv_Driver_Input(driver_input_status_t *out, TickType_t delay);
 can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay);
 can_status_t CarCAN_Recv_Controls_Status(controls_status_t *out, TickType_t delay);
+
+/* HAL MSP hooks implemented in CANbus.c */
+void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle);
+void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle);

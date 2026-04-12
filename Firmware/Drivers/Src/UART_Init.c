@@ -49,4 +49,7 @@ void HAL_UART_MspGPIOInit(UART_HandleTypeDef *huart) {
         GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
         HAL_GPIO_Init(USART3_PORT, &GPIO_InitStruct);
     }
+    
+    setvbuf(stdout, NULL, _IONBF, 0);
+    printf_init(husart3);
 }

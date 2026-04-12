@@ -20,9 +20,9 @@ typedef enum {
  * @brief Identification for specific contactors within the HV system.
  */
 typedef enum {
-    MOTOR_CONTACTOR,     /* Battery to Motor Contactor */
-    MOTOR_PRE_CONTACTOR, /* Post-Precharge Bypass Contactor */
-    NUM_CONTACTORS       /* Total count helper */
+    MOTOR_PRE_CONTACTOR, /**< Battery to Motor Contactor */
+    MOTOR_CONTACTOR,     /**< Post-Precharge Bypass Contactor */
+    NUM_CONTACTORS       /**< Total count helper */
 } contactor_num_t;
 
 /**

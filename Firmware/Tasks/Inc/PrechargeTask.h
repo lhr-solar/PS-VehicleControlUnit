@@ -6,7 +6,10 @@
 #include "ADC_Sense.h"
 #include "InitTask.h"
 #include "MotorSafeBits.h"
-
+#include "CANbus.h"
+#include "CarCAN_can_msgs.h"
+#include <string.h>
+#include "VCUReceiveCANTask.h"
 
 // Precharge thresholds
 #define OVERVOLTAGE_THRESHOLD_MV 140000 // 140 V
@@ -29,9 +32,11 @@
 
 typedef enum
 {
-    PRECHARGE_STATE_INITIAL = 0, // Precharge sequence hasn't started, start by closing main contactor and starting a timer to check for precharge timeout
+    PRECHARGE_STATE_WAITING, // Waiting for ignition state
+    PRECHARGE_STATE_INITIAL, // Precharge sequence hasn't started, start by closing main contactor and starting a timer to check for precharge timeout
     PRECHARGE_STATE_PRECHARGING, // Precharge sequence started successfully, close contactor and check hysterisis
-    PRECHARGE_STATE_RUN          // Precharge got through hysterisis, now continuously polling ADC
+    PRECHARGE_STATE_RUN,          // Precharge got through hysterisis, now continuously polling ADC
+    PRECHARGE_STATE_NUM
 } Precharge_State_t;
 
 /**
@@ -56,5 +61,11 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage);
  */
 void Task_Precharge();
 
+void Ignition_Off();
+
 /* handle for the Precharge task, defined in PrechargeTask.c */
 extern TaskHandle_t hprecharge_task;
+
+extern uint32_t Battery_Voltage;
+extern uint32_t Motor_Voltage;
+extern uint8_t Ignition_State;

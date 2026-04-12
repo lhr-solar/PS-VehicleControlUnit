@@ -17,8 +17,8 @@ void can_error_handler(){
     }
 }
 
-
-int main(){
+int main()
+{
     HAL_Init();
 
     SystemClock_Config();
@@ -37,18 +37,17 @@ int main(){
     Init_UART_Printf();
 
     xTaskCreateStatic(
-                Task_MotorTelemetry,
-                "Motor Telemetry Task",
-                512,
-                NULL,
-                tskIDLE_PRIORITY + 2,
-                task_stack,
-                &task_buffer);
+        Task_MotorTelemetry,
+        "Motor Telemetry Task",
+        512,
+        NULL,
+        tskIDLE_PRIORITY + 2,
+        task_stack,
+        &task_buffer);
 
-    
     vTaskStartScheduler();
 
-    while(1){
-
+    while (1)
+    {
     }
 }

@@ -5,6 +5,8 @@
 #include "Contactors.h"
 #include "task.h"
 #include "InitTask.h"
+#include "CANbus.h"
+#include "CarCAN_can_msgs.h"
 #include "MotorSafeBits.h"
 
 

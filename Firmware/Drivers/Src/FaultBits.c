@@ -4,10 +4,6 @@
 static StaticEventGroup_t faultBuffer;
 static EventGroupHandle_t faultGroup;
 
-EventGroupHandle_t stateBits;
-StaticEventGroup_t stateBitsBuffer;
-
-
 const char *fault_names[FAULT_ID_COUNT] = {
 #define X(name) [FAULT_ID_##name] = #name,
     FAULT_ID_LIST(X)
@@ -31,7 +27,6 @@ void faults_set(FaultID_e id) {
 void faults_set_from_isr(FaultID_e id) {
     BaseType_t hpw = pdFALSE;
     configASSERT(id < FAULT_ID_COUNT);
-
     xEventGroupSetBitsFromISR(faultGroup, FAULT_BIT(id), &hpw);
     portYIELD_FROM_ISR(hpw);
 }
@@ -64,52 +59,8 @@ EventBits_t faults_wait(FaultID_e id, TickType_t ticks) {
     return xEventGroupWaitBits(
         faultGroup,
         mask,
-        pdFALSE,   // don't clear
-        pdFALSE,   // wait for any
+        pdFALSE,    // don't clear
+        pdFALSE,    // wait for any
         ticks
     );
-
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-}
-
-uint8_t stateBits_init(void){
-    stateBits = xEventGroupCreateStatic( &stateBitsBuffer );
-    if(stateBits == NULL){
-        return 0;
-    }
-    return 1;
-}
-
-void set_stateBit(state_bit_t bit){
-    // not a valid state    
-    if(bit >= NUM_STATES){ 
-        return;
-    }
-
-    // Clear all state bits first
-    xEventGroupClearBits(stateBits, STATE_BITMASK);
-
-    // Set only the requested bit
-    xEventGroupSetBits(stateBits, STATE_BIT(bit));
-
-    taskYIELD();
-}
-
-EventBits_t faultBit_wait(fault_bit_t bit, TickType_t xTicksToWait){
-
-    // NUM_FAULTS indiciates you want to wait for all bits
-    if(bit > NUM_FAULTS){
-        return 0;
-    }
-
-    EventBits_t uxBitsToWaitFor = bit == NUM_FAULTS ? FAULT_BITMASK : (FAULT_BIT(bit));
-
-    EventBits_t pending = xEventGroupWaitBits(
-        faultStateBits,
-        uxBitsToWaitFor,  // wait for any defined fault
-        pdFALSE,          // fault bits are not reset
-        pdFALSE,          // wait for ANY bit to be set
-        xTicksToWait 
-    );
-    return pending;
 }

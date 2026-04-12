@@ -148,7 +148,7 @@ def write_table(path, fn, label):
         f" *        Regenerate: python3 generate_fsm.py --{label.lower()}\n"
         f" */\n\n"
         f"#pragma once\n"
-        f'#include "FSM.h"\n\n'
+        f'#include "FSMTask.h"\n\n'
         f"extern MocoState_t FSM[NUM_STATES];\n\n"
         f"#ifdef DEFINE_FSM_TABLE\n"
         f"MocoState_t FSM[NUM_STATES] = {{\n\n"

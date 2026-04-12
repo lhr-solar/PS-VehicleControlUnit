@@ -324,16 +324,30 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
     return result;
 }
 
-can_status_t CAN_Init()
-{
-  if (Motor_CANBus_Init() != CAN_OK)
-  {
-    return CAN_ERR;
-  }
-  if (Car_CANBus_Init() != CAN_OK)
-  {
-    return CAN_ERR;
-  }
+can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_mv, 
+    TickType_t delay) {
+    FDCAN_TxHeaderTypeDef header = {
+        .Identifier = CAN_ID_VCU_PRECHARGE_VOLTAGES,
+        .IdType = FDCAN_STANDARD_ID,
+        .TxFrameType = FDCAN_DATA_FRAME,
+        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_VCU_PRECHARGE_VOLTAGES),
+        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+        .BitRateSwitch = FDCAN_BRS_OFF,
+        .FDFormat = FDCAN_CLASSIC_CAN,
+        .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
+        .MessageMarker = 0,
+    };
+
+    uint8_t vcu_prech_tx_data[CAN_DLC_VCU_PRECHARGE_VOLTAGES] = {0};
+
+    memcpy(&vcu_prech_tx_data[0], &motor_mv, sizeof(uint32_t));
+    memcpy(&vcu_prech_tx_data[4], &battery_mv, sizeof(uint32_t));
+
+    can_status_t result =
+        can_fd_send(carfdcan, &header, vcu_prech_tx_data, delay);
+
+    return result; 
+}
 
 //////// HAL bs
 
@@ -453,5 +467,4 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle) {
     /* FDCAN3 interrupt Deinit */
     HAL_NVIC_DisableIRQ(FDCAN3_IT0_IRQn);
     HAL_NVIC_DisableIRQ(FDCAN3_IT1_IRQn);
-  }
 }

@@ -13,21 +13,6 @@ static void FHT_kill_precharge_task(void) {
     }
 }
 
-static FDCAN_TxHeaderTypeDef VCUSendStatusHeader;
-
-static void initVCUSendStatusHeader(FDCAN_TxHeaderTypeDef *tx_header)
-{
-    tx_header->Identifier = CAN_ID_VCU_STATUS;
-    tx_header->IdType = FDCAN_STANDARD_ID;
-    tx_header->TxFrameType = FDCAN_DATA_FRAME;
-    tx_header->DataLength = FDCAN_DLC_BYTES_8;
-    tx_header->ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-    tx_header->BitRateSwitch = FDCAN_BRS_OFF;
-    tx_header->FDFormat = FDCAN_CLASSIC_CAN;
-    tx_header->TxEventFifoControl = FDCAN_STORE_TX_EVENTS;
-    tx_header->MessageMarker = 0;
-}
-
 // Sets fault LEDs based on which faults are active. Multiple faults may be 
 // active at once, so multiple LEDs may be set.
 static void FHT_set_fault_leds(EventBits_t bits) {
@@ -93,15 +78,6 @@ void Task_FaultHandler(void *args __attribute__((unused))) {
         // Fault bit initialization failed, cannot proceed safely
         Error_Handler();
     }
-
-    if (stateBits_init() != 1)
-    {
-        // Fault bit initialization failed
-        Error_Handler();
-    }
-
-    initVCUSendStatusHeader(&VCUSendStatusHeader);
-}
 
     while (true) {
         EventBits_t bits = faults_wait(FAULT_ID_COUNT, portMAX_DELAY);

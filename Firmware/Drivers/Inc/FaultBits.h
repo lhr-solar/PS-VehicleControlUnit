@@ -27,6 +27,7 @@
     X(BATTERY_UNDERVOLTAGE)     /* Battery voltage is less than UNDERVOLTAGE_THRESHOLD_MV */       \
     X(MOTOR_GT_BATTERY)         /* Motor voltage is greater than battery voltage */                \
     X(CONTACTOR_CALLBACK)       /* Contactor state didnt match expected state after being set */   \
+    X(MOTOR_LT_BATTERY)         /* Motor voltage dropped below 80% of battery voltage */           \
     \
     /* ============== OTHER BOARDS =============== */                                              \
     X(STEERING_SENSOR_FAULT)    /* Sensor not OK or data invalid */                                \
@@ -54,20 +55,8 @@ _Static_assert(FAULT_ID_COUNT <= MAX_FAULT_BITS,
 // Names for faults for printing/debugging purposes. Indexed by FaultID_e values
 extern const char *fault_names[];
 
-
 #define FAULT_BIT(id)        (1UL << (id))
 #define FAULT_MASK_ALL       ((1UL << FAULT_ID_COUNT) - 1)
-typedef enum
-{
-    PRECHARGE_WAITING_STATE,
-    PRECHARGE_INITIAL_STATE,     // Indiciates we are in the inital state when set
-    PRECHARGE_PRECHARGING_STATE, // Indicates we are in the precharging state when set
-    PRECHARGE_RUN_STATE,         // Indicates we are in the run state when set
-    NUM_STATES
-} state_bit_t;
-
-#define STATE_BIT(state) (1UL << (state))
-#define STATE_BITMASK ((EventBits_t)((1UL << NUM_STATES) - 1UL))
 
 #define FAULT_MASK_MOTOR_ALL ( \
     FAULT_BIT(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT) | \
@@ -90,7 +79,8 @@ typedef enum
     FAULT_BIT(FAULT_ID_BATTERY_OVERVOLTAGE) | \
     FAULT_BIT(FAULT_ID_BATTERY_UNDERVOLTAGE) | \
     FAULT_BIT(FAULT_ID_MOTOR_GT_BATTERY) | \
-    FAULT_BIT(FAULT_ID_CONTACTOR_CALLBACK) \
+    FAULT_BIT(FAULT_ID_CONTACTOR_CALLBACK) | \
+    FAULT_BIT(FAULT_ID_MOTOR_LT_BATTERY) \
 )
 
 /**
@@ -169,27 +159,3 @@ EventBits_t faults_get(void);
  * fault bits set.
  */
 EventBits_t faults_wait(FaultID_e id, TickType_t ticks);
-
-/**
- * @brief Initializes state bitmap
- *
- * @param none
- * @return 0 on failure, 1 on success
- */
-uint8_t stateBits_init(void);
-
-/**
- * @brief Set a state in the state bitmap
- *
- * @param bit which state is being set
- * @return none
- */
-void set_stateBit(state_bit_t bit);
-
-/**
- * @brief Set a fault in the fault bitmap from an ISR
- *
- * @param bit which fault is being set
- * @return none
- */
-void set_faultBitFromISR(fault_bit_t bit);

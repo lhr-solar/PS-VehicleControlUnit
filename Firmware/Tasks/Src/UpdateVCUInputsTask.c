@@ -1,4 +1,4 @@
-#include "UpdateFSMInputsTask.h"
+#include "UpdateVCUInputsTask.h"
 #include "Contactors.h"
 #include "FaultBits.h"
 #include "event_groups.h"
@@ -6,6 +6,12 @@
 #include <math.h>
 
 static float brake_threshold = BRAKE_THRESH;
+
+static VCUDataIn_t fsm_input_a = {0};
+static VCUDataIn_t fsm_input_b = {0};
+
+VCUDataIn_t * volatile g_data_read = &fsm_input_a;
+VCUDataIn_t * volatile g_data_write = &fsm_input_b;
 
 static void rebuild_inputs(void) {
     EventBits_t s = 0;
@@ -77,12 +83,12 @@ void UFI_throw_faults() {
     faults_set_mask(mask);
 }
 
-void Task_UpdateFSMInputs(void *args __attribute__((unused))) {
+void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
 
     while (1) {
         // update from can
-        FSMDataIn_t *volatile update = g_data_write;
+        VCUDataIn_t *volatile update = g_data_write;
         MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
 
@@ -94,13 +100,16 @@ void Task_UpdateFSMInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
 
-        FSMDataIn_t *volatile tmp;
+        VCUDataIn_t *volatile tmp;
         taskENTER_CRITICAL();
         tmp = g_data_read;
         g_data_read = g_data_write;
         g_data_write = tmp;
         taskEXIT_CRITICAL();
-        memcpy(g_data_write, g_data_read, sizeof(FSMDataIn_t));
+        
+        
+
+        memcpy(g_data_write, g_data_read, sizeof(VCUDataIn_t));
 
         // Throw relevant faults
         UFI_throw_faults();

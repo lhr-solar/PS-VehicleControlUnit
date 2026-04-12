@@ -6,14 +6,12 @@
 
 #define DEFINE_FSM_TABLE
 #include "fsm_table_dnr.h"
-
-#include "BPSCAN_can_msgs.h"
-#include "CarCAN_can_msgs.h"
-#include "FSM.h"
-#include "FaultBits.h"
-#include "MotorCAN_can_msgs.h"
-#include "Watchdogs.h"
 #include "rollover_speed_table.h"
+
+#include "FSMTask.h"
+#include "UpdateVCUInputsTask.h"
+#include "FaultBits.h"
+#include "Watchdogs.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -24,11 +22,7 @@ EventGroupHandle_t fsmInputGroup = {0};
 
 MocoState_t current_state = {0};
 
-static FSMDataIn_t fsm_input_a = {0};
-static FSMDataIn_t fsm_input_b = {0};
 
-FSMDataIn_t * volatile g_data_read = &fsm_input_a;
-FSMDataIn_t * volatile g_data_write = &fsm_input_b;
 
 static bool rollover_limit_active = false;
 static volatile uint16_t fsm_inputs = 0;

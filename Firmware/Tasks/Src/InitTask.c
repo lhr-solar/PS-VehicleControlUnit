@@ -1,8 +1,4 @@
 #include "InitTask.h"
-#include "FSM.h"
-#include "VCUStatusTask.h"
-#include "PrechargeTask.h"
-#include "UpdateFSMInputsTask.h"
 #include "StatusLEDs.h"
 
 /* ===================== Stack Size Definitions ===================== */
@@ -10,8 +6,8 @@
 
 
 /* ===================== Static Task Buffers ===================== */
-StaticTask_t FaultHandlerTask_Buffer;
-StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
+StaticTask_t FaultHandler_Task_Buffer;
+StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
 StaticTask_t Precharge_Task_Buffer;
 StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
@@ -25,17 +21,8 @@ StackType_t FSM_Task_Stack[FSM_TASK_STACK_SIZE];
 StaticTask_t VCUStatus_Task_Buffer;
 StackType_t VCUStatus_Task_Stack[VCU_STATUS_TASK_STACK_SIZE];
 
-StaticTask_t UpdateFSMInputs_Task_Buffer;
-StackType_t UpdateFSMInputs_Task_Stack[UPDATE_FSM_INPUTS_STACK_SIZE];
-
-// StaticTask_t Motor_Control_Task_Buffer;
-// StackType_t Motor_Control_Task_Stack[MOTOR_CONTROL_TASK_STACK_SIZE];
-
-StaticTask_t VCUReceiveCAN_Task_Buffer;
-StackType_t VCUReceiveCAN_Task_Stack[configMINIMAL_STACK_SIZE];
-
-StaticTask_t Driver_Input_Task_Buffer;
-StackType_t Driver_Input_Task_Stack[configMINIMAL_STACK_SIZE];
+StaticTask_t UpdateVCUInputs_Task_Buffer;
+StackType_t UpdateVCUInputs_Task_Stack[UPDATE_VCU_INPUTS_STACK_SIZE];
 
 void Task_Init()
 {
@@ -43,8 +30,10 @@ void Task_Init()
     __HAL_RCC_PWR_CLK_ENABLE();
 
     Init_UART_Printf();
-    CAN_Init();
 
+    // prech
+    ADC_Sense_Init();
+    contactor_init();
     MotorSafeBits_Init();
 
     MotorCAN_Init();
@@ -54,7 +43,6 @@ void Task_Init()
 
     // Required for VCU status testing
     faults_init();
-    Init_PrechargeTask();
 
     xTaskCreateStatic(
         Task_FaultHandler,
@@ -62,8 +50,8 @@ void Task_Init()
         FAULT_HANDLER_TASK_STACK_SIZE,
         NULL,
         FAULT_HANDLER_THREAD_PRIO,
-        FaultHandlerTask_Stack,
-        &FaultHandlerTask_Buffer
+        FaultHandler_Task_Stack,
+        &FaultHandler_Task_Buffer
     );
 
     xTaskCreateStatic(
@@ -97,36 +85,15 @@ void Task_Init()
     );
 
     xTaskCreateStatic(
-        Task_UpdateFSMInputs,
+        Task_UpdateVCUInputs,
         "Update FSM Inputs Thread",
-        UPDATE_FSM_INPUTS_STACK_SIZE,
+        UPDATE_VCU_INPUTS_STACK_SIZE,
         NULL,
-        UPDATE_FSM_INPUTS_THREAD_PRIO,
-        UpdateFSMInputs_Task_Stack,
-        &UpdateFSMInputs_Task_Buffer
+        UPDATE_VCU_INPUTS_THREAD_PRIO,
+        UpdateVCUInputs_Task_Stack,
+        &UpdateVCUInputs_Task_Buffer
     );
 
-    // while (1) {
-    //     LED_toggle(HB);
-    //     HAL_Delay(100);
-    // }
-        Task_VCUReceiveCAN,        // Task function
-        "VCUReceiveCAN",           // Name of the task (for debugging)
-        configMINIMAL_STACK_SIZE,  // Stack size in words
-        NULL,                      // Task input parameter
-        tskIDLE_PRIORITY + 2,      // Task priority
-        VCUReceiveCAN_Task_Stack,  // Task handle
-        &VCUReceiveCAN_Task_Buffer // Static task buffer (optional)
-    );
-
-    xTaskCreateStatic(
-        Task_DriverInputTest,
-        "DriverInputTest",
-        configMINIMAL_STACK_SIZE,
-        NULL,
-        tskIDLE_PRIORITY + 2,
-        Driver_Input_Task_Stack,
-        &Driver_Input_Task_Buffer);
 
     vTaskDelete(NULL);
 }

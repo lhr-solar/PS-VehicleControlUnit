@@ -70,20 +70,6 @@ typedef struct {
 extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t current_state;
 
-typedef struct {
-    driver_input_status_t driver_input;
-    pedal_status_t accel_brake;
-    lws_standard_t lws;
-    controls_status_t controls_status;
-    mc_status_t motor_status;
-    bps_status_t bps_status;
-    mc_velocitymeasurement_t motor_velocity;
-} FSMDataIn_t;
-
-extern FSMDataIn_t * volatile g_data_read;
-extern FSMDataIn_t * volatile g_data_write;
-
-
 
 void fsm_init(void);
 void fsm_step(void);

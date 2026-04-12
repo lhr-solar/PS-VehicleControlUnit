@@ -1,11 +1,11 @@
 #include "VCUStatusTask.h"
-#include "CANbus.h"
-#include "event_groups.h"
+#include "UpdateVCUInputsTask.h"
+#include "FSMTask.h"
 #include "FaultBits.h"
 #include "Contactors.h"
-#include "FSM.h"
 #include "Watchdogs.h"
 #include "StatusLEDs.h"
+#include "event_groups.h"
 
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[CAN_DLC_VCU_STATUS];

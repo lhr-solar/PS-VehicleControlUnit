@@ -199,3 +199,15 @@ void warning_set(WarningID_e id);
  * @return A bitmask of fault bits that are currently active. 
  */
 EventBits_t warning_get(void);
+
+/**
+ * @brief Checks if a specific warning bit is active.
+ * @return true if the specified warning bit is active, false otherwise.
+ */
+bool warning_is_active(WarningID_e id);
+
+/**
+ * @brief Clear a specific warning bit.
+ * @param id The warning to clear.
+ */
+void warning_clear(WarningID_e id);

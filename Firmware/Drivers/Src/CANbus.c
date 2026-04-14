@@ -3,6 +3,7 @@
 #include "CarCAN_can_msgs.h"
 #include "MotorCAN_can_msgs.h"
 #include "UpdateVCUInputsTask.h"
+#include "Watchdogs.h"
 #include <math.h>
 #include <string.h>
 
@@ -73,6 +74,7 @@ can_status_t MotorCAN_Recv_Velocity(mc_velocitymeasurement_t *out, TickType_t de
     if (result == CAN_OK) {
         out->MC_MotorVelocity = *((float *)&motor_vel_rx_data[0]);
         out->MC_VehicleVelocity = *((float *)&motor_vel_rx_data[4]);
+        watchdog_received_can_message(WD_IDX_MOCO_VELOCITY);
     }
     return result;
 }
@@ -112,6 +114,8 @@ can_status_t MotorCAN_Recv_Status(mc_status_t *out, TickType_t delay) {
             (uint16_t)moco_status_rx_data[4] | ((uint16_t)moco_status_rx_data[5] << 8);
         out->MC_TxErrorCount = moco_status_rx_data[6];
         out->MC_RxErrorCount = moco_status_rx_data[7];
+
+        watchdog_received_can_message(WD_IDX_MOCO_STATUS);
     }
     
     return result;
@@ -124,7 +128,7 @@ can_status_t MotorCAN_Recv_Control_Src(set_motor_cmd_src_t *out, TickType_t dela
     uint8_t moco_control_src_rx_data[CAN_DLC_SET_MOTOR_CMD_SRC] = {0};
 
     can_status_t result =
-        can_fd_recv(motorfdcan, CAN_ID_SET_MOTOR_CMD_SRC, &header, moco_status_rx_data, delay);
+        can_fd_recv(motorfdcan, CAN_ID_SET_MOTOR_CMD_SRC, &header, moco_control_src_rx_data, delay);
 
     if (result == CAN_OK) {
         out->Motor_Command_Source = moco_control_src_rx_data[0];
@@ -239,6 +243,8 @@ can_status_t CarCAN_Recv_BPS_Status(bps_status_t *out, TickType_t delay) {
                                     ((uint32_t)bps_status_rx_data[6] << 16) |
                                     ((uint32_t)bps_status_rx_data[7] << 24));
         out->Main_Battery_Avg_Temperature = (int16_t)((uint16_t)bps_status_rx_data[2] | ((uint16_t)bps_status_rx_data[3] << 8));
+
+        watchdog_received_can_message(WD_IDX_BPS_STATUS);
     }
     return result;
 }
@@ -255,6 +261,7 @@ can_status_t CarCAN_Recv_Controls_Status(controls_status_t *out, TickType_t dela
     if (result == CAN_OK) {
         out->Controls_Leader_Fault = controls_status_rx_data[0];
         // out->Controls_Lighting_Fault = (uint16_t) (controls_status_rx_data[1]);
+        watchdog_received_can_message(WD_IDX_CONTROLS_STATUS);
     }
 
     return result;
@@ -282,6 +289,8 @@ can_status_t CarCAN_Recv_LWS(lws_standard_t *out, TickType_t delay) {
         out->LWS_Fault     = (steering_angle_rx_data[3] >> 0) & 0x01;
         out->LWS_CalibrationStaus = (steering_angle_rx_data[3] >> 1) & 0x01;
         out->LWS_Trimming_Status = (steering_angle_rx_data[3] >> 2) & 0x01;
+
+        watchdog_received_can_message(WD_IDX_STEERING_ANGLE);
     }
 
     return result;
@@ -313,6 +322,8 @@ can_status_t CarCAN_Recv_Driver_Input(driver_input_status_t *out, TickType_t del
         out->PushToTalk_Pressed  = !!(driver_input_rx_data[1] & (1U << 4));
         out->Regen_Activate      = !!(driver_input_rx_data[1] & (1U << 5));
         out->Regen_Enable        = !!(driver_input_rx_data[1] & (1U << 6));
+
+        watchdog_received_can_message(WD_IDX_DRIVER_INPUT);
     }
 
     return result;
@@ -337,6 +348,8 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
         out->AccelPedal_Redundant_Fault   = !!(pedals_pos_rx_data[4] & (1U << 1));
         out->BrakePedal_Main_Fault        = !!(pedals_pos_rx_data[4] & (1U << 2));
         out->BrakePedal_Redundant_Fault   = !!(pedals_pos_rx_data[4] & (1U << 3));
+
+        watchdog_received_can_message(WD_IDX_ACCEL_BRAKE);
     }
 
     return result;
@@ -358,8 +371,8 @@ can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_
 
     uint8_t vcu_prech_tx_data[CAN_DLC_VCU_PRECHARGE_VOLTAGES] = {0};
 
-    memcpy(&vcu_prech_tx_data[0], &motor_mv, sizeof(uint32_t));
-    memcpy(&vcu_prech_tx_data[4], &battery_mv, sizeof(uint32_t));
+    memcpy(&vcu_prech_tx_data[0], &motor_mv, 3);
+    memcpy(&vcu_prech_tx_data[3], &battery_mv, 3);
 
     can_status_t result =
         can_fd_send(carfdcan, &header, vcu_prech_tx_data, delay);

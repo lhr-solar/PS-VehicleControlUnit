@@ -99,3 +99,5 @@ void Task_FSM(void *args);
 
 float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_min,
                      uint8_t out_max);
+                     
+bool fsm_is_input_set(InputBits_t bit);

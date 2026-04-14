@@ -1,5 +1,6 @@
 #include "InitTask.h"
 #include "StatusLEDs.h"
+#include "Watchdogs.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -37,6 +38,10 @@ void Task_Init() {
     CarCAN_Init();
 
     FSM_TaskInit();
+
+    // watchdog_init();
+    // watchdog_start_all();
+
 
     // Required for VCU status testing
     faults_init();

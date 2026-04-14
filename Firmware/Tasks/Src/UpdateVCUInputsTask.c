@@ -42,6 +42,12 @@ static void rebuild_inputs(void) {
     }
 
     fsm_set_all_inputs(s);
+
+    if(fsm_is_input_set(REGEN_BUTTON_BIT) && !fsm_is_input_set(READY_TO_REGEN_BIT)) {
+        warning_set(WARNING_ID_REGEN_NOT_ALLOWED);
+    } else {
+        warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
+    }
 }
 
 void UFI_throw_faults() {

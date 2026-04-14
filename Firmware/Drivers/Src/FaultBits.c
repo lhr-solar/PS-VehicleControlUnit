@@ -82,10 +82,20 @@ EventBits_t faults_wait(FaultID_e id, TickType_t ticks) {
 }
 
 void warning_set(WarningID_e id) {
-    configASSERT(id < FAULT_ID_COUNT);
-    xEventGroupSetBits(warningGroup, FAULT_BIT(id));
+    configASSERT(id < WARNING_ID_COUNT);
+    xEventGroupSetBits(warningGroup, 1 << id);
+}
+
+void warning_clear(WarningID_e id) {
+    configASSERT(id < WARNING_ID_COUNT);
+    xEventGroupClearBits(warningGroup, 1 << id);
 }
 
 EventBits_t warning_get(void) {
     return xEventGroupGetBits(warningGroup) & WARNING_MASK_ALL;
+}
+
+bool warning_is_active(WarningID_e id) {
+    configASSERT(id < WARNING_ID_COUNT);
+    return (xEventGroupGetBits(warningGroup) & (1 << id)) != 0;
 }

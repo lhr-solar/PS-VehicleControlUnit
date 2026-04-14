@@ -64,14 +64,10 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
         tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
         tx_header.MessageMarker = 0;
 
-        can_fd_send_isr(motorfdcan, &tx_header, recv_payload.data, higherPriorityTaskWoken);
+        can_fd_send_isr(motorfdcan, &tx_header, recv_payload.data, &higherPriorityTaskWoken);
     }
 }
 
-        xQueueSendFromISR(motorTelemetryQueue, &recv_payload, &higherPriorityTaskWoken);
-        // don't yield at the end of this since the rest of the ISR needs to run
-    }
-}
 
 void Task_MotorTelemetry() {
 

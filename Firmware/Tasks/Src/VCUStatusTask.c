@@ -6,6 +6,7 @@
 #include "UpdateVCUInputsTask.h"
 #include "Watchdogs.h"
 #include "event_groups.h"
+#include "math.h"
 
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[CAN_DLC_VCU_STATUS];
@@ -29,17 +30,21 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         bool bps_fault = faults_is_active(FAULT_ID_BPS_FAULT);
         bool controls_fault = faults_is_active(FAULT_ID_CONTROLS_FAULT);
         bool motor_fault = !!(faults_get() & FAULT_MASK_MOTOR_ALL);
-        bool pedals_fault = !((bool)g_data_read->accel_brake.AccelPedal_Main_Fault) &&
-                            !((bool)g_data_read->accel_brake.AccelPedal_Redundant_Fault) &&
-                            !((bool)g_data_read->accel_brake.BrakePedal_Main_Fault) &&
-                            !((bool)g_data_read->accel_brake.BrakePedal_Redundant_Fault);
+        bool pedals_fault = ((bool)g_data_read->accel_brake.AccelPedal_Main_Fault) ||
+                             ((bool)g_data_read->accel_brake.AccelPedal_Redundant_Fault) ||
+                             ((bool)g_data_read->accel_brake.BrakePedal_Main_Fault) ||
+                             ((bool)g_data_read->accel_brake.BrakePedal_Redundant_Fault) ||
+                             (fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
+                                  g_data_read->accel_brake.AccelPedal_Redundant_Pos) >
+                              ACCEPTABLE_PEDAL_DEVIATION);
+
         bool steering_fault = g_data_read->lws.LWS_Fault;
         buf[1] = (pedals_wdog) | (bps_wdog << 1) | (steering_wdog << 2) | (bps_fault << 3) |
                  (controls_fault << 4) | (motor_fault << 5) | (pedals_fault << 6) |
                  (steering_fault << 7);
 
-        buf[2] = g_data_read->motor_controls_src |
-                 (!!(fsm_get_inputs() & READY_TO_REGEN_BIT) << 1) |
+        buf[2] = g_data_read->motor_controls_src.Motor_Command_Source |
+                 ((current_state.stateName == REGEN) << 1) |
                  (g_data_read->bps_status.BPS_Regen_OK << 2) |
                  (faults_is_active(FAULT_ID_PRECHARGE_TIMEOUT) << 3) |
                  (faults_is_active(FAULT_ID_PRECHARGE_SENSE_TIMEOUT) << 4) |
@@ -51,19 +56,24 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
                  (faults_is_active(FAULT_ID_BATTERY_UNDERVOLTAGE) << 1) |
                  (faults_is_active(FAULT_ID_MOTOR_GT_BATTERY) << 2) | // TODO check if this is right
                  (faults_is_active(FAULT_ID_MOTOR_LT_BATTERY) << 3) |
-                 (faults_any_active() << 4) | // TODO: make this "other"
-                 (faults_is_active(FAULT_ID_MOTOR_GT_BATTERY) << 2) |
+                 //(faults_any_active() << 4) | // TODO: make this "other" but not enough faults bits rn
+                 //The rest of these bits and one of the next one are all warnings
+                 (warning_is_active(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT) << 5) |
+                 (warning_is_active(WARNING_ID_TIPPING_LIMIT_ACTIVE) << 6) |
+                 (warning_is_active(WARNING_ID_REGEN_NOT_ALLOWED) << 7);
 
+        buf[4] = (warning_is_active(WARNING_ID_REGEN_NOT_ENABLED) << 0) |
+                 (fsm_is_input_set(BRAKE_BIT) << 1) |
+                 (fsm_is_input_set(PRECHARGE_COMPLETE_BIT) << 2) |
+                 (fsm_is_input_set(CRUISE_CONTROL_BUTTON_BIT) << 3) |
+                 (fsm_is_input_set(REGEN_BUTTON_BIT) << 4) |
+                 (fsm_is_input_set(REGEN_ENABLED_BIT) << 5) |
+                 (fsm_is_input_set(READY_TO_REGEN_BIT) << 6) |
+                 (fsm_is_input_set(FORWARD_BIT) << 7);
 
+        buf[5] = (fsm_is_input_set(NEUTRAL_BIT) << 0) |
+                 (fsm_is_input_set(REVERSE_BIT) << 1);
 
-        buf[3] = fsm_get_inputs(); // this supposed to have fsm states as well but stateName covers
-                                   // it for now
-
-        // for viewing faults in status
-        int faults = 0x0FFFFFF & faults_get();
-        buf[4] = (faults >> 16) & 0xFF;
-        buf[5] = (faults >> 8) & 0xFF;
-        buf[6] = faults & 0xFF;
 
         FDCAN_TxHeaderTypeDef tx_header = {0};
         tx_header.Identifier = CAN_ID_VCU_STATUS;
@@ -78,7 +88,7 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
 
         CarCAN_Send(&tx_header, buf, sizeof(buf));
 
-        // LED_toggle(HB);
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

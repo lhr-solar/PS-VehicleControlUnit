@@ -84,6 +84,10 @@ uint16_t fsm_get_inputs(void) {
     return (uint16_t)xEventGroupGetBits(fsmInputGroup);
 }
 
+bool fsm_is_input_set(InputBits_t bit) {
+    return (xEventGroupGetBits(fsmInputGroup) & bit) != 0;
+}
+
 
 
 // goofy ahh logic, uses lut
@@ -98,8 +102,11 @@ static float apply_rollover_limit(float requested_current) {
 
     if (v_max_cms != ROLLOVER_TABLE_NO_LIMIT && v_now_cms > v_max_cms) {
         rollover_limit_active = true;
+        warning_set(WARNING_ID_TIPPING_LIMIT_ACTIVE);
         return 0.0f;
     }
+    
+    warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
     rollover_limit_active = false;
     return requested_current;
 }
@@ -126,7 +133,9 @@ static void handle_state_forward(void) {
     if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
         // if we're actually going backwards, let off the pedal until we slow down
         MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
+        warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
+        warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
         MotorCAN_Send_Drive_Cmd(
             MAX_VELOCITY,
             fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
@@ -139,6 +148,7 @@ static void handle_state_reverse(void) {
     if (g_data_read->motor_velocity.MC_VehicleVelocity > 0.5f) {
         // if we're actually going forwards, let off the pedal until we slow down
         MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
+        warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         MotorCAN_Send_Drive_Cmd(
             -MAX_VELOCITY,

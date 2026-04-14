@@ -95,6 +95,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         VCUDataIn_t *volatile update = g_data_write;
         MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
+        MotorCAN_Recv_Control_Src(&update->motor_controls_src, 0);
 
         // making these motor can should be CARCAN
 

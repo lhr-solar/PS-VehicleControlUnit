@@ -55,7 +55,7 @@ void PT_check_ign() {
 void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage) {
     if (Motor_Voltage >
         (Battery_Voltage * VOLTAGE_TOLERANCE_NUMERATOR / VOLTAGE_TOLERANCE_DENOMINATOR)) {
-        faults_set(FAULT_ID_MOTOR_GT_BATTERY);
+        faults_set(FAULT_ID_MOTOR_GT_BATTERY);  
     }
 
     // is battery booming

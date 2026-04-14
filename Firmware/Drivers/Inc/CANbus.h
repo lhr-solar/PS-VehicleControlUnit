@@ -17,6 +17,7 @@ can_status_t MotorCAN_Recv(uint32_t id, FDCAN_RxHeaderTypeDef *header, uint8_t d
 
 can_status_t MotorCAN_Recv_Status(mc_status_t *out, TickType_t delay);
 can_status_t MotorCAN_Recv_Velocity(mc_velocitymeasurement_t *out, TickType_t delay);
+can_status_t MotorCAN_Recv_Control_Src(set_motor_cmd_src_t *out, TickType_t delay);
 
 can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay);
 

@@ -1,11 +1,6 @@
 #include "InitTask.h"
 #include "StatusLEDs.h"
 
-/* ===================== Stack Size Definitions ===================== */
-
-
-
-/* ===================== Static Task Buffers ===================== */
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
@@ -56,7 +51,7 @@ void Task_Init() {
         &FaultHandler_Task_Buffer
     );
 
-    precharge_task_handle =  xTaskCreateStatic(
+    precharge_task_handle = xTaskCreateStatic(
         Task_Precharge,
         "Precharge",
         PRECHARGE_TASK_STACK_SIZE,

@@ -21,6 +21,7 @@
 #define CAN_ID_MC_DSPBOARDTEMPMEASUREMENT 0x42C
 #define CAN_ID_MC_ODOMETERBUSAHMEASUREMENT 0x42E
 #define CAN_ID_MC_SLIPSPEEDMEASUREMENT 0x437
+#define CAN_ID_SET_MOTOR_CMD_SRC 0x7A1
 
 /* ================= CAN Length Macros ================= */
 
@@ -41,99 +42,105 @@
 #define CAN_DLC_MC_DSPBOARDTEMPMEASUREMENT 8
 #define CAN_DLC_MC_ODOMETERBUSAHMEASUREMENT 8
 #define CAN_DLC_MC_SLIPSPEEDMEASUREMENT 8
+#define CAN_DLC_SET_MOTOR_CMD_SRC 1
 
 
 /* ================= Value Table Enums ================= */
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_OUTPUTVOLTAGEPWM_LIMIT = 1,
     MC_STATUS_MC_LIMIT_OUTPUTVOLTAGEPWM_OK = 0,
+    MC_STATUS_MC_LIMIT_OUTPUTVOLTAGEPWM_LIMIT = 1,
 } mc_status_mc_limit_outputvoltagepwm_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_MOTORCURRENT_LIMIT = 1,
     MC_STATUS_MC_LIMIT_MOTORCURRENT_OK = 0,
+    MC_STATUS_MC_LIMIT_MOTORCURRENT_LIMIT = 1,
 } mc_status_mc_limit_motorcurrent_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_VELOCITY_LIMIT = 1,
     MC_STATUS_MC_LIMIT_VELOCITY_OK = 0,
+    MC_STATUS_MC_LIMIT_VELOCITY_LIMIT = 1,
 } mc_status_mc_limit_velocity_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_BUSCURRENT_LIMIT = 1,
     MC_STATUS_MC_LIMIT_BUSCURRENT_OK = 0,
+    MC_STATUS_MC_LIMIT_BUSCURRENT_LIMIT = 1,
 } mc_status_mc_limit_buscurrent_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_BUSVOLTAGEUPPER_LIMIT = 1,
     MC_STATUS_MC_LIMIT_BUSVOLTAGEUPPER_OK = 0,
+    MC_STATUS_MC_LIMIT_BUSVOLTAGEUPPER_LIMIT = 1,
 } mc_status_mc_limit_busvoltageupper_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_BUSVOLTAGELOWER_LIMIT = 1,
     MC_STATUS_MC_LIMIT_BUSVOLTAGELOWER_OK = 0,
+    MC_STATUS_MC_LIMIT_BUSVOLTAGELOWER_LIMIT = 1,
 } mc_status_mc_limit_busvoltagelower_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_MOTORTEMP_LIMIT = 1,
     MC_STATUS_MC_LIMIT_MOTORTEMP_OK = 0,
+    MC_STATUS_MC_LIMIT_MOTORTEMP_LIMIT = 1,
 } mc_status_mc_limit_motortemp_e;
 
 typedef enum {
-    MC_STATUS_MC_LIMIT_RESERVED_LIMIT = 1,
     MC_STATUS_MC_LIMIT_RESERVED_OK = 0,
+    MC_STATUS_MC_LIMIT_RESERVED_LIMIT = 1,
 } mc_status_mc_limit_reserved_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_HARDWAREOVERCURRENT_FAULT = 1,
     MC_STATUS_MC_FAULT_HARDWAREOVERCURRENT_OK = 0,
+    MC_STATUS_MC_FAULT_HARDWAREOVERCURRENT_FAULT = 1,
 } mc_status_mc_fault_hardwareovercurrent_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_SOFTWAREOVERCURRENT_FAULT = 1,
     MC_STATUS_MC_FAULT_SOFTWAREOVERCURRENT_OK = 0,
+    MC_STATUS_MC_FAULT_SOFTWAREOVERCURRENT_FAULT = 1,
 } mc_status_mc_fault_softwareovercurrent_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_DCBUSOVERVOLTAGE_FAULT = 1,
     MC_STATUS_MC_FAULT_DCBUSOVERVOLTAGE_OK = 0,
+    MC_STATUS_MC_FAULT_DCBUSOVERVOLTAGE_FAULT = 1,
 } mc_status_mc_fault_dcbusovervoltage_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_BADMOTORPOSITIONHALLSEQ_FAULT = 1,
     MC_STATUS_MC_FAULT_BADMOTORPOSITIONHALLSEQ_OK = 0,
+    MC_STATUS_MC_FAULT_BADMOTORPOSITIONHALLSEQ_FAULT = 1,
 } mc_status_mc_fault_badmotorpositionhallseq_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_WATCHDOGCAUSEDLASTRESET_FAULT = 1,
     MC_STATUS_MC_FAULT_WATCHDOGCAUSEDLASTRESET_OK = 0,
+    MC_STATUS_MC_FAULT_WATCHDOGCAUSEDLASTRESET_FAULT = 1,
 } mc_status_mc_fault_watchdogcausedlastreset_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_CONFIGREAD_FAULT = 1,
     MC_STATUS_MC_FAULT_CONFIGREAD_OK = 0,
+    MC_STATUS_MC_FAULT_CONFIGREAD_FAULT = 1,
 } mc_status_mc_fault_configread_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_15VRAILUNDERVOLTAGE_FAULT = 1,
     MC_STATUS_MC_FAULT_15VRAILUNDERVOLTAGE_OK = 0,
+    MC_STATUS_MC_FAULT_15VRAILUNDERVOLTAGE_FAULT = 1,
 } mc_status_mc_fault_15vrailundervoltage_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_DESATURATIONFAULT_FAULT = 1,
     MC_STATUS_MC_FAULT_DESATURATIONFAULT_OK = 0,
+    MC_STATUS_MC_FAULT_DESATURATIONFAULT_FAULT = 1,
 } mc_status_mc_fault_desaturationfault_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_MOTOROVERSPEED_FAULT = 1,
     MC_STATUS_MC_FAULT_MOTOROVERSPEED_OK = 0,
+    MC_STATUS_MC_FAULT_MOTOROVERSPEED_FAULT = 1,
 } mc_status_mc_fault_motoroverspeed_e;
 
 typedef enum {
-    MC_STATUS_MC_FAULT_RESERVED_FAULT = 1,
     MC_STATUS_MC_FAULT_RESERVED_OK = 0,
+    MC_STATUS_MC_FAULT_RESERVED_FAULT = 1,
 } mc_status_mc_fault_reserved_e;
+
+typedef enum {
+    SET_MOTOR_CMD_SRC_MOTOR_COMMAND_SOURCE_VCU = 0,
+    SET_MOTOR_CMD_SRC_MOTOR_COMMAND_SOURCE_TRITIUM_EXTERNAL = 1,
+} set_motor_cmd_src_motor_command_source_e;
 
 /* ================= Message Structs ================= */
 
@@ -235,4 +242,8 @@ typedef struct {
 typedef struct {
     float MC_SlipSpeed;
 } mc_slipspeedmeasurement_t;
+
+typedef struct {
+    uint8_t Motor_Command_Source;
+} set_motor_cmd_src_t;
 

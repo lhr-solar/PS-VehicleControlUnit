@@ -94,29 +94,38 @@ def transition_full(cur, bits):
 
 
 def transition_dnr(cur, bits):
+    if cur == DISABLED:
+        return DISABLED
+    
     if cur == INIT:
+        return NOT_READY
+    
+    if curr != DISABLED and not (bits & PC):
         return NOT_READY
  
     if cur == NOT_READY:
         return NEUTRAL if (bits & PC) else NOT_READY
 
-    if cur == DISABLED:
-        return DISABLED
-
     if cur == NEUTRAL:
-        if (bits & FWD) and not (bits & REV) and not (bits & BRK):
+        if (bits & FWD) and not (bits & REV):
             return FWD_DRIVE
-        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+        if (bits & REV) and not (bits & FWD):
             return REV_DRIVE
         return NEUTRAL
 
-    if cur in (FWD_DRIVE, REGEN, CRUISE):
+    if cur == FWD_DRIVE:
+        if (bits & REV) or (bits & NEU):
+            return NEUTRAL
+        return FWD_DRIVE
+    
+
+    if cur in (REGEN, CRUISE):
         if (bits & REV) or (bits & NEU) or (bits & BRK):
             return NEUTRAL
         return FWD_DRIVE
 
     if cur == REV_DRIVE:
-        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
+        if (bits & REV) and not (bits & FWD):
             return REV_DRIVE
         return NEUTRAL
 

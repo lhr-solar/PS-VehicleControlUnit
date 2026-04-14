@@ -1,73 +1,71 @@
 #include "VCUStatusTask.h"
-#include "UpdateVCUInputsTask.h"
+#include "Contactors.h"
 #include "FSMTask.h"
 #include "FaultBits.h"
-#include "Contactors.h"
-#include "Watchdogs.h"
 #include "StatusLEDs.h"
+#include "UpdateVCUInputsTask.h"
+#include "Watchdogs.h"
 #include "event_groups.h"
 
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[CAN_DLC_VCU_STATUS];
 
     while (1) {
-        // Byte 0: VCU_Fault — map internal faults to DBC enum
-        uint8_t vcu_fault = VCU_STATUS_VCU_FAULT_NO_FAULT;
-        if (faults_is_active(FAULT_ID_PRECHARGE_TIMEOUT))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_PRECHARGE_TIMEOUT;
-        else if(faults_is_active(VCU_STATUS_VCU_FAULT_MOTOR_PCHG_CONTACTOR_SENSE))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_PCHG_CONTACTOR_SENSE;
-        else if(faults_is_active(VCU_STATUS_VCU_FAULT_MOTOR_CONTACTOR_SENSE))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_CONTACTOR_SENSE;
-        else if (faults_is_active(FAULT_ID_MOTOR_DC_BUS_OVERVOLTAGE))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_HV_OVERVOLTAGE;
-        else if (faults_is_active(FAULT_ID_MOTOR_15V_UNDERVOLTAGE))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_HV_UNDERVOLTAGE;
-        else if (faults_is_active(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT) ||
-                 faults_is_active(FAULT_ID_MOTOR_SOFTWARE_OVERCURRENT) ||
-                 faults_is_active(FAULT_ID_MOTOR_BAD_HALL_SEQUENCE) ||
-                 faults_is_active(FAULT_ID_MOTOR_WD_RESET) ||
-                 faults_is_active(FAULT_ID_MOTOR_CONFIG_READ) ||
-                 faults_is_active(FAULT_ID_MOTOR_DESATURATION) ||
-                 faults_is_active(FAULT_ID_MOTOR_OVERSPEED))
-            vcu_fault = VCU_STATUS_VCU_FAULT_MOTOR_CONTROLLER_FAULT;
-        buf[0] = vcu_fault;
+        // Byte 0
+        uint8_t state = current_state.stateName & 0x0FU;
+        bool motor_ready = (current_state.stateName != DISABLED) &&
+                           (current_state.stateName != STATE_INIT) &&
+                           (current_state.stateName != CAR_NOT_READY);
+        bool motor_prech_cont_state = contactor_get_sense(MOTOR_PRE_CONTACTOR);
+        bool motor_cont_state = contactor_get_sense(MOTOR_CONTACTOR);
+        bool driver_inp_wdog = watchdog_is_alive(WD_IDX_DRIVER_INPUT);
+        buf[0] = (state) | (motor_ready << 4) | (motor_prech_cont_state << 5) |
+                 (motor_cont_state << 6) | (driver_inp_wdog << 7);
 
-        
+        // Byte 1
+        bool pedals_wdog = watchdog_is_alive(WD_IDX_ACCEL_BRAKE);
+        bool bps_wdog = watchdog_is_alive(WD_IDX_BPS_STATUS);
+        bool steering_wdog = watchdog_is_alive(WD_IDX_STEERING_ANGLE);
+        bool bps_fault = faults_is_active(FAULT_ID_BPS_FAULT);
+        bool controls_fault = faults_is_active(FAULT_ID_CONTROLS_FAULT);
+        bool motor_fault = !!(faults_get() & FAULT_MASK_MOTOR_ALL);
+        bool pedals_fault = !((bool)g_data_read->accel_brake.AccelPedal_Main_Fault) &&
+                            !((bool)g_data_read->accel_brake.AccelPedal_Redundant_Fault) &&
+                            !((bool)g_data_read->accel_brake.BrakePedal_Main_Fault) &&
+                            !((bool)g_data_read->accel_brake.BrakePedal_Redundant_Fault);
+        bool steering_fault = g_data_read->lws.LWS_Fault;
+        buf[1] = (pedals_wdog) | (bps_wdog << 1) | (steering_wdog << 2) | (bps_fault << 3) |
+                 (controls_fault << 4) | (motor_fault << 5) | (pedals_fault << 6) |
+                 (steering_fault << 7);
 
-        
-        // Byte 1: status bits per DBC positions 8-14
-        bool pedals_ok = !g_data_read->accel_brake.AccelPedal_Main_Fault &&
-                         !g_data_read->accel_brake.AccelPedal_Redundant_Fault &&
-                         !g_data_read->accel_brake.BrakePedal_Main_Fault &&
-                         !g_data_read->accel_brake.BrakePedal_Redundant_Fault;
+        buf[2] = g_data_read->motor_controls_src |
+                 (!!(fsm_get_inputs() & READY_TO_REGEN_BIT) << 1) |
+                 (g_data_read->bps_status.BPS_Regen_OK << 2) |
+                 (faults_is_active(FAULT_ID_PRECHARGE_TIMEOUT) << 3) |
+                 (faults_is_active(FAULT_ID_PRECHARGE_SENSE_TIMEOUT) << 4) |
+                 (faults_is_active(FAULT_ID_PRECHARGE_SENSE_MISMATCH) << 5) |
+                 (faults_is_active(FAULT_ID_MOTOR_SENSE_MISMATCH) << 6) |
+                 (faults_is_active(FAULT_ID_MOTOR_SENSE_TIMEOUT) << 7);
 
-        bool driver_input_ok = !faults_is_active(FAULT_ID_GENERIC_WATCHDOG_FAULT) &&
-                               !faults_is_active(FAULT_ID_CONTROLS_FAULT);
+        buf[3] = (faults_is_active(FAULT_ID_BATTERY_OVERVOLTAGE)) |
+                 (faults_is_active(FAULT_ID_BATTERY_UNDERVOLTAGE) << 1) |
+                 (faults_is_active(FAULT_ID_MOTOR_GT_BATTERY) << 2) | // TODO check if this is right
+                 (faults_is_active(FAULT_ID_MOTOR_LT_BATTERY) << 3) |
+                 (faults_any_active() << 4) | // TODO: make this "other"
+                 (faults_is_active(FAULT_ID_MOTOR_GT_BATTERY) << 2) |
 
-        bool steering_angle_ok = g_data_read->lws.LWS_Fault == 0;
 
-    //          while(1){
-    //             LED_toggle(HB);
-    //     vTaskDelay(pdMS_TO_TICKS(100));
 
-    // }
-        buf[1] = ((uint8_t)contactor_get_sense(MOTOR_CONTACTOR) << 0) | // Motor_Contactor_State
-                 ((uint8_t)contactor_get_sense(MOTOR_PRE_CONTACTOR) << 1) | // Motor_Precharge_Contactor_State
-                 ((uint8_t) (contactor_get_sense(MOTOR_PRE_CONTACTOR) && vcu_fault == 0) << 2) | // Motor_Ready_To_Drive
-                 ((uint8_t)driver_input_ok << 3) |    // VCU_Driver_Input_OK
-                 ((uint8_t)pedals_ok << 4) |          // VCU_Pedals_OK
-                 ((uint8_t)!!(fsm_get_inputs() & READY_TO_REGEN_BIT) << 5) | // VCU_Regen_OK
-                 ((uint8_t)(current_state.stateName == REGEN) << 6) |     // VCU_Regen_Active
-                 ((uint8_t)steering_angle_ok << 7); // VCU_Steering_Angle_OK (not implemented, set to OK)
+        buf[3] = fsm_get_inputs(); // this supposed to have fsm states as well but stateName covers
+                                   // it for now
 
-        // Byte 2: VCU_FSM_State bits [3:0]
-        buf[2] = (uint8_t)(current_state.stateName & 0x0FU);
+        // for viewing faults in status
+        int faults = 0x0FFFFFF & faults_get();
+        buf[4] = (faults >> 16) & 0xFF;
+        buf[5] = (faults >> 8) & 0xFF;
+        buf[6] = faults & 0xFF;
 
-        buf[3] = fsm_get_inputs() ; //this supposed to have fsm states as well but stateName covers it for now
-   
-    
-        FDCAN_TxHeaderTypeDef tx_header = {0};   
+        FDCAN_TxHeaderTypeDef tx_header = {0};
         tx_header.Identifier = CAN_ID_VCU_STATUS;
         tx_header.IdType = FDCAN_STANDARD_ID;
         tx_header.TxFrameType = FDCAN_DATA_FRAME;

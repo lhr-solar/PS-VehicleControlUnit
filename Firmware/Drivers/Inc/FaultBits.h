@@ -83,6 +83,33 @@ extern const char *fault_names[];
     FAULT_BIT(FAULT_ID_MOTOR_LT_BATTERY) \
 )
 
+#define WARNING_ID_LIST(X) \
+    X(MOTOR_DIRECTION_CHANGE_LOCKOUT) \
+    X(TIPPING_LIMIT_ACTIVE) \
+    X(REGEN_NOT_ALLOWED) \
+    X(REGEN_NOT_ENABLED)                      
+
+typedef enum {
+#define X(name) WARNING_ID_##name,
+    WARNING_ID_LIST(X)
+#undef X
+    WARNING_ID_COUNT
+} WarningID_e;
+
+#if (configUSE_16_BIT_TICKS == 0)
+#define MAX_WARNING_BITS 24U
+#else
+#define MAX_WARNING_BITS 8U
+#endif
+
+_Static_assert(WARNING_ID_COUNT <= MAX_WARNING_BITS,
+               "Too many warning bits for EventGroup");
+
+// Names for warnings for printing/debugging purposes. Indexed by WarningID_e values
+extern const char *warning_names[];
+
+#define WARNING_MASK_ALL       ((1UL << WARNING_ID_COUNT) - 1)
+
 /**
  * @brief Initializes fault bitmap and associated data structures. Must be 
  * called before using any other functions in this module.
@@ -159,3 +186,16 @@ EventBits_t faults_get(void);
  * fault bits set.
  */
 EventBits_t faults_wait(FaultID_e id, TickType_t ticks);
+
+/**
+ * @brief Set a warning. Non critical and just informational for driver.
+ * 
+ * @param id The warning to set.
+ */
+void warning_set(WarningID_e id);
+
+/**
+ * @brief Get the state of all warnings. 
+ * @return A bitmask of fault bits that are currently active. 
+ */
+EventBits_t warning_get(void);

@@ -14,15 +14,14 @@
 #include "Watchdogs.h"
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
-#define MAX_VELOCITY      100.0f // meters per second
+#define MAX_VELOCITY        100.0f // meters per second
+#define MAX_CURRENT_PERCENT 100.0f
 
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
-
 MocoState_t current_state = {0};
-
-
 
 static bool rollover_limit_active = false;
 static volatile uint16_t fsm_inputs = 0;
@@ -37,9 +36,8 @@ static void handle_state_regen(void);
 static void handle_state_cruise(void);
 static void handle_state_disabled(void);
 
-// static void update_from_can(void);
-// static void rebuild_bitfield(void);
 static float apply_rollover_limit(float requested_current);
+static uint8_t apply_swoc_speed_limit(float speed_mph);
 
 //must be called Before the FSM task gets called
 void FSM_TaskInit(){
@@ -129,7 +127,11 @@ static void handle_state_forward(void) {
         // if we're actually going backwards, let off the pedal until we slow down
         MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
     } else {
-        MotorCAN_Send_Drive_Cmd(MAX_VELOCITY, apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos), 0);
+        MotorCAN_Send_Drive_Cmd(
+            MAX_VELOCITY,
+            fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
+                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
+            0);
     }
 }
 
@@ -138,16 +140,36 @@ static void handle_state_reverse(void) {
         // if we're actually going forwards, let off the pedal until we slow down
         MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
     } else {
-        MotorCAN_Send_Drive_Cmd(-MAX_VELOCITY, apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos), 0);
+        MotorCAN_Send_Drive_Cmd(
+            -MAX_VELOCITY,
+            fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
+                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
+            0);
     }
 }
 
 static void handle_state_cruise(void) {
-    float current = apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos);
     float velocity = rollover_limit_active ? 0.0f : MAX_VELOCITY;
-    MotorCAN_Send_Drive_Cmd(velocity, current, 0);
+    MotorCAN_Send_Drive_Cmd(
+        velocity,
+        fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
+            apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
+        0);
 }
 
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
+                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
+static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
+
+static uint8_t apply_swoc_speed_limit(float speed_mph) {
+    uint8_t cap = MAX_CURRENT_PERCENT; // Default is 100%
+    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
+        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
+            cap = SWOC_THRESHOLDS[i].max_percent;
+        }
+    }
+    return cap;
+}
 
 
 //////// rtos tasks

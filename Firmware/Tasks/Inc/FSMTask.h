@@ -15,7 +15,10 @@
 #include "CANbus.h"
 #include "event_groups.h"
 
-// make sure if you change this to also change it in scripts/fsm_generator.py
+/**
+ * @brief A list of inputs; uses X macro pattern
+ * @note Make sure if you change this to also change it in scripts/fsm_generator.py
+ */
 #define BITFIELD_INPUT_LIST(X)                                                                     \
     X(NEUTRAL)                                                                                     \
     X(FORWARD)                                                                                     \
@@ -28,7 +31,7 @@
     X(PRECHARGE_COMPLETE)
 
 /**
- * @brief 
+ * @brief An enum of all FSM inputs
  */
 typedef enum {
 #define X(name) BIT_IDX_##name,
@@ -70,6 +73,15 @@ typedef struct {
 extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t current_state;
 
+/**
+ * @brief Used for stepping current down at higher speeds. An array of these will 
+ * represent a bin for min speed and associated max current.
+ */
+typedef struct {
+    float speed_mph;
+    uint8_t max_percent;
+} swoc_threshold_t;
+
 
 void fsm_init(void);
 void fsm_step(void);
@@ -82,11 +94,8 @@ uint16_t fsm_get_inputs(void);
 
 bool fsm_is_over_rollover_speed(void);
 
-void Task_UpdateControlStatus(void *args);
 void FSM_TaskInit();
 void Task_FSM(void *args);
-void Task_BroadcastVCUStatus(void *args);
-void Task_UpdateControlStatus(void *args __attribute__((unused)));
 
 float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_min,
                      uint8_t out_max);

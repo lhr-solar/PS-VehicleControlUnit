@@ -8,10 +8,10 @@
  */
 
 #include "VCUStatusTask.h"
-#include "UpdateFSMInputsTask.h"
+#include "UpdateVCUInputsTask.h"
 #include "inits.h"
 #include "InitTask.h"
-#include "FSM.h"
+#include "FSMTask.h"
 // #include ""
 
 #define PRINTF_DEBUG
@@ -54,13 +54,13 @@ int main() {
     );
 
     xTaskCreateStatic(
-        Task_UpdateFSMInputs,
+        Task_UpdateVCUInputs,
         "Update FSM Inputs Thread",
-        UPDATE_FSM_INPUTS_STACK_SIZE,
+        UPDATE_VCU_INPUTS_STACK_SIZE,
         NULL,
-        UPDATE_FSM_INPUTS_THREAD_PRIO,
-        UpdateFSMInputs_Task_Stack,
-        &UpdateFSMInputs_Task_Buffer
+        UPDATE_VCU_INPUTS_THREAD_PRIO,
+        UpdateVCUInputs_Task_Stack,
+        &UpdateVCUInputs_Task_Buffer
     );
 
     xTaskCreateStatic(

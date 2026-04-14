@@ -4,9 +4,18 @@
 static StaticEventGroup_t faultBuffer;
 static EventGroupHandle_t faultGroup;
 
+static StaticEventGroup_t warningBuffer;
+static EventGroupHandle_t warningGroup;
+
 const char *fault_names[FAULT_ID_COUNT] = {
 #define X(name) [FAULT_ID_##name] = #name,
     FAULT_ID_LIST(X)
+#undef X
+};
+
+const char *warning_names[WARNING_ID_COUNT] = {
+#define X(name) [WARNING_ID_##name] = #name,
+    WARNING_ID_LIST(X)
 #undef X
 };
 
@@ -16,6 +25,13 @@ bool faults_init(void) {
         return false;
     }
     xEventGroupClearBits(faultGroup, FAULT_MASK_ALL);
+
+    warningGroup = xEventGroupCreateStatic(&warningBuffer);
+    if (warningGroup == NULL) {
+        return false;
+    }
+    xEventGroupClearBits(warningGroup, WARNING_MASK_ALL);
+
     return true;
 }
 
@@ -63,4 +79,13 @@ EventBits_t faults_wait(FaultID_e id, TickType_t ticks) {
         pdFALSE,    // wait for any
         ticks
     );
+}
+
+void warning_set(WarningID_e id) {
+    configASSERT(id < FAULT_ID_COUNT);
+    xEventGroupSetBits(warningGroup, FAULT_BIT(id));
+}
+
+EventBits_t warning_get(void) {
+    return xEventGroupGetBits(warningGroup) & WARNING_MASK_ALL;
 }

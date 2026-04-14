@@ -37,26 +37,41 @@ void MotorTelemetryTask_Init(void) {
         return;
     }
 }
-// void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
+
+void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
     
-//     // only forward motorCAN messages to CarCAN
-//     if(motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
+    // only forward motorCAN messages to CarCAN
+    if(motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
 
-//         BaseType_t higherPriorityTaskWoken = pdFALSE;
+        BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-//         xQueueSendFromISR(
-//             motorTelemetryQueue,
-//             &recv_payload,
-//             &higherPriorityTaskWoken
-//         );
-//         // don't yield at the end of this since the rest of the ISR needs to run
-//     }
-// }
+        xQueueSendFromISR(
+            motorTelemetryQueue,
+            &recv_payload,
+            &higherPriorityTaskWoken
+        );
+        // don't yield at the end of this since the rest of the ISR needs to run
 
-//         xQueueSendFromISR(motorTelemetryQueue, &recv_payload, &higherPriorityTaskWoken);
-//         // don't yield at the end of this since the rest of the ISR needs to run
-//     }
-// }
+        
+        FDCAN_TxHeaderTypeDef tx_header = {0};   
+        tx_header.Identifier = recv_payload.header.Identifier;
+        tx_header.IdType = FDCAN_STANDARD_ID;
+        tx_header.TxFrameType = FDCAN_DATA_FRAME;
+        tx_header.DataLength = FDCAN_DLC_BYTES(CAN_DLC_VCU_STATUS);
+        tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+        tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+        tx_header.FDFormat = FDCAN_CLASSIC_CAN;
+        tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+        tx_header.MessageMarker = 0;
+
+        can_fd_send_isr(motorfdcan, &tx_header, recv_payload.data, higherPriorityTaskWoken);
+    }
+}
+
+        xQueueSendFromISR(motorTelemetryQueue, &recv_payload, &higherPriorityTaskWoken);
+        // don't yield at the end of this since the rest of the ISR needs to run
+    }
+}
 
 void Task_MotorTelemetry() {
 

@@ -17,7 +17,7 @@ typedef struct {
     mc_status_t motor_status;
     bps_status_t bps_status;
     mc_velocitymeasurement_t motor_velocity;
-    
+    set_motor_cmd_src_t motor_controls_src;
 } VCUDataIn_t;
 
 extern VCUDataIn_t * volatile g_data_read;

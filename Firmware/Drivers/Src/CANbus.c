@@ -2,6 +2,7 @@
 #include "BPSCAN_can_msgs.h"
 #include "CarCAN_can_msgs.h"
 #include "MotorCAN_can_msgs.h"
+#include "UpdateVCUInputsTask.h"
 #include <math.h>
 #include <string.h>
 
@@ -116,9 +117,26 @@ can_status_t MotorCAN_Recv_Status(mc_status_t *out, TickType_t delay) {
     return result;
 }
 
+can_status_t MotorCAN_Recv_Control_Src(set_motor_cmd_src_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    uint8_t moco_control_src_rx_data[CAN_DLC_SET_MOTOR_CMD_SRC] = {0};
+
+    can_status_t result =
+        can_fd_recv(motorfdcan, CAN_ID_SET_MOTOR_CMD_SRC, &header, moco_status_rx_data, delay);
+
+    if (result == CAN_OK) {
+        out->Motor_Command_Source = moco_control_src_rx_data[0];
+    }
+    
+    return result;
+}
+
 
 can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay) {
     if (!isfinite(velocity) || !isfinite(current)) return CAN_EMPTY;
+    if (g_data_read->motor_controls_src.Motor_Command_Source) return CAN_OK;
 
     FDCAN_TxHeaderTypeDef header = {
         .Identifier = CAN_ID_MC_DRIVECOMMAND,

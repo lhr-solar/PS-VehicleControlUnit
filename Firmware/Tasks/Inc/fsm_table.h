@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "FSM.h"
+#include "FSMTask.h"
 
 extern MocoState_t FSM[NUM_STATES];
 

@@ -39,8 +39,8 @@ void Task_Init() {
 
     FSM_TaskInit();
 
-    // watchdog_init();
-    // watchdog_start_all();
+    watchdog_init();
+    watchdog_start_all();
 
 
     // Required for VCU status testing

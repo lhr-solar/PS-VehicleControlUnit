@@ -100,7 +100,7 @@ def transition_dnr(cur, bits):
     if cur == INIT:
         return NOT_READY
     
-    if curr != DISABLED and not (bits & PC):
+    if cur != DISABLED and not (bits & PC):
         return NOT_READY
  
     if cur == NOT_READY:

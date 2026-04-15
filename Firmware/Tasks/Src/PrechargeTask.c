@@ -125,6 +125,13 @@ void Task_Precharge() {
             // Startup state: Closes main contactor and moves to precharging state
             case PRECHARGE_STATE_INITIAL:
                 printf("Precharge State: Initial\r\n");
+                
+                // dont attempt to close contactors before bps ready
+                if (!g_data_read->bps_status.HV_Plus_Contactor_State ||
+                    !g_data_read->bps_status.HV_Minus_Contactor_State || 
+                    g_data_read->bps_status.BPS_Fault) {
+                    break;
+                }
 
                 if (contactor_set(MOTOR_CONTACTOR, CLOSED, CALLBACK_BLOCKING_TIME, NORMAL) !=
                     SUCCESS) {
@@ -220,7 +227,7 @@ void Task_Precharge() {
             clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
         }
 
-        LED_toggle(HB);
+        // LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(PRECHARGE_TASK_DELAY_MS));
     }
 }

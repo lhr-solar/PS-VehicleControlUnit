@@ -20,7 +20,7 @@ can_status_t MotorCAN_Init(void) {
     motorfdcan->Init.ClockDivider = FDCAN_CLOCK_DIV1;
     motorfdcan->Init.FrameFormat = FDCAN_FRAME_CLASSIC;
     motorfdcan->Init.Mode = FDCAN_MODE_NORMAL;
-    motorfdcan->Init.AutoRetransmission = DISABLE;
+    motorfdcan->Init.AutoRetransmission = ENABLE;
     motorfdcan->Init.TransmitPause = DISABLE;
     motorfdcan->Init.ProtocolException = DISABLE;
     motorfdcan->Init.NominalPrescaler = 20;
@@ -139,6 +139,7 @@ can_status_t MotorCAN_Recv_Control_Src(set_motor_cmd_src_t *out, TickType_t dela
 
 
 can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay) {
+    // printf("Motor CAN send drive cmd: %f vel, %f curr", velocity, current);
     if (!isfinite(velocity) || !isfinite(current)) return CAN_EMPTY;
     if (g_data_read->motor_controls_src.Motor_Command_Source) return CAN_OK;
 
@@ -150,7 +151,7 @@ can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t d
         .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
         .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN,
-        .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
         .MessageMarker = 0,
     };
 
@@ -357,6 +358,9 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
 
 can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_mv, 
     TickType_t delay) {
+
+    printf("Car CAN send prech voltages: %lu motor_mv,  %lu batt_mv\n\r", motor_mv, battery_mv);
+
     FDCAN_TxHeaderTypeDef header = {
         .Identifier = CAN_ID_VCU_PRECHARGE_VOLTAGES,
         .IdType = FDCAN_STANDARD_ID,
@@ -365,7 +369,7 @@ can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_
         .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
         .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN,
-        .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
         .MessageMarker = 0,
     };
 

@@ -55,16 +55,16 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
         
         FDCAN_TxHeaderTypeDef tx_header = {0};   
         tx_header.Identifier = recv_payload.header.Identifier;
-        tx_header.IdType = FDCAN_STANDARD_ID;
+        tx_header.IdType = recv_payload.header.IdType;
         tx_header.TxFrameType = FDCAN_DATA_FRAME;
-        tx_header.DataLength = FDCAN_DLC_BYTES(CAN_DLC_VCU_STATUS);
-        tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-        tx_header.BitRateSwitch = FDCAN_BRS_OFF;
-        tx_header.FDFormat = FDCAN_CLASSIC_CAN;
+        tx_header.DataLength = recv_payload.header.DataLength;
+        tx_header.ErrorStateIndicator = recv_payload.header.ErrorStateIndicator;
+        tx_header.BitRateSwitch = recv_payload.header.BitRateSwitch;
+        tx_header.FDFormat = recv_payload.header.FDFormat;
         tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
         tx_header.MessageMarker = 0;
 
-        can_fd_send_isr(motorfdcan, &tx_header, recv_payload.data, &higherPriorityTaskWoken);
+        can_fd_send_isr(carfdcan, &tx_header, recv_payload.data, &higherPriorityTaskWoken);
     }
 }
 

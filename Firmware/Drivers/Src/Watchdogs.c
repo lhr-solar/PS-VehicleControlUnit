@@ -9,21 +9,26 @@
 #include <stdio.h>
 #include <string.h>
 
+
 #ifndef NODAWG
+static StaticEventGroup_t dogBuffer;
+static EventGroupHandle_t dogGroup; // 1 = alive, 0 = dead
 static StaticTimer_t  wd_buffers[MAX_WD_TIMERS] = {0};
 static TimerHandle_t  wd_timers[MAX_WD_TIMERS] = {0};
-static bool           wd_alive[MAX_WD_TIMERS] = {0};
 static FaultID_e      wd_fault_ids[MAX_WD_TIMERS] = {0};
 #endif
 
 static uint8_t        wd_count = 0;
 
+#define WDOG_MASK_ALL       ((1UL << WD_IDX_COUNT) - 1)
+#define WDOG_BIT(idx)       (1UL << idx)
+
 #ifndef NODAWG
 // Callback function for when a watchdog timer expires 
 static void wd_callback(TimerHandle_t xTimer) {
     uint8_t idx = (uint8_t)(uintptr_t)pvTimerGetTimerID(xTimer);
-    wd_alive[idx] = false;
-    printf("WD timeout: signal %d\n", idx);
+    xEventGroupClearBits(dogGroup, WDOG_BIT(idx));
+    printf("WD timeout: signal %d\r\n", idx);
     faults_set(wd_fault_ids[idx]);
 }
 #endif
@@ -34,6 +39,11 @@ void watchdog_init(void) {
     watchdog_create(str, WD_IDX_##name, timeout, fault);
     WATCHDOG_LIST(X)
 #undef X
+    dogGroup = xEventGroupCreateStatic(&dogBuffer);
+    if (dogGroup == NULL) {
+        return;
+    }
+    xEventGroupSetBits(dogGroup, WDOG_MASK_ALL);
 #endif
 }
 
@@ -52,8 +62,7 @@ void watchdog_create(const char *name, uint8_t idx, uint32_t timeout_ms, FaultID
         &wd_buffers[wd_count]
     );
     configASSERT(t != NULL);
-    wd_timers[wd_count] = t;
-    wd_alive[idx] = true;
+    wd_timers[idx] = t;
     wd_fault_ids[idx] = fault_id;
     wd_count++;
 #endif
@@ -78,7 +87,7 @@ void watchdog_stop_all(void) {
 void watchdog_received_can_message(uint8_t idx) {
 #ifndef NODAWG
     configASSERT(idx < MAX_WD_TIMERS && wd_timers[idx] != NULL);
-    wd_alive[idx] = true;
+    xEventGroupSetBits(dogGroup, (0x1 << idx));
     xTimerReset(wd_timers[idx], 0);
 #endif
 }
@@ -86,7 +95,7 @@ void watchdog_received_can_message(uint8_t idx) {
 void watchdog_received_can_message_ISR(uint8_t idx, BaseType_t *pxHigherPriorityTaskWoken) {
 #ifndef NODAWG
     configASSERT(idx < MAX_WD_TIMERS && wd_timers[idx] != NULL);
-    wd_alive[idx] = true;
+    xEventGroupClearBitsFromISR(dogGroup, WDOG_BIT(idx));
     xTimerResetFromISR(wd_timers[idx], pxHigherPriorityTaskWoken);
 #endif
 }
@@ -94,7 +103,7 @@ void watchdog_received_can_message_ISR(uint8_t idx, BaseType_t *pxHigherPriority
 bool watchdog_is_alive(int idx) {
 #ifndef NODAWG
     if (idx < 0 || idx >= MAX_WD_TIMERS) return false;
-    return wd_alive[idx];
+    return ((xEventGroupGetBits(dogGroup) >> idx) & 0x1);
 #else 
     return true;
 #endif

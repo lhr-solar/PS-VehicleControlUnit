@@ -1,6 +1,7 @@
 #include "UpdateVCUInputsTask.h"
 #include "Contactors.h"
 #include "FaultBits.h"
+#include "StatusLEDs.h"
 #include "event_groups.h"
 #include <string.h>
 #include <math.h>
@@ -81,9 +82,9 @@ void UFI_throw_faults() {
     if (g_data_read->accel_brake.AccelPedal_Main_Fault ||
         g_data_read->accel_brake.AccelPedal_Redundant_Fault ||
         g_data_read->accel_brake.BrakePedal_Main_Fault ||
-        g_data_read->accel_brake.BrakePedal_Redundant_Fault ||
-        fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
-            g_data_read->accel_brake.AccelPedal_Redundant_Pos) > ACCEPTABLE_PEDAL_DEVIATION) {
+        g_data_read->accel_brake.BrakePedal_Redundant_Fault ) {//||
+        // fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
+            // g_data_read->accel_brake.AccelPedal_Redundant_Pos) > ACCEPTABLE_PEDAL_DEVIATION) {
         mask |= FAULT_BIT(FAULT_ID_PEDAL_BOARD_FAULT);
     }
 
@@ -97,8 +98,12 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
 
     while (1) {
+        printf("Task_UpdateVCUInputs: %ld", last);
         // update from can
         VCUDataIn_t *volatile update = g_data_write;
+        if (MotorCAN_Recv_Status(&update->motor_status, 0) == CAN_OK) {
+            LED_toggle(HB);
+        }
         MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
         MotorCAN_Recv_Control_Src(&update->motor_controls_src, 0);
@@ -111,14 +116,16 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
 
+        // printf("Update VCU inputs: about to switch read and write ptrs");
+
         VCUDataIn_t *volatile tmp;
         taskENTER_CRITICAL();
         tmp = g_data_read;
         g_data_read = g_data_write;
         g_data_write = tmp;
         taskEXIT_CRITICAL();
-        
-        
+
+        // printf("Updated from CAN!");
 
         memcpy(g_data_write, g_data_read, sizeof(VCUDataIn_t));
 

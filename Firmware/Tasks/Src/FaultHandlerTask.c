@@ -88,7 +88,7 @@ void Task_FaultHandler(void *args __attribute__((unused))) {
             clear_MotorSafeBit(MOTOR_CONTACTOR_ENABLED);
             clear_MotorSafeBit(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
 
-            // fsm_disable();
+            fsm_disable();
             watchdog_stop_all();
 
             printf("Fault Handler triggered: 0x%02lX\r\n", bits);

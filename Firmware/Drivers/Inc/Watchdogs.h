@@ -14,6 +14,8 @@
 
 #define MAX_WD_TIMERS 10
 
+#define NODAWG 1
+
 /**
  * @brief List of watchdogs to create, along with their timeouts and fault IDs
  * Format: X(name, string_name, timeout_ms, fault_id)
@@ -27,13 +29,13 @@
  * caused the fault. Just make sure to add the new fault IDs to FaultBits.h as well.
  */
 #define WATCHDOG_LIST(X)                                                                           \
-    X(DRIVER_INPUT, "wd_driver_input", 150U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                        \
-    X(ACCEL_BRAKE, "wd_accel_brake", 150U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                          \
-    X(STEERING_ANGLE, "wd_steering_angle", 300U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                \
-    X(CONTROLS_STATUS, "wd_controls_status", 300U, FAULT_ID_GENERIC_WATCHDOG_FAULT)              \
-    X(BPS_STATUS, "wd_bps_status", 300U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                             \
-    X(MOCO_STATUS, "wd_moco_status", 500U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                          \
-    X(MOCO_VELOCITY, "wd_moco_velocity", 500U, FAULT_ID_GENERIC_WATCHDOG_FAULT)
+    X(DRIVER_INPUT, "wd_driver_input", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                        \
+    X(ACCEL_BRAKE, "wd_accel_brake", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                          \
+    X(STEERING_ANGLE, "wd_steering_angle", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                \
+    X(CONTROLS_STATUS, "wd_controls_status", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)              \
+    X(BPS_STATUS, "wd_bps_status", 2000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                             \
+    X(MOCO_STATUS, "wd_moco_status", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)                          \
+    X(MOCO_VELOCITY, "wd_moco_velocity", 1000U, FAULT_ID_GENERIC_WATCHDOG_FAULT)
 
 typedef enum {
 #define X(name, str, timeout, fault) WD_IDX_##name,

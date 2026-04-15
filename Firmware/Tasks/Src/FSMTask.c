@@ -12,6 +12,7 @@
 #include "UpdateVCUInputsTask.h"
 #include "FaultBits.h"
 #include "Watchdogs.h"
+#include "StatusLEDs.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -61,6 +62,7 @@ void fsm_init(void) {
 void fsm_step(void) {
     fsm_inputs = xEventGroupGetBits(fsmInputGroup);
     current_state = FSM[current_state.NextStates[fsm_inputs]];
+    printf("FSM step: %X inputs,  %d curr_state\n\r", fsm_inputs, current_state.stateName);
     if (current_state.stateHandler) current_state.stateHandler();
 }
 
@@ -92,8 +94,8 @@ bool fsm_is_input_set(InputBits_t bit) {
 
 // goofy ahh logic, uses lut
 static float apply_rollover_limit(float requested_current) {
-    printf("Applying rollover limit, requested current: %.2f, vehicle velocity: %.2f, steering angle: %.1f\r\n",
-           requested_current, g_data_read->motor_velocity.MC_VehicleVelocity, (float)g_data_read->lws.LWS_Angle / 10.0f);
+    // printf("Applying rollover limit, requested current: %.2f, vehicle velocity: %.2f, steering angle: %.1f\r\n",
+        //    requested_current, g_data_read->motor_velocity.MC_VehicleVelocity, (float)g_data_read->lws.LWS_Angle / 10.0f);
     int deg = abs((int)g_data_read->lws.LWS_Angle) / 10;
     if (deg > (int)ROLLOVER_TABLE_MAX_DEG) deg = (int)ROLLOVER_TABLE_MAX_DEG;
 
@@ -186,9 +188,10 @@ static uint8_t apply_swoc_speed_limit(float speed_mph) {
 
 
 void Task_FSM(void *args __attribute__((unused))) {
-    TickType_t last = xTaskGetTickCount();
+    // TickType_t last = xTaskGetTickCount();
     while (1) {
         fsm_step();
-        vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(250));
+        // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }
 }

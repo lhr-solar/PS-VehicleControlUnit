@@ -33,10 +33,10 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         bool pedals_fault = ((bool)g_data_read->accel_brake.AccelPedal_Main_Fault) ||
                              ((bool)g_data_read->accel_brake.AccelPedal_Redundant_Fault) ||
                              ((bool)g_data_read->accel_brake.BrakePedal_Main_Fault) ||
-                             ((bool)g_data_read->accel_brake.BrakePedal_Redundant_Fault) ||
-                             (fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
-                                  g_data_read->accel_brake.AccelPedal_Redundant_Pos) >
-                              ACCEPTABLE_PEDAL_DEVIATION);
+                             ((bool)g_data_read->accel_brake.BrakePedal_Redundant_Fault); //||
+                            //  (fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
+                            //       g_data_read->accel_brake.AccelPedal_Redundant_Pos) <
+                            //   ACCEPTABLE_PEDAL_DEVIATION);
 
         bool steering_fault = g_data_read->lws.LWS_Fault;
         buf[1] = (pedals_wdog) | (bps_wdog << 1) | (steering_wdog << 2) | (bps_fault << 3) |

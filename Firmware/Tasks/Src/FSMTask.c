@@ -17,7 +17,7 @@
 #include <string.h>
 #include <math.h>
 
-#define MAX_VELOCITY        100.0f // meters per second
+#define MAX_VELOCITY        12000 
 #define MAX_CURRENT_PERCENT 100.0f
 
 StaticEventGroup_t fsmInputBuffer = {0};
@@ -132,14 +132,26 @@ static void handle_state_regen(void) { MotorCAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
 static void handle_state_not_ready(void) { MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
 
 static void handle_state_forward(void) {
+    // if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
+    //     // if we're actually going backwards, let off the pedal until we slow down
+    //     MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
+    //     warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+    // } else {
+    //     warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
+    //     MotorCAN_Send_Drive_Cmd(
+    //         MAX_VELOCITY,
+    //         fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
+    //             apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
+    //         0);
+    // }
+
     if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
         // if we're actually going backwards, let off the pedal until we slow down
-        MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
+        MotorCAN_Send_Power_Cmd(0.0f, 0);
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-        MotorCAN_Send_Drive_Cmd(
-            MAX_VELOCITY,
+        MotorCAN_Send_Power_Cmd(
             fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
                 apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
             0);
@@ -190,9 +202,9 @@ static uint8_t apply_swoc_speed_limit(float speed_mph) {
 void Task_FSM(void *args __attribute__((unused))) {
     // TickType_t last = xTaskGetTickCount();
     while (1) {
-        // fsm_step();
-        MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
-        vTaskDelay(pdMS_TO_TICKS(250));
+        fsm_step();
+        // MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
+        vTaskDelay(pdMS_TO_TICKS(90));
         // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }
 }

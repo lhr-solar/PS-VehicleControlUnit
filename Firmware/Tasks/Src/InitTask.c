@@ -1,6 +1,7 @@
 #include "InitTask.h"
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
+#include "MotorTelemetryTask.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -46,25 +47,27 @@ void Task_Init() {
     // Required for VCU status testing
     faults_init();
 
-    xTaskCreateStatic(
-        Task_FaultHandler,
-        "FaultHandler",
-        FAULT_HANDLER_TASK_STACK_SIZE,
-        NULL,
-        FAULT_HANDLER_THREAD_PRIO,
-        FaultHandler_Task_Stack,
-        &FaultHandler_Task_Buffer
-    );
+    MotorTelemetryTask_Init();
 
-    precharge_task_handle = xTaskCreateStatic(
-        Task_Precharge,
-        "Precharge",
-        PRECHARGE_TASK_STACK_SIZE,
-        NULL,
-        PRECHARGE_THREAD_PRIO,
-        Precharge_Task_Stack,
-        &Precharge_Task_Buffer
-    );
+    // xTaskCreateStatic(
+    //     Task_FaultHandler,
+    //     "FaultHandler",
+    //     FAULT_HANDLER_TASK_STACK_SIZE,
+    //     NULL,
+    //     FAULT_HANDLER_THREAD_PRIO,
+    //     FaultHandler_Task_Stack,
+    //     &FaultHandler_Task_Buffer
+    // );
+
+    // precharge_task_handle = xTaskCreateStatic(
+    //     Task_Precharge,
+    //     "Precharge",
+    //     PRECHARGE_TASK_STACK_SIZE,
+    //     NULL,
+    //     PRECHARGE_THREAD_PRIO,
+    //     Precharge_Task_Stack,
+    //     &Precharge_Task_Buffer
+    // );
 
     xTaskCreateStatic(
         Task_FSM,
@@ -76,25 +79,25 @@ void Task_Init() {
         &FSM_Task_Buffer
     );
 
-    xTaskCreateStatic(
-        Task_BroadcastVCUStatus,
-        "VCU Status Thread",
-        VCU_STATUS_TASK_STACK_SIZE,
-        NULL,
-        VCU_STATUS_THREAD_PRIO,
-        VCUStatus_Task_Stack,
-        &VCUStatus_Task_Buffer
-    );
+    // xTaskCreateStatic(
+    //     Task_BroadcastVCUStatus,
+    //     "VCU Status Thread",
+    //     VCU_STATUS_TASK_STACK_SIZE,
+    //     NULL,
+    //     VCU_STATUS_THREAD_PRIO,
+    //     VCUStatus_Task_Stack,
+    //     &VCUStatus_Task_Buffer
+    // );
 
-    xTaskCreateStatic(
-        Task_UpdateVCUInputs,
-        "Update FSM Inputs Thread",
-        UPDATE_VCU_INPUTS_STACK_SIZE,
-        NULL,
-        UPDATE_VCU_INPUTS_THREAD_PRIO,
-        UpdateVCUInputs_Task_Stack,
-        &UpdateVCUInputs_Task_Buffer
-    );
+    // xTaskCreateStatic(
+    //     Task_UpdateVCUInputs,
+    //     "Update FSM Inputs Thread",
+    //     UPDATE_VCU_INPUTS_STACK_SIZE,
+    //     NULL,
+    //     UPDATE_VCU_INPUTS_THREAD_PRIO,
+    //     UpdateVCUInputs_Task_Stack,
+    //     &UpdateVCUInputs_Task_Buffer
+    // );
 
 
     vTaskDelete(NULL);

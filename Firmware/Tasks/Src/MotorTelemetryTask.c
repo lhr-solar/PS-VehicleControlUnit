@@ -41,7 +41,7 @@ void MotorTelemetryTask_Init(void) {
 void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
     
     // only forward motorCAN messages to CarCAN
-    if(motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
+    if (motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
 
         BaseType_t higherPriorityTaskWoken = pdFALSE;
 

@@ -190,7 +190,8 @@ static uint8_t apply_swoc_speed_limit(float speed_mph) {
 void Task_FSM(void *args __attribute__((unused))) {
     // TickType_t last = xTaskGetTickCount();
     while (1) {
-        fsm_step();
+        // fsm_step();
+        MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
         vTaskDelay(pdMS_TO_TICKS(250));
         // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }

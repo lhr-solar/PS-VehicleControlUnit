@@ -9,9 +9,10 @@
 #include "pinDefs.h"
 #include "InitTask.h"
 #include "slcanFormat.h"
+#include "ESP32.h"
 
 
 void MotorTelemetryTask_Init(void);
 
-void Task_MotorTelemetry();
+void Task_MotorTelemetry(void *args);
 

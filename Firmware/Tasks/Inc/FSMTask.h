@@ -61,7 +61,7 @@ typedef enum {
     CRUISE_CONTROL,
     DISABLED,
     CAR_NOT_READY,
-    NUM_STATES
+    NUM_FSM_STATES
 } FSMState_e;
 
 typedef struct {
@@ -70,7 +70,7 @@ typedef struct {
     uint8_t NextStates[NEXT_STATES_LENGTH];
 } MocoState_t;
 
-extern MocoState_t FSM[NUM_STATES];
+extern MocoState_t FSM[NUM_FSM_STATES];
 extern MocoState_t current_state;
 
 /**

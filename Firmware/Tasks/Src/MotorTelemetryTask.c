@@ -1,10 +1,13 @@
 #include "MotorTelemetryTask.h"
 
 #define MOTOR_TELEMETRY_QUEUE_SIZE 32
+#define SLCAN_MAX_FRAME_LEN 32
 
 static StaticQueue_t motorTelemetryQueueBuffer;
 static uint8_t motorTelemetryQueueStorage[MOTOR_TELEMETRY_QUEUE_SIZE * sizeof(can_rx_payload_t)];
 static QueueHandle_t motorTelemetryQueue;
+static volatile uint32_t motorTelemetryDroppedFrames = 0;
+static volatile uint32_t esp32SendErrors = 0;
 
 void print_slcan(const can_rx_payload_t payload) {
     uint32_t id = payload.header.Identifier;
@@ -45,11 +48,14 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
 
         BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-        xQueueSendFromISR(
+        const BaseType_t queued = xQueueSendFromISR(
             motorTelemetryQueue,
             &recv_payload,
             &higherPriorityTaskWoken
         );
+        if (queued != pdTRUE) {
+            motorTelemetryDroppedFrames++;
+        }
         // don't yield at the end of this since the rest of the ISR needs to run
 
         
@@ -69,7 +75,8 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
 }
 
 
-void Task_MotorTelemetry() {
+void Task_MotorTelemetry(void *args) {
+    (void)args;
 
     // motor canbus MUST be initialized by now
     MotorTelemetryTask_Init();
@@ -98,6 +105,27 @@ void Task_MotorTelemetry() {
 
             // print the incoming message over
             print_slcan(payload);
+
+            // forward SLCAN to ESP32 for WiFi broadcast bridge
+            if (payload.header.IdType == FDCAN_STANDARD_ID) {
+                char slcanBuf[SLCAN_MAX_FRAME_LEN];
+                uint8_t dlc = (uint8_t)payload.header.DataLength;
+                if (dlc > 8U) {
+                    dlc = 8U;
+                }
+                const int slen = can_to_slcan((uint16_t)(payload.header.Identifier & 0x7FFU),
+                                              payload.data,
+                                              dlc,
+                                              slcanBuf,
+                                              sizeof(slcanBuf));
+                if (slen > 0) {
+                    if (ESP32_Send((const uint8_t *)slcanBuf, (uint8_t)slen, 0) != UART_OK) {
+                        esp32SendErrors++;
+                    }
+                } else {
+                    esp32SendErrors++;
+                }
+            }
             taskYIELD();
         }
     }

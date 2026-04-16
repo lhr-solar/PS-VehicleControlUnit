@@ -158,9 +158,9 @@ def write_table(path, fn, label):
         f" */\n\n"
         f"#pragma once\n"
         f'#include "FSMTask.h"\n\n'
-        f"extern MocoState_t FSM[NUM_STATES];\n\n"
+        f"extern MocoState_t FSM[NUM_FSM_STATES];\n\n"
         f"#ifdef DEFINE_FSM_TABLE\n"
-        f"MocoState_t FSM[NUM_STATES] = {{\n\n"
+        f"MocoState_t FSM[NUM_FSM_STATES] = {{\n\n"
         + "".join(rows)
         + "};\n"
         f"#endif\n"

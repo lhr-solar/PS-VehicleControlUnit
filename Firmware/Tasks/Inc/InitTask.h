@@ -2,6 +2,7 @@
 
 #include "FaultHandlerTask.h"
 #include "PrechargeTask.h"
+#include "MotorTelemetryTask.h"
 #include "FSMTask.h"
 #include "UpdateVCUInputsTask.h"
 #include "VCUStatusTask.h"
@@ -10,6 +11,7 @@
 #define INIT_TASK_STACK_SIZE                configMINIMAL_STACK_SIZE
 #define FAULT_HANDLER_TASK_STACK_SIZE       configMINIMAL_STACK_SIZE * 2
 #define PRECHARGE_TASK_STACK_SIZE           configMINIMAL_STACK_SIZE * 2
+#define MOTOR_TELEMETRY_TASK_STACK_SIZE     configMINIMAL_STACK_SIZE * 2
 #define FSM_TASK_STACK_SIZE                 configMINIMAL_STACK_SIZE * 2
 #define VCU_STATUS_TASK_STACK_SIZE          configMINIMAL_STACK_SIZE * 2
 #define UPDATE_VCU_INPUTS_STACK_SIZE        configMINIMAL_STACK_SIZE * 2
@@ -20,6 +22,9 @@ extern StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 
 extern StaticTask_t Precharge_Task_Buffer;
 extern StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
+
+extern StaticTask_t MotorTelemetry_Task_Buffer;
+extern StackType_t MotorTelemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
 
 extern StaticTask_t Init_Task_Buffer;
 extern StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
@@ -33,13 +38,12 @@ extern StackType_t VCUStatus_Task_Stack[VCU_STATUS_TASK_STACK_SIZE];
 extern StaticTask_t UpdateVCUInputs_Task_Buffer;
 extern StackType_t UpdateVCUInputs_Task_Stack[FSM_TASK_STACK_SIZE];
 
-
-
 #define FAULT_HANDLER_THREAD_PRIO           (tskIDLE_PRIORITY + 4)
 #define PRECHARGE_THREAD_PRIO               (tskIDLE_PRIORITY + 3)
 #define UPDATE_VCU_INPUTS_THREAD_PRIO       (tskIDLE_PRIORITY + 2)
 #define FSM_THREAD_PRIO                     (tskIDLE_PRIORITY + 2)
 #define UPDATE_CONTROL_STATUS_THREAD_PRIO   (tskIDLE_PRIORITY + 2)
+#define MOTOR_TELEMETRY_THREAD_PRIO         (tskIDLE_PRIORITY + 1)
 #define VCU_STATUS_THREAD_PRIO              (tskIDLE_PRIORITY + 1)
 #define SDCARD_WORKER_THREAD_PRIO           (tskIDLE_PRIORITY + 1)
 

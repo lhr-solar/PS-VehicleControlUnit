@@ -7,10 +7,10 @@
 #pragma once
 #include "FSM.h"
 
-extern MocoState_t FSM[NUM_STATES];
+extern MocoState_t FSM[NUM_FSM_STATES];
 
 #ifdef DEFINE_FSM_TABLE
-MocoState_t FSM[NUM_STATES] = {
+MocoState_t FSM[NUM_FSM_STATES] = {
 
     [STATE_INIT] = { STATE_INIT, NULL, {
             CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY, CAR_NOT_READY,

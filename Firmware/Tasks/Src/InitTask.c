@@ -8,6 +8,9 @@ StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
 StaticTask_t Precharge_Task_Buffer;
 StackType_t Precharge_Task_Stack[PRECHARGE_TASK_STACK_SIZE];
 
+StaticTask_t MotorTelemetry_Task_Buffer;
+StackType_t MotorTelemetry_Task_Stack[MOTOR_TELEMETRY_TASK_STACK_SIZE];
+
 StaticTask_t Init_Task_Buffer;
 StackType_t Init_Task_Stack[INIT_TASK_STACK_SIZE];
 
@@ -28,6 +31,7 @@ void Task_Init() {
 
     
     Init_UART_Printf();
+    ESP32_UART_Init();
 
     // prech
     ADC_Sense_Init();
@@ -67,6 +71,16 @@ void Task_Init() {
     );
 
     xTaskCreateStatic(
+        Task_MotorTelemetry,
+        "MotorTelemetry",
+        MOTOR_TELEMETRY_TASK_STACK_SIZE,
+        NULL,
+        MOTOR_TELEMETRY_THREAD_PRIO,
+        MotorTelemetry_Task_Stack,
+        &MotorTelemetry_Task_Buffer
+    );
+
+    xTaskCreateStatic(
         Task_FSM,
         "FSM Thread",
         FSM_TASK_STACK_SIZE,
@@ -95,7 +109,6 @@ void Task_Init() {
         UpdateVCUInputs_Task_Stack,
         &UpdateVCUInputs_Task_Buffer
     );
-
 
     vTaskDelete(NULL);
 }

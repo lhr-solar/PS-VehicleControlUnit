@@ -3,7 +3,7 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-#define SEND_PERIOD 500
+#define SEND_PERIOD 5
 
 #define HEARTBEAT_LED 19
 #define FLASH_LED 20
@@ -60,35 +60,46 @@ void setup() {
 }
 
 void loop() {
-  static uint8_t buffer[MAX_PACKET_SIZE];
-  static int bufIdx = 0;
+  static uint8_t frameBuf[MAX_PACKET_SIZE];
+  static size_t frameLen = 0;
+  esp_err_t espNowResult = ESP_OK;
+  bool sawError = false;
 
   /*
-   * Drain UART into a linear buffer. Do not use modulo on bufIdx: it was
-   * corrupting the payload (overwriting from the start) and breaking the
-   * length passed to esp_now_send().
-   * ESP-NOW payload max is 250 bytes; extra bytes in this batch are dropped.
+   * Forward one complete SLCAN line per ESP-NOW packet so downstream readers
+   * (e.g. Electron serial parser) never see split frames.
    */
-  while (Serial0.available() && bufIdx < MAX_PACKET_SIZE) {
-    uint8_t c = Serial0.read();
-    buffer[bufIdx++] = c;
-    Serial.write(c);  // Mirror to USB
-  }
-  if (Serial0.available() && bufIdx >= MAX_PACKET_SIZE) {
-    /* UART still has data but packet is full — drop until next loop or flush UART */
-    while (Serial0.available()) {
-      (void)Serial0.read();
+  while (Serial0.available()) {
+    const int raw = Serial0.read();
+    if (raw < 0) {
+      break;
     }
+    const uint8_t c = (uint8_t)raw;
+    Serial.write(c);  // Mirror to USB for debug
+
+    if (frameLen >= MAX_PACKET_SIZE) {
+      frameLen = 0;
+      sawError = true;
+      continue;
+    }
+
+    frameBuf[frameLen++] = c;
+
+    if (c == '\r' || c == '\n') {
+      if (frameLen > 0) {
+        espNowResult = esp_now_send(receiverAddress, frameBuf, frameLen);
+        if (espNowResult != ESP_OK) {
+          sawError = true;
+        }
+      }
+      frameLen = 0;
+    }
+  }
+
+  if (sawError) {
     digitalWrite(ERR_LED, HIGH);
   } else {
     digitalWrite(ERR_LED, LOW);
-  }
-
-  esp_err_t espNowResult = ESP_FAIL;
-
-  if (bufIdx > 0) {
-    espNowResult = esp_now_send(receiverAddress, buffer, (size_t)bufIdx);
-    bufIdx = 0;
   }
 
 

@@ -63,26 +63,32 @@ void loop() {
   static uint8_t buffer[MAX_PACKET_SIZE];
   static int bufIdx = 0;
 
-  // Read UART into local buffer
+  /*
+   * Drain UART into a linear buffer. Do not use modulo on bufIdx: it was
+   * corrupting the payload (overwriting from the start) and breaking the
+   * length passed to esp_now_send().
+   * ESP-NOW payload max is 250 bytes; extra bytes in this batch are dropped.
+   */
   while (Serial0.available() && bufIdx < MAX_PACKET_SIZE) {
     uint8_t c = Serial0.read();
-    buffer[bufIdx] = c;
-    bufIdx = (bufIdx + 1) % MAX_PACKET_SIZE;
+    buffer[bufIdx++] = c;
     Serial.write(c);  // Mirror to USB
+  }
+  if (Serial0.available() && bufIdx >= MAX_PACKET_SIZE) {
+    /* UART still has data but packet is full — drop until next loop or flush UART */
+    while (Serial0.available()) {
+      (void)Serial0.read();
+    }
     digitalWrite(ERR_LED, HIGH);
+  } else {
+    digitalWrite(ERR_LED, LOW);
   }
 
   esp_err_t espNowResult = ESP_FAIL;
-  // Send via ESP-NOW if we have data
-  // char message[50];
-  // sprintf(message, "Message #%d\r\n", messageNum);
-  // const char* msgPtr = message;
-  // messageNum++;
-  // espNowResult = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
 
   if (bufIdx > 0) {
-    espNowResult = esp_now_send(receiverAddress, buffer, bufIdx);
-    bufIdx = 0;  // Reset buffer after attempt
+    espNowResult = esp_now_send(receiverAddress, buffer, (size_t)bufIdx);
+    bufIdx = 0;
   }
 
 
@@ -98,6 +104,5 @@ void loop() {
   digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
 
 
-  // delay
-  delay(1000);
+  delay(SEND_PERIOD);
 }

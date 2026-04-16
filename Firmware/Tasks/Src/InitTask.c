@@ -38,6 +38,9 @@ void Task_Init() {
     contactor_init();
     MotorSafeBits_Init();
 
+    /* Queue must exist before Motor CAN RX ISR can call can_fd_rx_callback_hook. */
+    MotorTelemetryTask_Init();
+
     MotorCAN_Init();
     CarCAN_Init();
 

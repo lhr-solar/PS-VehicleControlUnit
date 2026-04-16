@@ -32,29 +32,37 @@ void print_slcan(const can_rx_payload_t payload) {
 }
 
 void MotorTelemetryTask_Init(void) {
+    if (motorTelemetryQueue != NULL) {
+        return;
+    }
     motorTelemetryQueue =
         xQueueCreateStatic(MOTOR_TELEMETRY_QUEUE_SIZE, sizeof(can_rx_payload_t),
                            motorTelemetryQueueStorage, &motorTelemetryQueueBuffer);
-
-    if (motorTelemetryQueue == NULL) {
-        return;
-    }
 }
 
 void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, can_rx_payload_t recv_payload ){
-    
+    (void)RxFifo0ITs;
+
+    if (hfdcan == NULL || motorfdcan == NULL) {
+        return;
+    }
+
     // only forward motorCAN messages to CarCAN
-    if(motorfdcan != NULL && hfdcan->Instance == motorfdcan->Instance){
+    if (hfdcan->Instance == motorfdcan->Instance) {
 
         BaseType_t higherPriorityTaskWoken = pdFALSE;
 
-        const BaseType_t queued = xQueueSendFromISR(
-            motorTelemetryQueue,
-            &recv_payload,
-            &higherPriorityTaskWoken
-        );
-        if (queued != pdTRUE) {
+        if (motorTelemetryQueue == NULL) {
             motorTelemetryDroppedFrames++;
+        } else {
+            const BaseType_t queued = xQueueSendFromISR(
+                motorTelemetryQueue,
+                &recv_payload,
+                &higherPriorityTaskWoken
+            );
+            if (queued != pdTRUE) {
+                motorTelemetryDroppedFrames++;
+            }
         }
         // don't yield at the end of this since the rest of the ISR needs to run
 
@@ -78,8 +86,13 @@ void can_fd_rx_callback_hook(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs, c
 void Task_MotorTelemetry(void *args) {
     (void)args;
 
-    // motor canbus MUST be initialized by now
-    MotorTelemetryTask_Init();
+    /* Queue must already exist (InitTask calls MotorTelemetryTask_Init before MotorCAN_Init). */
+    if (motorTelemetryQueue == NULL) {
+        MotorTelemetryTask_Init();
+    }
+    if (motorTelemetryQueue == NULL) {
+        Error_Handler();
+    }
 
     can_rx_payload_t payload;
 

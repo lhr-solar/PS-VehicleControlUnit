@@ -7,8 +7,11 @@
 
 // Callback function when data is received
 void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int len) {
-  // Output received data to USB Serial
-  Serial.write(incomingData, len);
+  (void)info;
+  if (incomingData == NULL || len <= 0) {
+    return;
+  }
+  Serial.write(incomingData, (size_t)len);
 }
 
 void setup() {

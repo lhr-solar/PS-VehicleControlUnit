@@ -126,55 +126,56 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
 //// state handlers
 
 static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
-static void handle_state_neutral(void) { MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_disabled(void) { MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_regen(void) { MotorCAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
-static void handle_state_not_ready(void) { MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_neutral(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_disabled(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_regen(void) { CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
+static void handle_state_not_ready(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
 
 static void handle_state_forward(void) {
-    // if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
-    //     // if we're actually going backwards, let off the pedal until we slow down
-    //     MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
-    //     warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
-    // } else {
-    //     warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-    //     MotorCAN_Send_Drive_Cmd(
-    //         MAX_VELOCITY,
-    //         fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-    //             apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
-    //         0);
-    // }
-
+    float velocitySetpoint = 0.0f;
+    float currentSetpoint = 0.0f;
     if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
         // if we're actually going backwards, let off the pedal until we slow down
-        MotorCAN_Send_Power_Cmd(0.0f, 0);
+        velocitySetpoint = 0.0f;
+        currentSetpoint = 0.0f;
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-        MotorCAN_Send_Power_Cmd(
-            fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
-            0);
+        velocitySetpoint = MAX_VELOCITY;
+        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), 
+                                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos));
     }
+
+    printf("Forwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
+
+    CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
+
 }
 
 static void handle_state_reverse(void) {
+
+    float velocitySetpoint = 0.0f;
+    float currentSetpoint = 0.0f;
+
     if (g_data_read->motor_velocity.MC_VehicleVelocity > 0.5f) {
         // if we're actually going forwards, let off the pedal until we slow down
-        MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 0);
+        velocitySetpoint = 0.0f;
+        currentSetpoint = 0.0f;
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
-        MotorCAN_Send_Drive_Cmd(
-            -MAX_VELOCITY,
-            fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
-            0);
+        velocitySetpoint = -MAX_VELOCITY;
+        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos));
     }
+
+    CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
+
+    printf("Backwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
+
 }
 
 static void handle_state_cruise(void) {
     float velocity = rollover_limit_active ? 0.0f : MAX_VELOCITY;
-    MotorCAN_Send_Drive_Cmd(
+    CAN_Send_Drive_Cmd(
         velocity,
         fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
             apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
@@ -203,7 +204,7 @@ void Task_FSM(void *args __attribute__((unused))) {
     // TickType_t last = xTaskGetTickCount();
     while (1) {
         fsm_step();
-        // MotorCAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
+        // CAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
         vTaskDelay(pdMS_TO_TICKS(90));
         // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }

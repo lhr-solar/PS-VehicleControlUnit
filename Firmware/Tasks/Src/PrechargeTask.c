@@ -106,7 +106,7 @@ void Task_Precharge() {
             can_send_errors = 0;
         }
 
-        printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
+        // printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
 
         PT_check_ign();
 
@@ -119,12 +119,12 @@ void Task_Precharge() {
             case PRECHARGE_STATE_WAITING:
                 // Wait for ignition on message from driver input task,
                 // then move to initial precharge state
-                printf("Precharge State: Waiting for Ignition\r\n");
+                // printf("Precharge State: Waiting for Ignition\r\n");
                 break;
 
             // Startup state: Closes main contactor and moves to precharging state
             case PRECHARGE_STATE_INITIAL:
-                printf("Precharge State: Initial\r\n");
+                // printf("Precharge State: Initial\r\n");
                 
                 // dont attempt to close contactors before bps ready
                 if (!g_data_read->bps_status.HV_Plus_Contactor_State ||
@@ -158,7 +158,7 @@ void Task_Precharge() {
                 // Check how long we've been precharging for, fault if not precharged after
                 // PRECHARGE_TIMEOUT_MS
                 const TickType_t timeout_curr_tick = xTaskGetTickCount();
-                printf("Precharge State: Precharging\r\n");
+                // printf("Precharge State: Precharging\r\n");
 
                 // Faults if precharging takes too long
                 if ((timeout_curr_tick - timeout_start_tick) >
@@ -204,7 +204,7 @@ void Task_Precharge() {
         if (printDebugCounter >= PRECHARGE_PRINTF_DEBUG_COUNTER) {
 
             // prints battery and motor voltage
-            printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
+            // printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
 
             // prints current precharge state
             PT_print_state(curr_state);

@@ -62,7 +62,7 @@ void fsm_init(void) {
 void fsm_step(void) {
     fsm_inputs = xEventGroupGetBits(fsmInputGroup);
     current_state = FSM[current_state.NextStates[fsm_inputs]];
-    printf("FSM step: %X inputs,  %d curr_state\n\r", fsm_inputs, current_state.stateName);
+    // printf("FSM step: %X inputs,  %d curr_state\n\r", fsm_inputs, current_state.stateName);
     if (current_state.stateHandler) current_state.stateHandler();
 }
 
@@ -143,10 +143,10 @@ static void handle_state_forward(void) {
         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
         velocitySetpoint = MAX_VELOCITY;
         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), 
-                                apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos));
+                                apply_rollover_limit(((float)g_data_read->accel_brake.AccelPedal_Main_Pos)/100.0f));
     }
 
-    printf("Forwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
+    printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
 
@@ -164,7 +164,7 @@ static void handle_state_reverse(void) {
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         velocitySetpoint = -MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos));
+        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), ((float)apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos))/100.0f);
     }
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
@@ -178,7 +178,7 @@ static void handle_state_cruise(void) {
     CAN_Send_Drive_Cmd(
         velocity,
         fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-            apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos)),
+            apply_rollover_limit(((float)g_data_read->accel_brake.AccelPedal_Main_Pos))/100.0f),
         0);
 }
 

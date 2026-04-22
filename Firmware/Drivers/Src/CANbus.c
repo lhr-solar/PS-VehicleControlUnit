@@ -421,7 +421,7 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
 can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_mv, 
     TickType_t delay) {
 
-    printf("Car CAN send prech voltages: %lu motor_mv,  %lu batt_mv\n\r", motor_mv, battery_mv);
+    // printf("Car CAN send prech voltages: %lu motor_mv,  %lu batt_mv\n\r", motor_mv, battery_mv);
 
     FDCAN_TxHeaderTypeDef header = {
         .Identifier = CAN_ID_VCU_PRECHARGE_VOLTAGES,

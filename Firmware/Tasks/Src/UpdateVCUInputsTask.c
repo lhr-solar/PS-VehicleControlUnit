@@ -98,7 +98,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
     TickType_t last = xTaskGetTickCount();
 
     while (1) {
-        printf("Task_UpdateVCUInputs: %ld", last);
+        // printf("Task_UpdateVCUInputs: %ld", last);
         // update from can
         VCUDataIn_t *volatile update = g_data_write;
         if (MotorCAN_Recv_Status(&update->motor_status, 0) == CAN_OK) {

@@ -18,7 +18,9 @@
 #include <math.h>
 
 #define MAX_VELOCITY        12000 
-#define MAX_CURRENT_PERCENT 100.0f
+#define MAX_CURRENT_PERCENT 1.0f
+
+#define ACCEL_DEADZONE_MIN 5u // Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
 
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
@@ -143,7 +145,7 @@ static void handle_state_forward(void) {
         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
         velocitySetpoint = MAX_VELOCITY;
         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), 
-                                apply_rollover_limit(((float)g_data_read->accel_brake.AccelPedal_Main_Pos)/100.0f));
+                                apply_rollover_limit(((float)((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0))/100.0f));
     }
 
     printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
@@ -164,7 +166,7 @@ static void handle_state_reverse(void) {
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         velocitySetpoint = -MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), ((float)apply_rollover_limit(g_data_read->accel_brake.AccelPedal_Main_Pos))/100.0f);
+        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity), ((float)apply_rollover_limit(((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0)))/100.0f);
     }
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);

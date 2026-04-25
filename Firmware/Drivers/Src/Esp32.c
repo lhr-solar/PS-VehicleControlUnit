@@ -3,7 +3,11 @@
 
 static UART_HandleTypeDef* esp32Uart;
 
+static bool is_initialized;
+
 uart_status_t ESP32_UART_Init(void){
+
+    is_initialized = false;
     esp32Uart = hlpuart1;
     esp32Uart->Instance = LPUART1;
 
@@ -21,14 +25,22 @@ uart_status_t ESP32_UART_Init(void){
     if (status != UART_OK) {
         return UART_ERR;
     }
+
+    is_initialized = true;
+
     return UART_OK;
 }
 
 uart_status_t ESP32_Send(const uint8_t* data, uint8_t length, TickType_t delay_ticks){
-    return uart_send(esp32Uart, data, length, delay_ticks);
+    if(is_initialized == true){
+        return uart_send(esp32Uart, data, length, delay_ticks);
+    }
+    return UART_ERR;
 }
-// uart_send(hlpuart1, testData, msgLen, portMAX_DELAY);
 
 uart_status_t ESP32_Recv(uint8_t* data, uint8_t length, TickType_t delay_ticks){
-    return uart_recv(esp32Uart, data, length, delay_ticks);
+    if(is_initialized == true){
+        return uart_recv(esp32Uart, data, length, delay_ticks);
+    }
+    return UART_ERR;
 }

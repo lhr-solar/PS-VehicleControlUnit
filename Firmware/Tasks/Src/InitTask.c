@@ -2,6 +2,7 @@
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
+#include "Esp32.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -34,6 +35,8 @@ void Task_Init() {
     ADC_Sense_Init();
     contactor_init();
     MotorSafeBits_Init();
+
+    ESP32_UART_Init();
 
     MotorCAN_Init();
     CarCAN_Init();

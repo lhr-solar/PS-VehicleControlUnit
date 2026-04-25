@@ -3,7 +3,7 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-#define SEND_PERIOD 500
+#define SEND_PERIOD 5
 
 #define HEARTBEAT_LED 19
 #define FLASH_LED 20
@@ -60,29 +60,45 @@ void setup() {
 }
 
 void loop() {
-  static uint8_t buffer[MAX_PACKET_SIZE];
-  static int bufIdx = 0;
+  static uint8_t frameBuf[MAX_PACKET_SIZE];
+  static size_t frameLen = 0;
+  esp_err_t espNowResult = ESP_OK;
+  bool sawError = false;
 
-  // Read UART into local buffer
-  while (Serial0.available() && bufIdx < MAX_PACKET_SIZE) {
-    uint8_t c = Serial0.read();
-    buffer[bufIdx] = c;
-    bufIdx = (bufIdx + 1) % MAX_PACKET_SIZE;
-    Serial.write(c);  // Mirror to USB
-    digitalWrite(ERR_LED, HIGH);
+  /*
+   * Forward one complete SLCAN line per ESP-NOW packet so downstream readers
+   */
+  while (Serial0.available()) {
+    const int raw = Serial0.read();
+    if (raw < 0) {
+      break;
+    }
+    const uint8_t c = (uint8_t)raw;
+    Serial.write(c);  // Mirror to USB for debug
+
+    if (frameLen >= MAX_PACKET_SIZE) {
+      frameLen = 0;
+      sawError = true;
+      continue;
+    }
+
+    frameBuf[frameLen++] = c;
+
+    if (c == '\r' || c == '\n') {
+      if (frameLen > 0) {
+        espNowResult = esp_now_send(receiverAddress, frameBuf, frameLen);
+        if (espNowResult != ESP_OK) {
+          sawError = true;
+        }
+      }
+      frameLen = 0;
+    }
   }
 
-  esp_err_t espNowResult = ESP_FAIL;
-  // Send via ESP-NOW if we have data
-  // char message[50];
-  // sprintf(message, "Message #%d\r\n", messageNum);
-  // const char* msgPtr = message;
-  // messageNum++;
-  // espNowResult = esp_now_send(receiverAddress, (uint8_t*)message, strlen(message) + 1);
-
-  if (bufIdx > 0) {
-    espNowResult = esp_now_send(receiverAddress, buffer, bufIdx);
-    bufIdx = 0;  // Reset buffer after attempt
+  if (sawError) {
+    digitalWrite(ERR_LED, HIGH);
+  } else {
+    digitalWrite(ERR_LED, LOW);
   }
 
 
@@ -98,6 +114,5 @@ void loop() {
   digitalWrite(HEARTBEAT_LED, !digitalRead(HEARTBEAT_LED));
 
 
-  // delay
-  delay(1000);
+  delay(SEND_PERIOD);
 }

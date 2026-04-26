@@ -137,6 +137,7 @@ help:
 	@echo -e "Format: ${ORANGE}make  ${GREEN}PROJECT_TARGET=${PURPLE}<stm-target>${NC} ${BLUE}TEST=${PURPLE}<Test name>${NC}"
 	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' will compile the production code."
 	@echo "- Specify ${GREEN}TARGET${NC}if different than default; ${BLUE}TEST${NC}is optional. \n"
+	@echo "- Use ${GREEN}FIRMWARE_TYPE=${PURPLE}app${NC} to link after the bootloader."
 
 	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32g473xx${NC}):"
 	@echo "- Specify stm32 target by entering the full stm chip number.\n"

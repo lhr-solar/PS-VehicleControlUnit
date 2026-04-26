@@ -1,7 +1,9 @@
 #include "InitTask.h"
 #include "StatusLEDs.h"
+#include "UART.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
+#include "uart_bootloader.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -22,6 +24,22 @@ StaticTask_t UpdateVCUInputs_Task_Buffer;
 StackType_t UpdateVCUInputs_Task_Stack[UPDATE_VCU_INPUTS_STACK_SIZE];
 
 TaskHandle_t precharge_task_handle = NULL;
+
+#if defined(FIRMWARE_USES_BOOTLOADER)
+static StaticTask_t Bootloader_Command_Task_Buffer;
+static StackType_t Bootloader_Command_Task_Stack[configMINIMAL_STACK_SIZE];
+
+static void Task_BootloaderCommand(void *argument)
+{
+    (void)argument;
+    uart_bootloader_set_entry_allowed(true);
+
+    while (1)
+    {
+        (void)uart_bootloader_service(husart3, portMAX_DELAY);
+    }
+}
+#endif
 
 void Task_Init() {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
@@ -100,6 +118,17 @@ void Task_Init() {
         &UpdateVCUInputs_Task_Buffer
     );
 
+#if defined(FIRMWARE_USES_BOOTLOADER)
+    xTaskCreateStatic(
+        Task_BootloaderCommand,
+        "BootCommand",
+        configMINIMAL_STACK_SIZE,
+        NULL,
+        tskIDLE_PRIORITY + 2,
+        Bootloader_Command_Task_Stack,
+        &Bootloader_Command_Task_Buffer
+    );
+#endif
 
     vTaskDelete(NULL);
 }

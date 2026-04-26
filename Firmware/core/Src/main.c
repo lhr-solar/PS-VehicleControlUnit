@@ -2,9 +2,11 @@
 #include "UART_Init.h"
 #include "UART.h"
 #include "InitTask.h"
+#include "uart_bootloader.h"
 
 int main(void)
 {
+  uart_bootloader_init_app_vector_table();
   HAL_Init();
   SystemClock_Config();
   LED_init();

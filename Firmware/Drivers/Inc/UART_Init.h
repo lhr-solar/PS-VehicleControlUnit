@@ -1,7 +1,6 @@
 #pragma once
 
 #include "pinDefs.h"
-#include <stdio.h>
 #include "printf.h"
 
 

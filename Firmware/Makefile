@@ -17,6 +17,19 @@ NC=\033[0m # No Color
 # Project Configuration ----------
 TEST ?= main
 PROJECT_TARGET ?= stm32g473xx
+VCU_BOOTLOADER_BRINGUP ?= false
+VCU_BOOTLOADER_BRINGUP_LEVEL ?= 0
+VCU_BOOTLOADER_FULL_DIAG ?= false
+ifeq ($(VCU_BOOTLOADER_BRINGUP),true)
+ifneq ($(FIRMWARE_TYPE),app)
+$(error VCU_BOOTLOADER_BRINGUP=true must be built with FIRMWARE_TYPE=app)
+endif
+endif
+ifeq ($(VCU_BOOTLOADER_FULL_DIAG),true)
+ifneq ($(FIRMWARE_TYPE),app)
+$(error VCU_BOOTLOADER_FULL_DIAG=true must be built with FIRMWARE_TYPE=app)
+endif
+endif
 # STM32G473RET6 
 
 # source and include directories
@@ -51,6 +64,15 @@ PROJECT_BUILD_DIR := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_BUILD_DIR))
 
 # Additional defines
 PROJECT_MACROS = USART3_RX_QUEUE_SIZE=100
+
+ifeq ($(VCU_BOOTLOADER_BRINGUP),true)
+PROJECT_MACROS += VCU_BOOTLOADER_BRINGUP
+PROJECT_MACROS += VCU_BOOTLOADER_BRINGUP_LEVEL=$(VCU_BOOTLOADER_BRINGUP_LEVEL)
+endif
+
+ifeq ($(VCU_BOOTLOADER_FULL_DIAG),true)
+PROJECT_MACROS += VCU_BOOTLOADER_FULL_DIAG
+endif
 
 # export variables 
 export PROJECT_TARGET
@@ -133,6 +155,16 @@ help:
 	@echo -e "Format: ${ORANGE}make  ${GREEN}PROJECT_TARGET=${PURPLE}<stm-target>${NC} ${BLUE}TEST=${PURPLE}<Test name>${NC}"
 	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' will compile the production code."
 	@echo "- Specify ${GREEN}TARGET${NC}if different than default; ${BLUE}TEST${NC}is optional. \n"
+	@echo "- Use ${GREEN}FIRMWARE_TYPE=${PURPLE}app${NC} to link after the bootloader."
+	@echo "- Use ${GREEN}VCU_BOOTLOADER_BRINGUP=${PURPLE}true${NC} for isolated bootloader bring-up firmware.\n"
+	@echo "- Use ${GREEN}VCU_BOOTLOADER_FULL_DIAG=${PURPLE}true${NC} to keep the normal app path and light init/RTOS checkpoints.\n"
+	@echo "- Use ${GREEN}VCU_BOOTLOADER_BRINGUP_LEVEL=${PURPLE}<0..5>${NC} to add bring-up features one at a time:"
+	@echo "  0: raw GPIO blink only, before HAL_Init"
+	@echo "  1: add HAL_Init, then raw GPIO blink"
+	@echo "  2: add HAL_Delay"
+	@echo "  3: add SystemClock_Config"
+	@echo "  4: add UART bootloader command polling"
+	@echo "  5: add CAN init and heartbeat frames\n"
 
 	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32g473xx${NC}):"
 	@echo "- Specify stm32 target by entering the full stm chip number.\n"

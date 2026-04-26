@@ -1,4 +1,7 @@
 #include "InitTask.h"
+#include "StatusLEDs.h"
+#include "UART.h"
+#include "uart_bootloader.h"
 
 StaticTask_t FaultHandlerTask_Buffer;
 StackType_t FaultHandlerTask_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -25,15 +28,57 @@ StackType_t VCUReceiveCAN_Task_Stack[configMINIMAL_STACK_SIZE];
 StaticTask_t Driver_Input_Task_Buffer;
 StackType_t Driver_Input_Task_Stack[configMINIMAL_STACK_SIZE];
 
+#if defined(FIRMWARE_USES_BOOTLOADER)
+static StaticTask_t Bootloader_Command_Task_Buffer;
+static StackType_t Bootloader_Command_Task_Stack[configMINIMAL_STACK_SIZE];
+
+static void Task_BootloaderCommand(void *argument)
+{
+    (void)argument;
+    uart_bootloader_set_entry_allowed(true);
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    uint32_t service_ticks = 0U;
+    LED_set(CAR_HB, LED_ON);
+#endif
+
+    while (1)
+    {
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+        (void)uart_bootloader_service(husart3, pdMS_TO_TICKS(50U));
+        service_ticks++;
+        if (service_ticks >= 10U)
+        {
+            service_ticks = 0U;
+            Toggle_LED(HB);
+        }
+#else
+        (void)uart_bootloader_service(husart3, portMAX_DELAY);
+#endif
+    }
+}
+#endif
+
 void Task_Init()
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    LED_set(PRECHARGE_TIMEOUT, LED_ON);
+#endif
     Init_UART_Printf();
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    LED_set(PRECHARGE_SENSE_TIMEOUT, LED_ON);
+#endif
     CAN_Init();
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    LED_set(MOTOR_SENSE_TIMEOUT, LED_ON);
+#endif
 
     MotorSafeBits_Init();
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    LED_set(CAR_DRIVABLE, LED_ON);
+#endif
 
     xTaskCreateStatic(
         Task_FaultHandler,          // Task function
@@ -73,6 +118,21 @@ void Task_Init()
         tskIDLE_PRIORITY + 2,
         Driver_Input_Task_Stack,
         &Driver_Input_Task_Buffer);
+
+#if defined(FIRMWARE_USES_BOOTLOADER)
+    xTaskCreateStatic(
+        Task_BootloaderCommand,
+        "BootCommand",
+        configMINIMAL_STACK_SIZE,
+        NULL,
+        tskIDLE_PRIORITY + 2,
+        Bootloader_Command_Task_Stack,
+        &Bootloader_Command_Task_Buffer);
+#endif
+
+#if defined(VCU_BOOTLOADER_FULL_DIAG)
+    LED_set(CAR_DRIVING, LED_ON);
+#endif
 
     vTaskDelete(NULL);
 }

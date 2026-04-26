@@ -53,7 +53,4 @@ void HAL_UART_MspGPIOInit(UART_HandleTypeDef* huart){
       
     }
 
-  setvbuf(stdout, NULL, _IONBF, 0);
-
-  printf_init(husart3);
 }

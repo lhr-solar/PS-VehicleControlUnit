@@ -19,28 +19,71 @@ Additionally, install the [Arduino IDE](https://docs.arduino.cc/software/ide/)
 
 ## Command Usage
 
-### Compiling Firmware
-All firmware is stored in the Firmware/ directory and must be run while in a nix shell. For the first time you will need to run
-``` sh
-chmod +x ./run_nix.sh
+### Firmware build and flash
+
+Firmware builds use [Embedded-Sharepoint](Firmware/Embedded-Sharepoint) from `Firmware/Makefile`. Enter the nix shell first, then run all commands from `Firmware/`.
+
+By default, **`FIRMWARE_TYPE=app`**: the image is linked for the resident UART bootloader (application region at `0x08010000`, 512 KB part with 64 KB bootloader). Full protocol, one-time bootloader programming, and host scripts: [UART Bootloader](Firmware/Embedded-Sharepoint/docs/UartBootloader.md). USART3 on PC10/PC11 matches the default bootloader UART on STM32G473.
+
+**Nix shell (repository root):**
+
+```sh
+chmod +x ./run_nix.sh   # first time only
 ./run_nix.sh
-```
-This will place you in a nix shell with all needed dependencies. After the first time, you only need to run the below command to enter the nix shell.
-``` sh
-./run_nix.sh
+cd Firmware
 ```
 
-To compile production firmware, simply run:
-``` sh
+**Clean** (removes both `Firmware/build` and `Firmware/build/app`):
+
+```sh
+make clean
+```
+
+**Bootloader application (default)** — output under `Firmware/build/app`:
+
+```sh
 make
-```
-### Compiling Tests
-To compile a specific test file, run:
-``` sh
-make TEST=[name of test excluding .c and test_]
-```
-Test files are located in test/ and must have the prefix `test_` or else the test won't compile correctly. If you want to run the blinky test, which is located in `tests/blinky_test.c` you will run
-``` sh
-make TEST=blinky
+make flash
+make flash-uart
 ```
 
+**Standalone firmware** at `0x08000000` (no resident bootloader) — output under `Firmware/build`:
+
+```sh
+make clean
+make FIRMWARE_TYPE=firmware
+make flash FIRMWARE_TYPE=firmware
+make flash-uart FIRMWARE_TYPE=firmware
+```
+
+When switching between `app` and `firmware`, run **`make clean`** first so linker maps and objects stay consistent.
+
+**Other makefile variables:**
+
+```sh
+make PROJECT_TARGET=stm32g473xx    # default; override if you change MCU port
+make NODAWG=1                      # optional macro for this repo
+```
+
+### Compiling tests
+
+Tests live in `Firmware/tests/` and must be named `test_<name>.c`; the `test_` prefix and `.c` suffix are omitted from `TEST`.
+
+```sh
+make TEST=<name>
+```
+
+Example (`Firmware/tests/blinky_test.c`):
+
+```sh
+make TEST=blinky
+make flash
+```
+
+To build a test image as standalone instead of the default bootloader app:
+
+```sh
+make clean
+make TEST=blinky FIRMWARE_TYPE=firmware
+make flash FIRMWARE_TYPE=firmware
+```

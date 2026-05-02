@@ -2,6 +2,9 @@
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
+#if defined(FIRMWARE_USES_BOOTLOADER)
+#include "BootloaderUartTask.h"
+#endif
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -29,6 +32,10 @@ void Task_Init() {
 
     
     Init_UART_Printf();
+
+#if defined(FIRMWARE_USES_BOOTLOADER)
+    BootloaderUartTask_Init();
+#endif
 
     // prech
     ADC_Sense_Init();

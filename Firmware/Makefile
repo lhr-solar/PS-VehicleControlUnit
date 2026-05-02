@@ -18,13 +18,22 @@ NC=\033[0m # No Color
 TEST ?= main
 PROJECT_TARGET ?= stm32g473xx
 # STM32G473RET6 
+#
+# Firmware memory map (see Firmware/Embedded-Sharepoint/docs/UartBootloader.md):
+#   app (default) — image after resident UART bootloader (64 KB, base 0x08010000)
+#   firmware — standalone image at 0x08000000
+FIRMWARE_TYPE ?= app
 
 # source and include directories
 PROJECT_C_INCLUDES = $(wildcard */Inc)
 PROJECT_C_SOURCES = $(wildcard */Src/*.c)
 
-# build directories
+# build directories (keep app and standalone outputs separate)
+ifeq ($(FIRMWARE_TYPE),app)
+PROJECT_BUILD_DIR = build/app
+else
 PROJECT_BUILD_DIR = build
+endif
 BUILD_MAKEFILE_DIR = Embedded-Sharepoint
 
 # generate paths
@@ -62,6 +71,7 @@ export PROJECT_C_SOURCES
 export PROJECT_C_INCLUDES
 export PROJECT_BUILD_DIR
 export PROJECT_MACROS
+export FIRMWARE_TYPE
 
 
 #-------------------------------
@@ -77,7 +87,6 @@ $(shell mkdir -p $(VS_CODE_DIR))
 ifeq ($(BEAR_INSTALLED),yes)
 BEAR_PREFIX := bear --output $(VS_CODE_DIR)/compile_commands.json --append --
 endif
-
 
 # Build --------------------------
 ifeq ($(MAKECMDGOALS),)
@@ -104,6 +113,20 @@ endif
 # Flash
 flash: 	
 	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash
+
+# UART app flash: send ESBLT_BOOT then pause before stm32prog (see uart_bootloader_flash.py --enter).
+UART_BOOTLOADER_FLASH_FLAGS ?= --enter
+
+flash-uart:
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash-uart UART_BOOTLOADER_FLASH_FLAGS="$(UART_BOOTLOADER_FLASH_FLAGS)"
+
+
+# Remove all firmware outputs (standalone and bootloader-app) so switching
+# FIRMWARE_TYPE never leaves stale ELF/bin in the other directory.
+# (Must come after the default build goal — otherwise plain `make` runs clean.)
+.PHONY: clean
+clean:
+	rm -rf $(MAKEFILE_DIR)/build $(MAKEFILE_DIR)/build/app
 
 
 #-------------------------------
@@ -135,7 +158,8 @@ endif
 .PHONY: help
 help:
 	@echo -e "Format: ${ORANGE}make  ${GREEN}PROJECT_TARGET=${PURPLE}<stm-target>${NC} ${BLUE}TEST=${PURPLE}<Test name>${NC}"
-	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' will compile the production code."
+	@echo "- Simply running '${ORANGE}make${NC}' or '${ORANGE}make${NC} all' compiles for the resident UART bootloader (${GREEN}FIRMWARE_TYPE=${PURPLE}app${NC}, default)."
+	@echo "- ${GREEN}FIRMWARE_TYPE=${PURPLE}firmware${NC} for a standalone image at 0x08000000 (see Embedded-Sharepoint docs/UartBootloader.md)."
 	@echo "- Specify ${GREEN}TARGET${NC}if different than default; ${BLUE}TEST${NC}is optional. \n"
 
 	@echo "${GREEN}PROJECT_TARGET${NC}( default is ${PURPLE}stm32g473xx${NC}):"
@@ -144,6 +168,8 @@ help:
 	@echo "${BLUE}TEST${NC}( OPTIONAL ):"
 	@echo "- If you want to run a test, specify ${BLUE}TEST=${PURPLE}<Test name>${NC}, with ${PURPLE}<Test name>${NC}"
 	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix and test_ suffix. \n"
+
+	@echo "- ${GREEN}flash-uart${NC}: default ${PURPLE}UART_BOOTLOADER_FLASH_FLAGS=--enter${NC} (ESBLT_BOOT then flash). Clear if chip is already in bootloader.\n"
 
 #-------------- 
 # Documentation

@@ -757,6 +757,322 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Simulation_SPICE:NMOS"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "Q"
+				(at 5.08 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "NMOS"
+				(at 5.08 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#cha_MOSFETs"
+				(at 0 -12.7 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "N-MOSFET transistor, drain/source/gate"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Device" "NMOS"
+				(at 0 -17.145 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Type" "VDMOS"
+				(at 0 -19.05 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=D 2=G 3=S"
+				(at 0 -15.24 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET simulation"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "NMOS_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "NMOS_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "UTSVT_Connectors:CarLVPowerConnector"
 			(pin_names
 				(offset 1.016)
@@ -1119,401 +1435,6 @@
 						)
 					)
 					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "UTSVT_Power:NVMFWS1D7N04XMT1G"
-			(exclude_from_sim no)
-			(in_bom no)
-			(on_board no)
-			(property "Reference" "Q"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "NVMFWS1D7N04XMT1G"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "UTSVT_Power:NVMFWS3D0P04M8LT1G"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://www.mouser.com/catalog/specsheets/onsemi_02-27-2025_NVMFWS1D7N04XM-D.pdf"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "1 N-Channel MOSFETs 40V 154A Id 1.65mOhm Rds 3.5-20V Vgs"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "P/N" "NVMFWS1D7N04XMT1G"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "NVMFWS1D7N04XMT1G_0_1"
-				(polyline
-					(pts
-						(xy 2.159 -5.08) (xy 2.159 -8.89)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.159 -6.985) (xy -0.635 -6.985)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.667 -4.699) (xy 2.667 -5.715)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.667 -6.477) (xy 2.667 -7.493)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.667 -8.255) (xy 2.667 -9.271)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.667 -8.763) (xy 5.207 -8.763) (xy 5.207 -5.207) (xy 2.667 -5.207)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.921 -6.985) (xy 3.937 -6.604) (xy 3.937 -7.366) (xy 2.921 -6.985)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(circle
-					(center 3.556 -6.985)
-					(radius 2.794)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -4.445) (xy 4.445 -5.207)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 4.445 -5.207)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(circle
-					(center 4.445 -8.763)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.445 -9.525) (xy 4.445 -6.985) (xy 2.667 -6.985)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 4.699 -6.477) (xy 4.826 -6.604) (xy 5.588 -6.604) (xy 5.715 -6.731)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.207 -6.604) (xy 4.826 -7.239) (xy 5.588 -7.239) (xy 5.207 -6.604)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "NVMFWS1D7N04XMT1G_1_1"
-				(pin input line
-					(at -3.175 -6.985 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -1.905 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -1.905 270)
-					(length 2.54)
-					(hide yes)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -1.905 270)
-					(length 2.54)
-					(hide yes)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -1.905 270)
-					(length 2.54)
-					(hide yes)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -1.905 270)
-					(length 2.54)
-					(hide yes)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -12.065 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -12.065 90)
-					(length 2.54)
-					(hide yes)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 4.445 -12.065 90)
-					(length 2.54)
-					(hide yes)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1943,16 +1864,16 @@
 		(uuid "51ecc73e-020d-42f5-b903-b141ba462b92")
 	)
 	(junction
-		(at 123.19 33.02)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "71cdf9a8-2705-4861-876e-e78263ff173c")
-	)
-	(junction
 		(at 59.055 68.58)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "92e7f0b5-255a-4d42-a960-4e803453b4de")
+	)
+	(junction
+		(at 123.19 33.02)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "972c951a-4064-4b15-b56a-0a68624fb344")
 	)
 	(junction
 		(at 111.125 72.39)
@@ -1978,7 +1899,7 @@
 	)
 	(wire
 		(pts
-			(xy 94.615 33.02) (xy 100.965 33.02)
+			(xy 94.615 33.02) (xy 101.6 33.02)
 		)
 		(stroke
 			(width 0)
@@ -2118,7 +2039,7 @@
 	)
 	(wire
 		(pts
-			(xy 88.265 40.64) (xy 106.045 40.64)
+			(xy 88.265 40.64) (xy 106.68 40.64)
 		)
 		(stroke
 			(width 0)
@@ -2358,16 +2279,6 @@
 	)
 	(wire
 		(pts
-			(xy 111.125 33.02) (xy 123.19 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e726a976-1764-4aeb-9c44-c03530cb8d30")
-	)
-	(wire
-		(pts
 			(xy 107.315 72.39) (xy 111.125 72.39)
 		)
 		(stroke
@@ -2375,6 +2286,16 @@
 			(type default)
 		)
 		(uuid "eb851a3a-fc04-43cd-8d18-34da51d7c8dd")
+	)
+	(wire
+		(pts
+			(xy 111.76 33.02) (xy 123.19 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f0848627-e64f-489f-b76c-a27b4f6a221b")
 	)
 	(wire
 		(pts
@@ -3898,123 +3819,6 @@
 		)
 	)
 	(symbol
-		(lib_id "UTSVT_Power:NVMFWS1D7N04XMT1G")
-		(at 113.03 37.465 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0bfa0708-4ef8-41d9-b052-9c37ba80a288")
-		(property "Reference" "Q6"
-			(at 106.045 26.67 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "NVMFWS1D7N04XMT1G"
-			(at 106.045 29.21 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "UTSVT_Power:NVMFWS3D0P04M8LT1G"
-			(at 113.03 37.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/catalog/specsheets/onsemi_02-27-2025_NVMFWS1D7N04XM-D.pdf"
-			(at 113.03 37.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "1 N-Channel MOSFETs 40V 154A Id 1.65mOhm Rds 3.5-20V Vgs"
-			(at 113.03 37.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "P/N" "NVMFWS1D7N04XMT1G"
-			(at 113.03 37.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "If" ""
-			(at 113.03 37.465 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Vf" ""
-			(at 113.03 37.465 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "8"
-			(uuid "9f8c9692-117b-4cfc-bcd0-068c338693ce")
-		)
-		(pin "5"
-			(uuid "2d274ed3-1863-4622-ab1c-ca62698c31ff")
-		)
-		(pin "4"
-			(uuid "b8a4e710-0619-423a-8e70-ca2f60693729")
-		)
-		(pin "6"
-			(uuid "46fb399e-7e5f-4f66-b917-37a56c2e9ae9")
-		)
-		(pin "7"
-			(uuid "139dcf1a-2f8c-46c2-9d9d-e6ab3e149364")
-		)
-		(pin "3"
-			(uuid "7bded18f-5cb6-4c61-8fd6-4a0a962ac866")
-		)
-		(pin "9"
-			(uuid "3d0da6b6-412d-4fa0-9bee-a784d5f48e34")
-		)
-		(pin "1"
-			(uuid "4924a059-85c9-48ba-b2fd-b931006c0cee")
-		)
-		(pin "2"
-			(uuid "832fa6dc-df8b-4c0f-b573-ae10be030149")
-		)
-		(instances
-			(project "VehicleControlUnit"
-				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
-					(reference "Q6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 47.625 62.865 0)
 		(unit 1)
@@ -4253,42 +4057,33 @@
 		)
 	)
 	(symbol
-		(lib_id "UTSVT_Power:NVMFWS1D7N04XMT1G")
-		(at 73.025 37.465 90)
+		(lib_id "Simulation_SPICE:NMOS")
+		(at 106.68 35.56 90)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "3230e0a4-250f-4f92-b1af-23ebec501eca")
+		(uuid "37fb0d28-24e1-477b-b0b3-25aa3ebe3a90")
 		(property "Reference" "Q5"
-			(at 80.01 26.67 90)
+			(at 106.68 26.67 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "NVMFWS1D7N04XMT1G"
-			(at 80.01 29.21 90)
+		(property "Value" "DMN10H220LFDF-13"
+			(at 106.68 29.21 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "UTSVT_Power:NVMFWS3D0P04M8LT1G"
-			(at 73.025 37.465 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/catalog/specsheets/onsemi_02-27-2025_NVMFWS1D7N04XM-D.pdf"
-			(at 73.025 37.465 0)
+		(property "Footprint" ""
+			(at 104.14 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4296,8 +4091,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1 N-Channel MOSFETs 40V 154A Id 1.65mOhm Rds 3.5-20V Vgs"
-			(at 73.025 37.465 0)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/DMN10H220LFDF.pdf"
+			(at 119.38 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4305,8 +4100,8 @@
 				(hide yes)
 			)
 		)
-		(property "P/N" "NVMFWS1D7N04XMT1G"
-			(at 73.025 37.465 0)
+		(property "Description" "N-MOSFET transistor, drain/source/gate"
+			(at 106.68 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4314,8 +4109,8 @@
 				(hide yes)
 			)
 		)
-		(property "If" ""
-			(at 73.025 37.465 90)
+		(property "Sim.Device" "NMOS"
+			(at 123.825 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4323,8 +4118,8 @@
 				(hide yes)
 			)
 		)
-		(property "Vf" ""
-			(at 73.025 37.465 90)
+		(property "Sim.Type" "VDMOS"
+			(at 125.73 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4332,35 +4127,26 @@
 				(hide yes)
 			)
 		)
-		(pin "8"
-			(uuid "69fb0515-ad02-4334-bd85-8b304a227146")
-		)
-		(pin "5"
-			(uuid "3424a093-d810-4208-9e53-4f10825af2cf")
-		)
-		(pin "4"
-			(uuid "2fa924d4-798c-4649-9563-bf577ada91dc")
-		)
-		(pin "6"
-			(uuid "7326ca6e-067f-4f83-9b04-af5fccc3df71")
-		)
-		(pin "7"
-			(uuid "ae27fb66-5c50-47c4-84ff-3594511956d2")
-		)
-		(pin "3"
-			(uuid "938576bf-16f5-412c-8175-d6e712e5a721")
-		)
-		(pin "9"
-			(uuid "4cb68089-f1cc-4b41-8e11-ec2ca2631140")
-		)
-		(pin "1"
-			(uuid "2cee7f02-16f9-4001-aeba-33b35db5c14f")
+		(property "Sim.Pins" "1=D 2=G 3=S"
+			(at 121.92 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(pin "2"
-			(uuid "bbe89c6f-260a-4033-a9ec-348a6c962a2b")
+			(uuid "da1171df-9565-4e6f-8352-fb20ba091bbb")
+		)
+		(pin "1"
+			(uuid "4476ef8a-a6b1-4d34-96aa-5eab65a51388")
+		)
+		(pin "3"
+			(uuid "fefb9037-d1d5-4923-aa23-2cadbb1634a8")
 		)
 		(instances
-			(project ""
+			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
 					(reference "Q5")
 					(unit 1)
@@ -6305,6 +6091,104 @@
 			(project "VehicleControlUnit"
 				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
 					(reference "C18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Simulation_SPICE:NMOS")
+		(at 80.01 35.56 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cfd5b308-1e13-4334-987a-819416e9013e")
+		(property "Reference" "Q7"
+			(at 80.01 26.67 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DMN10H220LFDF-13"
+			(at 80.01 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 77.47 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/DMN10H220LFDF.pdf"
+			(at 92.71 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "N-MOSFET transistor, drain/source/gate"
+			(at 80.01 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "NMOS"
+			(at 97.155 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" "VDMOS"
+			(at 99.06 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=D 2=G 3=S"
+			(at 95.25 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "2064b7cf-35e2-48bc-a228-ceaf6be48162")
+		)
+		(pin "1"
+			(uuid "8c841562-a880-4693-bb34-b2aa92c70740")
+		)
+		(pin "3"
+			(uuid "8078a963-f05f-4d51-b6e0-5a293f4cc0cc")
+		)
+		(instances
+			(project ""
+				(path "/795c8e51-3ded-4d21-b864-aaff31c5def7/5469fc22-573e-4402-96df-d8b4b5bb4d29"
+					(reference "Q7")
 					(unit 1)
 				)
 			)

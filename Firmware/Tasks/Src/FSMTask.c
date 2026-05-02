@@ -17,10 +17,7 @@
 #include <string.h>
 #include <math.h>
 
-#define MAX_VELOCITY        12000 
-#define MAX_CURRENT_PERCENT 1.0f
-
-#define ACCEL_DEADZONE_MIN 5u // Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
+#define MAX_VELOCITY        12000
 #define METERS_SEC_TO_MPH 2.237
 
 StaticEventGroup_t fsmInputBuffer = {0};
@@ -41,7 +38,7 @@ static void handle_state_cruise(void);
 static void handle_state_disabled(void);
 
 static float apply_rollover_limit(float requested_current);
-static uint8_t apply_swoc_speed_limit(float speed_mph);
+static float swoc_max_current(float speed_mph);
 
 //must be called Before the FSM task gets called
 void FSM_TaskInit(){
@@ -126,6 +123,31 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
     return ((float)(oi * or_) / (float)ir + (float)out_min) / 100.0f;
 }
 
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
+                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
+static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
+
+static float swoc_max_current(float speed_mph) {
+    float cap = 1.0f;
+    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
+        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
+            cap = PERCENT_TO_CURRENT_SETPOINT(SWOC_THRESHOLDS[i].max_percent);
+        }
+    }
+    return cap;
+}
+
+float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
+    uint8_t pedal = accel_percent_0_100;
+    if (pedal <= ACCEL_DEADZONE_MIN) {
+        pedal = 0U;
+    }
+    float requested = PERCENT_TO_CURRENT_SETPOINT(pedal);
+    float swoc_cap = swoc_max_current(speed_mph);
+    float after_rollover = apply_rollover_limit(requested);
+    return fminf(swoc_cap, after_rollover);
+}
+
 //// state handlers
 
 static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
@@ -145,8 +167,9 @@ static void handle_state_forward(void) {
     } else {
         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
         velocitySetpoint = MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), 
-                                apply_rollover_limit(((float)((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0))/100.0f));
+        float speed_mph = fabsf(g_data_read->motor_velocity.MC_VehicleVelocity) * METERS_SEC_TO_MPH;
+        currentSetpoint = get_drive_current(
+            speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
@@ -167,7 +190,9 @@ static void handle_state_reverse(void) {
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
     } else {
         velocitySetpoint = -MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), ((float)apply_rollover_limit(((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0)))/100.0f);
+        float speed_mph = fabsf(g_data_read->motor_velocity.MC_VehicleVelocity) * METERS_SEC_TO_MPH;
+        currentSetpoint = get_drive_current(
+            speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
@@ -178,25 +203,11 @@ static void handle_state_reverse(void) {
 
 static void handle_state_cruise(void) {
     float velocity = rollover_limit_active ? 0.0f : MAX_VELOCITY;
+    float speed_mph = fabsf(g_data_read->motor_velocity.MC_VehicleVelocity) * METERS_SEC_TO_MPH;
     CAN_Send_Drive_Cmd(
         velocity,
-        fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-            apply_rollover_limit(((float)g_data_read->accel_brake.AccelPedal_Main_Pos))/100.0f),
+        get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos),
         0);
-}
-
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
-                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
-static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
-
-static uint8_t apply_swoc_speed_limit(float speed_mph) {
-    uint8_t cap = MAX_CURRENT_PERCENT; // Default is 100%
-    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
-        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
-            cap = SWOC_THRESHOLDS[i].max_percent;
-        }
-    }
-    return cap;
 }
 
 

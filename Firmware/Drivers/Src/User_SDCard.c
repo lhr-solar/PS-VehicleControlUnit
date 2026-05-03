@@ -1,9 +1,14 @@
 #include "User_SDCard.h"
+#include "FreeRTOSConfig.h"
 
 sd_handle_t sd;
 SPI_HandleTypeDef hspi_user;   
 
-#define SDCARD_SPI_NVIC_PRIO (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY+5)
+/*
+ * SPI byte ISRs should not preempt CAN: SD was using the same NVIC preempt as FDCAN
+ * driver (MAX_SYSCALL+5), which caused choppy motor updates while logging.
+ */
+#define SDCARD_SPI_NVIC_PRIO (configLIBRARY_LOWEST_INTERRUPT_PRIORITY)
 
 static BaseType_t SDCard_SPI_Init(){
 

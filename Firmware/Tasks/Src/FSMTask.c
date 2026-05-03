@@ -9,7 +9,7 @@
 #include "rollover_speed_table.h"
 
 #include "FSMTask.h"
-#include "SwocAutotuneTask.h"
+#include "SwocAutotuneTask.h" /* pulls SwocAutotune_config.h for ENABLE_SWOC_AUTOTUNE */
 #include "UpdateVCUInputsTask.h"
 #include "FaultBits.h"
 #include "Watchdogs.h"
@@ -212,7 +212,9 @@ static void handle_state_forward(void) {
             speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
+#if !ENABLE_SWOC_AUTOTUNE
     printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
+#endif
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
 
@@ -237,7 +239,9 @@ static void handle_state_reverse(void) {
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
 
+#if !ENABLE_SWOC_AUTOTUNE
     printf("Backwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
+#endif
 
 }
 

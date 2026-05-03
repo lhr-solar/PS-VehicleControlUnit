@@ -161,6 +161,8 @@ static void tune_sd_line(const char *msg) {
     unsigned long tick = HAL_GetTick() / 50UL;
     (void)snprintf(line, sizeof line, "%04lu %s\r\n", tick, msg);
     (void)SDCard_Write(SWOC_TUNE_SD_FILE, line, 0);
+    /* USART3 @ 115200 — same port as printf / uart_bootloader_service (PC10 TX). */
+    (void)printf("%s", line);
 }
 
 static void tune_log_swoc(float vmph_swoc, float curr_set_0_1, const char *tag) {

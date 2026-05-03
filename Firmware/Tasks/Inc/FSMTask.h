@@ -76,9 +76,18 @@ extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t current_state;
 
 /**
- * @brief SWOC (speed-dependent current) table row: at or above speed_mph, cap torque to max_percent.
- * max_percent is 0–100 (percent of max motor current). Lookup is combined into a 0.0–1.0 setpoint
- * before sending on the CAN drive command.
+ * How SWOC limits max drive current vs vehicle speed (see `swoc_max_current` in FSMTask.c).
+ */
+typedef enum {
+    /** Piecewise table: `SWOC_THRESHOLDS` — at/above each speed_mph, cap to max_percent (0–100). */
+    SWOC_MODE_SETPOINT_TABLE = 0,
+    /** Linear ramp: full torque fraction at `SWOC_LINEAR_FULL_SPEED_MPH`, zero at `SWOC_LINEAR_ZERO_SPEED_MPH`. */
+    SWOC_MODE_LINEAR,
+} SwocMode_e;
+
+/**
+ * @brief SWOC setpoint-table row: at or above speed_mph, cap torque to max_percent.
+ * max_percent is 0–100 (percent of max motor current). Combined into a 0.0–1.0 setpoint for CAN.
  */
 typedef struct {
     float speed_mph;

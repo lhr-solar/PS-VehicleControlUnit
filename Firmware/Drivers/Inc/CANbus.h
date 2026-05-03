@@ -21,6 +21,8 @@ can_status_t MotorCAN_Recv_Control_Src(set_motor_cmd_src_t *out, TickType_t dela
 
 can_status_t MotorCAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay);
 can_status_t MotorCAN_Send_Power_Cmd(float current, TickType_t delay);
+/** MC reset CAN id 0x403, DLC 1 (motor bus only); no Motor_Command_Source gating. */
+can_status_t MotorCAN_Send_Reset_Cmd(uint8_t payload_byte, TickType_t delay_ticks);
 
 can_status_t CarCAN_Init(void);
 can_status_t CarCAN_Send(FDCAN_TxHeaderTypeDef *header, uint8_t data[], TickType_t delay_ticks);

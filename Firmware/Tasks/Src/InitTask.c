@@ -1,4 +1,5 @@
 #include "InitTask.h"
+#include "SwocAutotuneTask.h"
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
@@ -56,6 +57,8 @@ void Task_Init() {
     faults_init();
 
     MotorTelemetryTask_Init();
+
+    SwocAutotune_Init();
 
     xTaskCreateStatic(
         Task_FaultHandler,

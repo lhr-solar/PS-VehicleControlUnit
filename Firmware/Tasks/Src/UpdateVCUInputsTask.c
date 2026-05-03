@@ -1,4 +1,5 @@
 #include "UpdateVCUInputsTask.h"
+#include "SwocAutotuneTask.h"
 #include "Contactors.h"
 #include "FaultBits.h"
 #include "StatusLEDs.h"
@@ -61,8 +62,10 @@ void UFI_throw_faults() {
     // Moco faults
     if (g_data_read->motor_status.MC_FAULT_HardwareOverCurrent)
         mask |= FAULT_BIT(FAULT_ID_MOTOR_HARDWARE_OVERCURRENT);
+#if !ENABLE_SWOC_AUTOTUNE
     if (g_data_read->motor_status.MC_FAULT_SoftwareOverCurrent)
         mask |= FAULT_BIT(FAULT_ID_MOTOR_SOFTWARE_OVERCURRENT);
+#endif
     if (g_data_read->motor_status.MC_FAULT_DcBusOverVoltage)
         mask |= FAULT_BIT(FAULT_ID_MOTOR_DC_BUS_OVERVOLTAGE);
     if (g_data_read->motor_status.MC_FAULT_BadMotorPositionHallSeq)
@@ -133,6 +136,8 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         UFI_throw_faults();
 
         rebuild_inputs();
+
+        SwocAutotune_OnInputCycleComplete();
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
     }
 }

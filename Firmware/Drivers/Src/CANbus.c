@@ -201,6 +201,24 @@ can_status_t CAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay)
     return result; 
 }
 
+can_status_t MotorCAN_Send_Reset_Cmd(uint8_t payload_byte, TickType_t delay_ticks) {
+    uint8_t payload[CAN_DLC_MC_RESETCOMMAND] = {payload_byte};
+    FDCAN_TxHeaderTypeDef header = {
+        .Identifier = CAN_ID_MC_RESETCOMMAND,
+        .IdType = FDCAN_STANDARD_ID,
+        .TxFrameType = FDCAN_DATA_FRAME,
+        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_MC_RESETCOMMAND),
+        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+        .BitRateSwitch = FDCAN_BRS_OFF,
+        .FDFormat = FDCAN_CLASSIC_CAN,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+        .MessageMarker = 0,
+    };
+
+    /* Reset must clear SWOC regardless of alternate command sources. */
+    return can_fd_send(motorfdcan, &header, payload, delay_ticks);
+}
+
 can_status_t MotorCAN_Send_Power_Cmd(float current, TickType_t delay){
      // printf("Motor CAN send drive cmd: %f vel, %f curr", velocity, current);
     if (!isfinite(current)) return CAN_EMPTY;

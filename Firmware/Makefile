@@ -65,6 +65,11 @@ ifeq ($(NODAWG),1)
 PROJECT_MACROS += NODAWG
 endif
 
+# SWOC setpoint-table autotune (see Firmware/config/Inc/SwocAutotune_config.h)
+ifeq ($(ENABLE_SWOC_AUTOTUNE),1)
+PROJECT_MACROS += ENABLE_SWOC_AUTOTUNE=1
+endif
+
 # export variables 
 export PROJECT_TARGET
 export PROJECT_C_SOURCES
@@ -170,6 +175,7 @@ help:
 	@echo "   being the exact name of the test file ${RED} without${NC} the .c suffix and test_ suffix. \n"
 
 	@echo "- ${GREEN}flash-uart${NC}: default ${PURPLE}UART_BOOTLOADER_FLASH_FLAGS=--enter${NC} (ESBLT_BOOT then flash). Clear if chip is already in bootloader.\n"
+	@echo "- ${GREEN}ENABLE_SWOC_AUTOTUNE=${PURPLE}1${NC}: builds SD-logged SWOC table autotuner (motor SWOC clears via CAN 403; FaultHandler ignores SWOC). See ${PURPLE}config/Inc/SwocAutotune_config.h${NC}.\n"
 
 #-------------- 
 # Documentation

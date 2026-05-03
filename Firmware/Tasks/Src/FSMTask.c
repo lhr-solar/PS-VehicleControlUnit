@@ -9,6 +9,7 @@
 #include "rollover_speed_table.h"
 
 #include "FSMTask.h"
+#include "SwocAutotuneTask.h"
 #include "UpdateVCUInputsTask.h"
 #include "FaultBits.h"
 #include "Watchdogs.h"
@@ -123,19 +124,58 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
     return ((float)(oi * or_) / (float)ir + (float)out_min) / 100.0f;
 }
 
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
-                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
+#if ENABLE_SWOC_AUTOTUNE
+static float swoc_max_current(float speed_mph) {
+    return SwocAutotune_MaxCurrentFraction(speed_mph);
+}
+#else
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {{7.0f, 50}};
 static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
-static float swoc_max_current(float speed_mph) {
-    float cap = 1.0f;
-    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
-        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
-            cap = PERCENT_TO_CURRENT_SETPOINT(SWOC_THRESHOLDS[i].max_percent);
-        }
+/*
+ * SWOC tuning — switch mode here.
+ * - SWOC_MODE_SETPOINT_TABLE: use SWOC_THRESHOLDS[] (piecewise caps).
+ * - SWOC_MODE_LINEAR: ramp cap from 1.0 at SWOC_LINEAR_FULL_SPEED_MPH to 0.0 at SWOC_LINEAR_ZERO_SPEED_MPH
+ *   (default 0 mph → 40 mph gives 100% torque at rest, 0% at 40 mph).
+ */
+static const SwocMode_e SWOC_MODE = SWOC_MODE_SETPOINT_TABLE;
+
+/** Linear mode: at/below this speed (mph), SWOC max-current fraction is 1.0. */
+static const float SWOC_LINEAR_FULL_SPEED_MPH = 3.0f;
+/** Linear mode: at/above this speed (mph), SWOC max-current fraction is 0.0. */
+static const float SWOC_LINEAR_ZERO_SPEED_MPH = 30.0f;
+
+static float swoc_max_current_linear(float speed_mph) {
+    if (speed_mph <= SWOC_LINEAR_FULL_SPEED_MPH) {
+        return 1.0f;
     }
-    return cap;
+    if (speed_mph >= SWOC_LINEAR_ZERO_SPEED_MPH) {
+        return 0.0f;
+    }
+    const float span = SWOC_LINEAR_ZERO_SPEED_MPH - SWOC_LINEAR_FULL_SPEED_MPH;
+    if (span <= 0.0f) {
+        return 1.0f;
+    }
+    return 1.0f - (speed_mph - SWOC_LINEAR_FULL_SPEED_MPH) / span;
 }
+
+static float swoc_max_current(float speed_mph) {
+    switch (SWOC_MODE) {
+    case SWOC_MODE_LINEAR:
+        return swoc_max_current_linear(speed_mph);
+    case SWOC_MODE_SETPOINT_TABLE:
+    default: {
+        float cap = 1.0f;
+        for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
+            if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
+                cap = PERCENT_TO_CURRENT_SETPOINT(SWOC_THRESHOLDS[i].max_percent);
+            }
+        }
+        return cap;
+    }
+    }
+}
+#endif /* ENABLE_SWOC_AUTOTUNE */
 
 float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
     uint8_t pedal = accel_percent_0_100;

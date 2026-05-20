@@ -31,7 +31,7 @@ typedef enum {
 } lws_standard_lws_trimming_status_e;
 
 typedef enum {
-    LWS_CONFIG_LWS_CCW_SETS_THE_SIGNAL_LWS_ANGLE_TO_0Â_ = 3,
+    LWS_CONFIG_LWS_CCW_SETS_THE_SIGNAL_LWS_ANGLE_TO_0Ã_Â_ = 3,
     LWS_CONFIG_LWS_CCW_RESETS_CALIBRATION_STATUS = 5,
 } lws_config_lws_ccw_e;
 

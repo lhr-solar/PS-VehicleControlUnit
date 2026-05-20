@@ -418,6 +418,46 @@ can_status_t CarCAN_Recv_Pedals_Position(pedal_status_t *out, TickType_t delay) 
     return result;
 }
 
+can_status_t CarCAN_Recv_Brake_Pressure1(brake_pressure_1_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    uint8_t brake_pressure1_rx_data[CAN_DLC_BRAKE_PRESSURE_1] = {0};
+
+    can_status_t result =
+        can_fd_recv(carfdcan, CAN_ID_BRAKE_PRESSURE_1, &header, brake_pressure1_rx_data, delay);
+        
+    if (result == CAN_OK) {
+        out->Brake_Pressure = (uint16_t)(brake_pressure1_rx_data[0] | ((uint16_t)brake_pressure1_rx_data[1] << 8));
+        out->Brake_Pressure_ADC = (uint16_t)(brake_pressure1_rx_data[2] | ((uint16_t)brake_pressure1_rx_data[3] << 8));
+        out->FrameID_Pedals = brake_pressure1_rx_data[4];
+
+        watchdog_received_can_message(WD_IDX_BRAKE_PRESSURE_1);
+    }
+
+    return result;
+}
+
+can_status_t CarCAN_Recv_Brake_Pressure2(brake_pressure_2_t *out, TickType_t delay) {
+    if (out == NULL) return CAN_EMPTY;
+
+    FDCAN_RxHeaderTypeDef header = {0};
+    uint8_t brake_pressure2_rx_data[CAN_DLC_BRAKE_PRESSURE_2] = {0};
+
+    can_status_t result =
+        can_fd_recv(carfdcan, CAN_ID_BRAKE_PRESSURE_2, &header, brake_pressure2_rx_data, delay);
+    
+    if (result == CAN_OK) {
+        out->Brake_Pressure = (uint16_t)(brake_pressure2_rx_data[0] | ((uint16_t)brake_pressure2_rx_data[1] << 8));
+        out->Brake_Pressure_ADC = (uint16_t)(brake_pressure2_rx_data[2] | ((uint16_t)brake_pressure2_rx_data[3] << 8));
+        out->FrameID_Pedals = brake_pressure2_rx_data[4];
+    
+        watchdog_received_can_message(WD_IDX_BRAKE_PRESSURE_2);
+    }
+
+    return result;
+}
+
 can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_mv, 
     TickType_t delay) {
 

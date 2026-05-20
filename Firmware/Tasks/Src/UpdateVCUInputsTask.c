@@ -35,7 +35,7 @@ static void rebuild_inputs(void) {
     if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
         s |= PRECHARGE_COMPLETE_BIT;
 
-    if (g_data_read->accel_brake.BrakePedal_Main_Pos >= brake_threshold) {
+    if (g_data_read->brake_pressure1.Brake_Pressure >= brake_threshold) {
         s |= BRAKE_BIT;
         brake_threshold = BRAKE_THRESH_HYST;
     } else {
@@ -81,10 +81,8 @@ void UFI_throw_faults() {
     // Pedals faults
     if (g_data_read->accel_brake.AccelPedal_Main_Fault ||
         g_data_read->accel_brake.AccelPedal_Redundant_Fault ||
-        g_data_read->accel_brake.BrakePedal_Main_Fault ||
-        g_data_read->accel_brake.BrakePedal_Redundant_Fault ) {//||
-        // fabs(g_data_read->accel_brake.AccelPedal_Main_Pos -
-            // g_data_read->accel_brake.AccelPedal_Redundant_Pos) > ACCEPTABLE_PEDAL_DEVIATION) {
+        g_data_read->accel_brake.Brake_Pressure_1_Fault ||
+        g_data_read->accel_brake.Brake_Pressure_2_Fault) {
         mask |= FAULT_BIT(FAULT_ID_PEDAL_BOARD_FAULT);
     }
 
@@ -112,6 +110,8 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
 
         CarCAN_Recv_BPS_Status(&update->bps_status, 0);
         CarCAN_Recv_Pedals_Position(&update->accel_brake, 0);
+        CarCAN_Recv_Brake_Pressure1(&update->brake_pressure1, 0);
+        CarCAN_Recv_Brake_Pressure2(&update->brake_pressure2, 0);
         CarCAN_Recv_Controls_Status(&update->controls_status, 0);
         CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);

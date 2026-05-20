@@ -20,8 +20,8 @@
 #define MAX_VELOCITY        12000 
 #define MAX_CURRENT_PERCENT 1.0f
 
-#define ACCEL_DEADZONE_MIN 5u // Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
-#define METERS_SEC_TO_MPH 2.237
+#define ACCEL_DEADZONE_MIN  5u // Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
+#define METERS_SEC_TO_MPH   2.23694f
 
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
@@ -40,8 +40,10 @@ static void handle_state_regen(void);
 static void handle_state_cruise(void);
 static void handle_state_disabled(void);
 
+static void handle_drive_state(bool);
+
 static float apply_rollover_limit(float requested_current);
-static uint8_t apply_swoc_speed_limit(float speed_mph);
+static float apply_swoc_speed_limit(float speed_mph);
 
 //must be called Before the FSM task gets called
 void FSM_TaskInit(){
@@ -111,7 +113,7 @@ static float apply_rollover_limit(float requested_current) {
         return 0.0f;
     }
     
-    warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
+    warning_clear(WARNING_ID_TIPPING_LIMIT_ACTIVE);
     rollover_limit_active = false;
     return requested_current;
 }
@@ -126,6 +128,14 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
     return ((float)(oi * or_) / (float)ir + (float)out_min) / 100.0f;
 }
 
+static float get_accel_percent(uint8_t pedal_percent) {
+    if (pedal_percent <= ACCEL_DEADZONE_MIN) {
+        return 0.0f;
+    }
+
+    return ((float)pedal_percent) / 100.0f;
+}
+
 //// state handlers
 
 static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
@@ -134,46 +144,100 @@ static void handle_state_disabled(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
 static void handle_state_regen(void) { CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
 static void handle_state_not_ready(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
 
+// static void handle_state_forward(void) {
+//     float velocitySetpoint = 0.0f;
+//     float currentSetpoint = 0.0f;
+//     if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
+//         // if we're actually going backwards, let off the pedal until we slow down
+//         velocitySetpoint = 0.0f;
+//         currentSetpoint = 0.0f;
+//         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+//     } else {
+//         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
+//         velocitySetpoint = MAX_VELOCITY;
+//         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), 
+//                                 apply_rollover_limit(((float)((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0))/100.0f));
+//     }
+
+//     printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
+
+//     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
+
+// }
+
+// static void handle_state_reverse(void) {
+
+//     float velocitySetpoint = 0.0f;
+//     float currentSetpoint = 0.0f;
+
+//     if (g_data_read->motor_velocity.MC_VehicleVelocity > 0.5f) {
+//         // if we're actually going forwards, let off the pedal until we slow down
+//         velocitySetpoint = 0.0f;
+//         currentSetpoint = 0.0f;
+//         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+//     } else {
+//         velocitySetpoint = -MAX_VELOCITY;
+//         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), ((float)apply_rollover_limit(((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0)))/100.0f);
+//     }
+
+//     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
+
+//     printf("Backwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
+
+// }
+
 static void handle_state_forward(void) {
-    float velocitySetpoint = 0.0f;
-    float currentSetpoint = 0.0f;
-    if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
-        // if we're actually going backwards, let off the pedal until we slow down
-        velocitySetpoint = 0.0f;
-        currentSetpoint = 0.0f;
-        warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
-    } else {
-        warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-        velocitySetpoint = MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), 
-                                apply_rollover_limit(((float)((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0))/100.0f));
-    }
-
-    printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
-
-    CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
-
+    handle_drive_state(false);
 }
 
 static void handle_state_reverse(void) {
+    handle_drive_state(true);
+}
+
+static void handle_drive_state(bool reverse) {
 
     float velocitySetpoint = 0.0f;
     float currentSetpoint = 0.0f;
 
-    if (g_data_read->motor_velocity.MC_VehicleVelocity > 0.5f) {
-        // if we're actually going forwards, let off the pedal until we slow down
+    const float vehicleVelocity =
+        g_data_read->motor_velocity.MC_VehicleVelocity;
+
+    const bool wrongDirection =
+        (!reverse && vehicleVelocity < -0.5f) ||
+        ( reverse && vehicleVelocity >  0.5f);
+
+    if (wrongDirection) {
+
+        // If we're moving opposite the requested direction,
+        // force zero torque until vehicle slows down
         velocitySetpoint = 0.0f;
         currentSetpoint = 0.0f;
+
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+
     } else {
-        velocitySetpoint = -MAX_VELOCITY;
-        currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), ((float)apply_rollover_limit(((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0)))/100.0f);
+
+        warning_clear(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+
+        velocitySetpoint = reverse ? -MAX_VELOCITY : MAX_VELOCITY;
+
+        currentSetpoint = fmin(
+            apply_swoc_speed_limit(vehicleVelocity * METERS_SEC_TO_MPH),
+
+            apply_rollover_limit(
+                get_accel_percent(
+                    g_data_read->accel_brake.AccelPedal_Main_Pos
+                )
+            )
+        );
     }
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
 
-    printf("Backwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
-
+    printf("%s Drive cmd: %f vel, %f curr\r\n",
+           reverse ? "Reverse" : "Forward",
+           velocitySetpoint,
+           currentSetpoint);
 }
 
 static void handle_state_cruise(void) {
@@ -185,15 +249,14 @@ static void handle_state_cruise(void) {
         0);
 }
 
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
-                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {{7.0f, 0.6}, {17.0f, 0.4}, {27.0f, 0.2}};
 static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
-static uint8_t apply_swoc_speed_limit(float speed_mph) {
-    uint8_t cap = MAX_CURRENT_PERCENT; // Default is 100%
+static float apply_swoc_speed_limit(float speed_mph) {
+    float cap = MAX_CURRENT_PERCENT; // Default is 100%
     for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
         if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
-            cap = SWOC_THRESHOLDS[i].max_percent;
+            cap = SWOC_THRESHOLDS[i].max_current;
         }
     }
     return cap;

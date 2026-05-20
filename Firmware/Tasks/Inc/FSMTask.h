@@ -79,7 +79,7 @@ extern MocoState_t current_state;
  */
 typedef struct {
     float speed_mph;
-    uint8_t max_percent;
+    float max_current; // 0.0 to 1.0
 } swoc_threshold_t;
 
 

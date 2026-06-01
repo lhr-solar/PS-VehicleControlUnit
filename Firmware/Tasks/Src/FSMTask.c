@@ -43,7 +43,8 @@ static void handle_state_disabled(void);
 static void handle_drive_state(bool);
 
 static float apply_rollover_limit(float requested_current);
-static float apply_swoc_speed_limit(float speed_mph);
+static float swoc_max_current(float speed_mph);
+static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
 
 //must be called Before the FSM task gets called
 void FSM_TaskInit(){
@@ -113,7 +114,7 @@ static float apply_rollover_limit(float requested_current) {
         return 0.0f;
     }
     
-    warning_clear(WARNING_ID_TIPPING_LIMIT_ACTIVE);
+    warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
     rollover_limit_active = false;
     return requested_current;
 }
@@ -128,12 +129,13 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
     return ((float)(oi * or_) / (float)ir + (float)out_min) / 100.0f;
 }
 
-static float get_accel_percent(uint8_t pedal_percent) {
-    if (pedal_percent <= ACCEL_DEADZONE_MIN) {
-        return 0.0f;
-    }
-
-    return ((float)pedal_percent) / 100.0f;
+static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
+    uint8_t pedal = accel_percent_0_100;
+    if (pedal <= ACCEL_DEADZONE_MIN) pedal = 0U;
+    float requested = (float)pedal / 100.0f;
+    float swoc_cap = swoc_max_current(speed_mph);
+    float after_rollover = apply_rollover_limit(requested);
+    return fminf(swoc_cap, after_rollover);
 }
 
 //// state handlers
@@ -217,19 +219,12 @@ static void handle_drive_state(bool reverse) {
 
     } else {
 
-        warning_clear(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
+        if (!reverse) warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
 
         velocitySetpoint = reverse ? -MAX_VELOCITY : MAX_VELOCITY;
 
-        currentSetpoint = fmin(
-            apply_swoc_speed_limit(vehicleVelocity * METERS_SEC_TO_MPH),
-
-            apply_rollover_limit(
-                get_accel_percent(
-                    g_data_read->accel_brake.AccelPedal_Main_Pos
-                )
-            )
-        );
+        float speed_mph = fabsf(vehicleVelocity) * METERS_SEC_TO_MPH;
+        currentSetpoint = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
@@ -242,18 +237,21 @@ static void handle_drive_state(bool reverse) {
 
 static void handle_state_cruise(void) {
     float velocity = rollover_limit_active ? 0.0f : MAX_VELOCITY;
+    float speed_mph = fabsf(g_data_read->motor_velocity.MC_VehicleVelocity) * METERS_SEC_TO_MPH;
     CAN_Send_Drive_Cmd(
         velocity,
-        fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity),
-            apply_rollover_limit(((float)g_data_read->accel_brake.AccelPedal_Main_Pos))/100.0f),
+        get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos),
         0);
 }
 
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {{7.0f, 0.6}, {17.0f, 0.4}, {27.0f, 0.2}};
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {
+    {10.0f, 0.80f}, {17.0f, 0.75f}, {20.0f, 0.70f},
+    {23.0f, 0.60f}, {25.0f, 0.50f}, {28.5f, 0.45f}
+};
 static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
-static float apply_swoc_speed_limit(float speed_mph) {
-    float cap = MAX_CURRENT_PERCENT; // Default is 100%
+static float swoc_max_current(float speed_mph) {
+    float cap = MAX_CURRENT_PERCENT;
     for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
         if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
             cap = SWOC_THRESHOLDS[i].max_current;

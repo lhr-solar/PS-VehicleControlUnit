@@ -123,8 +123,17 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
     return ((float)(oi * or_) / (float)ir + (float)out_min) / 100.0f;
 }
 
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {{10.0f, 80}, {17.0f, 75}, {20.0f, 70},
-                                                   {23.0f, 60}, {25.0f, 50}, {28.5f, 45}};
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {
+    {0.0f,  80},  //  0–10 kmh
+	{6.2f,  55},  // 10–15 kmh
+	{9.3f,  60},  // 15–20 kmh
+    {12.4f, 70},  // 20–28 kmh
+    {17.0f, 80},  // 28–32 kmh
+    {20.0f, 80},  // 32–37 kmh
+    {23.0f, 75},  // 37–46 kmh
+    {25.0f, 50},  // 46–46 kmh
+    {28.5f, 45},  // 46+ kmh
+};
 static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
 static float swoc_max_current(float speed_mph) {

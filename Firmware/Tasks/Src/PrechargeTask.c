@@ -1,7 +1,7 @@
 #include "PrechargeTask.h"
 #include "UpdateVCUInputsTask.h"
 
-#define PRECHARGE_PRINTF_DEBUG_PERIOD_MS 10000
+#define PRECHARGE_PRINTF_DEBUG_PERIOD_MS 2000
 #define PRECHARGE_PRINTF_DEBUG_COUNTER (PRECHARGE_PRINTF_DEBUG_PERIOD_MS / PRECHARGE_TASK_DELAY_MS)
 
 uint32_t battery_voltage = 0;
@@ -79,7 +79,7 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage) {
 }
 
 static void PT_print_state(PrechargeState_e state) {
-    printf("Fault: %s\r\n", precharge_state_names[state]);
+    printf("Prech_state: %s\r\n", precharge_state_names[state]);
 }
 
 void Task_Precharge() {
@@ -201,6 +201,7 @@ void Task_Precharge() {
         curr_state = g_precharge_state;
         taskEXIT_CRITICAL();
 
+        printDebugCounter++;
         if (printDebugCounter >= PRECHARGE_PRINTF_DEBUG_COUNTER) {
 
             // prints battery and motor voltage

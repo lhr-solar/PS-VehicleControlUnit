@@ -269,6 +269,7 @@ void Task_FSM(void *args __attribute__((unused))) {
     while (1) {
         fsm_step();
         // CAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(90));
         // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
     }

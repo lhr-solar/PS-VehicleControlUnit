@@ -54,17 +54,25 @@ typedef enum {
 #define FSM_INPUTS_MASK_ALL     ((1U << BITFIELD_INPUT_COUNT) - 1U)
 
 // must match in the generator script
+#define FSM_STATE_LIST(X) \
+    X(STATE_INIT)         \
+    X(FORWARD_DRIVE)      \
+    X(NEUTRAL_DRIVE)      \
+    X(REVERSE_DRIVE)      \
+    X(REGEN)              \
+    X(CRUISE_CONTROL)     \
+    X(DISABLED)           \
+    X(CAR_NOT_READY)
+
 typedef enum {
-    STATE_INIT = 0,
-    FORWARD_DRIVE,
-    NEUTRAL_DRIVE,
-    REVERSE_DRIVE,
-    REGEN,
-    CRUISE_CONTROL,
-    DISABLED,
-    CAR_NOT_READY,
+#define X(name) name,
+    FSM_STATE_LIST(X)
+#undef X
     NUM_STATES
 } FSMState_e;
+
+#define FSM_STATE_NAME_(name) #name,
+#define FSM_STATE_NAMES { FSM_STATE_LIST(FSM_STATE_NAME_) }
 
 typedef struct {
     FSMState_e stateName;

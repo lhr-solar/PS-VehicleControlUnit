@@ -204,7 +204,7 @@ void Task_Precharge() {
         if (printDebugCounter >= PRECHARGE_PRINTF_DEBUG_COUNTER) {
 
             // prints battery and motor voltage
-            // printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
+            printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
 
             // prints current precharge state
             PT_print_state(curr_state);

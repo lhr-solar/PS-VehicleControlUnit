@@ -20,6 +20,8 @@
 #define MAX_VELOCITY        12000
 #define METERS_SEC_TO_MPH 2.237
 
+const char* state_names[NUM_STATES] = FSM_STATE_NAMES;
+
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
 MocoState_t current_state = {0};
@@ -60,9 +62,32 @@ void fsm_init(void) {
 }
 
 void fsm_step(void) {
-    fsm_inputs = xEventGroupGetBits(fsmInputGroup);
+    static volatile uint16_t prev_inputs = 0;
+    static volatile MocoState_t prev_state = {0};
+    static volatile uint8_t print_counter = 0;
+
+    fsm_inputs = xEventGroupGetBits(fsmInputGroup) & FSM_INPUTS_MASK_ALL;
+    prev_state = current_state;
     current_state = FSM[current_state.NextStates[fsm_inputs]];
-    // printf("FSM step: %X inputs,  %d curr_state\n\r", fsm_inputs, current_state.stateName);
+
+    print_counter++;
+    if (fsm_inputs != prev_inputs || current_state.stateName != prev_state.stateName || print_counter >= 10) {
+        prev_inputs = fsm_inputs;
+        prev_state = current_state;
+        print_counter = 0;
+        printf("FSM step: %s\n\r    Forward: %d\tNeutral: %d\tReverse: %d\tRegen: %d\tRegen En: %d\r\n    Cruise: %d\tDrivable: %d\tPrecharge: %d\tBrake: %d\r\n",
+                state_names[current_state.stateName],
+                (fsm_inputs & FORWARD_BIT) != 0,
+                (fsm_inputs & NEUTRAL_BIT) != 0,
+                (fsm_inputs & REVERSE_BIT) != 0,
+                (fsm_inputs & REGEN_BUTTON_BIT) != 0,
+                (fsm_inputs & REGEN_ENABLED_BIT) != 0,
+                (fsm_inputs & CRUISE_CONTROL_BUTTON_BIT) != 0,
+                (fsm_inputs & READY_TO_REGEN_BIT) != 0,
+                (fsm_inputs & PRECHARGE_COMPLETE_BIT) != 0,
+                (fsm_inputs & BRAKE_BIT) != 0);
+    }
+
     if (current_state.stateHandler) current_state.stateHandler();
 }
 

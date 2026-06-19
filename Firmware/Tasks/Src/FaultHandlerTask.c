@@ -94,20 +94,19 @@ void Task_FaultHandler(void *args __attribute__((unused))) {
             printf("Fault Handler triggered: 0x%02lX\r\n", bits);
 
             // Loop to display/handle fault until system reset
-            // uint32_t print_counter = 0;
+            uint32_t print_counter = 0;
             while (true) {
-                // print_counter++;
-                // if (print_counter >= FAULT_PRINTF_COUNTER) {
+                print_counter++;
+                if (print_counter >= FAULT_PRINTF_COUNTER) {
                     for (int i = 0; i < FAULT_ID_COUNT; i++) {
                         if (bits & FAULT_BIT(i)) {
                             printf("Fault: %s\r\n", fault_names[i]);
                         }
                     }
-                    // print_counter = 0;
-                // }
+                    print_counter = 0;
+                }
 
                 FHT_set_fault_leds(bits);
-                // LED_toggle(HB);
                 vTaskDelay(pdMS_TO_TICKS(FAULT_LOOP_PERIOD_MS));
             }
         }

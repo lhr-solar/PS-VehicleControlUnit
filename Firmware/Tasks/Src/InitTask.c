@@ -38,7 +38,6 @@ void Task_Init() {
     MotorCAN_Init();
     CarCAN_Init();
 
-    FSM_TaskInit();
     fsm_init();
 
     watchdog_init();

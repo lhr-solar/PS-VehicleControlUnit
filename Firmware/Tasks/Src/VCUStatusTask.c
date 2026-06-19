@@ -88,7 +88,7 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
 
         CarCAN_Send(&tx_header, buf, sizeof(buf));
 
-        // LED_toggle(HB);
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(800));
     }
 }

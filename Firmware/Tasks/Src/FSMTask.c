@@ -46,11 +46,6 @@ static float apply_rollover_limit(float requested_current);
 static float swoc_max_current(float speed_mph);
 static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
 
-//must be called Before the FSM task gets called
-void FSM_TaskInit(){
-    fsmInputGroup = xEventGroupCreateStatic(&fsmInputBuffer);
-}
-
 void fsm_init(void) {
     FSM[STATE_INIT].stateHandler = handle_state_init;
     FSM[FORWARD_DRIVE].stateHandler = handle_state_forward;
@@ -63,6 +58,8 @@ void fsm_init(void) {
 
     current_state = FSM[STATE_INIT];
     current_state.stateHandler();
+
+    fsmInputGroup = xEventGroupCreateStatic(&fsmInputBuffer);
 }
 
 void fsm_step(void) {
@@ -197,42 +194,37 @@ static void handle_state_reverse(void) {
 }
 
 static void handle_drive_state(bool reverse) {
+    float velocity_setpoint = 0.0f;
+    float current_setpoint = 0.0f;
 
-    float velocitySetpoint = 0.0f;
-    float currentSetpoint = 0.0f;
-
-    const float vehicleVelocity =
+    const float vehicle_velocity =
         g_data_read->motor_velocity.MC_VehicleVelocity;
 
-    const bool wrongDirection =
-        (!reverse && vehicleVelocity < -0.5f) ||
-        ( reverse && vehicleVelocity >  0.5f);
+    const bool is_wrong_direction =
+        (!reverse && vehicle_velocity < -0.5f) ||
+        ( reverse && vehicle_velocity >  0.5f);
 
-    if (wrongDirection) {
-
+    if (is_wrong_direction) {
         // If we're moving opposite the requested direction,
         // force zero torque until vehicle slows down
-        velocitySetpoint = 0.0f;
-        currentSetpoint = 0.0f;
-
+        velocity_setpoint = 0.0f;
+        current_setpoint = 0.0f;
         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
-
     } else {
-
         if (!reverse) warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
 
-        velocitySetpoint = reverse ? -MAX_VELOCITY : MAX_VELOCITY;
+        velocity_setpoint = reverse ? -MAX_VELOCITY : MAX_VELOCITY;
 
-        float speed_mph = fabsf(vehicleVelocity) * METERS_SEC_TO_MPH;
-        currentSetpoint = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
+        float speed_mph = fabsf(vehicle_velocity) * METERS_SEC_TO_MPH;
+        current_setpoint = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
-    CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
+    CAN_Send_Drive_Cmd(velocity_setpoint, current_setpoint, 0);
 
     printf("%s Drive cmd: %f vel, %f curr\r\n",
            reverse ? "Reverse" : "Forward",
-           velocitySetpoint,
-           currentSetpoint);
+           velocity_setpoint,
+           current_setpoint);
 }
 
 static void handle_state_cruise(void) {

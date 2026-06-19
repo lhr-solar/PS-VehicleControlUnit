@@ -116,7 +116,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
 
-        // printf("Update VCU inputs: about to switch read and write ptrs");
+        printf("Update VCU inputs: about to switch read and write ptrs\r\n");
 
         VCUDataIn_t *volatile tmp;
         taskENTER_CRITICAL();
@@ -125,7 +125,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         g_data_write = tmp;
         taskEXIT_CRITICAL();
 
-        // printf("Updated from CAN!");
+        printf("Updated from CAN!\r\n");
 
         memcpy(g_data_write, g_data_read, sizeof(VCUDataIn_t));
 

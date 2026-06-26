@@ -105,6 +105,14 @@ endif
 flash: 	
 	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash
 
+# bl-lite: UART escape to the ROM bootloader (see Embedded-Sharepoint/bootloader_lite/README.md)
+.PHONY: bl-send flash-lite
+bl-send:
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) bl-send BL_LITE_PORT=$(BL_LITE_PORT)
+
+flash-lite:
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash-lite BL_LITE_PORT=$(BL_LITE_PORT)
+
 
 #-------------------------------
 # ESP32 Build

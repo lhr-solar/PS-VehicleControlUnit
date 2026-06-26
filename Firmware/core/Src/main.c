@@ -2,20 +2,15 @@
 #include "UART_Init.h"
 #include "UART.h"
 #include "InitTask.h"
-#include "DumbBootloaderTask.h"
+#include "bootloader_lite.h"
 
 int main(void)
 {
   HAL_Init();
   SystemClock_Config();
 
-  // If a bootloader entry was requested (UART "BOOT" or a hardfault), a
-  // backup-register flag survives the reset; jump now from a clean context.
-  if (dumb_bootloader_consume_request()) {
-    dumb_bootloader_enter_rom();
-  }
-  // From here on, route HardFault/MemManage/BusFault/UsageFault to the ROM bootloader.
-  dumb_bootloader_install_fault_vectors();
+  // Route HardFault/MemManage/BusFault/UsageFault to the ROM bootloader (bl-lite).
+  bootloader_lite_init();
 
   LED_init();
 

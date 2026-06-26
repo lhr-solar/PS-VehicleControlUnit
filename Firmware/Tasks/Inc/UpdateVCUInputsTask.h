@@ -4,8 +4,10 @@
 #include "CANbus.h"
 #include "FSMTask.h"
 
-#define BRAKE_THRESH      42.0f  // percent
-#define BRAKE_THRESH_HYST 30.0f  // percent
+/** Brake pedal ≥ this (%) asserts FSM brake input (was 42%). */
+#define BRAKE_THRESH      55.0f
+/** After brake is asserted, release below this (%) before full threshold reapplies (~hysteresis). */
+#define BRAKE_THRESH_HYST 42.0f
 
 #define ACCEPTABLE_PEDAL_DEVIATION 3 // percent
 

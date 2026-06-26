@@ -8,6 +8,11 @@
 
 static float brake_threshold = BRAKE_THRESH;
 
+/** Toggle HB every N loops (50 ms loop) so the LED blinks ~1 Hz while firmware runs, independent of CAN. */
+#define UFI_HB_TOGGLE_PERIOD_LOOPS 10U
+
+static uint32_t ufi_hb_loop_count;
+
 static VCUDataIn_t fsm_input_a = {0};
 static VCUDataIn_t fsm_input_b = {0};
 
@@ -101,10 +106,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         // printf("Task_UpdateVCUInputs: %ld", last);
         // update from can
         VCUDataIn_t *volatile update = g_data_write;
-        if (MotorCAN_Recv_Status(&update->motor_status, 0) == CAN_OK) {
-            LED_toggle(HB);
-        }
-        MotorCAN_Recv_Status(&update->motor_status, 0);
+        (void)MotorCAN_Recv_Status(&update->motor_status, 0);
         MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
         MotorCAN_Recv_Control_Src(&update->motor_controls_src, 0);
 
@@ -133,6 +135,13 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         UFI_throw_faults();
 
         rebuild_inputs();
+
+        ufi_hb_loop_count++;
+        if (ufi_hb_loop_count >= UFI_HB_TOGGLE_PERIOD_LOOPS) {
+            ufi_hb_loop_count = 0U;
+            LED_toggle(HB);
+        }
+
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
     }
 }

@@ -2,6 +2,7 @@
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
+#include "DumbBootloaderTask.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -29,6 +30,9 @@ void Task_Init() {
 
     
     Init_UART_Printf();
+
+    // dumb bootloader: listen on USART3 for "BOOT" -> jump to ROM bootloader
+    DumbBootloaderTask_Init();
 
     // prech
     ADC_Sense_Init();

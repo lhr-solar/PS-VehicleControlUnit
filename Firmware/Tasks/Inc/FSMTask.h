@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+#include <stdint.h>
 #include "inits.h"
 #include "CANbus.h"
 #include "event_groups.h"
@@ -74,13 +76,28 @@ extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t current_state;
 
 /**
- * @brief Used for stepping current down at higher speeds. An array of these will 
- * represent a bin for min speed and associated max current.
+ * @brief SWOC (speed-dependent current) table row: at or above speed_mph, cap torque to max_percent.
+ * max_percent is 0–100 (percent of max motor current). Lookup is combined into a 0.0–1.0 setpoint
+ * before sending on the CAN drive command.
  */
 typedef struct {
     float speed_mph;
     uint8_t max_percent;
 } swoc_threshold_t;
+
+/** Pedal or table field in percent (0–100) → drive current setpoint (0.0–1.0). */
+#define PERCENT_TO_CURRENT_SETPOINT(percent) ((float)(percent) / 100.0f)
+
+/** Minimum pedal % to count as accel input; at or below this, torque request is zero. */
+#define ACCEL_DEADZONE_MIN 5U
+
+/**
+ * @brief Combined SWOC cap (from thresholds in %) and rollover limit on accelerator request.
+ * @param speed_mph Vehicle speed magnitude in mph (use fabsf(velocity_m_s)*METERS_SEC_TO_MPH if needed).
+ * @param accel_percent_0_100 Raw accelerator pedal 0–100; pedal ≤ ACCEL_DEADZONE_MIN is treated as zero.
+ * @return Current setpoint in [0.0, 1.0].
+ */
+float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
 
 
 void fsm_init(void);

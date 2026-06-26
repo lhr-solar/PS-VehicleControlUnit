@@ -2,7 +2,7 @@
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
-#include "DumbBootloaderTask.h"
+#include "BootloaderTask.h"
 #include "HeartbeatTask.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
@@ -32,8 +32,8 @@ void Task_Init() {
     
     Init_UART_Printf();
 
-    // dumb bootloader: listen on USART3 for "BOOT" -> jump to ROM bootloader
-    DumbBootloaderTask_Init();
+    // bootloader_lite: listen on USART3 for "BOOT" -> jump to ROM bootloader
+    BootloaderTask_Init(husart3);
 
     // liveness heartbeat (HB LED)
     HeartbeatTask_Init();

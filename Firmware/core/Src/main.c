@@ -10,6 +10,11 @@
 
 int main(void)
 {
+  // bootloader_lite: if a prior "BOOT"/HardFault asked for the ROM bootloader,
+  // jump there now (thread mode, peripherals in reset). Must be first, before
+  // HAL_Init(). No-op on a normal boot.
+  BOOTLOADER_LITE_CHECK();
+
   HAL_Init();
   SystemClock_Config();
 

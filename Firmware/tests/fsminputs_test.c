@@ -54,13 +54,13 @@ int main() {
     );
 
     xTaskCreateStatic(
-        Task_UpdateFSMInputs,
-        "Update FSM Inputs Thread",
-        UPDATE_FSM_INPUTS_STACK_SIZE,
+        Task_UpdateVCUInputs,
+        "Update VCU Inputs Thread",
+        UPDATE_VCU_INPUTS_STACK_SIZE,
         NULL,
-        UPDATE_FSM_INPUTS_THREAD_PRIO,
-        UpdateFSMInputs_Task_Stack,
-        &UpdateFSMInputs_Task_Buffer
+        UPDATE_VCU_INPUTS_THREAD_PRIO,
+        UpdateVCUInputs_Task_Stack,
+        &UpdateVCUInputs_Task_Buffer
     );
 
     vTaskStartScheduler();

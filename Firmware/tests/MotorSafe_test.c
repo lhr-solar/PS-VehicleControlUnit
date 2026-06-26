@@ -2,11 +2,14 @@
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "MotorControlTask.h"
 #include "MotorSafeBits.h"
 
 StaticTask_t wait_buffer;
 StackType_t wait_stack[512];
+
+static const EventBits_t motor_drivable_bits =
+    MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED) |
+    MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
 
 StaticTask_t producer_buffer;
 StackType_t producer_stack[512];
@@ -14,7 +17,7 @@ StackType_t producer_stack[512];
 void waitTask(void *pvParameters){
 
     while(1){
-        MotorSafeBits_WaitMask((motorDrivableBits), portMAX_DELAY);
+        MotorSafeBits_WaitMask(motor_drivable_bits, portMAX_DELAY);
         LED_toggle(CAR_DRIVABLE);
         vTaskDelay(pdMS_TO_TICKS(500));
     }

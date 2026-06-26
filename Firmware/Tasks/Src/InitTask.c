@@ -3,6 +3,7 @@
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
 #include "DumbBootloaderTask.h"
+#include "HeartbeatTask.h"
 
 StaticTask_t FaultHandler_Task_Buffer;
 StackType_t FaultHandler_Task_Stack[FAULT_HANDLER_TASK_STACK_SIZE];
@@ -33,6 +34,9 @@ void Task_Init() {
 
     // dumb bootloader: listen on USART3 for "BOOT" -> jump to ROM bootloader
     DumbBootloaderTask_Init();
+
+    // liveness heartbeat (HB LED)
+    HeartbeatTask_Init();
 
     // prech
     ADC_Sense_Init();

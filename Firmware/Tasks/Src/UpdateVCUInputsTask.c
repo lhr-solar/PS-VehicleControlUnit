@@ -8,11 +8,6 @@
 
 static float brake_threshold = BRAKE_THRESH;
 
-/** Toggle HB every N loops (50 ms loop) so the LED blinks ~1 Hz while firmware runs, independent of CAN. */
-#define UFI_HB_TOGGLE_PERIOD_LOOPS 10U
-
-static uint32_t ufi_hb_loop_count;
-
 static VCUDataIn_t fsm_input_a = {0};
 static VCUDataIn_t fsm_input_b = {0};
 
@@ -135,13 +130,6 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         UFI_throw_faults();
 
         rebuild_inputs();
-
-        ufi_hb_loop_count++;
-        if (ufi_hb_loop_count >= UFI_HB_TOGGLE_PERIOD_LOOPS) {
-            ufi_hb_loop_count = 0U;
-            LED_toggle(HB);
-        }
-
         vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
     }
 }

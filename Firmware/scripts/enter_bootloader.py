@@ -20,8 +20,11 @@ Requires pyserial:  python3 -m pip install pyserial
 import argparse
 import glob
 import sys
+import time
 
 MAGIC_DEFAULT = "BOOT"
+ACK_DEFAULT = "BOOTACK"
+ACK_TIMEOUT_DEFAULT = 3.0
 BAUD_DEFAULT = 115200
 
 try:
@@ -83,6 +86,12 @@ def main():
                     help=f'Magic command to send (default "{MAGIC_DEFAULT}")')
     ap.add_argument("-n", "--newline", action="store_true",
                     help="Append a newline after the magic command")
+    ap.add_argument("--ack", default=ACK_DEFAULT,
+                    help=f'Token the board replies with (default "{ACK_DEFAULT}")')
+    ap.add_argument("--ack-timeout", type=float, default=ACK_TIMEOUT_DEFAULT,
+                    help=f"Seconds to wait for the ACK (default {ACK_TIMEOUT_DEFAULT})")
+    ap.add_argument("--no-ack", action="store_true",
+                    help="Don't wait for the board's ACK")
     ap.add_argument("-l", "--list", action="store_true",
                     help="List serial ports and exit")
     args = ap.parse_args()
@@ -98,15 +107,36 @@ def main():
     port = args.port or choose_port()
     payload = args.magic.encode() + (b"\n" if args.newline else b"")
 
+    ack_token = args.ack.encode()
     try:
-        with serial.Serial(port, args.baud, timeout=1) as ser:
+        with serial.Serial(port, args.baud, timeout=0.1) as ser:
+            ser.reset_input_buffer()
             ser.write(payload)
             ser.flush()
+            print(f"Sent {payload!r} to {port} @ {args.baud} baud.")
+
+            if args.no_ack:
+                print("Not waiting for ACK (--no-ack).")
+            else:
+                deadline = time.monotonic() + args.ack_timeout
+                buf = bytearray()
+                got_ack = False
+                while time.monotonic() < deadline:
+                    chunk = ser.read(256)
+                    if chunk:
+                        buf += chunk
+                        if ack_token in buf:
+                            got_ack = True
+                            break
+                if not got_ack:
+                    sys.exit(
+                        f"ERROR: no ACK ({args.ack!r}) within {args.ack_timeout:.0f}s. "
+                        "Check that the board is running the dumb-bootloader firmware "
+                        "and that the port and baud are correct.")
+                print(f"ACK ({args.ack!r}) received - board is rebooting into the ROM bootloader.")
     except serial.SerialException as e:
         sys.exit(f"Failed to open/write {port}: {e}")
 
-    print(f"Sent {payload!r} to {port} @ {args.baud} baud.")
-    print("The board should now be in the STM32 ROM bootloader.")
     print("Flash example (standalone image at 0x08000000):")
     print(f"  STM32_Programmer_CLI -c port={port} br={args.baud} -w firmware.bin 0x08000000 -s")
 

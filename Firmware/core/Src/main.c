@@ -2,15 +2,19 @@
 #include "UART_Init.h"
 #include "UART.h"
 #include "InitTask.h"
-#include "bootloader_lite.h"
+
+// Opt into Embedded-Sharepoint bootloader_lite (see BootloaderTask.h).
+#define USE_BOOTLOADER
+#define BOOTLOADER_ON_HARDFAULT
+#include "BootloaderTask.h"
 
 int main(void)
 {
   HAL_Init();
   SystemClock_Config();
 
-  // Route HardFault/MemManage/BusFault/UsageFault to the ROM bootloader (bl-lite).
-  bootloader_lite_init();
+  // Enable bootloader_lite: USART3 "BOOT" listener + HardFault -> ROM bootloader.
+  BOOTLOADER_LITE_SETUP(husart3);
 
   LED_init();
 

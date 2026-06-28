@@ -9,6 +9,7 @@
 #include "rollover_speed_table.h"
 
 #include "FSMTask.h"
+#include "InitTask.h"
 #include "UpdateVCUInputsTask.h"
 #include "FaultBits.h"
 #include "Watchdogs.h"
@@ -17,11 +18,23 @@
 #include <string.h>
 #include <math.h>
 
-#define MAX_VELOCITY        12000 
+#define MAX_VELOCITY        12000
 #define MAX_CURRENT_PERCENT 1.0f
 
-#define ACCEL_DEADZONE_MIN  5u // Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
+// Minimum 5% pedal pressed to register accel input, prevents ghost inputs :P
+#define ACCEL_DEADZONE_MIN  5u 
 #define METERS_SEC_TO_MPH   2.23694f
+
+// Max increase in commanded current (0.0-1.0) allowed per second. Re-entering
+// drive from neutral/brake jumps straight from 0 current to whatever the
+// pedal is currently asking for; this caps how fast that climb can happen.
+// Untested against hardware - tune up/down while watching for
+// MC_FAULT_SoftwareOverCurrent. Decreases in current are never limited.
+#define CURRENT_RAMP_PER_SECOND 0.5556f // ~0.05/tick at the 90ms default
+
+// Per-tick step derived from the rate above, so it stays correct if
+// FSM_TASK_DELAY_MS ever changes.
+#define CURRENT_RAMP_PER_TICK   (CURRENT_RAMP_PER_SECOND * ((float)FSM_TASK_DELAY_MS / 1000.0f))
 
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
@@ -29,8 +42,11 @@ MocoState_t current_state = {0};
 
 static bool rollover_limit_active = false;
 static volatile uint16_t fsm_inputs = 0;
+// Shared ramp accumulator for ramp_current(); safe because only one state's
+// handler runs per tick (current_state is a single active state).
+static float last_sent_current = 0.0f;
 
-// method stubs so linker doesnt shit itself
+// forward declarations for FSM[] handler table wiring in fsm_init()
 static void handle_state_init(void);
 static void handle_state_not_ready(void);
 static void handle_state_forward(void);
@@ -40,11 +56,13 @@ static void handle_state_regen(void);
 static void handle_state_cruise(void);
 static void handle_state_disabled(void);
 
+// forward declarations for helper functions
 static void handle_drive_state(bool);
-
 static float apply_rollover_limit(float requested_current);
 static float swoc_max_current(float speed_mph);
 static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
+static float ramp_current(float target_current);
+static void reset_current_ramp(void);
 
 void fsm_init(void) {
     FSM[STATE_INIT].stateHandler = handle_state_init;
@@ -65,7 +83,6 @@ void fsm_init(void) {
 void fsm_step(void) {
     fsm_inputs = xEventGroupGetBits(fsmInputGroup);
     current_state = FSM[current_state.NextStates[fsm_inputs]];
-    // printf("FSM step: %X inputs,  %d curr_state\n\r", fsm_inputs, current_state.stateName);
     if (current_state.stateHandler) current_state.stateHandler();
 }
 
@@ -135,55 +152,23 @@ static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
     return fminf(swoc_cap, after_rollover);
 }
 
+// Rate-limits increases in commanded current so re-entering drive after a
+// brake/neutral doesn't jump straight to the pedal's current position.
+// Decreases pass through immediately, only increases are capped.
+static float ramp_current(float target_current) {
+    last_sent_current = fminf(target_current, last_sent_current + CURRENT_RAMP_PER_TICK);
+    return last_sent_current;
+}
+
+static void reset_current_ramp(void) { last_sent_current = 0.0f; }
+
 //// state handlers
 
 static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
-static void handle_state_neutral(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_disabled(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_regen(void) { CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
-static void handle_state_not_ready(void) { CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-
-// static void handle_state_forward(void) {
-//     float velocitySetpoint = 0.0f;
-//     float currentSetpoint = 0.0f;
-//     if (g_data_read->motor_velocity.MC_VehicleVelocity < -0.5f) {
-//         // if we're actually going backwards, let off the pedal until we slow down
-//         velocitySetpoint = 0.0f;
-//         currentSetpoint = 0.0f;
-//         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
-//     } else {
-//         warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-//         velocitySetpoint = MAX_VELOCITY;
-//         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), 
-//                                 apply_rollover_limit(((float)((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0))/100.0f));
-//     }
-
-//     printf("Forwards Drive cmd: %f vel, %f curr\r\n", velocitySetpoint, currentSetpoint);
-
-//     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
-
-// }
-
-// static void handle_state_reverse(void) {
-
-//     float velocitySetpoint = 0.0f;
-//     float currentSetpoint = 0.0f;
-
-//     if (g_data_read->motor_velocity.MC_VehicleVelocity > 0.5f) {
-//         // if we're actually going forwards, let off the pedal until we slow down
-//         velocitySetpoint = 0.0f;
-//         currentSetpoint = 0.0f;
-//         warning_set(WARNING_ID_MOTOR_DIRECTION_CHANGE_LOCKOUT);
-//     } else {
-//         velocitySetpoint = -MAX_VELOCITY;
-//         currentSetpoint = fmin(apply_swoc_speed_limit(g_data_read->motor_velocity.MC_VehicleVelocity * METERS_SEC_TO_MPH), ((float)apply_rollover_limit(((g_data_read->accel_brake.AccelPedal_Main_Pos > ACCEL_DEADZONE_MIN) ? g_data_read->accel_brake.AccelPedal_Main_Pos : 0)))/100.0f);
-//     }
-
-//     CAN_Send_Drive_Cmd(velocitySetpoint, currentSetpoint, 0);
-
-//     printf("Backwards Drive cmd: %f vel, %f curr", velocitySetpoint, currentSetpoint);
-
-// }
+static void handle_state_neutral(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_disabled(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_regen(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
+static void handle_state_not_ready(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
 
 static void handle_state_forward(void) {
     handle_drive_state(false);
@@ -219,6 +204,8 @@ static void handle_drive_state(bool reverse) {
         current_setpoint = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
+    current_setpoint = ramp_current(current_setpoint);
+
     CAN_Send_Drive_Cmd(velocity_setpoint, current_setpoint, 0);
 
     printf("%s Drive cmd: %f vel, %f curr\r\n",
@@ -230,10 +217,8 @@ static void handle_drive_state(bool reverse) {
 static void handle_state_cruise(void) {
     float velocity = rollover_limit_active ? 0.0f : MAX_VELOCITY;
     float speed_mph = fabsf(g_data_read->motor_velocity.MC_VehicleVelocity) * METERS_SEC_TO_MPH;
-    CAN_Send_Drive_Cmd(
-        velocity,
-        get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos),
-        0);
+    float current = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
+    CAN_Send_Drive_Cmd(velocity, ramp_current(current), 0);
 }
 
 static const swoc_threshold_t SWOC_THRESHOLDS[] = {
@@ -257,13 +242,10 @@ static float swoc_max_current(float speed_mph) {
 
 
 void Task_FSM(void *args __attribute__((unused))) {
-    // TickType_t last = xTaskGetTickCount();
+    TickType_t last = xTaskGetTickCount();
     while (1) {
         fsm_step();
-        // CAN_Send_Drive_Cmd(0.0f, 0.0f, 100);
         LED_toggle(HB);
-        // printf("FSM Task Running\r\n");
-        vTaskDelay(pdMS_TO_TICKS(90));
-        // vTaskDelayUntil(&last, pdMS_TO_TICKS(10));
+        vTaskDelayUntil(&last, pdMS_TO_TICKS(FSM_TASK_DELAY_MS));
     }
 }

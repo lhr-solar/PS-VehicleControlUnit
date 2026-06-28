@@ -1,6 +1,7 @@
 #include "VCUStatusTask.h"
 #include "Contactors.h"
 #include "FSMTask.h"
+#include "InitTask.h"
 #include "FaultBits.h"
 #include "StatusLEDs.h"
 #include "UpdateVCUInputsTask.h"
@@ -10,6 +11,7 @@
 
 void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
     uint8_t buf[CAN_DLC_VCU_STATUS];
+    TickType_t last = xTaskGetTickCount();
 
     while (1) {
         // Byte 0
@@ -89,6 +91,6 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
         CarCAN_Send(&tx_header, buf, sizeof(buf));
 
         LED_toggle(HB);
-        vTaskDelay(pdMS_TO_TICKS(800));
+        vTaskDelayUntil(&last, pdMS_TO_TICKS(VCU_STATUS_TASK_DELAY_MS));
     }
 }

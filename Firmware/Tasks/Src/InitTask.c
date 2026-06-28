@@ -1,4 +1,5 @@
 #include "InitTask.h"
+#include "DebugConfig.h"
 #include "StatusLEDs.h"
 #include "Watchdogs.h"
 #include "MotorTelemetryTask.h"
@@ -38,6 +39,12 @@ void Task_Init() {
     MotorCAN_Init();
     CarCAN_Init();
 
+#if FSM_DEBUG_BUILD
+    // Bench-test: route motor controller telemetry/commands over the CarCAN
+    // bus instead of the (possibly unwired) dedicated MotorCAN bus.
+    motorfdcan = carfdcan;
+#endif
+
     fsm_init();
 
     watchdog_init();
@@ -59,6 +66,7 @@ void Task_Init() {
         &FaultHandler_Task_Buffer
     );
 
+#if !FSM_DEBUG_BUILD
     precharge_task_handle = xTaskCreateStatic(
         Task_Precharge,
         "Precharge",
@@ -68,6 +76,7 @@ void Task_Init() {
         Precharge_Task_Stack,
         &Precharge_Task_Buffer
     );
+#endif
 
     xTaskCreateStatic(
         Task_FSM,

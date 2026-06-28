@@ -107,9 +107,9 @@ def transition_dnr(cur, bits):
         return NEUTRAL if (bits & PC) else NOT_READY
 
     if cur == NEUTRAL:
-        if (bits & FWD) and not (bits & REV):
+        if (bits & FWD) and not (bits & REV) and not (bits & BRK):
             return FWD_DRIVE
-        if (bits & REV) and not (bits & FWD):
+        if (bits & REV) and not (bits & FWD) and not (bits & BRK):
             return REV_DRIVE
         return NEUTRAL
 
@@ -117,7 +117,7 @@ def transition_dnr(cur, bits):
         if (bits & REV) or (bits & NEU) or (bits & BRK):
             return NEUTRAL
         return FWD_DRIVE
-    
+
 
     if cur in (REGEN, CRUISE):
         if (bits & REV) or (bits & NEU) or (bits & BRK):

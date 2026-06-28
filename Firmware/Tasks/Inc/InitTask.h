@@ -53,6 +53,13 @@ extern StackType_t UpdateVCUInputs_Task_Stack[FSM_TASK_STACK_SIZE];
 // Period the precharge thread runs at 
 #define PRECHARGE_TASK_DELAY_MS 100
 
+#define FSM_TASK_DELAY_MS 100
+
+#define VCU_STATUS_TASK_DELAY_MS 800
+
+#define UPDATE_VCU_INPUTS_TASK_DELAY_MS 50
+
+
 extern TaskHandle_t precharge_task_handle;
 
 

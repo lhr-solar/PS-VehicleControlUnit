@@ -79,7 +79,7 @@ void Fault_Checker(uint32_t Motor_Voltage, uint32_t Battery_Voltage) {
 }
 
 static void PT_print_state(PrechargeState_e state) {
-    printf("Prech_state: %s\r\n", precharge_state_names[state]);
+    printf("Precharge state: %s\r\n", precharge_state_names[state]);
 }
 
 void Task_Precharge() {

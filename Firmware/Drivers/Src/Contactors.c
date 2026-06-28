@@ -1,4 +1,5 @@
 #include "Contactors.h"
+#include "DebugConfig.h"
 #include "FaultBits.h"
 
 static SemaphoreHandle_t contactorsMutex = NULL;
@@ -14,9 +15,12 @@ contactor_state_t contactor_get_sense(contactor_num_t contactor_num) {
     if ((contactor_num < 0) || (contactor_num >= NUM_CONTACTORS)) {
         Error_Handler();
     }
-
+#if FSM_DEBUG_BUILD
+    return CLOSED;
+#else
     contactor_t *contactor = &contactors[contactor_num];
     return HAL_GPIO_ReadPin(contactor->sense_pin.port, contactor->sense_pin.pin);
+#endif
 }
 
 contactor_state_t contactor_get_commanded_state(contactor_num_t contactor_num) {

@@ -1,4 +1,5 @@
 #include "UpdateVCUInputsTask.h"
+#include "InitTask.h"
 #include "Contactors.h"
 #include "FaultBits.h"
 #include "StatusLEDs.h"
@@ -116,7 +117,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
 
-        printf("Update VCU inputs: about to switch read and write ptrs\r\n");
+        // printf("Update VCU inputs: about to switch read and write ptrs\r\n");
 
         VCUDataIn_t *volatile tmp;
         taskENTER_CRITICAL();
@@ -125,7 +126,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         g_data_write = tmp;
         taskEXIT_CRITICAL();
 
-        printf("Updated from CAN!\r\n");
+        // printf("Updated from CAN!\r\n");
 
         memcpy(g_data_write, g_data_read, sizeof(VCUDataIn_t));
 
@@ -133,6 +134,7 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         UFI_throw_faults();
 
         rebuild_inputs();
-        vTaskDelayUntil(&last, pdMS_TO_TICKS(50));
+        
+        vTaskDelayUntil(&last, pdMS_TO_TICKS(UPDATE_VCU_INPUTS_TASK_DELAY_MS));
     }
 }

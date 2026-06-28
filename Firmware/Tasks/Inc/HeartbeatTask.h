@@ -6,7 +6,7 @@
  *
  * Independent of the control/CAN tasks so the blink reflects RTOS liveness:
  * if the firmware hangs or hardfaults the LED stops (and a hardfault also routes
- * to the ROM bootloader, see DumbBootloaderTask).
+ * to the ROM bootloader, see Embedded-Sharepoint bootloader_lite / BootloaderTask).
  */
 
 /** Create the heartbeat task. */

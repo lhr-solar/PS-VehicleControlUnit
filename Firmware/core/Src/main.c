@@ -5,7 +5,7 @@
 
 // Opt into Embedded-Sharepoint bootloader_lite (see BootloaderTask.h).
 #define USE_BOOTLOADER
-#define BOOTLOADER_ON_HARDFAULT
+// #define BOOTLOADER_ON_HARDFAULT
 #include "BootloaderTask.h"
 
 int main(void)

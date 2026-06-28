@@ -105,13 +105,20 @@ endif
 flash: 	
 	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash
 
-# bl-lite: UART escape to the ROM bootloader (see Embedded-Sharepoint/bootloader_lite/README.md)
-.PHONY: bl-send flash-lite
+# UART flashing -- all scripts live in Embedded-Sharepoint (see
+# Embedded-Sharepoint/bootloader_lite/README.md). These just forward there.
+#   flash-uart : flash over UART when the chip is ALREADY in the ROM bootloader
+#   bl-send    : send "BOOT" so the running app escapes into the ROM bootloader
+#   flash-bl   : bl-send, then flash the built image over the ROM UART bootloader
+.PHONY: flash-uart bl-send flash-bl
+flash-uart:
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash-uart
+
 bl-send:
 	$(MAKE) -C $(BUILD_MAKEFILE_DIR) bl-send BL_LITE_PORT=$(BL_LITE_PORT)
 
-flash-lite:
-	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash-lite BL_LITE_PORT=$(BL_LITE_PORT)
+flash-bl:
+	$(MAKE) -C $(BUILD_MAKEFILE_DIR) flash-bl BL_LITE_PORT=$(BL_LITE_PORT)
 
 
 #-------------------------------

@@ -10,8 +10,8 @@ from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "Tasks/Inc/rollover_speed_table.h"
 
-G, HALF_TRACK, CG_LATERAL = 9.81, 1.35, 1.612
-CG_HEIGHT, WHEELBASE, STEERING_RATIO, MIN_DEG = 0.481, 2.25, 15.0, 2.0
+G, TRACK_WIDTH, CG_LATERAL = 9.81, 1.350001, 1.358
+CG_HEIGHT, WHEELBASE, STEERING_RATIO, MIN_DEG = 0.476158, 2.250001, 15.0, 2.0
 NO_LIMIT = 0xFFFF
 
 def v_max_cms(deg):
@@ -19,7 +19,7 @@ def v_max_cms(deg):
     if abs(wheel_deg) < MIN_DEG:
         return NO_LIMIT
     R = WHEELBASE / math.tan(math.radians(abs(wheel_deg)))
-    v_ms = math.sqrt(G * R * HALF_TRACK * CG_LATERAL / (2.0 * CG_HEIGHT * WHEELBASE))
+    v_ms = math.sqrt(G * R * TRACK_WIDTH * CG_LATERAL / (2.0 * CG_HEIGHT * WHEELBASE))
     return min(int(v_ms * 100), NO_LIMIT - 1)
 
 table = [v_max_cms(i) for i in range(721)]

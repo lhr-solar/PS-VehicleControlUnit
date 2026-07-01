@@ -37,7 +37,7 @@ static void rebuild_inputs(void) {
         s |= PRECHARGE_COMPLETE_BIT;
 
     if (g_data_read->brake_pressure1.Brake_Pressure >= brake_threshold) {
-        s |= BRAKE_BIT;
+        // s |= BRAKE_BIT;
         brake_threshold = BRAKE_THRESH_HYST;
     } else {
         brake_threshold = BRAKE_THRESH;
@@ -87,8 +87,8 @@ void UFI_throw_faults() {
         mask |= FAULT_BIT(FAULT_ID_PEDAL_BOARD_FAULT);
     }
 
-    if (g_data_read->lws.LWS_Fault) 
-        mask |= FAULT_BIT(FAULT_ID_STEERING_SENSOR_FAULT);
+    // if (g_data_read->lws.LWS_Fault) 
+        // mask |= FAULT_BIT(FAULT_ID_STEERING_SENSOR_FAULT);
 
     faults_set_mask(mask);
 }
@@ -114,8 +114,10 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         CarCAN_Recv_Brake_Pressure1(&update->brake_pressure1, 0);
         CarCAN_Recv_Brake_Pressure2(&update->brake_pressure2, 0);
         CarCAN_Recv_Controls_Status(&update->controls_status, 0);
-        CarCAN_Recv_Driver_Input(&update->driver_input, 0);
+        can_status_t driver_input_status = CarCAN_Recv_Driver_Input(&update->driver_input, 0);
         CarCAN_Recv_LWS(&update->lws, 0);
+
+        printf("Update VCU inputs: driver input status: %d\r\n", driver_input_status);
 
         // printf("Update VCU inputs: about to switch read and write ptrs\r\n");
 

@@ -106,7 +106,7 @@ void Task_Precharge() {
             can_send_errors = 0;
         }
 
-        // printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
+        printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
 
         PT_check_ign();
 

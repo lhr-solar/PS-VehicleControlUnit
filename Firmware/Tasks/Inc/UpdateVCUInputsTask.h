@@ -4,7 +4,7 @@
 #include "CANbus.h"
 #include "FSMTask.h"
 
-#define BRAKE_THRESH      1.0f  // psi
+#define BRAKE_THRESH      2000.0f  // psi
 #define BRAKE_THRESH_HYST 0.5f  // psi
 
 #define ACCEPTABLE_PEDAL_DEVIATION 3 // percent

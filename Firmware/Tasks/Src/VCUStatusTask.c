@@ -40,7 +40,7 @@ void Task_BroadcastVCUStatus(void *args __attribute__((unused))) {
                             //       g_data_read->accel_brake.AccelPedal_Redundant_Pos) <
                             //   ACCEPTABLE_PEDAL_DEVIATION);
 
-        bool steering_fault = g_data_read->lws.LWS_Fault;
+        bool steering_fault = false; //g_data_read->lws.LWS_Fault;
         buf[1] = (pedals_wdog) | (bps_wdog << 1) | (steering_wdog << 2) | (bps_fault << 3) |
                  (controls_fault << 4) | (motor_fault << 5) | (pedals_fault << 6) |
                  (steering_fault << 7);

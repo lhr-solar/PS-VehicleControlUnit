@@ -10,7 +10,7 @@
 #include "VCUStatusTask.h"
 #include "inits.h"
 #include "InitTask.h"
-#include "FSM.h"
+#include "FSMTask.h"
 // #include ""
 
 #define PRINTF_DEBUG
@@ -39,7 +39,6 @@ int main() {
 
     faults_init();
     contactor_init();
-    FSM_TaskInit();
     fsm_init();
 
     xTaskCreateStatic(

@@ -102,11 +102,12 @@ void Task_Precharge() {
 
         if (result == CAN_ERR) {
             can_send_errors++;
+            printf("Precharge: CarCAN_Send_Precharge_Voltages FAILED (count=%u)\r\n", can_send_errors);
         } else {
             can_send_errors = 0;
         }
 
-        // printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
+        printf("Motor: %ld mV | Battery: %ld mV\r\n", motor_voltage, battery_voltage);
 
         PT_check_ign();
 

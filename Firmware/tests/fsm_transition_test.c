@@ -40,7 +40,6 @@ int main() {
 
     faults_init();
     contactor_init();
-    FSM_TaskInit();
     fsm_init();
 
     xTaskCreateStatic(

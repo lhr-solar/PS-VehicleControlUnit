@@ -2,8 +2,6 @@
 
 #include "inits.h"
 #include "ADC.h"
-#include "ADC_Battery_LUT.h"
-#include "ADC_Motor_LUT.h"
 #include "FaultBits.h"
 #include "UART.h"
 #include "queue.h"

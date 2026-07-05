@@ -36,8 +36,12 @@ void Task_Init() {
     contactor_init();
     MotorSafeBits_Init();
 
-    MotorCAN_Init();
-    CarCAN_Init();
+    if (MotorCAN_Init() != CAN_OK) {
+        printf("MotorCAN_Init FAILED\r\n");
+    }
+    if (CarCAN_Init() != CAN_OK) {
+        printf("CarCAN_Init FAILED\r\n");
+    }
 
 #if FSM_DEBUG_BUILD
     // Bench-test: route motor controller telemetry/commands over the CarCAN

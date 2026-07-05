@@ -18,7 +18,7 @@ static void task(void *pvParameters){
         if(SDCard_Write("MOTOR.TXT", msg, pdMS_TO_TICKS(portMAX_DELAY)) != SD_OK){
             LED_set(CAR_BPSFAULT, LED_ON);
         }
-        Toggle_LED(HB);
+        LED_toggle(HB);
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
@@ -30,7 +30,7 @@ int main(){
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
 
     xTaskCreateStatic(
                 task,

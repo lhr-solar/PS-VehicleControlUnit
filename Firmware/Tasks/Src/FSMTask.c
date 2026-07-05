@@ -30,7 +30,7 @@
 // pedal is currently asking for; this caps how fast that climb can happen.
 // Untested against hardware - tune up/down while watching for
 // MC_FAULT_SoftwareOverCurrent. Decreases in current are never limited.
-#define CURRENT_RAMP_PER_SECOND 0.5556f // ~0.05/tick at the 90ms default
+#define CURRENT_RAMP_PER_SECOND 0.5556f 
 
 // Per-tick step derived from the rate above, so it stays correct if
 // FSM_TASK_DELAY_MS ever changes.
@@ -58,8 +58,8 @@ static void handle_state_disabled(void);
 
 // forward declarations for helper functions
 static void handle_drive_state(bool);
-static float apply_rollover_limit(float requested_current);
-static float swoc_max_current(float speed_mph);
+// static float apply_rollover_limit(float requested_current);
+// static float swoc_max_current(float speed_mph);
 static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
 static float ramp_current(float target_current);
 static void reset_current_ramp(void);
@@ -113,25 +113,25 @@ bool fsm_is_input_set(InputBits_t bit) {
 
 
 // goofy ahh logic, uses lut
-static float apply_rollover_limit(float requested_current) {
-    // printf("Applying rollover limit, requested current: %.2f, vehicle velocity: %.2f, steering angle: %.1f\r\n",
-        //    requested_current, g_data_read->motor_velocity.MC_VehicleVelocity, (float)g_data_read->lws.LWS_Angle / 10.0f);
-    int deg = abs((int)g_data_read->lws.LWS_Angle) / 10;
-    if (deg > (int)ROLLOVER_TABLE_MAX_DEG) deg = (int)ROLLOVER_TABLE_MAX_DEG;
+// static float apply_rollover_limit(float requested_current) {
+//     // printf("Applying rollover limit, requested current: %.2f, vehicle velocity: %.2f, steering angle: %.1f\r\n",
+//         //    requested_current, g_data_read->motor_velocity.MC_VehicleVelocity, (float)g_data_read->lws.LWS_Angle / 10.0f);
+//     int deg = abs((int)g_data_read->lws.LWS_Angle) / 10;
+//     if (deg > (int)ROLLOVER_TABLE_MAX_DEG) deg = (int)ROLLOVER_TABLE_MAX_DEG;
 
-    uint16_t v_max_cms = rollover_speed_table[deg];
-    uint16_t v_now_cms = (uint16_t)(g_data_read->motor_velocity.MC_VehicleVelocity * 100.0f);
+//     uint16_t v_max_cms = rollover_speed_table[deg];
+//     uint16_t v_now_cms = (uint16_t)(g_data_read->motor_velocity.MC_VehicleVelocity * 100.0f);
 
-    if (v_max_cms != ROLLOVER_TABLE_NO_LIMIT && v_now_cms > v_max_cms) {
-        rollover_limit_active = true;
-        warning_set(WARNING_ID_TIPPING_LIMIT_ACTIVE);
-        return 0.0f;
-    }
+//     if (v_max_cms != ROLLOVER_TABLE_NO_LIMIT && v_now_cms > v_max_cms) {
+//         rollover_limit_active = true;
+//         warning_set(WARNING_ID_TIPPING_LIMIT_ACTIVE);
+//         return 0.0f;
+//     }
     
-    warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
-    rollover_limit_active = false;
-    return requested_current;
-}
+//     warning_clear(WARNING_ID_REGEN_NOT_ALLOWED);
+//     rollover_limit_active = false;
+//     return requested_current;
+// }
 
 float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_min,
                      uint8_t out_max) {
@@ -147,9 +147,9 @@ static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
     uint8_t pedal = accel_percent_0_100;
     if (pedal <= ACCEL_DEADZONE_MIN) pedal = 0U;
     float requested = (float)pedal / 100.0f;
-    float swoc_cap = swoc_max_current(speed_mph);
-    float after_rollover = apply_rollover_limit(requested);
-    return fminf(swoc_cap, after_rollover);
+    // float swoc_cap = swoc_max_current(speed_mph);
+    float after_rollover = requested; //apply_rollover_limit(requested);
+    return after_rollover; //fminf(swoc_cap, after_rollover);
 }
 
 // Rate-limits increases in commanded current so re-entering drive after a
@@ -160,15 +160,34 @@ static float ramp_current(float target_current) {
     return last_sent_current;
 }
 
-static void reset_current_ramp(void) { last_sent_current = 0.0f; }
+static void reset_current_ramp(void) { 
+    last_sent_current = 0.0f; 
+}
 
 //// state handlers
 
-static void handle_state_init(void) { current_state = FSM[CAR_NOT_READY]; }
-static void handle_state_neutral(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_disabled(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
-static void handle_state_regen(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); }
-static void handle_state_not_ready(void) { reset_current_ramp(); CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); }
+static void handle_state_init(void) { 
+    current_state = FSM[CAR_NOT_READY]; 
+}
+
+static void handle_state_disabled(void) { 
+    reset_current_ramp(); 
+    CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); 
+}
+static void handle_state_not_ready(void) { 
+    reset_current_ramp(); 
+    CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); 
+}
+
+static void handle_state_regen(void) { 
+    reset_current_ramp(); 
+    CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); 
+}
+
+static void handle_state_neutral(void) { 
+    reset_current_ramp(); 
+    CAN_Send_Drive_Cmd(0.0f, 0.0f, 0); 
+}
 
 static void handle_state_forward(void) {
     handle_drive_state(false);
@@ -182,8 +201,7 @@ static void handle_drive_state(bool reverse) {
     float velocity_setpoint = 0.0f;
     float current_setpoint = 0.0f;
 
-    const float vehicle_velocity =
-        g_data_read->motor_velocity.MC_VehicleVelocity;
+    const float vehicle_velocity = g_data_read->motor_velocity.MC_VehicleVelocity;
 
     const bool is_wrong_direction =
         (!reverse && vehicle_velocity < -0.5f) ||
@@ -201,7 +219,8 @@ static void handle_drive_state(bool reverse) {
         velocity_setpoint = reverse ? -MAX_VELOCITY : MAX_VELOCITY;
 
         float speed_mph = fabsf(vehicle_velocity) * METERS_SEC_TO_MPH;
-        current_setpoint = get_drive_current(speed_mph, g_data_read->accel_brake.AccelPedal_Main_Pos);
+        current_setpoint = get_drive_current(speed_mph, 
+                                             g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     current_setpoint = ramp_current(current_setpoint);
@@ -221,21 +240,21 @@ static void handle_state_cruise(void) {
     CAN_Send_Drive_Cmd(velocity, ramp_current(current), 0);
 }
 
-static const swoc_threshold_t SWOC_THRESHOLDS[] = {
-    {10.0f, 0.80f}, {17.0f, 0.75f}, {20.0f, 0.70f},
-    {23.0f, 0.60f}, {25.0f, 0.50f}, {28.5f, 0.45f}
-};
-static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
+// static const swoc_threshold_t SWOC_THRESHOLDS[] = {
+//     {10.0f, 0.80f}, {17.0f, 0.75f}, {20.0f, 0.70f},
+//     {23.0f, 0.60f}, {25.0f, 0.50f}, {28.5f, 0.45f}
+// };
+// static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
-static float swoc_max_current(float speed_mph) {
-    float cap = MAX_CURRENT_PERCENT;
-    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
-        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
-            cap = SWOC_THRESHOLDS[i].max_current;
-        }
-    }
-    return cap;
-}
+// static float swoc_max_current(float speed_mph) {
+//     float cap = MAX_CURRENT_PERCENT;
+//     for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
+//         if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
+//             cap = SWOC_THRESHOLDS[i].max_current;
+//         }
+//     }
+//     return cap;
+// }
 
 
 //////// rtos tasks

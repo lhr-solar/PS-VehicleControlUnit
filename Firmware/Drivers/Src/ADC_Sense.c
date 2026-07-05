@@ -1,4 +1,5 @@
 #include "ADC_Sense.h"
+#include "ADC_Voltage_LUT.h"
 
 static uint8_t Is_Initialized = 0;
 
@@ -234,7 +235,7 @@ ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Re
 
     if (xQueueReceive(Motor_ADC_Queue, &Motor_ADC, Timeout_Ticks) == pdPASS)
     {
-        Result->Motor_Voltage = Motor_LUT[Motor_ADC];
+        Result->Motor_Voltage = Voltage_LUT[Motor_ADC];
     }
     else
     {
@@ -245,7 +246,7 @@ ADC_Sense_Status_t Read_ADC(uint32_t Timeout_MS, ADC_Sense_Result *Result) // Re
 
     if (xQueueReceive(Battery_ADC_Queue, &Battery_ADC, Timeout_Ticks) == pdPASS)
     {
-        Result->Battery_Voltage = Battery_LUT[Battery_ADC];
+        Result->Battery_Voltage = Voltage_LUT[Battery_ADC];
     }
     else
     {

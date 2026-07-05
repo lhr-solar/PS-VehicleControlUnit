@@ -2,8 +2,10 @@
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "MotorControlTask.h"
 #include "MotorSafeBits.h"
+
+static const EventBits_t motorDrivableBits = MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED)
+                                            | MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
 
 StaticTask_t wait_buffer;
 StackType_t wait_stack[512];

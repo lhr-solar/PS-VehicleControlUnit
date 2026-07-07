@@ -36,7 +36,7 @@ static void rebuild_inputs(void) {
     if (contactor_get_sense(MOTOR_CONTACTOR) && contactor_get_sense(MOTOR_PRE_CONTACTOR))
         s |= PRECHARGE_COMPLETE_BIT;
 
-    if (g_data_read->brake_pressure1.Brake_Pressure >= brake_threshold) {
+    if (g_data_read->brake_pressure2.Brake_Pressure >= brake_threshold) {
         // s |= BRAKE_BIT;
         brake_threshold = BRAKE_THRESH_HYST;
     } else {
@@ -103,50 +103,51 @@ void Task_UpdateVCUInputs(void *args __attribute__((unused))) {
         if (MotorCAN_Recv_Status(&update->motor_status, 0) == CAN_OK) {
             LED_toggle(HB);
         }
-        can_status_t motor_status = MotorCAN_Recv_Status(&update->motor_status, 0);
-        can_status_t motor_velocity_status = MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
-        can_status_t motor_controls_src_status = MotorCAN_Recv_Control_Src(&update->motor_controls_src, 0);
+        
+        MotorCAN_Recv_Status(&update->motor_status, 0);
+        MotorCAN_Recv_Velocity(&update->motor_velocity, 0);
+        MotorCAN_Recv_Control_Src(&update->motor_controls_src, 0);
 
-        can_status_t bps_status = CarCAN_Recv_BPS_Status(&update->bps_status, 0);
-        can_status_t accel_brake_status = CarCAN_Recv_Pedals_Position(&update->accel_brake, 0);
-        can_status_t brake_pressure1_status = CarCAN_Recv_Brake_Pressure1(&update->brake_pressure1, 0);
-        can_status_t brake_pressure2_status = CarCAN_Recv_Brake_Pressure2(&update->brake_pressure2, 0);
-        can_status_t controls_status = CarCAN_Recv_Controls_Status(&update->controls_status, 0);
-        can_status_t driver_input_status = CarCAN_Recv_Driver_Input(&update->driver_input, 0);
-        can_status_t lws_status = CarCAN_Recv_LWS(&update->lws, 0);
+        CarCAN_Recv_BPS_Status(&update->bps_status, 0);
+        CarCAN_Recv_Pedals_Position(&update->accel_brake, 0);
+        CarCAN_Recv_Brake_Pressure1(&update->brake_pressure1, 0);
+        CarCAN_Recv_Brake_Pressure2(&update->brake_pressure2, 0);
+        CarCAN_Recv_Controls_Status(&update->controls_status, 0);
+        CarCAN_Recv_Driver_Input(&update->driver_input, 0);
+        CarCAN_Recv_LWS(&update->lws, 0);
 
-        if (count % 10 == 0) {
-            printf("Motor Status: %s\r\n", (motor_status == CAN_OK) 
-                                                ? "CAN_OK" : (motor_status == CAN_ERR) 
-                                                    ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Motor Velocity Status: %s\r\n", (motor_velocity_status == CAN_OK) 
-                                                        ? "CAN_OK" : (motor_velocity_status == CAN_ERR) 
-                                                            ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Motor Controls Src Status: %s\r\n", (motor_controls_src_status == CAN_OK) 
-                                                        ? "CAN_OK" : (motor_controls_src_status == CAN_ERR) 
-                                                            ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("BPS Status: %s\r\n", (bps_status == CAN_OK) 
-                                        ? "CAN_OK" : (bps_status == CAN_ERR) 
-                                            ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Accel/Brake Status: %s\r\n", (accel_brake_status == CAN_OK) 
-                                                ? "CAN_OK" : (accel_brake_status == CAN_ERR) 
-                                                    ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Brake Pressure 1 Status: %s\r\n", (brake_pressure1_status == CAN_OK) 
-                                                    ? "CAN_OK" : (brake_pressure1_status == CAN_ERR) 
-                                                        ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Brake Pressure 2 Status: %s\r\n", (brake_pressure2_status == CAN_OK) 
-                                                    ? "CAN_OK" : (brake_pressure2_status == CAN_ERR) 
-                                                        ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Controls Status: %s\r\n", (controls_status == CAN_OK) 
-                                            ? "CAN_OK" : (controls_status == CAN_ERR) 
-                                                ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("Driver Input Status: %s\r\n", (driver_input_status == CAN_OK) 
-                                                ? "CAN_OK" : (driver_input_status == CAN_ERR) 
-                                                    ? "CAN_ERROR" : "CAN_EMPTY");
-            printf("LWS Status: %s\r\n", (lws_status == CAN_OK) 
-                                        ? "CAN_OK" : (lws_status == CAN_ERR) 
-                                            ? "CAN_ERROR" : "CAN_EMPTY");
-        }
+        // if (count % 10 == 0) {
+        //     printf("Motor Status: %s\r\n", (motor_status == CAN_OK) 
+        //                                         ? "CAN_OK" : (motor_status == CAN_ERR) 
+        //                                             ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Motor Velocity Status: %s\r\n", (motor_velocity_status == CAN_OK) 
+        //                                                 ? "CAN_OK" : (motor_velocity_status == CAN_ERR) 
+        //                                                     ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Motor Controls Src Status: %s\r\n", (motor_controls_src_status == CAN_OK) 
+        //                                                 ? "CAN_OK" : (motor_controls_src_status == CAN_ERR) 
+        //                                                     ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("BPS Status: %s\r\n", (bps_status == CAN_OK) 
+        //                                 ? "CAN_OK" : (bps_status == CAN_ERR) 
+        //                                     ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Accel/Brake Status: %s\r\n", (accel_brake_status == CAN_OK) 
+        //                                         ? "CAN_OK" : (accel_brake_status == CAN_ERR) 
+        //                                             ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Brake Pressure 1 Status: %s\r\n", (brake_pressure1_status == CAN_OK) 
+        //                                             ? "CAN_OK" : (brake_pressure1_status == CAN_ERR) 
+        //                                                 ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Brake Pressure 2 Status: %s\r\n", (brake_pressure2_status == CAN_OK) 
+        //                                             ? "CAN_OK" : (brake_pressure2_status == CAN_ERR) 
+        //                                                 ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Controls Status: %s\r\n", (controls_status == CAN_OK) 
+        //                                     ? "CAN_OK" : (controls_status == CAN_ERR) 
+        //                                         ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("Driver Input Status: %s\r\n", (driver_input_status == CAN_OK) 
+        //                                         ? "CAN_OK" : (driver_input_status == CAN_ERR) 
+        //                                             ? "CAN_ERROR" : "CAN_EMPTY");
+        //     printf("LWS Status: %s\r\n", (lws_status == CAN_OK) 
+        //                                 ? "CAN_OK" : (lws_status == CAN_ERR) 
+        //                                     ? "CAN_ERROR" : "CAN_EMPTY");
+        // }
 
         // printf("Update VCU inputs: about to switch read and write ptrs\r\n");
 

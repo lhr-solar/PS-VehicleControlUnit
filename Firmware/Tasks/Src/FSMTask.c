@@ -36,6 +36,12 @@
 // FSM_TASK_DELAY_MS ever changes.
 #define CURRENT_RAMP_PER_TICK   (CURRENT_RAMP_PER_SECOND * ((float)FSM_TASK_DELAY_MS / 1000.0f))
 
+#define SOFT_LIM_CURR_DRIVE 70
+#define HARD_LIM_CURR_DRIVE 200
+
+#define SOFT_LIM_CURR_PWR 70
+#define HARD_LIM_CURR_PWR 210
+
 StaticEventGroup_t fsmInputBuffer = {0};
 EventGroupHandle_t fsmInputGroup = {0};
 MocoState_t current_state = {0};
@@ -59,7 +65,7 @@ static void handle_state_disabled(void);
 // forward declarations for helper functions
 static void handle_drive_state(bool);
 // static float apply_rollover_limit(float requested_current);
-// static float swoc_max_current(float speed_mph);
+static float swoc_max_current(float speed_mph);
 static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100);
 static float ramp_current(float target_current);
 static void reset_current_ramp(void);
@@ -144,12 +150,20 @@ float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_
 }
 
 static float get_drive_current(float speed_mph, uint8_t accel_percent_0_100) {
-    uint8_t pedal = accel_percent_0_100;
+    uint8_t pedal = accel_percent_0_100 * SOFT_LIM_CURR_DRIVE / HARD_LIM_CURR_DRIVE;
     if (pedal <= ACCEL_DEADZONE_MIN) pedal = 0U;
     float requested = (float)pedal / 100.0f;
-    // float swoc_cap = swoc_max_current(speed_mph);
+    float swoc_cap = swoc_max_current(speed_mph);
     float after_rollover = requested; //apply_rollover_limit(requested);
-    return after_rollover; //fminf(swoc_cap, after_rollover);
+    return fminf(swoc_cap, after_rollover);
+}
+
+static float get_pwr_current(uint8_t accel_percent_0_100) {
+    uint8_t pedal = accel_percent_0_100 * SOFT_LIM_CURR_PWR / HARD_LIM_CURR_PWR;
+    if (pedal <= ACCEL_DEADZONE_MIN) pedal = 0U;
+    float requested = (float)pedal / 100.0f;
+    float after_rollover = requested; //apply_rollover_limit(requested);
+    return fminf(0.0f, after_rollover);
 }
 
 // Rate-limits increases in commanded current so re-entering drive after a
@@ -200,6 +214,7 @@ static void handle_state_reverse(void) {
 static void handle_drive_state(bool reverse) {
     float velocity_setpoint = 0.0f;
     float current_setpoint = 0.0f;
+    float current_pwr = 0.0f;
 
     const float vehicle_velocity = g_data_read->motor_velocity.MC_VehicleVelocity;
 
@@ -221,12 +236,14 @@ static void handle_drive_state(bool reverse) {
         float speed_mph = fabsf(vehicle_velocity) * METERS_SEC_TO_MPH;
         current_setpoint = get_drive_current(speed_mph, 
                                              g_data_read->accel_brake.AccelPedal_Main_Pos);
+        current_pwr = get_pwr_current(g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     current_setpoint = ramp_current(current_setpoint);
 
     CAN_Send_Drive_Cmd(velocity_setpoint, current_setpoint, 0);
-
+    MotorCAN_Send_Power_Cmd(current_pwr, 0);
+    CarCAN_Send_Power_Cmd(current_pwr, 0);
     printf("%s Drive cmd: %f vel, %f curr\r\n",
            reverse ? "Reverse" : "Forward",
            velocity_setpoint,
@@ -240,21 +257,21 @@ static void handle_state_cruise(void) {
     CAN_Send_Drive_Cmd(velocity, ramp_current(current), 0);
 }
 
-// static const swoc_threshold_t SWOC_THRESHOLDS[] = {
-//     {10.0f, 0.80f}, {17.0f, 0.75f}, {20.0f, 0.70f},
-//     {23.0f, 0.60f}, {25.0f, 0.50f}, {28.5f, 0.45f}
-// };
-// static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
+static const swoc_threshold_t SWOC_THRESHOLDS[] = {
+    {7.0f, 0.80f}, {17.0f, 0.75f}, {20.0f, 0.70f},
+    {23.0f, 0.60f}, {25.0f, 0.50f}, {28.5f, 0.45f}
+};
+static const size_t NUM_SWOC_THRESHOLDS = (sizeof(SWOC_THRESHOLDS) / sizeof(SWOC_THRESHOLDS[0]));
 
-// static float swoc_max_current(float speed_mph) {
-//     float cap = MAX_CURRENT_PERCENT;
-//     for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
-//         if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
-//             cap = SWOC_THRESHOLDS[i].max_current;
-//         }
-//     }
-//     return cap;
-// }
+static float swoc_max_current(float speed_mph) {
+    float cap = MAX_CURRENT_PERCENT;
+    for (size_t i = 0; i < NUM_SWOC_THRESHOLDS; ++i) {
+        if (speed_mph >= SWOC_THRESHOLDS[i].speed_mph) {
+            cap = SWOC_THRESHOLDS[i].max_current;
+        }
+    }
+    return cap;
+}
 
 
 //////// rtos tasks

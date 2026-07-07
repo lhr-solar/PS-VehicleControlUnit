@@ -37,6 +37,7 @@ can_status_t CarCAN_Recv_Controls_Status(controls_status_t *out, TickType_t dela
 can_status_t CarCAN_Send_Precharge_Voltages(uint32_t motor_mv, uint32_t battery_mv,
                                             TickType_t delay);
 can_status_t CarCAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay);
+can_status_t CarCAN_Send_Power_Cmd(float current, TickType_t delay);
 
 can_status_t CAN_Send_Drive_Cmd(float velocity, float current, TickType_t delay);
 

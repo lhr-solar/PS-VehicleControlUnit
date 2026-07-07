@@ -229,6 +229,34 @@ can_status_t MotorCAN_Send_Power_Cmd(float current, TickType_t delay){
     return result; 
 }
 
+can_status_t CarCAN_Send_Power_Cmd(float current, TickType_t delay){
+     // printf("Motor CAN send drive cmd: %f vel, %f curr", velocity, current);
+    if (!isfinite(current)) return CAN_EMPTY;
+    if (g_data_read->motor_controls_src.Motor_Command_Source) return CAN_OK;
+
+    FDCAN_TxHeaderTypeDef header = {
+        .Identifier = CAN_ID_MC_POWERCOMMAND,
+        .IdType = FDCAN_STANDARD_ID,
+        .TxFrameType = FDCAN_DATA_FRAME,
+        .DataLength = FDCAN_DLC_BYTES(CAN_DLC_MC_POWERCOMMAND),
+        .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+        .BitRateSwitch = FDCAN_BRS_OFF,
+        .FDFormat = FDCAN_CLASSIC_CAN,
+        .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+        .MessageMarker = 0,
+    };
+
+    uint8_t moco_power_tx_data[CAN_DLC_MC_POWERCOMMAND] = {0};
+
+    //first 4 bytes reserved
+    memcpy(&moco_power_tx_data[4], &current, sizeof(float));
+
+    can_status_t result =
+        can_fd_send(carfdcan, &header, moco_power_tx_data, delay);
+
+    return result; 
+}
+
 
 ///////// Carcan
 

@@ -37,6 +37,7 @@ static const size_t NUM_MAX_CURRENT_STEPS =
  * Outside the table:
  *   - Below first start_rps → first start_current
  *   - Above last end_rps    → last end_current
+ * Table currents are 0–1 of soft limit (1 = full soft).
  */
 static const motor_max_current_segment_t MAX_CURRENT_SEGMENTS[] = {
     /* start_hz, end_hz, start_current, end_current */
@@ -50,7 +51,7 @@ static const size_t NUM_MAX_CURRENT_SEGMENTS =
 #endif
 
 /**
- * @brief Rollover limit as a current multiplier: 0.0 when over limit, else 1.0.
+ * @brief Rollover limit (0–1 of soft limit): 0 when over limit, else 1.
  * @note Gated by APPLY_ROLLOVER. LUT indexed by abs(LWS_Angle / 10).
  */
 static float get_rollover_limit(float vehicle_velocity_mps, int16_t lws_angle) {
@@ -82,7 +83,7 @@ float motor_get_max_current(float motor_rpm, float vehicle_velocity_mps) {
 #if MOTOR_MAX_CURRENT_MODE == MOTOR_MAX_CURRENT_MODE_STEPS
     (void)motor_rpm;
     float speed_mph = fabsf(vehicle_velocity_mps) * MOTOR_METERS_SEC_TO_MPH;
-    float cap = MOTOR_MAX_CURRENT_PERCENT;
+    float cap = 1.0f;
     for (size_t i = 0; i < NUM_MAX_CURRENT_STEPS; ++i) {
         if (speed_mph >= MAX_CURRENT_STEPS[i].speed_mph) {
             cap = MAX_CURRENT_STEPS[i].max_current;
@@ -95,7 +96,7 @@ float motor_get_max_current(float motor_rpm, float vehicle_velocity_mps) {
     float rps = fabsf(motor_rpm) / 60.0f;
 
     if (NUM_MAX_CURRENT_SEGMENTS == 0) {
-        return MOTOR_MAX_CURRENT_PERCENT;
+        return 1.0f;
     }
 
     if (rps <= MAX_CURRENT_SEGMENTS[0].start_rps) {
@@ -127,13 +128,12 @@ float motor_get_max_current(float motor_rpm, float vehicle_velocity_mps) {
 
 float motor_get_drive_current(float motor_rpm, float vehicle_velocity_mps,
                               int16_t lws_angle, uint8_t accel_percent_0_100) {
-    float soft_lim_pct = MOTOR_SOFT_LIM_CURR_DRIVE / MOTOR_HARD_LIM_CURR_DRIVE;
     float pedal = (accel_percent_0_100 <= MOTOR_ACCEL_DEADZONE_MIN)
                       ? 0.0f
                       : (float)accel_percent_0_100 / 100.0f;
     float rollover = get_rollover_limit(vehicle_velocity_mps, lws_angle);
     float max_curr = motor_get_max_current(motor_rpm, vehicle_velocity_mps);
-    return soft_lim_pct * fminf(rollover, max_curr) * pedal;
+    return MOTOR_MAX_CURRENT_PERCENT * fminf(rollover, max_curr) * pedal;
 }
 
 float motor_get_pwr_current(uint8_t accel_percent_0_100) {

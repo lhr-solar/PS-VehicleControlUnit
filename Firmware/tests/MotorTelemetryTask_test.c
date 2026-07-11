@@ -25,10 +25,10 @@ int main()
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
 
-    if (CAN_Init() != CAN_OK)
-    {
+
+    if(MotorCAN_Init() != CAN_OK){
         can_error_handler();
     }
 

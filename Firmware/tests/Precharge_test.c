@@ -14,7 +14,7 @@ int main()
     __HAL_RCC_PWR_CLK_ENABLE();
 
     // Initialize all LED GPIOs
-    LEDs_init();
+    LED_init();
 
     Init_UART_Printf();
 

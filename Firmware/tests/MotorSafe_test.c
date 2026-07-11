@@ -2,8 +2,10 @@
 #include "inits.h"
 #include "StatusLEDs.h"
 #include "pinDefs.h"
-#include "MotorControlTask.h"
 #include "MotorSafeBits.h"
+
+static const EventBits_t motorDrivableBits = MOTOR_STATUS_BIT(MOTOR_CONTACTOR_ENABLED)
+                                            | MOTOR_STATUS_BIT(MOTOR_PRECHARGE_CONTACTOR_ENABLED);
 
 StaticTask_t wait_buffer;
 StackType_t wait_stack[512];
@@ -15,7 +17,7 @@ void waitTask(void *pvParameters){
 
     while(1){
         MotorSafeBits_WaitMask((motorDrivableBits), portMAX_DELAY);
-        Toggle_LED(CAR_DRIVABLE);
+        LED_toggle(CAR_DRIVABLE);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
@@ -48,7 +50,7 @@ int main(){
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
 
-    LEDs_init();
+    LED_init();
     
     Init_UART_Printf();
 

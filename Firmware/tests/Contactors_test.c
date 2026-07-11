@@ -45,7 +45,7 @@ int main() {
 
     SystemClock_Config();
 
-    LEDs_init();
+    LED_init();
 
     contactor_init();
 

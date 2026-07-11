@@ -52,6 +52,10 @@ PROJECT_BUILD_DIR := $(addprefix $(MAKEFILE_DIR)/, $(PROJECT_BUILD_DIR))
 # Additional defines
 PROJECT_MACROS = USART3_RX_QUEUE_SIZE=100
 
+ifeq ($(NODAWG),1)
+PROJECT_MACROS += NODAWG
+endif
+
 # export variables 
 export PROJECT_TARGET
 export PROJECT_C_SOURCES

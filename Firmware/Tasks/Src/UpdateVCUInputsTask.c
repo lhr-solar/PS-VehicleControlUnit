@@ -37,7 +37,7 @@ static void rebuild_inputs(void) {
         s |= PRECHARGE_COMPLETE_BIT;
 
     if (g_data_read->brake_pressure2.Brake_Pressure >= brake_threshold) {
-        // s |= BRAKE_BIT;
+        s |= BRAKE_BIT;
         brake_threshold = BRAKE_THRESH_HYST;
     } else {
         brake_threshold = BRAKE_THRESH;

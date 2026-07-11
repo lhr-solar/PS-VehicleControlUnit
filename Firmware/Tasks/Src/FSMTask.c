@@ -240,14 +240,16 @@ static void handle_drive_state(bool reverse) {
         float speed_mph = fabsf(vehicle_velocity) * METERS_SEC_TO_MPH;
         current_setpoint = get_drive_current(speed_mph, 
                                              g_data_read->accel_brake.AccelPedal_Main_Pos);
+
+
         current_pwr = get_pwr_current(g_data_read->accel_brake.AccelPedal_Main_Pos);
     }
 
     current_setpoint = ramp_current(current_setpoint);
 
-    CAN_Send_Drive_Cmd(velocity_setpoint, current_setpoint, 0);
-    MotorCAN_Send_Power_Cmd(current_pwr, 0);
-    CarCAN_Send_Power_Cmd(current_pwr, 0);
+    CAN_Send_Drive_Cmd(velocity_setpoint, current_setpoint, pdMS_TO_TICKS(1));
+    MotorCAN_Send_Power_Cmd(current_pwr, pdMS_TO_TICKS(1));
+    CarCAN_Send_Power_Cmd(current_pwr, pdMS_TO_TICKS(1));
     printf("%s Drive cmd: %f vel, %f curr\r\n",
            reverse ? "Reverse" : "Forward",
            velocity_setpoint,

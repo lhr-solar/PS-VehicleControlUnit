@@ -137,11 +137,10 @@ float motor_get_drive_current(float motor_rpm, float vehicle_velocity_mps,
 }
 
 float motor_get_pwr_current(uint8_t accel_percent_0_100) {
-    float pedal = accel_percent_0_100 * (MOTOR_SOFT_LIM_CURR_PWR / MOTOR_HARD_LIM_CURR_PWR);
-    if (pedal <= MOTOR_ACCEL_DEADZONE_MIN) {
-        pedal = 0.0f;
-    }
-    return pedal / 100.0f;
+    float pedal = (accel_percent_0_100 <= MOTOR_ACCEL_DEADZONE_MIN)
+                      ? 0.0f
+                      : (float)accel_percent_0_100 / 100.0f;
+    return pedal * (MOTOR_SOFT_LIM_CURR_PWR / MOTOR_HARD_LIM_CURR_PWR);
 }
 
 float motor_ramp_current(float target_current) {

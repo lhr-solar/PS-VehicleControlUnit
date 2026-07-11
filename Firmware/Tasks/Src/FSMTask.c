@@ -96,7 +96,7 @@ static void handle_state_not_ready(void) {
 
 static void handle_state_regen(void) { 
     motor_reset_current_ramp(); 
-    CAN_Send_Drive_Cmd(0.0f, 1.0f, 0); 
+    CAN_Send_Drive_Cmd(0.0f, 0.15f, 0); 
 }
 
 static void handle_state_neutral(void) { 

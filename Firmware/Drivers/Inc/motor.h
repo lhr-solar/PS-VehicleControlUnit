@@ -78,7 +78,7 @@ float motor_get_max_current(float motor_rpm, float vehicle_velocity_mps);
 
 /**
  * @brief Drive current command (0.0–1.0 of hard limit):
- *        MOTOR_MAX_CURRENT_PERCENT * fmin(rollover, max_current) * pedal
+ *        MOTOR_MAX_CURRENT_PERCENT * fmin(pedal, rollover, max_current)
  */
 float motor_get_drive_current(float motor_rpm, float vehicle_velocity_mps,
                               int16_t lws_angle, uint8_t accel_percent_0_100);

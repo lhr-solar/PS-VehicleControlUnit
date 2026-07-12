@@ -133,7 +133,7 @@ float motor_get_drive_current(float motor_rpm, float vehicle_velocity_mps,
                       : (float)accel_percent_0_100 / 100.0f;
     float rollover = get_rollover_limit(vehicle_velocity_mps, lws_angle);
     float max_curr = motor_get_max_current(motor_rpm, vehicle_velocity_mps);
-    return MOTOR_MAX_CURRENT_PERCENT * fminf(rollover, max_curr) * pedal;
+    return MOTOR_MAX_CURRENT_PERCENT * fminf(pedal, fminf(rollover, max_curr));
 }
 
 float motor_get_pwr_current(uint8_t accel_percent_0_100) {

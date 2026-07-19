@@ -42,9 +42,9 @@ static const size_t NUM_MAX_CURRENT_STEPS =
 static const motor_max_current_segment_t MAX_CURRENT_SEGMENTS[] = {
     /* start_hz, end_hz, start_current, end_current */
     {0.0f,  2.0f,  1.00f, 1.00f},
-    {2.0f,  2.5f,  1.00f, 0.42f},
-    {2.5f,  3.75f, 0.42f, 0.42f},
-    {3.75f, 5.0f,  0.42f, 0.84f},
+    {2.0f,  2.5f,  1.00f, 0.75f},
+    {2.5f,  3.75f, 0.75f, 0.75f},
+    {3.75f, 5.0f,  0.75f, 0.85f},
 };
 static const size_t NUM_MAX_CURRENT_SEGMENTS =
     sizeof(MAX_CURRENT_SEGMENTS) / sizeof(MAX_CURRENT_SEGMENTS[0]);

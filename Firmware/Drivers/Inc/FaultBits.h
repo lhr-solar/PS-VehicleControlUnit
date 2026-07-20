@@ -13,15 +13,15 @@
  */
 #define FAULT_ID_LIST(X) \
     /* ============= MOTOR CONTROLLER ============ */ \
-    X(MOTOR_HARDWARE_OVERCURRENT, 3) \
-    X(MOTOR_SOFTWARE_OVERCURRENT, 3) \
-    X(MOTOR_DC_BUS_OVERVOLTAGE, 3) \
-    X(MOTOR_BAD_HALL_SEQUENCE, 3) \
-    X(MOTOR_WD_RESET, 3) \
-    X(MOTOR_CONFIG_READ, 3) \
-    X(MOTOR_15V_UNDERVOLTAGE, 3) \
-    X(MOTOR_DESATURATION, 3) \
-    X(MOTOR_OVERSPEED, 3) \
+    X(MOTOR_HARDWARE_OVERCURRENT, 1) \
+    X(MOTOR_SOFTWARE_OVERCURRENT, 1) \
+    X(MOTOR_DC_BUS_OVERVOLTAGE, 1) \
+    X(MOTOR_BAD_HALL_SEQUENCE, 1) \
+    X(MOTOR_WD_RESET, 1) \
+    X(MOTOR_CONFIG_READ, 1) \
+    X(MOTOR_15V_UNDERVOLTAGE, 1) \
+    X(MOTOR_DESATURATION, 1) \
+    X(MOTOR_OVERSPEED, 1) \
     \
     /* ================ PRECHARGE ================ */                                              \
     X(PRECHARGE_TIMEOUT, 3)        /* Prech sequence took too long */                                 \

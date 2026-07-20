@@ -94,3 +94,10 @@ void motor_reset_current_ramp(void);
 
 /** True while rollover limiting is actively zeroing current. */
 bool motor_is_over_rollover_speed(void);
+
+/**
+ * @brief Toggle performance mode. While enabled, motor_get_max_current()
+ *        bypasses the speed-based max-current curve and returns 1.0
+ *        (soft-limit ceiling only). Driven by the cruise-enable button.
+ */
+void motor_set_performance_mode(bool enabled);

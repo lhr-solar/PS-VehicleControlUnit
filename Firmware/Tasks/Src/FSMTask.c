@@ -51,6 +51,7 @@ void fsm_init(void) {
 
 void fsm_step(void) {
     fsm_inputs = xEventGroupGetBits(fsmInputGroup);
+    motor_set_performance_mode((fsm_inputs & CRUISE_CONTROL_BUTTON_BIT) != 0);
     current_state = FSM[current_state.NextStates[fsm_inputs]];
     if (current_state.stateHandler) current_state.stateHandler();
 }

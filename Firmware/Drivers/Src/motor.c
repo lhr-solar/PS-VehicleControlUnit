@@ -13,6 +13,7 @@
 
 static bool rollover_limit_active = false;
 static float last_sent_current = 0.0f;
+static bool performance_mode_active = false;
 
 #if MOTOR_MAX_CURRENT_MODE == MOTOR_MAX_CURRENT_MODE_STEPS
 /* At/above each speed_mph (inclusive), max_current applies; last match wins.
@@ -80,6 +81,10 @@ static float get_rollover_limit(float vehicle_velocity_mps, int16_t lws_angle) {
 }
 
 float motor_get_max_current(float motor_rpm, float vehicle_velocity_mps) {
+    if (performance_mode_active) {
+        return 1.0f;
+    }
+
 #if MOTOR_MAX_CURRENT_MODE == MOTOR_MAX_CURRENT_MODE_STEPS
     (void)motor_rpm;
     float speed_mph = fabsf(vehicle_velocity_mps) * MOTOR_METERS_SEC_TO_MPH;
@@ -154,4 +159,8 @@ void motor_reset_current_ramp(void) {
 
 bool motor_is_over_rollover_speed(void) {
     return rollover_limit_active;
+}
+
+void motor_set_performance_mode(bool enabled) {
+    performance_mode_active = enabled;
 }

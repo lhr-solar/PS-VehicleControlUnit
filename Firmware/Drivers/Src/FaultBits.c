@@ -8,10 +8,36 @@ static StaticEventGroup_t warningBuffer;
 static EventGroupHandle_t warningGroup;
 
 const char *fault_names[FAULT_ID_COUNT] = {
-#define X(name) [FAULT_ID_##name] = #name,
+#define X(name, persist) [FAULT_ID_##name] = #name,
     FAULT_ID_LIST(X)
 #undef X
 };
+
+// Mandatory per-fault persistence threshold, from FAULT_ID_LIST.
+static const uint16_t fault_persist_threshold[FAULT_ID_COUNT] = {
+#define X(name, persist) [FAULT_ID_##name] = (persist),
+    FAULT_ID_LIST(X)
+#undef X
+};
+
+#define X(name, persist) \
+    _Static_assert((persist) > 0, #name " fault persistence count must be > 0");
+FAULT_ID_LIST(X)
+#undef X
+
+// Per-fault count of faults_set()/faults_set_mask() reports since the last
+// faults_clear(). Not reset by anything else, so repeated reports across
+// separate call sites/tasks all count toward the same fault's persistence.
+static uint16_t fault_persist_counter[FAULT_ID_COUNT] = {0};
+
+// Increments the counter for id (if not already at threshold) and returns
+// true once persist_count has been reached. Caller holds a critical section.
+static bool FB_report_locked(FaultID_e id) {
+    if (fault_persist_counter[id] < fault_persist_threshold[id]) {
+        fault_persist_counter[id]++;
+    }
+    return fault_persist_counter[id] >= fault_persist_threshold[id];
+}
 
 const char *warning_names[WARNING_ID_COUNT] = {
 #define X(name) [WARNING_ID_##name] = #name,
@@ -37,22 +63,54 @@ bool faults_init(void) {
 
 void faults_set(FaultID_e id) {
     configASSERT(id < FAULT_ID_COUNT);
-    xEventGroupSetBits(faultGroup, FAULT_BIT(id));
+
+    taskENTER_CRITICAL();
+    bool reached = FB_report_locked(id);
+    taskEXIT_CRITICAL();
+
+    if (reached) {
+        xEventGroupSetBits(faultGroup, FAULT_BIT(id));
+    }
 }
 
 void faults_set_from_isr(FaultID_e id) {
     BaseType_t hpw = pdFALSE;
     configASSERT(id < FAULT_ID_COUNT);
-    xEventGroupSetBitsFromISR(faultGroup, FAULT_BIT(id), &hpw);
-    portYIELD_FROM_ISR(hpw);
+
+    UBaseType_t saved = taskENTER_CRITICAL_FROM_ISR();
+    bool reached = FB_report_locked(id);
+    taskEXIT_CRITICAL_FROM_ISR(saved);
+
+    if (reached) {
+        xEventGroupSetBitsFromISR(faultGroup, FAULT_BIT(id), &hpw);
+        portYIELD_FROM_ISR(hpw);
+    }
 }
 
 void faults_set_mask(EventBits_t mask) {
-    xEventGroupSetBits(faultGroup, mask & FAULT_MASK_ALL);
+    mask &= FAULT_MASK_ALL;
+    EventBits_t to_latch = 0;
+
+    taskENTER_CRITICAL();
+    for (FaultID_e id = 0; id < FAULT_ID_COUNT; id++) {
+        if ((mask & FAULT_BIT(id)) && FB_report_locked(id)) {
+            to_latch |= FAULT_BIT(id);
+        }
+    }
+    taskEXIT_CRITICAL();
+
+    if (to_latch) {
+        xEventGroupSetBits(faultGroup, to_latch);
+    }
 }
 
 void faults_clear(FaultID_e id) {
     configASSERT(id < FAULT_ID_COUNT);
+
+    taskENTER_CRITICAL();
+    fault_persist_counter[id] = 0;
+    taskEXIT_CRITICAL();
+
     xEventGroupClearBits(faultGroup, FAULT_BIT(id));
 }
 

@@ -44,14 +44,14 @@ static const motor_max_current_segment_t MAX_CURRENT_SEGMENTS[] = {
     /* start_hz, end_hz, start_current, end_current */
     {0.0f,  2.0f,  1.00f, 1.00f},
     {2.0f,  2.5f,  1.00f, 0.75f},
-    {2.5f,  3.75f, 0.75f, 0.75f},
-    {3.75f, 5.0f,  0.75f, 0.85f},
+    {2.5f,  3.75f, 0.75f, 0.78f},
+    {3.75f, 4.0f,  0.78f, 0.85f},
 };
 static const size_t NUM_MAX_CURRENT_SEGMENTS =
     sizeof(MAX_CURRENT_SEGMENTS) / sizeof(MAX_CURRENT_SEGMENTS[0]);
 #endif
 
-/**
+/**.
  * @brief Rollover limit (0–1 of soft limit): 0 when over limit, else 1.
  * @note Gated by APPLY_ROLLOVER. LUT indexed by abs(LWS_Angle / 10).
  */
@@ -149,7 +149,11 @@ float motor_get_pwr_current(uint8_t accel_percent_0_100) {
 }
 
 float motor_ramp_current(float target_current) {
+#if MOTOR_RAMP_ENABLED
     last_sent_current = fminf(target_current, last_sent_current + MOTOR_CURRENT_RAMP_PER_TICK);
+#else
+    last_sent_current = target_current;
+#endif
     return last_sent_current;
 }
 

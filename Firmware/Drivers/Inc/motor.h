@@ -29,6 +29,12 @@
 #define MOTOR_ACCEL_DEADZONE_MIN  5u
 #define MOTOR_METERS_SEC_TO_MPH   2.23694f
 
+/* Set to 1 to actually rate-limit increases in commanded current; 0 to pass
+ * the target current straight through every tick. The ramp accumulator and
+ * per-tick math stay wired up either way so this can be flipped back on
+ * without rebuilding the logic. */
+#define MOTOR_RAMP_ENABLED 0
+
 /* Max increase in commanded current (0.0-1.0) allowed per second. Decreases
  * are never limited. Untested against hardware — tune while watching for
  * MC_FAULT_SoftwareOverCurrent. */

@@ -5,39 +5,45 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/**
+ * @brief List of all faults. X(name, persist_count) — persist_count is the
+ * number of times faults_set()/faults_set_mask() must report a given fault
+ * before it actually latches (see faults_set()). Mandatory for every entry;
+ * there is no default. Counter is per-fault and only resets on faults_clear().
+ */
 #define FAULT_ID_LIST(X) \
     /* ============= MOTOR CONTROLLER ============ */ \
-    X(MOTOR_HARDWARE_OVERCURRENT) \
-    X(MOTOR_SOFTWARE_OVERCURRENT) \
-    X(MOTOR_DC_BUS_OVERVOLTAGE) \
-    X(MOTOR_BAD_HALL_SEQUENCE) \
-    X(MOTOR_WD_RESET) \
-    X(MOTOR_CONFIG_READ) \
-    X(MOTOR_15V_UNDERVOLTAGE) \
-    X(MOTOR_DESATURATION) \
-    X(MOTOR_OVERSPEED) \
+    X(MOTOR_HARDWARE_OVERCURRENT, 1) \
+    X(MOTOR_SOFTWARE_OVERCURRENT, 1) \
+    X(MOTOR_DC_BUS_OVERVOLTAGE, 1) \
+    X(MOTOR_BAD_HALL_SEQUENCE, 1) \
+    X(MOTOR_WD_RESET, 1) \
+    X(MOTOR_CONFIG_READ, 1) \
+    X(MOTOR_15V_UNDERVOLTAGE, 1) \
+    X(MOTOR_DESATURATION, 1) \
+    X(MOTOR_OVERSPEED, 1) \
     \
     /* ================ PRECHARGE ================ */                                              \
-    X(PRECHARGE_TIMEOUT)        /* Prech sequence took too long */                                 \
-    X(PRECHARGE_SENSE_TIMEOUT)  /* Prech contactor didn't close within expected time */            \
-    X(PRECHARGE_SENSE_MISMATCH) /* Prech contactor sense reading doesnt match contactor state */   \
-    X(MOTOR_SENSE_TIMEOUT)      /* Motor contactor didn't close within expected time */            \
-    X(MOTOR_SENSE_MISMATCH)     /* Motor contactor sense reading doesnt match contactor state */   \
-    X(BATTERY_OVERVOLTAGE)      /* Battery voltage is greater than OVERVOLTAGE_THRESHOLD_MV */     \
-    X(BATTERY_UNDERVOLTAGE)     /* Battery voltage is less than UNDERVOLTAGE_THRESHOLD_MV */       \
-    X(MOTOR_GT_BATTERY)         /* Motor voltage is greater than battery voltage */                \
-    X(CONTACTOR_CALLBACK)       /* Contactor state didnt match expected state after being set */   \
-    X(MOTOR_LT_BATTERY)         /* Motor voltage dropped below 80% of battery voltage */           \
+    X(PRECHARGE_TIMEOUT, 3)        /* Prech sequence took too long */                                 \
+    X(PRECHARGE_SENSE_TIMEOUT, 3)  /* Prech contactor didn't close within expected time */            \
+    X(PRECHARGE_SENSE_MISMATCH, 3) /* Prech contactor sense reading doesnt match contactor state */   \
+    X(MOTOR_SENSE_TIMEOUT, 3)      /* Motor contactor didn't close within expected time */            \
+    X(MOTOR_SENSE_MISMATCH, 3)     /* Motor contactor sense reading doesnt match contactor state */   \
+    X(BATTERY_OVERVOLTAGE, 3)      /* Battery voltage is greater than OVERVOLTAGE_THRESHOLD_MV */     \
+    X(BATTERY_UNDERVOLTAGE, 3)     /* Battery voltage is less than UNDERVOLTAGE_THRESHOLD_MV */       \
+    X(MOTOR_GT_BATTERY, 3)         /* Motor voltage is greater than battery voltage */                \
+    X(CONTACTOR_CALLBACK, 3)       /* Contactor state didnt match expected state after being set */   \
+    X(MOTOR_LT_BATTERY, 3)         /* Motor voltage dropped below 80% of battery voltage */           \
     \
     /* ============== OTHER BOARDS =============== */                                              \
-    X(STEERING_SENSOR_FAULT)    /* Sensor not OK or data invalid */                                \
-    X(PEDAL_BOARD_FAULT)        /* Pedal board fault or data invalid */                            \
-    X(CONTROLS_FAULT)           /* Fault in controls status */                                     \
-    X(BPS_FAULT)                /* Fault in BPS status */                                          \
-    X(GENERIC_WATCHDOG_FAULT)   /* A generic fault triggereed by all dogs */                      
+    X(STEERING_SENSOR_FAULT, 3)    /* Sensor not OK or data invalid */                                \
+    X(PEDAL_BOARD_FAULT, 3)        /* Pedal board fault or data invalid */                            \
+    X(CONTROLS_FAULT, 3)           /* Fault in controls status */                                     \
+    X(BPS_FAULT, 3)                /* Fault in BPS status */                                          \
+    X(GENERIC_WATCHDOG_FAULT, 3)   /* A generic fault triggereed by all dogs */
 
 typedef enum {
-#define X(name) FAULT_ID_##name,
+#define X(name, persist) FAULT_ID_##name,
     FAULT_ID_LIST(X)
 #undef X
     FAULT_ID_COUNT
@@ -119,34 +125,42 @@ extern const char *warning_names[];
 bool faults_init(void);
 
 /**
- * @brief Sets a fault bit.
- * 
- * @param id The fault ID to set.
+ * @brief Reports an occurrence of a fault. Only latches the fault bit (and
+ * wakes FaultHandlerTask) once this fault has been reported
+ * FAULT_ID_LIST's persist_count times; earlier calls just increment the
+ * per-fault counter. The counter is not reset automatically — only
+ * faults_clear() resets it.
+ *
+ * @param id The fault ID to report.
  */
 void faults_set(FaultID_e id);
 
 /**
- * @brief Sets a fault bit from an ISR context. 
- * 
- * This is a separate function from the non-ISR version because it needs to use 
+ * @brief Reports an occurrence of a fault from an ISR context. Same
+ * persistence behavior as faults_set().
+ *
+ * This is a separate function from the non-ISR version because it needs to use
  * FromISR FreeRTOS APIs and handle the pxHigherPriorityTaskWoken parameter.
- * 
- * @param id The fault ID to set.
+ *
+ * @param id The fault ID to report.
  */
 void faults_set_from_isr(FaultID_e id);
 
 /**
- * @brief Sets multiple fault bits at once using a mask. This is useful for 
- * cases where multiple faults need to be set simultaneously.
- * 
- * @param mask A bitmask of fault bits to set. Only bits corresponding to valid 
- * fault IDs will be set; other bits will be ignored.
+ * @brief Reports occurrences of multiple faults at once using a mask. This is
+ * useful for cases where multiple faults need to be reported simultaneously.
+ * Same per-fault persistence behavior as faults_set() — each bit in mask
+ * increments that fault's counter, only latching once its persist_count is
+ * reached.
+ *
+ * @param mask A bitmask of fault bits to report. Only bits corresponding to
+ * valid fault IDs will be considered; other bits will be ignored.
  */
 void faults_set_mask(EventBits_t mask);
 
 /**
- * @brief Clears a fault bit.
- * 
+ * @brief Clears a fault bit and resets its persistence counter.
+ *
  * @param id The fault ID to clear.
  */
 void faults_clear(FaultID_e id);

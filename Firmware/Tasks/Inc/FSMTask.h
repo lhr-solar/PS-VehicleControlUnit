@@ -13,6 +13,7 @@
 
 #include "inits.h"
 #include "CANbus.h"
+#include "motor.h"
 #include "event_groups.h"
 
 /**
@@ -73,16 +74,6 @@ typedef struct {
 extern MocoState_t FSM[NUM_STATES];
 extern MocoState_t current_state;
 
-/**
- * @brief Used for stepping current down at higher speeds. An array of these will 
- * represent a bin for min speed and associated max current.
- */
-typedef struct {
-    float speed_mph;
-    float max_current; // 0.0 to 1.0
-} swoc_threshold_t;
-
-
 void fsm_init(void);
 void fsm_step(void);
 void fsm_disable(void);
@@ -96,7 +87,4 @@ bool fsm_is_over_rollover_speed(void);
 
 void Task_FSM(void *args);
 
-float map_to_percent(uint8_t input, uint8_t in_min, uint8_t in_max, uint8_t out_min,
-                     uint8_t out_max);
-                     
 bool fsm_is_input_set(InputBits_t bit);
